@@ -1,11 +1,7 @@
-import './App.css';
+import AdminPage from './pages/admin/AdminPage';
 
 function App() {
-  return (
-    <div className='App'>
-      <h1>Hello world</h1>
-    </div>
-  );
+  return <AdminPage />;
 }
 
 export default App;
