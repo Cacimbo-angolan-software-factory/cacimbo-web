@@ -15,7 +15,7 @@ const Stats: React.FC = () => {
       </Stat>
       <Stat>
         <h2>2786</h2>
-        <p>Solicitações</p>
+        <p>Atribuídas</p>
       </Stat>
     </StatsContainer>
   );
