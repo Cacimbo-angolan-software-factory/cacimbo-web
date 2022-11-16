@@ -8,13 +8,10 @@ import Filters from '../../../components/licenças/filters/Filters';
 const Licenças: React.FC = () => {
   const { licences } = useContext(LicContext);
 
-  useEffect(() => {
-    console.log(licences[0]);
-  }, [licences]);
-
   return (
     <>
       <Filters />
+
       <div>
         {licences &&
           licences.map((licence) => {

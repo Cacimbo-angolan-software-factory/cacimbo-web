@@ -13,6 +13,7 @@ interface ICreateContext {
     cliente_nome: string;
     data_emissao: string;
     data_validade: string;
+    parceiro_nome: string;
   }[];
   totalPedidos?: number;
   getLic?: () => Promise<void>;
