@@ -8,6 +8,12 @@ interface IContext {
 interface ICreateContext {
   lic_renovations: [];
   lic_requests: [];
+  licences: {
+    id: number;
+    cliente_nome: string;
+    data_emissao: string;
+    data_validade: string;
+  }[];
   totalPedidos?: number;
   getLic?: () => Promise<void>;
   getLicRequest?: () => Promise<void>;
@@ -21,10 +27,12 @@ interface ICreateContext {
 export const LicContext = createContext<ICreateContext>({
   lic_requests: [],
   lic_renovations: [],
+  licences: [],
 });
 
 export const LicProvider = ({ children }: IContext) => {
   const [lic_requests, setLicRequests] = useState<[]>([]);
+  const [licences, setLicences] = useState<[]>([]);
   const [lic_renovations, setLicRenovations] = useState<[]>([]);
   const [totalPedidos, setTotalPedidos] = useState(0);
   const [TotalLicenses, setTotalLicenses] = useState(0);
@@ -113,6 +121,7 @@ export const LicProvider = ({ children }: IContext) => {
       const { data } = await api.get(urlGeral);
       if (data.length > 0) {
         setTotalLicenses(data.length);
+        setLicences(data);
       }
     } catch (err: any) {
       if (err?.response.status === 'undefined') {
@@ -131,16 +140,15 @@ export const LicProvider = ({ children }: IContext) => {
   }
 
   useEffect(() => {
-    if (!!user) {
-      getLic();
-      getLicRequest();
-      getLicRenovations();
-    }
-  }, [user]);
+    getLic();
+    getLicRequest();
+    getLicRenovations();
+  }, []);
 
   return (
     <LicContext.Provider
       value={{
+        licences,
         lic_requests,
         lic_renovations,
         totalPedidos,

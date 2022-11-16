@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { LicContext } from '../../../context';
+import Licence from '../../../components/licenças/Licence';
 
 import { Container } from './styles';
+import Filters from '../../../components/licenças/filters/Filters';
 
 const Licenças: React.FC = () => {
-  return <h1>Hello world</h1>;
+  const { licences } = useContext(LicContext);
+
+  useEffect(() => {
+    console.log(licences[0]);
+  }, [licences]);
+
+  return (
+    <>
+      <Filters />
+      <div>
+        {licences &&
+          licences.map((licence) => {
+            return <Licence licence={licence} />;
+          })}
+      </div>
+    </>
+  );
 };
 
 export default Licenças;
