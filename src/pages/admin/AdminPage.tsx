@@ -2,7 +2,6 @@ import React from 'react';
 import Menu from '../../components/menu/Menu';
 import Notifications from '../../components/notifications/Notif';
 import Stats from '../../components/stats/Stats';
-import styled from 'styled-components';
 
 import { AdminContainer, Section } from './styles';
 import Animation from '../../components/backAnimation/Animation';
