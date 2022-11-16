@@ -6,7 +6,11 @@ export const NotificationContainer = styled.div`
   gap: 1.6rem;
   /* height: 35rem; */
   /* overflow-y: scroll; */
-  width: 80%;
+  width: 90%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const NotificationItem = styled.div`

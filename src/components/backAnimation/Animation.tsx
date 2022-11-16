@@ -4,9 +4,14 @@ import styled from 'styled-components';
 const Div = styled.div`
   & svg {
     height: 50rem;
+    width: 100%;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1000px) {
+    height: 40rem;
+  }
+
+  @media screen and (max-width: 768px) {
     display: none;
   } ;
 `;
