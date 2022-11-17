@@ -14,6 +14,7 @@ export const Container = styled.div`
     background-color: #1d1d1d;
     padding: 3rem 6rem 3rem 6rem;
     border-bottom: 0.5px solid #3a3a3a;
+    box-shadow: 0px 11px 11px -14px rgba(0, 0, 0, 0.75);
   }
 
   & div {

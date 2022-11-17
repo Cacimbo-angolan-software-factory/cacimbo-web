@@ -44,7 +44,7 @@ const Menu: React.FC = () => {
         <p>Licenças</p>
       </MenuItem>
 
-      <MenuItem to='/'>
+      <MenuItem to='/Admin/solicitaçoes'>
         <span>
           <RiShieldCheckFill />
         </span>
