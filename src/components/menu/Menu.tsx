@@ -44,7 +44,14 @@ const Menu: React.FC = () => {
         <p>Licenças</p>
       </MenuItem>
 
-      <MenuItem to='/Admin/solicitaçoes'>
+      <MenuItem
+        className={
+          location.pathname === `/Admin/solicita%C3%A7oes`
+            ? 'active'
+            : 'inherit'
+        }
+        to='/Admin/solicitaçoes'
+      >
         <span>
           <RiShieldCheckFill />
         </span>

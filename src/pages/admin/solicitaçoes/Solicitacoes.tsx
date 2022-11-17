@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import { LicContext } from '../../../context';
 
 import { Container } from './stylesSoli';
@@ -9,9 +10,13 @@ const Solicitaçoes: React.FC = () => {
   console.log(lic_requests);
 
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <Container>
+      {lic_requests.map((lic_request: any) => (
+        <div key={lic_request.id}>
+          <Solicitacao lic_request={lic_request} />
+        </div>
+      ))}
+    </Container>
   );
 };
 
