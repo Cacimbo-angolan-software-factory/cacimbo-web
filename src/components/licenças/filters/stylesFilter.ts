@@ -3,6 +3,18 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  /* transition: all 0.5s; */
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: #1d1d1d;
+    padding: 3rem 6rem 3rem 6rem;
+    border-bottom: 0.5px solid #3a3a3a;
+  }
 
   & div {
     cursor: pointer;

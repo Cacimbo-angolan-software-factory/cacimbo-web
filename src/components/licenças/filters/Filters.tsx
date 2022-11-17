@@ -3,9 +3,13 @@ import { RiFilter3Fill } from 'react-icons/ri';
 
 import { Container, SecondFilter } from './stylesFilter';
 
-const Filters: React.FC = () => {
+interface FiltersProps {
+  fixedFilter: boolean;
+}
+
+const Filters: React.FC<FiltersProps> = ({ fixedFilter }) => {
   return (
-    <Container>
+    <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
       <div>
         <h2>Todos</h2>
         <h2>Parceiro</h2>

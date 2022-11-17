@@ -5,55 +5,60 @@ import { RiFolderKeyholeFill } from 'react-icons/ri';
 import { RiShieldCheckFill } from 'react-icons/ri';
 import { RiWechatFill } from 'react-icons/ri';
 import { RiNewspaperFill } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
 
 const Menu: React.FC = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState();
+  const location = useLocation();
 
   return (
     <MenuContainer>
-      <Link to='/Admin'>
-        <MenuItem>
-          <span>
-            <RiHome5Fill />
-          </span>
-          <p>Home</p>
-        </MenuItem>
-      </Link>
+      <MenuItem
+        className={location.pathname === `/Admin` ? 'active' : 'inherit'}
+        to='/Admin'
+      >
+        <span>
+          <RiHome5Fill />
+        </span>
+        <p>Home</p>
+      </MenuItem>
 
-      <MenuItem>
+      <MenuItem to='/'>
         <span>
           <RiServiceFill />
         </span>
         <p>Empresa</p>
       </MenuItem>
 
-      <Link to='/Admin/licenças'>
-        <MenuItem>
-          <span>
-            <RiFolderKeyholeFill />
-          </span>
-          <p>Licenças</p>
-        </MenuItem>
-      </Link>
+      <MenuItem
+        className={
+          location.pathname === `/Admin/licen%C3%A7as` ? 'active' : 'inherit'
+        }
+        to='/Admin/licenças'
+      >
+        <span>
+          <RiFolderKeyholeFill />
+        </span>
+        <p>Licenças</p>
+      </MenuItem>
 
-      <MenuItem>
+      <MenuItem to='/'>
         <span>
           <RiShieldCheckFill />
         </span>
         <p>Solicitações</p>
       </MenuItem>
 
-      <MenuItem>
+      <MenuItem to='/'>
         <span>
           <RiWechatFill />
         </span>
         <p>Comunidade</p>
       </MenuItem>
 
-      <MenuItem>
+      <MenuItem to='/'>
         <span>
           <RiNewspaperFill />
         </span>

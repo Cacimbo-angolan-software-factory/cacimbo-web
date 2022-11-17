@@ -1,18 +1,19 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const MenuContainer = styled.div`
+export const MenuContainer = styled.nav`
   display: flex;
   gap: 2rem;
 `;
 
-export const MenuItem = styled.div`
+export const MenuItem = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.3rem;
   cursor: pointer;
-  background: rgba(56, 56, 56, 0.6);
+  background: rgba(56 56, 56, 0.6);
   border-radius: 2rem;
   height: 10rem;
   width: 10rem;
@@ -28,5 +29,9 @@ export const MenuItem = styled.div`
 
   &:hover {
     color: #b71c50;
+  }
+
+  &.active {
+    border: 1px solid #b71c50;
   }
 `;
