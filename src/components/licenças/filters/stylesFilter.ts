@@ -1,0 +1,47 @@
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* transition: all 0.5s; */
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: #1d1d1d;
+    padding: 3rem 6rem 3rem 6rem;
+    border-bottom: 0.5px solid #3a3a3a;
+  }
+
+  & div {
+    cursor: pointer;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  & span {
+    font-size: 2rem;
+  }
+
+  & h2 {
+    background: rgba(56, 56, 56, 0.6);
+    border-radius: 1rem;
+    padding: 0.5rem 1.2rem;
+  }
+
+  & h2:hover {
+    color: #b71c50;
+  }
+`;
+
+export const SecondFilter = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+  cursor: pointer;
+  align-items: center;
+`;

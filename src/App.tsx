@@ -1,7 +1,12 @@
-import AdminPage from './pages/admin/AdminPage';
+import AdminPage from './pages/admin/adminRoute/AdminPage';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
-  return <AdminPage />;
+  return (
+    <>
+      <AdminPage />
+    </>
+  );
 }
 
 export default App;
