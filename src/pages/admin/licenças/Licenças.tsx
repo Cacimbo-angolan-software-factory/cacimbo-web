@@ -10,11 +10,19 @@ const Licenças: React.FC = () => {
   const { licences } = useContext(LicContext);
   const [fixedFilter, setFixedFilter] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
+  const [filterPartner, setFilterPartner] = useState(false);
 
   const itemsPerPage = 50;
-  const endOffset = pageNumber * itemsPerPage;
+  const endOffset = pageNumber + itemsPerPage;
   const currentItems = licences.slice(endOffset, endOffset + itemsPerPage);
   const pageCount = Math.ceil(licences.length / itemsPerPage);
+  const selectedPartner = licences.filter(
+    (licence) => licence.parceiro_id === 1
+  );
+  const SelectedPartnerPaginated = selectedPartner.slice(
+    endOffset,
+    endOffset + itemsPerPage
+  );
 
   const handlePageClick = (event: any) => {
     const newOffset =
@@ -33,13 +41,24 @@ const Licenças: React.FC = () => {
 
   return (
     <>
-      <Filters fixedFilter={fixedFilter} />
+      <Filters
+        filterPartner={filterPartner}
+        setFilterPartner={setFilterPartner}
+        fixedFilter={fixedFilter}
+      />
 
       <div>
-        {currentItems &&
-          currentItems.map((licence) => {
-            return <Licence licence={licence} />;
-          })}
+        {filterPartner === false
+          ? currentItems.map((licence) => (
+              <div key={licence.id}>
+                <Licence licence={licence} />
+              </div>
+            ))
+          : SelectedPartnerPaginated.map((licence) => (
+              <div key={licence.id}>
+                <Licence licence={licence} />
+              </div>
+            ))}
       </div>
 
       <Pagination

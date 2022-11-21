@@ -37,6 +37,10 @@ export const Container = styled.div`
   & h2:hover {
     color: #b71c50;
   }
+
+  & h2.active {
+    border: 0.5px solid #b71c50;
+  }
 `;
 
 export const SecondFilter = styled.div`
