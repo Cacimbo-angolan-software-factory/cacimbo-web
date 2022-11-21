@@ -13,7 +13,7 @@ const Licenças: React.FC = () => {
   const [filterPartner, setFilterPartner] = useState(false);
 
   const itemsPerPage = 50;
-  const endOffset = pageNumber * itemsPerPage;
+  const endOffset = pageNumber + itemsPerPage;
   const currentItems = licences.slice(endOffset, endOffset + itemsPerPage);
   const pageCount = Math.ceil(licences.length / itemsPerPage);
   const selectedPartner = licences.filter(
