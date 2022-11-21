@@ -5,14 +5,40 @@ import { Container, SecondFilter } from './stylesFilter';
 
 interface FiltersProps {
   fixedFilter: boolean;
+  setFilterPartner: React.Dispatch<React.SetStateAction<boolean>>;
+  filterPartner: boolean;
 }
 
-const Filters: React.FC<FiltersProps> = ({ fixedFilter }) => {
+const Filters: React.FC<FiltersProps> = ({
+  fixedFilter,
+  setFilterPartner,
+  filterPartner,
+}) => {
+  const handleFilterPartner = () => {
+    setFilterPartner(true);
+    console.log('filter partner');
+  };
+
+  const handleFilterTodos = () => {
+    setFilterPartner(false);
+    console.log('filter todos');
+  };
+
   return (
     <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
       <div>
-        <h2>Todos</h2>
-        <h2>Parceiro</h2>
+        <h2
+          className={filterPartner === false ? `active` : ''}
+          onClick={handleFilterTodos}
+        >
+          Todos
+        </h2>
+        <h2
+          className={filterPartner === true ? `active` : ''}
+          onClick={handleFilterPartner}
+        >
+          Parceiro
+        </h2>
         <span>
           <RiFilter3Fill />
         </span>
