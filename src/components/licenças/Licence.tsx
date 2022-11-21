@@ -8,6 +8,7 @@ interface IProps {
     cliente_nome: string;
     data_emissao: string;
     data_validade: string;
+    parceiro_id: number;
   };
 }
 
