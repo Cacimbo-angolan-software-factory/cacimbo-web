@@ -19,6 +19,10 @@ const Licenças: React.FC = () => {
   const selectedPartner = licences.filter(
     (licence) => licence.parceiro_id === 1
   );
+  const SelectedPartnerPaginated = selectedPartner.slice(
+    endOffset,
+    endOffset + itemsPerPage
+  );
 
   const handlePageClick = (event: any) => {
     const newOffset =
@@ -50,7 +54,7 @@ const Licenças: React.FC = () => {
                 <Licence licence={licence} />
               </div>
             ))
-          : selectedPartner.map((licence) => (
+          : SelectedPartnerPaginated.map((licence) => (
               <div key={licence.id}>
                 <Licence licence={licence} />
               </div>
