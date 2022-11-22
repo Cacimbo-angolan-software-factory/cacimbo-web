@@ -10,7 +10,6 @@ const AdminIndex: React.FC = () => {
   function onScroll() {
     if (window.scrollY >= -309) {
       setFixedNav(true);
-      console.log(window.scrollY);
     } else {
       setFixedNav(false);
     }
