@@ -8,9 +8,13 @@ import {
 
 import { Container } from './stylesBottomNav';
 
-const BottomNav: React.FC = () => {
+interface BottomNavProps {
+  fixedNav: boolean;
+}
+
+const BottomNav: React.FC<BottomNavProps> = ({ fixedNav }) => {
   return (
-    <Container>
+    <Container className={fixedNav ? 'nav fixed' : 'nav'}>
       <span>
         <IoSettingsOutline />
       </span>

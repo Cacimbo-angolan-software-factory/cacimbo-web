@@ -17,4 +17,14 @@ export const Container = styled.div`
   & span:hover {
     color: #f5f5f5;
   }
+
+  &.fixed {
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    background-color: #1d1d1d;
+    padding: 2rem 0 2rem 6rem;
+    border-bottom: 0.5px solid #3a3a3a;
+    box-shadow: 0px 11px 11px -14px rgba(0, 0, 0, 0.75);
+  }
 `;
