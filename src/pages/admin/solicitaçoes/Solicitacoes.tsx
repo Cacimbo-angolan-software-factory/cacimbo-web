@@ -7,8 +7,6 @@ import { Container } from './stylesSoli';
 const Solicitaçoes: React.FC = () => {
   const { lic_requests } = useContext(LicContext);
 
-  console.log(lic_requests);
-
   return (
     <Container>
       {lic_requests.map((lic_request: any) => (
