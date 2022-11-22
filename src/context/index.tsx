@@ -24,18 +24,21 @@ interface ICreateContext {
   getLicRefresh?: (typeRefresh: string) => void;
   TotalLicenses?: number;
   setTotalLicenses?: (value: number) => void;
+  empresas: [];
 }
 
 export const LicContext = createContext<ICreateContext>({
   lic_requests: [],
   lic_renovations: [],
   licences: [],
+  empresas: [],
 });
 
 export const LicProvider = ({ children }: IContext) => {
   const [lic_requests, setLicRequests] = useState<[]>([]);
   const [licences, setLicences] = useState<[]>([]);
   const [lic_renovations, setLicRenovations] = useState<[]>([]);
+  const [empresas, setEmpresas] = useState<[]>([]);
   const [totalPedidos, setTotalPedidos] = useState(0);
   const [TotalLicenses, setTotalLicenses] = useState(0);
   const [IsLoadingTheOrder, setIsLoadingTheOrder] = useState(false);
@@ -140,11 +143,29 @@ export const LicProvider = ({ children }: IContext) => {
     if (typeRefresh === 'getLicRequest') getLicRequest();
     if (typeRefresh === 'getLicRenovations') getLicRenovations();
   }
+  async function getEmpresas() {
+    try {
+      const { data } = await api.get(`parceiros`);
+      if (data.data.length > 0) {
+        setEmpresas(data.data);
+      }
+    } catch (err: any) {
+      if (err?.response.status === 'undefined') {
+        console.error('Sem ligação à internet', 'error');
+        return;
+      }
+      if (err?.response.status) {
+        console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        return;
+      }
+    }
+  }
 
   useEffect(() => {
     getLic();
     getLicRequest();
     getLicRenovations();
+    getEmpresas();
   }, []);
 
   return (
@@ -161,6 +182,7 @@ export const LicProvider = ({ children }: IContext) => {
         getLicRefresh,
         TotalLicenses,
         setTotalLicenses,
+        empresas,
       }}
     >
       {children}
