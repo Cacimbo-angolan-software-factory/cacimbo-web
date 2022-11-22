@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { LicContext } from '../../../context';
 import Licence from '../../../components/licenças/Licence';
-import ReactPaginate from 'react-paginate';
 
 import { Pagination } from './styles';
 import Filters from '../../../components/licenças/filters/Filters';
@@ -66,7 +65,6 @@ const Licenças: React.FC = () => {
         nextLabel={'>'}
         breakLabel={'...'}
         pageCount={pageCount}
-        // marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}
         activeClassName={'active'}
