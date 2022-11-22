@@ -25,7 +25,12 @@ const Menu: React.FC = () => {
         <p>Home</p>
       </MenuItem>
 
-      <MenuItem to='/'>
+      <MenuItem
+        className={
+          location.pathname === `/Admin/empresas` ? 'active' : 'inherit'
+        }
+        to='/Admin/empresas'
+      >
         <span>
           <RiServiceFill />
         </span>
