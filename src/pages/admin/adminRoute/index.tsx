@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Animation from '../../../components/adminHome/backAnimation/Animation';
-import BottomNav from '../../../components/adminHome/bottomNav/bottomNav';
-import Notifications from '../../../components/adminHome/notifications/Notif';
+import Animation from '../../../components/Admin/backAnimation/Animation';
+import BottomNav from '../../../components/Admin/bottomNav/BottomNav';
+import Notifications from '../../../components/Admin/notifications/Notif';
 import { Section } from './styles';
 
 const AdminIndex: React.FC = () => {
