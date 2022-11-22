@@ -16,7 +16,8 @@ export const MenuItem = styled(Link)`
   background: rgba(56 56, 56, 0.6);
   border-radius: 2rem;
   height: 10rem;
-  width: 10rem;
+  min-width: 10rem;
+  padding: 1.5rem;
   transition: all 0.2s ease-in-out;
 
   & span {
