@@ -5,6 +5,7 @@ import { RiFolderKeyholeFill } from 'react-icons/ri';
 import { RiShieldCheckFill } from 'react-icons/ri';
 import { RiWechatFill } from 'react-icons/ri';
 import { RiNewspaperFill } from 'react-icons/ri';
+import { RiUserFill } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
@@ -24,7 +25,12 @@ const Menu: React.FC = () => {
         <p>Home</p>
       </MenuItem>
 
-      <MenuItem to='/'>
+      <MenuItem
+        className={
+          location.pathname === `/Admin/empresas` ? 'active' : 'inherit'
+        }
+        to='/Admin/empresas'
+      >
         <span>
           <RiServiceFill />
         </span>
@@ -69,6 +75,13 @@ const Menu: React.FC = () => {
           <RiNewspaperFill />
         </span>
         <p>Noticías</p>
+      </MenuItem>
+
+      <MenuItem to='/'>
+        <span>
+          <RiUserFill />
+        </span>
+        <p>Usuários</p>
       </MenuItem>
     </MenuContainer>
   );

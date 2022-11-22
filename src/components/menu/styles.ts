@@ -25,7 +25,8 @@ export const MenuItem = styled(Link)`
   }
 
   & p {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
+    font-weight: 300;
   }
 
   &:hover {
