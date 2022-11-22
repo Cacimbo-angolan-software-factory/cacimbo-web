@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { RiHome5Fill } from 'react-icons/ri';
 import { RiServiceFill } from 'react-icons/ri';
 import { RiFolderKeyholeFill } from 'react-icons/ri';
 import { RiShieldCheckFill } from 'react-icons/ri';
 import { RiWechatFill } from 'react-icons/ri';
 import { RiNewspaperFill } from 'react-icons/ri';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
 
 const Menu: React.FC = () => {
-  const [active, setActive] = useState();
   const location = useLocation();
 
   return (
