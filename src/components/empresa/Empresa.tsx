@@ -10,9 +10,10 @@ interface EmpresaProps {
     email: string;
     Nif: string;
   };
+  handleOpen?: () => void;
 }
 
-const Empresa: React.FC<EmpresaProps> = ({ empresa }) => {
+const Empresa: React.FC<EmpresaProps> = ({ empresa, handleOpen }) => {
   console.log(empresa);
 
   return (
@@ -23,7 +24,7 @@ const Empresa: React.FC<EmpresaProps> = ({ empresa }) => {
         <p>{empresa.Nif}</p>
       </div>
 
-      <span>
+      <span onClick={handleOpen}>
         <RiMore2Fill />
       </span>
     </Container>
