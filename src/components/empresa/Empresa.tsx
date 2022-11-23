@@ -1,5 +1,6 @@
 import React from 'react';
 import { RiMore2Fill } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
 import { Container } from './stylesEmpresa';
 
@@ -10,12 +11,15 @@ interface EmpresaProps {
     email: string;
     Nif: string;
   };
-  handleOpen?: () => void;
+  handleClick?: () => void;
+  setEmpresaSelected?: (id: any) => void;
 }
 
-const Empresa: React.FC<EmpresaProps> = ({ empresa, handleOpen }) => {
-  console.log(empresa);
-
+const Empresa: React.FC<EmpresaProps> = ({
+  empresa,
+  handleClick,
+  setEmpresaSelected,
+}) => {
   return (
     <Container>
       <div>
@@ -24,7 +28,12 @@ const Empresa: React.FC<EmpresaProps> = ({ empresa, handleOpen }) => {
         <p>{empresa.Nif}</p>
       </div>
 
-      <span onClick={handleOpen}>
+      <span
+        onClick={() => {
+          handleClick && handleClick();
+          setEmpresaSelected && setEmpresaSelected(empresa);
+        }}
+      >
         <RiMore2Fill />
       </span>
     </Container>

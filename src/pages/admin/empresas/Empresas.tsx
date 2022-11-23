@@ -8,8 +8,9 @@ import { Container } from './stylesEmpresas';
 const Empresas: React.FC = () => {
   const { empresas } = useContext(LicContext);
   const [open, setOpen] = useState(false);
+  const [empresaSelected, setEmpresaSelected] = useState<any>();
 
-  const handleOpen = () => {
+  const handleClick = () => {
     setOpen(!open);
   };
 
@@ -23,12 +24,17 @@ const Empresas: React.FC = () => {
         {empresas &&
           empresas.map((empresa: any) => (
             <Container key={empresa.id}>
-              <Empresa handleOpen={handleOpen} empresa={empresa} />
+              <Empresa
+                handleClick={handleClick}
+                setEmpresaSelected={setEmpresaSelected}
+                empresa={empresa}
+              />
             </Container>
           ))}
       </Container>
-
-      {open && <Sidebar handleClose={handleClose} />}
+      {open && (
+        <Sidebar empresaSelected={empresaSelected} handleClose={handleClose} />
+      )}
     </>
   );
 };
