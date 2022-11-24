@@ -24,7 +24,12 @@ interface ICreateContext {
   getLicRefresh?: (typeRefresh: string) => void;
   TotalLicenses?: number;
   setTotalLicenses?: (value: number) => void;
-  empresas: [];
+  empresas: {
+    id: number;
+    Nome: string;
+    email: string;
+    Nif: string;
+  }[];
 }
 
 export const LicContext = createContext<ICreateContext>({
