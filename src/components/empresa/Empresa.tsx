@@ -1,7 +1,5 @@
 import React from 'react';
 import { RiMore2Fill } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
-
 import { Container } from './stylesEmpresa';
 
 interface EmpresaProps {

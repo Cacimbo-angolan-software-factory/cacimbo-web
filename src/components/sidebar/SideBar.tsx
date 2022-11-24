@@ -10,16 +10,16 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ handleClose, empresaSelected }) => {
-  const { empresas } = useContext(LicContext);
-
   console.log(empresaSelected);
 
   return (
     <Wrapper>
-      <h1>{empresaSelected.Nome}</h1>
-      <span onClick={handleClose}>
-        <IoIosCloseCircleOutline />
-      </span>
+      <div>
+        <h1>{empresaSelected.Nome}</h1>
+        <span onClick={handleClose}>
+          <IoIosCloseCircleOutline />
+        </span>
+      </div>
     </Wrapper>
   );
 };
