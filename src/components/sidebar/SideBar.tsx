@@ -7,10 +7,11 @@ import { IoMailOutline } from 'react-icons/io5';
 import { IoCallOutline } from 'react-icons/io5';
 import { IoLocationOutline } from 'react-icons/io5';
 import { IoKeyOutline } from 'react-icons/io5';
+import { IoFileTrayFullOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
-import { LicContext } from '../../context';
+import { IoCreateOutline } from 'react-icons/io5';
 
-import { Wrapper } from './sidebarStyles';
+import { Button, Div, Wrapper } from './sidebarStyles';
 
 interface SidebarProps {
   handleClose?: () => void;
@@ -71,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleClose, empresaSelected }) => {
 
       {Nif && (
         <p>
-          <IoKeyOutline />
+          <IoFileTrayFullOutline />
           {Nif}
         </p>
       )}
@@ -89,6 +90,17 @@ const Sidebar: React.FC<SidebarProps> = ({ handleClose, empresaSelected }) => {
           {website}
         </p>
       )}
+
+      <Div>
+        <Button>
+          <IoCreateOutline />
+          Editar
+        </Button>
+        <Button>
+          <IoKeyOutline />
+          Licença
+        </Button>
+      </Div>
     </Wrapper>
   );
 };

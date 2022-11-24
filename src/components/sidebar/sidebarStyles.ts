@@ -22,6 +22,9 @@ export const Wrapper = styled.div`
   border-left: 0.5px solid #3a3a3a;
   animation: ${animation} 0.5s;
 
+  display: flex;
+  flex-direction: column;
+
   & h1 {
     display: flex;
     align-items: center;
@@ -32,7 +35,7 @@ export const Wrapper = styled.div`
     }
   }
 
-  & div {
+  & div:first-child {
     display: flex;
     justify-content: space-between;
     margin-bottom: 3rem;
@@ -50,5 +53,31 @@ export const Wrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+`;
+
+export const Div = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+`;
+
+export const Button = styled.button`
+  background-color: #b71c50;
+  border: 0.5px solid #3a3a3a;
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  color: #ebebeb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  /* width: 100%; */
+
+  &:hover {
+    transform: translateY(-3px);
   }
 `;
