@@ -3,7 +3,7 @@ import Empresa from '../../../components/empresa/Empresa';
 import Sidebar from '../../../components/sidebar/SideBar';
 import { LicContext } from '../../../context';
 
-import { Container } from './stylesEmpresas';
+import { Button, Container } from './stylesEmpresas';
 
 const Empresas: React.FC = () => {
   const { empresas } = useContext(LicContext);
@@ -20,6 +20,7 @@ const Empresas: React.FC = () => {
 
   return (
     <>
+      <Button>Criar empresa</Button>
       <Container>
         {empresas &&
           empresas.map((empresa: any) => (
