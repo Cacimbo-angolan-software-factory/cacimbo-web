@@ -23,3 +23,29 @@ export const Container = styled.div`
     cursor: pointer;
   }
 `;
+
+export const Div = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+`;
+
+export const Button = styled.button`
+  background-color: #b71c50;
+  border: 0.5px solid #3a3a3a;
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  color: #ebebeb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  /* width: 100%; */
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;
