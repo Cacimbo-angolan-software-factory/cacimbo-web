@@ -9,7 +9,8 @@ const Licenças: React.FC = () => {
   const { licences } = useContext(LicContext);
   const [fixedFilter, setFixedFilter] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
-  const [filterPartner, setFilterPartner] = useState(false);
+  const [todos, setTodos] = useState(true);
+  const [filtro, setFiltro] = useState(false);
 
   const itemsPerPage = 50;
   const endOffset = pageNumber + itemsPerPage;
@@ -41,13 +42,15 @@ const Licenças: React.FC = () => {
   return (
     <>
       <Filters
-        filterPartner={filterPartner}
-        setFilterPartner={setFilterPartner}
+        todos={todos}
+        setTodos={setTodos}
+        filtro={filtro}
+        setFiltro={setFiltro}
         fixedFilter={fixedFilter}
       />
 
       <div>
-        {filterPartner === false
+        {todos
           ? currentItems.map((licence) => (
               <div key={licence.id}>
                 <Licence licence={licence} />
