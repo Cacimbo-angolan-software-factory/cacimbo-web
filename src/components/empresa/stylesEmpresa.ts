@@ -49,3 +49,56 @@ export const Button = styled.button`
     transform: translateY(-3px);
   }
 `;
+
+// sideBarLicencas.tsx
+export const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Header = styled.div`
+  display: flex;
+
+  & svg {
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+
+  & h1 {
+    text-align: center;
+  }
+`;
+
+export const LicencasDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: scroll;
+  height: 100vh;
+`;
+
+export const Licenca = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(56 56, 56, 0.6);
+  border-radius: 0.5rem;
+  margin-bottom: 0 !important;
+
+  & p {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  & p:nth-child(2),
+  & p:nth-child(3) {
+    color: #bababa;
+    font-size: 1.2rem;
+  }
+`;
+
+export const SemLicenca = styled.h2`
+  text-align: center;
+  font-size: 2rem;
+`;
