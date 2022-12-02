@@ -16,11 +16,13 @@ import { Button, Div } from './stylesEmpresa';
 interface SideBarEmpresaProps {
   empresaSelected: any;
   handleClose?: () => void;
+  setShowLicencas: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
   empresaSelected,
   handleClose,
+  setShowLicencas,
 }) => {
   const {
     Nome,
@@ -32,6 +34,10 @@ const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
     telefone,
     website,
   } = empresaSelected;
+
+  const handleClick = () => {
+    setShowLicencas(true);
+  };
 
   return (
     <>
@@ -99,7 +105,7 @@ const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
           <IoCreateOutline />
           Editar
         </Button>
-        <Button>
+        <Button onClick={handleClick}>
           <IoKeyOutline />
           Licenças
         </Button>
