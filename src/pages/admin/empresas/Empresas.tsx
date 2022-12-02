@@ -6,7 +6,7 @@ import { LicContext } from '../../../context';
 import { Button, Container } from './stylesEmpresas';
 
 const Empresas: React.FC = () => {
-  const { empresas } = useContext(LicContext);
+  const { empresas, licences } = useContext(LicContext);
   const [open, setOpen] = useState(false);
   const [empresaSelected, setEmpresaSelected] = useState<any>();
 
@@ -17,6 +17,10 @@ const Empresas: React.FC = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const licencasDeParceiro = licences.filter((licence) => {
+    return licence.parceiro_id === empresaSelected?.id;
+  });
 
   return (
     <>
@@ -34,7 +38,11 @@ const Empresas: React.FC = () => {
           ))}
       </Container>
       {open && (
-        <Sidebar empresaSelected={empresaSelected} handleClose={handleClose} />
+        <Sidebar
+          licencas={licencasDeParceiro}
+          empresaSelected={empresaSelected}
+          handleClose={handleClose}
+        />
       )}
     </>
   );
