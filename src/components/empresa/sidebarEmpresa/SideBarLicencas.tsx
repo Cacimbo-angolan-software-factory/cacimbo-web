@@ -1,7 +1,15 @@
 import React from 'react';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
 
-import { Box, Header, Licenca, SemLicenca, LicencasDiv } from './stylesEmpresa';
+import {
+  Box,
+  Header,
+  Licenca,
+  SemLicenca,
+  LicencasDiv,
+  SmallP,
+  NameP,
+} from './sidebarEmpresaStyles';
 
 interface SideBarLicencasProps {
   licencas: any;
@@ -29,9 +37,9 @@ const SideBarLicencas: React.FC<SideBarLicencasProps> = ({
         {licencas.length > 0 ? (
           licencas.map((licenca: any) => (
             <Licenca key={licenca.id}>
-              <p>{licenca.cliente_nome}</p>
-              <p>{licenca.id}</p>
-              <p>{licenca.data_validade}</p>
+              <NameP>{licenca.cliente_nome}</NameP>
+              <SmallP>{licenca.id}</SmallP>
+              <SmallP>{licenca.data_validade}</SmallP>
             </Licenca>
           ))
         ) : (

@@ -11,7 +11,7 @@ import { IoFileTrayFullOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoCreateOutline } from 'react-icons/io5';
 
-import { Button, Div } from './stylesEmpresa';
+import { Container, Text, Button, Div } from './sidebarEmpresaStyles';
 
 interface SideBarEmpresaProps {
   empresaSelected: any;
@@ -41,7 +41,7 @@ const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
 
   return (
     <>
-      <div>
+      <Container>
         <h1>
           <IoBusinessOutline />
           {Nome}
@@ -49,55 +49,55 @@ const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
         <span onClick={handleClose}>
           <IoCloseCircleOutline />
         </span>
-      </div>
+      </Container>
 
       {id && (
-        <p>
+        <Text>
           <IoIdCardOutline />
           {id && id}
-        </p>
+        </Text>
       )}
 
       {Responsavel && (
-        <p>
+        <Text>
           <IoPersonOutline />
           {Responsavel && Responsavel}
-        </p>
+        </Text>
       )}
 
       {email && (
-        <p>
+        <Text>
           <IoMailOutline />
           {email}
-        </p>
+        </Text>
       )}
 
       {telefone && (
-        <p>
+        <Text>
           <IoCallOutline />
           {telefone}
-        </p>
+        </Text>
       )}
 
       {Nif && (
-        <p>
+        <Text>
           <IoFileTrayFullOutline />
           {Nif}
-        </p>
+        </Text>
       )}
 
       {ProvinciaSede && (
-        <p>
+        <Text>
           <IoLocationOutline />
           {ProvinciaSede}
-        </p>
+        </Text>
       )}
 
       {website && (
-        <p>
+        <Text>
           <IoGlobeOutline />
           {website}
-        </p>
+        </Text>
       )}
 
       <Div>
