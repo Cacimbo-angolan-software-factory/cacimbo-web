@@ -107,3 +107,29 @@ export const SemLicenca = styled.h2`
   text-align: center;
   font-size: 2rem;
 `;
+// sidebarEditar.tsx
+
+export const H1 = styled.h1`
+  margin-bottom: 3rem;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  & label {
+    font-size: 1.4rem;
+  }
+
+  & input {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+`;
