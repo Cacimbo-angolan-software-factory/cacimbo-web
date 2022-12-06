@@ -24,34 +24,4 @@ export const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-
-  & h1 {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    & svg {
-      font-size: 2rem;
-    }
-  }
-
-  & div:first-child {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-  }
-
-  & span {
-    font-size: 2.4rem;
-    cursor: pointer;
-    height: fit-content;
-  }
-
-  & p {
-    font-size: 1.6rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
 `;
