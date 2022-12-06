@@ -17,12 +17,14 @@ interface SideBarEmpresaProps {
   empresaSelected: any;
   handleClose?: () => void;
   setShowLicencas: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowEditar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
   empresaSelected,
   handleClose,
   setShowLicencas,
+  setShowEditar,
 }) => {
   const {
     Nome,
@@ -101,7 +103,7 @@ const SideBarEmpresa: React.FC<SideBarEmpresaProps> = ({
       )}
 
       <Div>
-        <Button>
+        <Button onClick={() => setShowEditar(true)}>
           <IoCreateOutline />
           Editar
         </Button>
