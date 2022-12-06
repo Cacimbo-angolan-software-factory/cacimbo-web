@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import Empresa from '../../../components/empresa/Empresa';
 import Sidebar from '../../../components/sidebar/SideBar';
 import { LicContext } from '../../../context';
@@ -9,6 +9,7 @@ const Empresas: React.FC = () => {
   const { empresas, licences } = useContext(LicContext);
   const [open, setOpen] = useState(false);
   const [empresaSelected, setEmpresaSelected] = useState<any>();
+  let menuRef = useRef<any>(null);
 
   const handleClick = () => {
     setOpen(!open);
@@ -17,6 +18,20 @@ const Empresas: React.FC = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    let handler = (event: any) => {
+      if (!menuRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
 
   const licencasDeParceiro = licences.filter((licence) => {
     return licence.parceiro_id === empresaSelected?.id;
@@ -39,6 +54,7 @@ const Empresas: React.FC = () => {
       </Container>
       {open && (
         <Sidebar
+          menuRef={menuRef}
           licencas={licencasDeParceiro}
           empresaSelected={empresaSelected}
           handleClose={handleClose}

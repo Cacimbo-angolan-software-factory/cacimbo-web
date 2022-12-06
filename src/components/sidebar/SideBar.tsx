@@ -8,17 +8,19 @@ interface SidebarProps {
   handleClose?: () => void;
   empresaSelected: any;
   licencas: any;
+  menuRef?: React.MutableRefObject<any>;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   handleClose,
   empresaSelected,
   licencas,
+  menuRef,
 }) => {
   const [showLicencas, setShowLicencas] = useState(false);
 
   return (
-    <Wrapper>
+    <Wrapper ref={menuRef}>
       {showLicencas === false ? (
         <SideBarEmpresa
           empresaSelected={empresaSelected}
