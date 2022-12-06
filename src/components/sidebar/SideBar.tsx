@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SideBarEmpresa from '../empresa/SideBarEmpresa';
-import SideBarLicencas from '../empresa/SideBarLicencas';
+import SideBarEmpresa from '../empresa/sidebarEmpresa/SideBarEmpresa';
+import SideBarLicencas from '../empresa/sidebarEmpresa/SideBarLicencas';
 
 import { Wrapper } from './sidebarStyles';
 
