@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import Empresa from '../../../components/empresa/Empresa';
+import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import Sidebar from '../../../components/sidebar/SideBar';
 import { LicContext } from '../../../context';
 
@@ -60,6 +61,7 @@ const Empresas: React.FC = () => {
           handleClose={handleClose}
         />
       )}
+      <ScrollTop />
     </>
   );
 };
