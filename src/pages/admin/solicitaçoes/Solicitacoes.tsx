@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import { LicContext } from '../../../context';
 
@@ -17,6 +18,7 @@ const Solicitaçoes: React.FC = () => {
           </div>
         ))}
       </Container>
+      <ScrollTop />
     </>
   );
 };

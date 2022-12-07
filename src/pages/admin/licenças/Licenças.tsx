@@ -4,6 +4,7 @@ import Licence from '../../../components/licenças/Licence';
 
 import { Pagination } from './styles';
 import Filters from '../../../components/licenças/filters/Filters';
+import ScrollTop from '../../../components/scrollTop/ScrollTop';
 
 const Licenças: React.FC = () => {
   const { licences } = useContext(LicContext);
@@ -62,6 +63,7 @@ const Licenças: React.FC = () => {
               </div>
             ))}
       </div>
+      <ScrollTop />
 
       <Pagination
         previousLabel={'<'}
