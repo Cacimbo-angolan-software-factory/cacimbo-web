@@ -5,36 +5,28 @@ import { Container, SecondFilter } from './stylesFilter';
 
 interface FiltersProps {
   fixedFilter: boolean;
-  todos: boolean;
-  setTodos: React.Dispatch<React.SetStateAction<boolean>>;
-  filtro: boolean;
-  setFiltro: React.Dispatch<React.SetStateAction<boolean>>;
+  filtro: string;
+  setFiltro: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Filters: React.FC<FiltersProps> = ({
   fixedFilter,
-  todos,
-  setTodos,
   filtro,
   setFiltro,
 }) => {
-  const handleFilterTodos = () => {
-    setTodos(true);
-    setFiltro(false);
-  };
-
-  const handleFilterPartner = () => {
-    setTodos(false);
-    setFiltro(true);
-  };
-
   return (
     <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
       <div>
-        <h2 className={todos ? `active` : ''} onClick={handleFilterTodos}>
+        <h2
+          className={filtro === 'all' ? 'active' : ''}
+          onClick={() => setFiltro('all')}
+        >
           Todos
         </h2>
-        <h2 className={filtro ? `active` : ''} onClick={handleFilterPartner}>
+        <h2
+          className={filtro === 'parceiro' ? 'active' : ''}
+          onClick={() => setFiltro('parceiro')}
+        >
           Parceiro
         </h2>
         <span>
@@ -43,7 +35,7 @@ const Filters: React.FC<FiltersProps> = ({
       </div>
 
       <SecondFilter>
-        <h2>Todas</h2>
+        <h2 className={filtro === 'all' ? 'active' : ''}>Todas</h2>
         <h2>Activas</h2>
         <h2>Por renovar</h2>
       </SecondFilter>
