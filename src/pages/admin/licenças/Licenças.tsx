@@ -10,8 +10,7 @@ const Licenças: React.FC = () => {
   const { licences } = useContext(LicContext);
   const [fixedFilter, setFixedFilter] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
-  const [todos, setTodos] = useState(true);
-  const [filtro, setFiltro] = useState(false);
+  const [filtro, setFiltro] = useState('all');
 
   const itemsPerPage = 50;
   const endOffset = pageNumber + itemsPerPage;
@@ -24,6 +23,35 @@ const Licenças: React.FC = () => {
     endOffset,
     endOffset + itemsPerPage
   );
+
+  // handling the filter
+  const todos = () => {
+    return (
+      filtro === 'all' && (
+        <div>
+          {currentItems.map((licence) => (
+            <div key={licence.id}>
+              <Licence licence={licence} />
+            </div>
+          ))}
+        </div>
+      )
+    );
+  };
+
+  const parceiro = () => {
+    return (
+      filtro === 'parceiro' && (
+        <div>
+          {SelectedPartnerPaginated.map((licence) => (
+            <div key={licence.id}>
+              <Licence licence={licence} />
+            </div>
+          ))}
+        </div>
+      )
+    );
+  };
 
   const handlePageClick = (event: any) => {
     const newOffset =
@@ -43,25 +71,14 @@ const Licenças: React.FC = () => {
   return (
     <>
       <Filters
-        todos={todos}
-        setTodos={setTodos}
         filtro={filtro}
         setFiltro={setFiltro}
         fixedFilter={fixedFilter}
       />
 
       <div>
-        {todos
-          ? currentItems.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
-          : SelectedPartnerPaginated.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))}
+        {todos && todos()}
+        {parceiro && parceiro()}
       </div>
       <ScrollTop />
 
