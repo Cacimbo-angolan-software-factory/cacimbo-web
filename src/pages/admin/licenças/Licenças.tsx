@@ -16,10 +16,41 @@ const Licenças: React.FC = () => {
   const endOffset = pageNumber + itemsPerPage;
   const currentItems = licences.slice(endOffset, endOffset + itemsPerPage);
   const pageCount = Math.ceil(licences.length / itemsPerPage);
+  let today = new Date().toISOString().slice(0, 10);
+  const todasActivas = licences.filter(
+    (licence) => licence.data_validade > today
+  );
+  const todasActivasPaginated = todasActivas.slice(
+    endOffset,
+    endOffset + itemsPerPage
+  );
+  const porRenovar = licences.filter(
+    (licence) => licence.data_validade < today
+  );
+  const porRenovarPaginated = porRenovar.slice(
+    endOffset,
+    endOffset + itemsPerPage
+  );
+
+  // filter by partner
   const selectedPartner = licences.filter(
     (licence) => licence.parceiro_id === 1
   );
   const SelectedPartnerPaginated = selectedPartner.slice(
+    endOffset,
+    endOffset + itemsPerPage
+  );
+  const activasParceiro = selectedPartner.filter(
+    (licence) => licence.data_validade > today
+  );
+  const activasParceiroPaginated = activasParceiro.slice(
+    endOffset,
+    endOffset + itemsPerPage
+  );
+  const porRenovarParceiro = selectedPartner.filter(
+    (licence) => licence.data_validade < today
+  );
+  const porRenovarParceiroPaginated = porRenovarParceiro.slice(
     endOffset,
     endOffset + itemsPerPage
   );
@@ -39,11 +70,68 @@ const Licenças: React.FC = () => {
     );
   };
 
+  const handleTodasActivas = () => {
+    return (
+      filtro === 'activasAll' && (
+        <div>
+          {todasActivasPaginated.map((licence) => (
+            <div key={licence.id}>
+              <Licence licence={licence} />
+            </div>
+          ))}
+        </div>
+      )
+    );
+  };
+
+  const handlePorRenovar = () => {
+    return (
+      filtro === 'porRenovar' && (
+        <div>
+          {porRenovarPaginated.map((licence) => (
+            <div key={licence.id}>
+              <Licence licence={licence} />
+            </div>
+          ))}
+        </div>
+      )
+    );
+  };
+
+  // function to filter by partner
   const parceiro = () => {
     return (
       filtro === 'parceiro' && (
         <div>
           {SelectedPartnerPaginated.map((licence) => (
+            <div key={licence.id}>
+              <Licence licence={licence} />
+            </div>
+          ))}
+        </div>
+      )
+    );
+  };
+
+  const handleActivasParceiro = () => {
+    return (
+      filtro === 'activasParceiro' && (
+        <div>
+          {activasParceiroPaginated.map((licence) => (
+            <div key={licence.id}>
+              <Licence licence={licence} />
+            </div>
+          ))}
+        </div>
+      )
+    );
+  };
+
+  const handlePorRenovarParceiro = () => {
+    return (
+      filtro === 'porRenovarParceiro' && (
+        <div>
+          {porRenovarParceiroPaginated.map((licence) => (
             <div key={licence.id}>
               <Licence licence={licence} />
             </div>
@@ -78,7 +166,11 @@ const Licenças: React.FC = () => {
 
       <div>
         {todos && todos()}
+        {handleTodasActivas && handleTodasActivas()}
+        {handlePorRenovar && handlePorRenovar()}
         {parceiro && parceiro()}
+        {handleActivasParceiro && handleActivasParceiro()}
+        {handlePorRenovarParceiro && handlePorRenovarParceiro()}
       </div>
       <ScrollTop />
 

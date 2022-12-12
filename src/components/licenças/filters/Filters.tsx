@@ -14,17 +14,34 @@ const Filters: React.FC<FiltersProps> = ({
   filtro,
   setFiltro,
 }) => {
+  const isTodosActive = () => {
+    if (
+      filtro === 'all' ||
+      filtro === 'activasAll' ||
+      filtro === 'porRenovar'
+    ) {
+      return 'active';
+    }
+  };
+
+  const isParceiroActive = () => {
+    if (
+      filtro === 'parceiro' ||
+      filtro === 'activasParceiro' ||
+      filtro === 'porRenovarParceiro'
+    ) {
+      return 'active';
+    }
+  };
+
   return (
     <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
       <div>
-        <h2
-          className={filtro === 'all' ? 'active' : ''}
-          onClick={() => setFiltro('all')}
-        >
+        <h2 className={isTodosActive()} onClick={() => setFiltro('all')}>
           Todos
         </h2>
         <h2
-          className={filtro === 'parceiro' ? 'active' : ''}
+          className={isParceiroActive()}
           onClick={() => setFiltro('parceiro')}
         >
           Parceiro
@@ -35,7 +52,7 @@ const Filters: React.FC<FiltersProps> = ({
       </div>
 
       <SecondFilter>
-        <h2 className={filtro === 'all' ? 'active' : ''}>Todas</h2>
+        <h2>Todas</h2>
         <h2>Activas</h2>
         <h2>Por renovar</h2>
       </SecondFilter>
