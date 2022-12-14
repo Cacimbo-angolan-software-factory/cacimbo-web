@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RiFilter3Fill } from 'react-icons/ri';
 
 import { Container, SecondFilter } from './stylesFilter';
@@ -7,42 +7,39 @@ interface FiltersProps {
   fixedFilter: boolean;
   filtro: string;
   setFiltro: React.Dispatch<React.SetStateAction<string>>;
+  childFiltro: string;
+  setChildFiltro: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Filters: React.FC<FiltersProps> = ({
   fixedFilter,
   filtro,
   setFiltro,
+  childFiltro,
+  setChildFiltro,
 }) => {
-  const isTodosActive = () => {
-    if (
-      filtro === 'all' ||
-      filtro === 'activasAll' ||
-      filtro === 'porRenovar'
-    ) {
-      return 'active';
-    }
+  const handleClickFiltro = () => {
+    setFiltro('all');
+    setChildFiltro('todas');
   };
 
-  const isParceiroActive = () => {
-    if (
-      filtro === 'parceiro' ||
-      filtro === 'activasParceiro' ||
-      filtro === 'porRenovarParceiro'
-    ) {
-      return 'active';
-    }
+  const handleClickFiltroParceiro = () => {
+    setFiltro('parceiro');
+    setChildFiltro('parceiroTodas');
   };
 
   return (
     <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
       <div>
-        <h2 className={isTodosActive()} onClick={() => setFiltro('all')}>
+        <h2
+          className={filtro === 'all' ? 'active' : ''}
+          onClick={handleClickFiltro}
+        >
           Todos
         </h2>
         <h2
-          className={isParceiroActive()}
-          onClick={() => setFiltro('parceiro')}
+          className={filtro === 'parceiro' ? 'active' : ''}
+          onClick={handleClickFiltroParceiro}
         >
           Parceiro
         </h2>
@@ -51,11 +48,49 @@ const Filters: React.FC<FiltersProps> = ({
         </span>
       </div>
 
-      <SecondFilter>
-        <h2>Todas</h2>
-        <h2>Activas</h2>
-        <h2>Por renovar</h2>
-      </SecondFilter>
+      {filtro === 'all' ? (
+        <SecondFilter>
+          <h2
+            className={childFiltro === 'todas' ? 'active' : ''}
+            onClick={() => setChildFiltro('todas')}
+          >
+            Todas
+          </h2>
+          <h2
+            className={childFiltro === 'activasAll' ? 'active' : ''}
+            onClick={() => setChildFiltro('activasAll')}
+          >
+            Activas
+          </h2>
+          <h2
+            className={childFiltro === 'porRenovarAll' ? 'active' : ''}
+            onClick={() => setChildFiltro('porRenovarAll')}
+          >
+            Por renovar
+          </h2>
+        </SecondFilter>
+      ) : (
+        <SecondFilter>
+          <h2
+            className={childFiltro === 'parceiroTodas' ? 'active' : ''}
+            onClick={() => setChildFiltro('parceiroTodas')}
+          >
+            Todas
+          </h2>
+          <h2
+            className={childFiltro === 'activasParceiro' ? 'active' : ''}
+            onClick={() => setChildFiltro('activasParceiro')}
+          >
+            Activas
+          </h2>
+          <h2
+            className={childFiltro === 'porRenovarParceiro' ? 'active' : ''}
+            onClick={() => setChildFiltro('porRenovarParceiro')}
+          >
+            Por renovar
+          </h2>
+        </SecondFilter>
+      )}
     </Container>
   );
 };

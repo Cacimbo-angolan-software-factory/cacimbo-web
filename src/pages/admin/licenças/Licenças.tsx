@@ -11,6 +11,7 @@ const Licenças: React.FC = () => {
   const [fixedFilter, setFixedFilter] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [filtro, setFiltro] = useState('all');
+  const [childFitro, setChildFiltro] = useState('todas');
 
   const itemsPerPage = 50;
   const endOffset = pageNumber + itemsPerPage;
@@ -57,8 +58,8 @@ const Licenças: React.FC = () => {
 
   // handling the filter
   const todos = () => {
-    return (
-      filtro === 'all' && (
+    if (filtro === 'all' && childFitro === 'todas') {
+      return (
         <div>
           {currentItems.map((licence) => (
             <div key={licence.id}>
@@ -66,13 +67,13 @@ const Licenças: React.FC = () => {
             </div>
           ))}
         </div>
-      )
-    );
+      );
+    }
   };
 
   const handleTodasActivas = () => {
-    return (
-      filtro === 'activasAll' && (
+    if (filtro === 'all' && childFitro === 'activasAll') {
+      return (
         <div>
           {todasActivasPaginated.map((licence) => (
             <div key={licence.id}>
@@ -80,13 +81,13 @@ const Licenças: React.FC = () => {
             </div>
           ))}
         </div>
-      )
-    );
+      );
+    }
   };
 
   const handlePorRenovar = () => {
-    return (
-      filtro === 'porRenovar' && (
+    if (filtro === 'all' && childFitro === 'porRenovarAll') {
+      return (
         <div>
           {porRenovarPaginated.map((licence) => (
             <div key={licence.id}>
@@ -94,14 +95,14 @@ const Licenças: React.FC = () => {
             </div>
           ))}
         </div>
-      )
-    );
+      );
+    }
   };
 
   // function to filter by partner
   const parceiro = () => {
-    return (
-      filtro === 'parceiro' && (
+    if (filtro === 'parceiro' && childFitro === 'parceiroTodas') {
+      return (
         <div>
           {SelectedPartnerPaginated.map((licence) => (
             <div key={licence.id}>
@@ -109,13 +110,13 @@ const Licenças: React.FC = () => {
             </div>
           ))}
         </div>
-      )
-    );
+      );
+    }
   };
 
   const handleActivasParceiro = () => {
-    return (
-      filtro === 'activasParceiro' && (
+    if (filtro === 'parceiro' && childFitro === 'activasParceiro') {
+      return (
         <div>
           {activasParceiroPaginated.map((licence) => (
             <div key={licence.id}>
@@ -123,13 +124,13 @@ const Licenças: React.FC = () => {
             </div>
           ))}
         </div>
-      )
-    );
+      );
+    }
   };
 
   const handlePorRenovarParceiro = () => {
-    return (
-      filtro === 'porRenovarParceiro' && (
+    if (filtro === 'parceiro' && childFitro === 'porRenovarParceiro') {
+      return (
         <div>
           {porRenovarParceiroPaginated.map((licence) => (
             <div key={licence.id}>
@@ -137,8 +138,8 @@ const Licenças: React.FC = () => {
             </div>
           ))}
         </div>
-      )
-    );
+      );
+    }
   };
 
   const handlePageClick = (event: any) => {
@@ -161,6 +162,8 @@ const Licenças: React.FC = () => {
       <Filters
         filtro={filtro}
         setFiltro={setFiltro}
+        childFiltro={childFitro}
+        setChildFiltro={setChildFiltro}
         fixedFilter={fixedFilter}
       />
 
