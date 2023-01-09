@@ -14,7 +14,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <AdminContainer>
-      {token && (
+      {!token && (
         <>
           <Stats />
           <Menu />
