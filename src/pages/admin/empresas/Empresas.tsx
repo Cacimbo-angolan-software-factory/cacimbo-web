@@ -8,7 +8,7 @@ import { LicContext } from '../../../context';
 import { Button, Container } from './stylesEmpresas';
 
 const Empresas: React.FC = () => {
-  const { empresas, licences } = useContext(LicContext);
+  const { empresas, licences, setEditar } = useContext(LicContext);
   const [open, setOpen] = useState(false);
   const [criarEmpresa, setCriarEmpresa] = useState(false);
   const [empresaSelected, setEmpresaSelected] = useState<any>();
@@ -20,6 +20,7 @@ const Empresas: React.FC = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setEditar && setEditar(null);
   };
 
   useEffect(() => {
