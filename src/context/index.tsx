@@ -24,6 +24,10 @@ interface ICreateContext {
   getLicRefresh?: (typeRefresh: string) => void;
   TotalLicenses?: number;
   setTotalLicenses?: (value: number) => void;
+  editEmpresa?: (id: number, formData: any) => Promise<void | number>;
+  setEditar?: (value: any) => void;
+  loadingEditar: boolean;
+  editar: any;
   empresas: {
     id: number;
     Nome: string;
@@ -37,6 +41,8 @@ export const LicContext = createContext<ICreateContext>({
   lic_renovations: [],
   licences: [],
   empresas: [],
+  editar: null,
+  loadingEditar: false,
 });
 
 export const LicProvider = ({ children }: IContext) => {
@@ -44,6 +50,8 @@ export const LicProvider = ({ children }: IContext) => {
   const [licences, setLicences] = useState<[]>([]);
   const [lic_renovations, setLicRenovations] = useState<[]>([]);
   const [empresas, setEmpresas] = useState<[]>([]);
+  const [editar, setEditar] = useState<any>(null);
+  const [loadingEditar, setLoadingEditar] = useState(false);
   const [totalPedidos, setTotalPedidos] = useState(0);
   const [TotalLicenses, setTotalLicenses] = useState(0);
   const [IsLoadingTheOrder, setIsLoadingTheOrder] = useState(false);
@@ -166,6 +174,37 @@ export const LicProvider = ({ children }: IContext) => {
     }
   }
 
+  async function editEmpresa(
+    parceiro: number,
+    formData: any
+  ): Promise<void | number> {
+    try {
+      setLoadingEditar(true);
+      const { status } = await api.put(`parceiros/${parceiro}`, formData);
+      setEditar({
+        id: parceiro,
+        Nome: formData.nome,
+        Responsavel: formData.responsavel,
+        email: formData.email,
+        ProvinciaSede: formData.sede,
+        Nif: formData.nif,
+        telefone: formData.telefone,
+      });
+      setLoadingEditar(false);
+      return status;
+    } catch (err: any) {
+      setLoadingEditar(false);
+      if (err?.response.status === 'undefined') {
+        console.error('Sem ligação à internet', 'error');
+        return;
+      }
+      if (err?.response.status) {
+        console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        return;
+      }
+    }
+  }
+
   useEffect(() => {
     getLic();
     getLicRequest();
@@ -188,6 +227,10 @@ export const LicProvider = ({ children }: IContext) => {
         TotalLicenses,
         setTotalLicenses,
         empresas,
+        editEmpresa,
+        editar,
+        setEditar,
+        loadingEditar,
       }}
     >
       {children}
