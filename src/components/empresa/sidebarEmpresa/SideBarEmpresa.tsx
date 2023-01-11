@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoBusinessOutline } from 'react-icons/io5';
