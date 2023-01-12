@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Animation from '../../../components/Admin/backAnimation/Animation';
 import BottomNav from '../../../components/Admin/bottomNav/BottomNav';
 import Notifications from '../../../components/Admin/notifications/Notif';
+import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import { Section } from './styles';
 
-const AdminIndex: React.FC = () => {
+const AdminHome: React.FC = () => {
   const [fixedNav, setFixedNav] = useState(false);
 
   function onScroll() {
@@ -18,6 +19,8 @@ const AdminIndex: React.FC = () => {
 
   return (
     <>
+      <AdminHeader />
+
       <Section>
         <Notifications />
         <Animation />
@@ -27,4 +30,4 @@ const AdminIndex: React.FC = () => {
   );
 };
 
-export default AdminIndex;
+export default AdminHome;

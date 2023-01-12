@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const AdminContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6rem;
-`;
-
 export const Section = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
