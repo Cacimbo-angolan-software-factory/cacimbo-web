@@ -1,6 +1,6 @@
 import React from 'react';
-import Menu from '../../../components/menu/Menu';
-import Stats from '../../../components/stats/Stats';
+import Menu from '../../../components/adminHeader/menu/Menu';
+import Stats from '../../../components/adminHeader/stats/Stats';
 import { Routes, Route } from 'react-router-dom';
 import { AdminContainer } from './styles';
 import AdminIndex from './index';
