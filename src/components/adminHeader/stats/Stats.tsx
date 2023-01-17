@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { LicContext } from '../../context';
+import { LicContext } from '../../../context';
 import { StatsContainer, Stat } from './styles';
 
 const Stats: React.FC = () => {

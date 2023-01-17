@@ -5,6 +5,7 @@ import Licence from '../../../components/licenças/Licence';
 import { Pagination } from './styles';
 import Filters from '../../../components/licenças/filters/Filters';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
+import AdminHeader from '../../../components/adminHeader/AdminHeader';
 
 const Licenças: React.FC = () => {
   const { licences } = useContext(LicContext);
@@ -159,6 +160,8 @@ const Licenças: React.FC = () => {
 
   return (
     <>
+      <AdminHeader />
+
       <Filters
         filtro={filtro}
         setFiltro={setFiltro}

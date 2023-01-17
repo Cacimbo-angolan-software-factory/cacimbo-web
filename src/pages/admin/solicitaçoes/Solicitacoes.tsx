@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import { LicContext } from '../../../context';
@@ -10,6 +11,8 @@ const Solicitaçoes: React.FC = () => {
 
   return (
     <>
+      <AdminHeader />
+
       <Button>Nova Solicitação</Button>
       <Container>
         {lic_requests.map((lic_request: any) => (

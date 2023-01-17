@@ -1,4 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
+import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import CriarEmpresa from '../../../components/empresa/criarEmpresa/CriarEmpresa';
 import Empresa from '../../../components/empresa/Empresa';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
@@ -43,6 +44,8 @@ const Empresas: React.FC = () => {
 
   return (
     <>
+      <AdminHeader />
+
       <Button
         style={{
           display: criarEmpresa ? 'none' : 'flex',

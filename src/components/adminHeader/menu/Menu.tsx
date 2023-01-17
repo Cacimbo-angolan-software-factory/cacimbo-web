@@ -63,21 +63,21 @@ const Menu: React.FC = () => {
         <p>Solicitações</p>
       </MenuItem>
 
-      <MenuItem to='/'>
+      <MenuItem to='/Admin'>
         <span>
           <RiWechatFill />
         </span>
         <p>Comunidade</p>
       </MenuItem>
 
-      <MenuItem to='/'>
+      <MenuItem to='/Admin'>
         <span>
           <RiNewspaperFill />
         </span>
         <p>Noticías</p>
       </MenuItem>
 
-      <MenuItem to='/'>
+      <MenuItem to='/Admin'>
         <span>
           <RiUserFill />
         </span>
