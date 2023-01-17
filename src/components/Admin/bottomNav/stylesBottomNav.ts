@@ -28,3 +28,16 @@ export const Container = styled.div`
     box-shadow: 0px 11px 11px -14px rgba(0, 0, 0, 0.75);
   }
 `;
+
+export const ModalItem = styled.p`
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #b71c50;
+  }
+`;
