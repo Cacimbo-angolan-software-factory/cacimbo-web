@@ -4,15 +4,19 @@ import {
   IoListOutline,
   IoPeopleOutline,
   IoSettingsOutline,
+  IoLogOutOutline,
 } from 'react-icons/io5';
+import Modal from '../../modal/Modal';
 
-import { Container } from './stylesBottomNav';
+import { Container, ModalItem } from './stylesBottomNav';
 
 interface BottomNavProps {
   fixedNav: boolean;
 }
 
 const BottomNav: React.FC<BottomNavProps> = ({ fixedNav }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
     <Container className={fixedNav ? 'nav fixed' : 'nav'}>
       <span>
@@ -21,9 +25,22 @@ const BottomNav: React.FC<BottomNavProps> = ({ fixedNav }) => {
       <span>
         <IoListOutline />
       </span>
-      <span>
+      <span onClick={() => setIsOpen(!isOpen)}>
         <IoPeopleOutline />
       </span>
+      {isOpen && (
+        <Modal>
+          <ModalItem>
+            <IoPeopleOutline />
+            Arnaldo Domingos
+          </ModalItem>
+
+          <ModalItem>
+            <IoLogOutOutline />
+            Logout
+          </ModalItem>
+        </Modal>
+      )}
     </Container>
   );
 };
