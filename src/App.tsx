@@ -19,13 +19,13 @@ function App() {
     <>
       <AppContainer>
         <Routes>
-          <Route path='/' element={<Home />} />
-          {/* <Route element={<PrivateRoutes />}>
+          <Route element={<PrivateRoutes />}>
+            <Route path='/' element={<Home />} />
             <Route path='/Admin' element={<AdminHome />} />
             <Route path='/Admin/licenças' element={<Licenças />} />
             <Route path='/Admin/solicitaçoes' element={<Solicitaçoes />} />
             <Route path='/Admin/empresas' element={<Empresas />} />
-          </Route> */}
+          </Route>
           <Route path='/Login' element={<Login />} />
         </Routes>
       </AppContainer>
