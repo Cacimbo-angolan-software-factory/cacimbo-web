@@ -34,6 +34,11 @@ export const Div = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: 2rem;
+
+  & button.cancel {
+    background-color: #bebebe;
+    color: #1d1d1d;
+  }
 `;
 
 export const Button = styled.button`

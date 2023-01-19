@@ -121,7 +121,9 @@ export default function SideBarEditar({
       </Form>
 
       <Div>
-        <Button onClick={() => setShowEditar(false)}>Cancelar</Button>
+        <Button className='cancel' onClick={() => setShowEditar(false)}>
+          Cancelar
+        </Button>
         <Button
           onClick={() => {
             !loadingEditar && handleEdit(empresa.id);
