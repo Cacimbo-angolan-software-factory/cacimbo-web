@@ -1,4 +1,5 @@
 import React from 'react';
+import { logout } from '../../../redux/userFeatures/usersSlice';
 
 import {
   IoListOutline,
@@ -9,6 +10,9 @@ import {
 import Modal from '../../modal/Modal';
 
 import { Container, ModalItem } from './stylesBottomNav';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../redux/store';
+import { useNavigate } from 'react-router-dom';
 
 interface BottomNavProps {
   fixedNav: boolean;
@@ -16,6 +20,13 @@ interface BottomNavProps {
 
 const BottomNav: React.FC<BottomNavProps> = ({ fixedNav }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/Login');
+  };
 
   return (
     <Container className={fixedNav ? 'nav fixed' : 'nav'}>
@@ -35,7 +46,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ fixedNav }) => {
             Arnaldo Domingos
           </ModalItem>
 
-          <ModalItem>
+          <ModalItem onClick={handleLogout}>
             <IoLogOutOutline />
             Logout
           </ModalItem>

@@ -7,7 +7,8 @@ export const ModalContainer = styled.div`
   width: 20rem;
   height: 20rem;
   padding: 2rem 1rem;
-  background: inherit;
+  background-color: #cfcfcf;
+  color: #1d1d1d;
   z-index: 999;
   border-radius: 1rem;
   border: 0.5px solid #3a3a3a;
