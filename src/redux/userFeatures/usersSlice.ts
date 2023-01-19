@@ -21,10 +21,9 @@ const initialState: UserState = {
 
 export const login = createAsyncThunk(
   'user/login',
-  async (payload: { email: string; password: string }, { rejectWithValue }) => {
+  async (user: any, { rejectWithValue }) => {
     try {
-      const user = await userService.login(payload.email, payload.password);
-      return user;
+      return await userService.login(user);
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }

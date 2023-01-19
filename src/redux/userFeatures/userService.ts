@@ -1,7 +1,7 @@
 import { api } from '../../service/Service.api';
 
-const login = async (email: string, password: string) => {
-  const response = await api.post('/login', { email, password });
+const login = async (userData: { email: string; password: string }) => {
+  const response = await api.post(`token`, userData);
 
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data));
