@@ -17,19 +17,18 @@ const Login: React.FC = () => {
     (state: any) => state.user
   );
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) {
       setError('Email ou palavra-passe incorretos');
     }
 
-    if (isSuccess || user) {
-      navigate('/Admin');
+    if (user) {
+      window.location.pathname = '/Admin';
     }
 
     dispatch(reset());
-  }, [isSuccess, isError, user, dispatch, navigate]);
+  }, [user, dispatch, isError]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
