@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { useNavigate } from 'react-router-dom';
 import { login } from '../../redux/userFeatures/usersSlice';
 
 import { Container } from './stylesLogin';
