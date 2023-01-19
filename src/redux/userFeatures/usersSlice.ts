@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import userService from './userService';
 
-const user = JSON.parse(localStorage.getItem('user') || 'null');
+// const user =
 
 interface UserState {
   user: null;
@@ -12,7 +12,9 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  user: user ? user : null,
+  user: JSON.parse(localStorage.getItem('user') || 'null')
+    ? JSON.parse(localStorage.getItem('user') || 'null')
+    : null,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -29,6 +31,10 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const logout = createAsyncThunk('user/logout', async () => {
+  await userService.logout();
+});
 
 export const userSlice = createSlice({
   name: 'user',
