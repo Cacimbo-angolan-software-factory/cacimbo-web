@@ -1,12 +1,31 @@
 import React from 'react';
 
 import { Container, Form, Div, DivChild } from './stylesCriarSol';
+import { MenuItem, TextField } from '@mui/material';
+import SelectInput from '../../SelectTextField';
 
 interface CriarSolicitaçaoProps {
   setClick: (value: boolean) => void;
 }
 
 const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
+  const [value, setValue] = React.useState({
+    nif: '',
+    empresa: '',
+    email: '',
+    pais: '',
+    provincia: '',
+    endereço: '',
+    cargo: '',
+    responsável: '',
+    licenceType: '',
+    canal: '',
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue({ ...value, [event.target.name]: event.target.value });
+  };
+
   return (
     <Container>
       <h1>Solicitação</h1>
@@ -14,53 +33,112 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
       <Form>
         <div>
           <label htmlFor='nif'>Nif</label>
-          <input type='text' />
+          <input
+            name='nif'
+            value={value.nif}
+            onChange={handleChange}
+            type='text'
+          />
         </div>
         <div>
           <label htmlFor='empresa'>Empresa</label>
-          <input type='text' />
+          <input
+            name='empresa'
+            value={value.empresa}
+            onChange={handleChange}
+            type='text'
+          />
         </div>
         <div>
           <label htmlFor='email'>Email</label>
-          <input type='email' />
+          <input
+            name='email'
+            value={value.email}
+            onChange={handleChange}
+            type='email'
+          />
         </div>
-        <div>
-          <label htmlFor='pais'>País</label>
-          <input type='text' />
-        </div>
+        <SelectInput
+          value={value.pais}
+          labelName='País'
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue({ ...value, pais: e.target.value })
+          }
+        >
+          <MenuItem value={'Angola'}>Angola</MenuItem>
+          <MenuItem value={'Brasil'}>Brasil</MenuItem>
+          <MenuItem value={'Moçambique'}>Mocambique</MenuItem>
+          <MenuItem value={'Sao Tome'}>Sao tome</MenuItem>
+        </SelectInput>
         <DivChild>
           <div>
             <label htmlFor='provincia'>Provincia</label>
-            <input type='text' />
+            <input
+              name='provincia'
+              value={value.provincia}
+              onChange={handleChange}
+              type='text'
+            />
           </div>
           <div>
             <label htmlFor='address'>Endereço</label>
-            <input type='address' />
+            <input
+              name='endereço'
+              value={value.endereço}
+              onChange={handleChange}
+              type='address'
+            />
           </div>
         </DivChild>
         <DivChild>
           <div>
             <label htmlFor='cargo'>Cargo</label>
-            <input type='text' />
+            <input
+              name='cargo'
+              value={value.cargo}
+              onChange={handleChange}
+              type='text'
+            />
           </div>
           <div>
             <label htmlFor='responsavel'>Responsável</label>
-            <input type='name' />
+            <input
+              name='responsável'
+              value={value.responsável}
+              onChange={handleChange}
+              type='name'
+            />
           </div>
         </DivChild>
         <DivChild>
-          <div>
-            <label htmlFor='licença'>Tipo de licença</label>
-            <input type='text' />
-          </div>
-          <div>
+          <SelectInput
+            value={value.licenceType}
+            labelName='Tipo de licença'
+            handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setValue({ ...value, licenceType: e.target.value })
+            }
+          >
+            <MenuItem value={'Comun'}>Comun</MenuItem>
+            <MenuItem value={'Padronizar'}>Padronizar</MenuItem>
+            <MenuItem value={'Renovação'}>Renovação</MenuItem>
+          </SelectInput>
+          {/* <div>
             <label htmlFor='licenças'>Licenças</label>
             <input type='text' />
-          </div>
-          <div>
-            <label htmlFor='Canl'>Canal</label>
-            <input type='text' />
-          </div>
+          </div> */}
+          <SelectInput
+            value={value.canal}
+            labelName='Canal'
+            handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setValue({ ...value, canal: e.target.value })
+            }
+          >
+            <MenuItem value={'CACIMBO LDA'}>CACIMBO LDA</MenuItem>
+            <MenuItem value={'MPOFO'}>MPOFO</MenuItem>
+            <MenuItem value={'MEDIA INOVATE'}>MEDIA INOVATE</MenuItem>
+            <MenuItem value={'R&L'}>R&L</MenuItem>
+            <MenuItem value={'CACIMBO DEV'}>CACIMBO DEV</MenuItem>
+          </SelectInput>
         </DivChild>
       </Form>
 

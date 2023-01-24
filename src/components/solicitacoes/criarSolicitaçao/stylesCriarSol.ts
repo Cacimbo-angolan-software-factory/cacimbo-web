@@ -31,6 +31,10 @@ export const Form = styled.form`
     border-radius: 0.5rem;
     border: none;
   }
+
+  &.textField {
+    border-color: #fff;
+  }
 `;
 
 export const Div = styled.div`
