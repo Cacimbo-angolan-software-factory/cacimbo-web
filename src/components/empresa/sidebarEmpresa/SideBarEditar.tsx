@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { LicContext } from '../../../context';
-import { api } from '../../../service/Service.api';
 import { Button, Div, Form, H1 } from './sidebarEmpresaStyles';
 
 interface SideBarEditarProps {

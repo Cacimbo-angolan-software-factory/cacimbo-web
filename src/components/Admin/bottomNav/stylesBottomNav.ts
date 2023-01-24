@@ -37,7 +37,7 @@ export const ModalItem = styled.p`
   cursor: pointer;
   transition: all 0.2s;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #bebebe;
+  border-bottom: 0.5px solid #bebebe;
 
   &:hover {
     color: #b71c50;
