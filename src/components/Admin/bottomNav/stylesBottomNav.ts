@@ -36,8 +36,11 @@ export const ModalItem = styled.p`
   gap: 1rem;
   cursor: pointer;
   transition: all 0.2s;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid #bebebe;
 
   &:hover {
     color: #b71c50;
+    transform: translateX(3px);
   }
 `;

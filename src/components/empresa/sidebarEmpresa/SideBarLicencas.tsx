@@ -1,5 +1,6 @@
 import React from 'react';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
+import EmptyState from '../../emptyState/EmptyState';
 
 import {
   Box,
@@ -43,7 +44,9 @@ const SideBarLicencas: React.FC<SideBarLicencasProps> = ({
             </Licenca>
           ))
         ) : (
-          <SemLicenca>Não existem licenças</SemLicenca>
+          <EmptyState>
+            <SemLicenca>Não existem licenças</SemLicenca>
+          </EmptyState>
         )}
       </LicencasDiv>
     </Box>
