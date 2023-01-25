@@ -4,12 +4,14 @@ import CriarEmpresa from '../../../components/empresa/criarEmpresa/CriarEmpresa'
 import Empresa from '../../../components/empresa/Empresa';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import Sidebar from '../../../components/sidebar/SideBar';
+import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
 import { Button, Container } from './stylesEmpresas';
 
 const Empresas: React.FC = () => {
-  const { empresas, licences, setEditar } = useContext(LicContext);
+  const { empresas, licences, setEditar, loadingEmpresas } =
+    useContext(LicContext);
   const [open, setOpen] = useState(false);
   const [criarEmpresa, setCriarEmpresa] = useState(false);
   const [empresaSelected, setEmpresaSelected] = useState<any>();
@@ -81,6 +83,8 @@ const Empresas: React.FC = () => {
         />
       )}
       <ScrollTop />
+
+      {loadingEmpresas && <Spinner />}
     </>
   );
 };

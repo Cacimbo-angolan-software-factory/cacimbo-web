@@ -7,9 +7,10 @@ import Filters from '../../../components/licenças/filters/Filters';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import EmptyState from '../../../components/emptyState/EmptyState';
+import Spinner from '../../../components/spinner/Spinner';
 
 const Licenças: React.FC = () => {
-  const { licences } = useContext(LicContext);
+  const { licences, loadingLicenses } = useContext(LicContext);
   const [fixedFilter, setFixedFilter] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [filtro, setFiltro] = useState('all');
@@ -216,6 +217,8 @@ const Licenças: React.FC = () => {
         {handlePorRenovarParceiro && handlePorRenovarParceiro()}
       </div>
       <ScrollTop />
+
+      {loadingLicenses && <Spinner />}
 
       <Pagination
         previousLabel={'<'}

@@ -7,7 +7,12 @@ const criarEmpresa = async (empresaData: {
   telefone: string;
   nif: string;
   sede: string;
+  tipo: string;
 }) => {
-  const response = await api.post(`empresas`, { ...empresaData });
+  const response = await api.post(`parceiros`, { ...empresaData });
   return response.data;
+};
+
+export default {
+  criarEmpresa,
 };

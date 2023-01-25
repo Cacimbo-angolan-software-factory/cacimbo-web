@@ -27,6 +27,8 @@ interface ICreateContext {
   editEmpresa?: (id: number, formData: any) => Promise<void | number>;
   setEditar?: (value: any) => void;
   loadingEditar: boolean;
+  loadingEmpresas?: boolean;
+  loadingLicenses?: boolean;
   editar: any;
   empresas: {
     id: number;
@@ -55,6 +57,8 @@ export const LicProvider = ({ children }: IContext) => {
   const [totalPedidos, setTotalPedidos] = useState(0);
   const [TotalLicenses, setTotalLicenses] = useState(0);
   const [IsLoadingTheOrder, setIsLoadingTheOrder] = useState(false);
+  const [loadingEmpresas, setLoadingEmpresas] = useState(false);
+  const [loadingLicenses, setLoadingLicenses] = useState(false);
   const user = {
     id: 1,
     name: 'Arnaldo Domingos',
@@ -136,12 +140,15 @@ export const LicProvider = ({ children }: IContext) => {
   }
   async function getLic() {
     try {
+      setLoadingLicenses(true);
       const { data } = await api.get(urlGeral);
       if (data.length > 0) {
         setTotalLicenses(data.length);
         setLicences(data);
       }
+      setLoadingLicenses(false);
     } catch (err: any) {
+      setLoadingLicenses(false);
       if (err?.response.status === 'undefined') {
         console.error('Sem ligação à internet', 'error');
         return;
@@ -158,11 +165,14 @@ export const LicProvider = ({ children }: IContext) => {
   }
   async function getEmpresas() {
     try {
+      setLoadingEmpresas(true);
       const { data } = await api.get(`parceiros`);
       if (data.data.length > 0) {
         setEmpresas(data.data);
       }
+      setLoadingEmpresas(false);
     } catch (err: any) {
+      setLoadingEmpresas(false);
       if (err?.response.status === 'undefined') {
         console.error('Sem ligação à internet', 'error');
         return;
@@ -231,6 +241,8 @@ export const LicProvider = ({ children }: IContext) => {
         editar,
         setEditar,
         loadingEditar,
+        loadingEmpresas,
+        loadingLicenses,
       }}
     >
       {children}

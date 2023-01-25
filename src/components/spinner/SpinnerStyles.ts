@@ -9,6 +9,7 @@ export const Container = styled.span`
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+  margin: auto;
 
   @keyframes rotation {
     0% {
