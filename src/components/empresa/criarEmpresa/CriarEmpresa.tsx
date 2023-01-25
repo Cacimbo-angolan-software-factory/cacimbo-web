@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, Form, Div } from './stylesCriarEmpresa';
 import { AppDispatch } from '../../../redux/store';
-import ModalConcluido from '../../modalConcluido/modalConcluido';
+import ModalConcluido from '../../modalConcluido/ModalConcluido';
 
 interface CriarEmpresaProps {
   setCriarEmpresa: (value: boolean) => void;
@@ -23,7 +23,9 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
     tipo: '',
   });
   const dispatch = useDispatch<AppDispatch>();
-  const { empresa, isError } = useSelector((state: any) => state.empresa);
+  const { empresa, isError, isLoading } = useSelector(
+    (state: any) => state.empresa
+  );
   const [showModal, setShowModal] = React.useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +138,9 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
 
           <Div className='buttons'>
             <button onClick={() => setCriarEmpresa(false)}>Cancelar</button>
-            <button type='submit'>Criar empresa</button>
+            <button type='submit'>
+              {isLoading ? 'Aguarde...' : 'Criar empresa'}
+            </button>
           </Div>
         </Form>
       </Container>
