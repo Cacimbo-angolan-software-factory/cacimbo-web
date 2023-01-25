@@ -1,6 +1,11 @@
-import React from 'react';
+import { MenuItem } from '@mui/material';
+import React, { useEffect } from 'react';
+import SelectInput from '../../SelectTextField';
+import { criarEmpresa } from '../../../redux/empresaFeatures/empresaSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, Form, Div } from './stylesCriarEmpresa';
+import { AppDispatch } from '../../../redux/store';
 
 interface CriarEmpresaProps {
   setCriarEmpresa: (value: boolean) => void;
@@ -14,17 +19,35 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
     telefone: '',
     nif: '',
     sede: '',
+    tipo: '',
   });
+  const dispatch = useDispatch<AppDispatch>();
+  const { empresa, isError } = useSelector((state: any) => state.empresa);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(criarEmpresa(value));
+  };
+
+  useEffect(() => {
+    if (isError) {
+      alert('Erro ao criar empresa');
+    }
+
+    if (empresa) {
+      console.log(empresa);
+    }
+  }, [empresa, isError]);
+
   return (
     <Container>
       <h1>Parceiros</h1>
 
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='nome'>Nome</label>
           <input
@@ -79,12 +102,25 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
             type='text'
           />
         </div>
-      </Form>
 
-      <Div>
-        <button onClick={() => setCriarEmpresa(false)}>Cancelar</button>
-        <button>Criar empresa</button>
-      </Div>
+        <SelectInput
+          value={value.tipo}
+          labelName='tipo'
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue({ ...value, tipo: e.target.value })
+          }
+        >
+          <MenuItem value={'Silver'}>Silver</MenuItem>
+          <MenuItem value={'Gold'}>Gold</MenuItem>
+          <MenuItem value={'Platinum'}>Platinum</MenuItem>
+          <MenuItem value={'Cliente'}>Cliente</MenuItem>
+        </SelectInput>
+
+        <Div className='buttons'>
+          <button onClick={() => setCriarEmpresa(false)}>Cancelar</button>
+          <button type='submit'>Criar empresa</button>
+        </Div>
+      </Form>
     </Container>
   );
 };
