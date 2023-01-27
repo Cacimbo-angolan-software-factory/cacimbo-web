@@ -3,12 +3,13 @@ import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import CriarSolicitaçao from '../../../components/solicitacoes/criarSolicitaçao/CriarSolic';
 import Solicitacao from '../../../components/solicitacoes/Solicitacao';
+import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
 import { Button, Container } from './stylesSoli';
 
 const Solicitaçoes: React.FC = () => {
-  const { lic_requests } = useContext(LicContext);
+  const { lic_requests, IsLoadingTheOrder } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
 
   return (
@@ -35,6 +36,8 @@ const Solicitaçoes: React.FC = () => {
           ))}
         </Container>
       )}
+
+      {IsLoadingTheOrder && <Spinner />}
       <ScrollTop />
     </>
   );

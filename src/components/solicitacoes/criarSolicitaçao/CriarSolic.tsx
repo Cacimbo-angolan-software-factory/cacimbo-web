@@ -14,7 +14,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     empresa: '',
     email: '',
     pais: '',
-    provincia: '',
+    província: '',
     endereço: '',
     cargo: '',
     responsável: '',
@@ -66,16 +66,19 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           }
         >
           <MenuItem value={'Angola'}>Angola</MenuItem>
+          <MenuItem value={'Portugal'}>Portugal</MenuItem>
           <MenuItem value={'Brasil'}>Brasil</MenuItem>
-          <MenuItem value={'Moçambique'}>Mocambique</MenuItem>
-          <MenuItem value={'Sao Tome'}>Sao tome</MenuItem>
+          <MenuItem value={'Cabo Verde'}>Cabo Verde</MenuItem>
+          <MenuItem value={'Moçambique'}>Moçambique</MenuItem>
+          <MenuItem value={'São Tome'}>São Tomé</MenuItem>
+          <MenuItem value={'Guiné'}>Guiné</MenuItem>
         </SelectInput>
         <DivChild>
           <div>
-            <label htmlFor='provincia'>Provincia</label>
+            <label htmlFor='provincia'>Província</label>
             <input
               name='provincia'
-              value={value.provincia}
+              value={value.província}
               onChange={handleChange}
               type='text'
             />
