@@ -16,6 +16,10 @@ export const GlobalStyle = createGlobalStyle`
 html {
     font-size: 62.5%;
 
+    @media (max-width: 700px) {
+        font-size: 56.25%;
+    }
+
 }
 body {
     font-family: system-ui;
