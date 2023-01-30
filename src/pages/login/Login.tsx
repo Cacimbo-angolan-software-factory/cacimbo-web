@@ -23,7 +23,7 @@ const Login: React.FC = () => {
     }
 
     if (user) {
-      window.location.pathname = '/Admin';
+      window.location.pathname = '/';
     }
 
     dispatch(reset());

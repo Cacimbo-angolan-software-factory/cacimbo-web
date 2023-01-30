@@ -2,6 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from 'react';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import CriarEmpresa from '../../../components/empresa/criarEmpresa/CriarEmpresa';
 import Empresa from '../../../components/empresa/Empresa';
+import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import Sidebar from '../../../components/sidebar/SideBar';
 import Spinner from '../../../components/spinner/Spinner';
@@ -47,6 +48,7 @@ const Empresas: React.FC = () => {
   return (
     <>
       <AdminHeader />
+      <HeaderMobile />
 
       <Button
         style={{

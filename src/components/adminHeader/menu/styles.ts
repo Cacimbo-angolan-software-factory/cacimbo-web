@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 export const MenuContainer = styled.nav`
   display: flex;
   gap: 2rem;
+
+  @media (max-width: 630px) {
+    display: none;
+  }
 `;
 
 export const MenuItem = styled(Link)`

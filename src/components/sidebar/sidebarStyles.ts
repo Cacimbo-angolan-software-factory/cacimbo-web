@@ -24,4 +24,17 @@ export const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1000px) {
+    width: 50%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6rem 1.5rem 6rem 1.5rem;
+  }
+
+  @media (max-width: 630px) {
+    width: 100%;
+    z-index: 1000;
+  }
 `;
