@@ -39,6 +39,23 @@ export const Div = styled.div`
     background-color: #bebebe;
     color: #1d1d1d;
   }
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+    gap: 1rem;
+
+    & button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 630px) {
+    flex-direction: column;
+
+    & button:nth-child(2) {
+      margin-top: 0.5rem;
+    }
+  }
 `;
 
 export const Button = styled.button`

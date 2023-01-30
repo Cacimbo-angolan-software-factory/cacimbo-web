@@ -8,6 +8,10 @@ export const Container = styled.div`
     font-size: 2rem;
     margin-bottom: 3rem;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Form = styled.form`

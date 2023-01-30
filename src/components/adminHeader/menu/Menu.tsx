@@ -16,8 +16,8 @@ const Menu: React.FC = () => {
   return (
     <MenuContainer>
       <MenuItem
-        className={location.pathname === `/Admin` ? 'active' : 'inherit'}
-        to='/Admin'
+        className={location.pathname === `/` ? 'active' : 'inherit'}
+        to='/'
       >
         <span>
           <RiHome5Fill />
@@ -26,10 +26,8 @@ const Menu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
-        className={
-          location.pathname === `/Admin/empresas` ? 'active' : 'inherit'
-        }
-        to='/Admin/empresas'
+        className={location.pathname === `/empresas` ? 'active' : 'inherit'}
+        to='/empresas'
       >
         <span>
           <RiServiceFill />
@@ -39,9 +37,9 @@ const Menu: React.FC = () => {
 
       <MenuItem
         className={
-          location.pathname === `/Admin/licen%C3%A7as` ? 'active' : 'inherit'
+          location.pathname === `/licen%C3%A7as` ? 'active' : 'inherit'
         }
-        to='/Admin/licenças'
+        to='/licenças'
       >
         <span>
           <RiFolderKeyholeFill />
@@ -51,11 +49,9 @@ const Menu: React.FC = () => {
 
       <MenuItem
         className={
-          location.pathname === `/Admin/solicita%C3%A7oes`
-            ? 'active'
-            : 'inherit'
+          location.pathname === `/solicita%C3%A7oes` ? 'active' : 'inherit'
         }
-        to='/Admin/solicitaçoes'
+        to='/solicitaçoes'
       >
         <span>
           <RiShieldCheckFill />
@@ -77,7 +73,7 @@ const Menu: React.FC = () => {
         <p>Noticías</p>
       </MenuItem> */}
 
-      <MenuItem to='/Admin'>
+      <MenuItem to='/'>
         <span>
           <RiUserFill />
         </span>
