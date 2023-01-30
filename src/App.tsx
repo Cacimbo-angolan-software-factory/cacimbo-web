@@ -20,11 +20,10 @@ function App() {
       <AppContainer>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path='/' element={<Home />} />
-            <Route path='/Admin' element={<AdminHome />} />
-            <Route path='/Admin/licenças' element={<Licenças />} />
-            <Route path='/Admin/solicitaçoes' element={<Solicitaçoes />} />
-            <Route path='/Admin/empresas' element={<Empresas />} />
+            <Route path='/' element={<AdminHome />} />
+            <Route path='/licenças' element={<Licenças />} />
+            <Route path='/solicitaçoes' element={<Solicitaçoes />} />
+            <Route path='/empresas' element={<Empresas />} />
           </Route>
           <Route path='/Login' element={<Login />} />
         </Routes>
