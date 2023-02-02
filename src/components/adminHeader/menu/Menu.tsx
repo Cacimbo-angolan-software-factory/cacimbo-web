@@ -73,7 +73,7 @@ const Menu: React.FC = () => {
         <p>Noticías</p>
       </MenuItem> */}
 
-      <MenuItem to='/'>
+      <MenuItem to='/Usuarios'>
         <span>
           <RiUserFill />
         </span>
