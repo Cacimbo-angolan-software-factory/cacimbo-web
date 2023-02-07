@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
+import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import CriarEmpresa from '../../../components/empresa/criarEmpresa/CriarEmpresa';
 import Empresa from '../../../components/empresa/Empresa';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -8,7 +9,7 @@ import Sidebar from '../../../components/sidebar/SideBar';
 import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
-import { Button, Container } from './stylesEmpresas';
+import { Container } from './stylesEmpresas';
 
 const Empresas: React.FC = () => {
   const { empresas, licences, setEditar, loadingEmpresas } =
@@ -45,19 +46,23 @@ const Empresas: React.FC = () => {
     return licence.parceiro_id === empresaSelected?.id;
   });
 
+  const handleCreate = () => {
+    setCriarEmpresa(true);
+  };
+
   return (
     <>
       <AdminHeader />
       <HeaderMobile />
 
-      <Button
+      <BtnCreate
         style={{
           display: criarEmpresa ? 'none' : 'flex',
         }}
-        onClick={() => setCriarEmpresa(true)}
+        onClick={handleCreate}
       >
         Criar empresa
-      </Button>
+      </BtnCreate>
 
       {criarEmpresa ? (
         <CriarEmpresa setCriarEmpresa={setCriarEmpresa} />

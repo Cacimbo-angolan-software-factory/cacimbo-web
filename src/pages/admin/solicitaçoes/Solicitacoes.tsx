@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
+import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import CriarSolicitaçao from '../../../components/solicitacoes/criarSolicitaçao/CriarSolic';
 import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
-import { Button, Container } from './stylesSoli';
+import { Container } from './stylesSoli';
 
 const Solicitaçoes: React.FC = () => {
   const { lic_requests, IsLoadingTheOrder } = useContext(LicContext);
@@ -16,14 +17,14 @@ const Solicitaçoes: React.FC = () => {
     <>
       <AdminHeader />
 
-      <Button
+      <BtnCreate
         style={{
           display: click ? 'none' : 'flex',
         }}
         onClick={() => setClick(true)}
       >
         Nova Solicitação
-      </Button>
+      </BtnCreate>
 
       {click ? (
         <CriarSolicitaçao setClick={setClick} />

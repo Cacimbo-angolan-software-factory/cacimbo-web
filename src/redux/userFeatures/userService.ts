@@ -1,4 +1,4 @@
-import { api } from '../../service/Service.api';
+import { api, apiCacimbo } from '../../service/Service.api';
 
 const login = async (userData: {
   email: string;
@@ -18,9 +18,19 @@ const logout = async () => {
   localStorage.removeItem('user');
 };
 
+const getUsers = async (companyId: string) => {
+  try {
+    const response = await api.get(`users?parceiro_id=${companyId}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const userService = {
   login,
   logout,
+  getUsers,
 };
 
 export default userService;

@@ -5,8 +5,8 @@ import Solicitaçoes from './pages/admin/solicitaçoes/Solicitacoes';
 import Empresas from './pages/admin/empresas/Empresas';
 import Login from './pages/login/Login';
 import styled from 'styled-components';
-import Home from './pages/home/Home';
 import PrivateRoutes from './PrivateRoutes';
+import Usuarios from './pages/admin/usuarios/Usuarios';
 
 const AppContainer = styled.div`
   display: flex;
@@ -24,6 +24,7 @@ function App() {
             <Route path='/licenças' element={<Licenças />} />
             <Route path='/solicitaçoes' element={<Solicitaçoes />} />
             <Route path='/empresas' element={<Empresas />} />
+            <Route path='/Usuarios' element={<Usuarios />} />
           </Route>
           <Route path='/Login' element={<Login />} />
         </Routes>
