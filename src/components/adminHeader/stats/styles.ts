@@ -3,6 +3,14 @@ import styled from 'styled-components';
 export const StatsContainer = styled.div`
   display: flex;
   gap: 3rem;
+
+  @media (max-width: 630px) {
+    margin-top: 6rem;
+  }
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const Stat = styled.div`

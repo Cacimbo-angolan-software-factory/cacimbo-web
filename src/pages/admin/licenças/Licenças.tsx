@@ -8,6 +8,7 @@ import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import EmptyState from '../../../components/emptyState/EmptyState';
 import Spinner from '../../../components/spinner/Spinner';
+import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 
 const Licenças: React.FC = () => {
   const { licences, loadingLicenses } = useContext(LicContext);
@@ -199,6 +200,7 @@ const Licenças: React.FC = () => {
   return (
     <>
       <AdminHeader />
+      <HeaderMobile />
 
       <Filters
         filtro={filtro}
