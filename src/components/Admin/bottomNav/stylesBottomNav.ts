@@ -9,6 +9,10 @@ export const Container = styled.div`
 
   align-self: flex-end;
 
+  @media (max-width: 500px) {
+    display: none;
+  }
+
   & span {
     cursor: pointer;
     transition: all 0.2s;

@@ -8,6 +8,14 @@ export const Container = styled.div`
     font-size: 2rem;
     margin-bottom: 3rem;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (max-width: 500px) {
+    margin-top: 6rem;
+  }
 `;
 
 export const Form = styled.form`
@@ -70,5 +78,9 @@ export const DivChild = styled.span`
 
   & div {
     width: 100%;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
   }
 `;

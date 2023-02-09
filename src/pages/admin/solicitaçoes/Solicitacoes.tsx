@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import BtnCreate from '../../../components/btnCreate/BtnCreate';
+import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import CriarSolicitaçao from '../../../components/solicitacoes/criarSolicitaçao/CriarSolic';
 import Solicitacao from '../../../components/solicitacoes/Solicitacao';
@@ -16,6 +17,7 @@ const Solicitaçoes: React.FC = () => {
   return (
     <>
       <AdminHeader />
+      <HeaderMobile />
 
       <BtnCreate
         style={{

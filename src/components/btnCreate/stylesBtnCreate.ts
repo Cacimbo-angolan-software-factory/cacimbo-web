@@ -15,4 +15,8 @@ export const Button = styled.button`
   &:hover {
     transform: translateY(-3px);
   }
+
+  @media (max-width: 500px) {
+    margin-top: 6rem;
+  }
 `;

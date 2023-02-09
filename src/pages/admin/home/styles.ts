@@ -16,6 +16,9 @@ export const Section = styled.section`
     display: flex;
     flex-direction: column;
   }
+  @media screen and (max-width: 500px) {
+    margin-top: 6rem;
+  }
   @media screen and (max-width: 400px) {
     padding: 1rem;
   }

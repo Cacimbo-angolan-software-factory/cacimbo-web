@@ -3,6 +3,7 @@ import Animation from '../../../components/Admin/backAnimation/Animation';
 import BottomNav from '../../../components/Admin/bottomNav/BottomNav';
 import Notifications from '../../../components/Admin/notifications/Notif';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
+import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { Section } from './styles';
 
 const AdminHome: React.FC = () => {
@@ -20,6 +21,7 @@ const AdminHome: React.FC = () => {
   return (
     <>
       <AdminHeader />
+      <HeaderMobile />
 
       <Section>
         <Notifications />

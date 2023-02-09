@@ -5,6 +5,10 @@ export const Container = styled.div`
   flex-direction: column;
   /* transition: all 0.5s; */
 
+  @media (max-width: 500px) {
+    margin-top: 6rem;
+  }
+
   &.fixed {
     position: fixed;
     top: 0;
