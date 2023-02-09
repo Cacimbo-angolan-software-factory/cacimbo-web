@@ -26,6 +26,10 @@ body {
     padding: 6rem 6rem;
     background: #1d1d1d;
     color: #ebebeb;
+
+    @media (max-width: 500px) {
+        padding: 4rem 2rem;
+    }
 }
 
 a {
