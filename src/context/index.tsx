@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { api } from '../service/Service.api';
+import { api, baseUrlGetNif } from '../service/Service.api';
 
 interface IContext {
   children: React.ReactNode;
@@ -20,6 +20,7 @@ interface ICreateContext {
   getLic?: () => Promise<void>;
   getLicRequest?: () => Promise<void>;
   getLicRenovations?: () => Promise<void>;
+  getNif?: (nif: string) => Promise<any>;
   IsLoadingTheOrder?: boolean;
   getLicRefresh?: (typeRefresh: string) => void;
   TotalLicenses?: number;
@@ -215,6 +216,23 @@ export const LicProvider = ({ children }: IContext) => {
     }
   }
 
+  async function getNif(nif: string) {
+    try {
+      const { data } = await baseUrlGetNif.get(`${nif}`);
+      return data;
+    } catch (err: any) {
+      console.log(err);
+      if (err?.response.status === 'undefined') {
+        console.error('Sem ligação à internet', 'error');
+        return;
+      }
+      if (err?.response.status) {
+        console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        return;
+      }
+    }
+  }
+
   useEffect(() => {
     getLic();
     getLicRequest();
@@ -243,6 +261,7 @@ export const LicProvider = ({ children }: IContext) => {
         loadingEditar,
         loadingEmpresas,
         loadingLicenses,
+        getNif,
       }}
     >
       {children}

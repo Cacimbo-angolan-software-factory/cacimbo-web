@@ -45,7 +45,7 @@ export const Form = styled.form`
   }
 `;
 
-export const Div = styled.div`
+export const Div = styled.span`
   display: flex;
   justify-content: space-between;
   gap: 2rem;
