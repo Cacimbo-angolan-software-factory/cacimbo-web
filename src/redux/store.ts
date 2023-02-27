@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userSlice } from './userFeatures/usersSlice';
 import { empresaSlice } from './empresaFeatures/empresaSlice';
+import { solicSlice } from './solicitaçaoFeatures/solicSlice';
 
 export const store = configureStore({
   reducer: {
     user: userSlice.reducer,
     empresa: empresaSlice.reducer,
+    solicitaçao: solicSlice.reducer,
   },
 });
 
