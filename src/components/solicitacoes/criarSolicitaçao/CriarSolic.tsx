@@ -146,37 +146,38 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           user_id: user?.user.id,
         })
       );
-
-      // console.log({
-      //   ...value,
-      //   licencaId:
-      //     typeof value.licencaId === 'string' && value.licencaId.length === 0
-      //       ? 0
-      //       : value.licencaId,
-      //   modulo: modulosId,
-      //   canal_id: canal_id,
-      //   user_id: user.user.id,
-      //   parceiro_id: user.user.parceiro_id,
-      // });
     } catch (error: any) {
       console.log(error.response);
     }
-
-    // setValue({
-    //   nif: '',
-    //   empresa: '',
-    //   telefone: '',
-    //   email: '',
-    //   pais: '',
-    //   província: '',
-    //   localidade: '',
-    //   morada: '',
-    //   cargo: '',
-    //   responsável: '',
-    //   licenceType: '',
-    //   canal: '',
-    // });
   };
+
+  useEffect(() => {
+    if (isError) {
+      alert('Erro ao criar solicitação');
+    }
+
+    if (solic) {
+      setValue({
+        nif: '',
+        empresa: '',
+        telefone: '',
+        email: '',
+        pais: '',
+        provincia: '',
+        localidade: '',
+        morada: '',
+        cargo: '',
+        responsavel: '',
+        tipo: '',
+        canal_id: '',
+        licencaId: '',
+        modulo: [],
+      });
+      setTimeout(() => {
+        setClick(false);
+      }, 2500);
+    }
+  }, [isError, solic]);
 
   return (
     <Container>

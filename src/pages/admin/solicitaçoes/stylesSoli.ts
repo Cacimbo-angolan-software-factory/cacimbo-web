@@ -16,3 +16,12 @@ export const Container = styled.div`
     flex-direction: column;
   }
 `;
+
+export const InputSearch = styled.input`
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  border: 1px solid #fff;
+  background-color: inherit;
+  color: #fff;
+`;

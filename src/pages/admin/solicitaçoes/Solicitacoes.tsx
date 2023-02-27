@@ -8,11 +8,16 @@ import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
-import { Container } from './stylesSoli';
+import { Container, InputSearch } from './stylesSoli';
 
 const Solicitaçoes: React.FC = () => {
   const { lic_requests, IsLoadingTheOrder } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
+  const [search, setSearch] = React.useState('');
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
   return (
     <>
@@ -31,13 +36,34 @@ const Solicitaçoes: React.FC = () => {
       {click ? (
         <CriarSolicitaçao setClick={setClick} />
       ) : (
-        <Container>
-          {lic_requests.map((lic_request: any) => (
-            <div key={lic_request.id}>
-              <Solicitacao lic_request={lic_request} />
-            </div>
-          ))}
-        </Container>
+        <>
+          <InputSearch
+            onChange={handleSearch}
+            value={search}
+            type='text'
+            placeholder='Pesquise solicitação...'
+          />
+          <Container>
+            {lic_requests
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((lic_request: any) => (
+                <div key={lic_request.id}>
+                  <Solicitacao lic_request={lic_request} />
+                </div>
+              ))}
+          </Container>
+        </>
       )}
 
       {IsLoadingTheOrder && <Spinner />}
