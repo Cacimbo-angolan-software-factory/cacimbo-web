@@ -1,6 +1,7 @@
 import React from 'react';
+import { IoPersonAddOutline } from 'react-icons/io5';
 
-import { Container } from './stylesSingleSoli';
+import { Buttons, Container } from './stylesSingleSoli';
 
 interface SolicitacaoProps {
   lic_request: any;
@@ -16,6 +17,16 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
       <h2 className='nif'>{cliente_nif}</h2>
       <p>{tipo}</p>
       <p>{data}</p>
+      <Buttons>
+        <button>
+          <IoPersonAddOutline />
+          Atribuir
+        </button>
+        <button>
+          <IoPersonAddOutline />
+          Interesse
+        </button>
+      </Buttons>
     </Container>
   );
 };

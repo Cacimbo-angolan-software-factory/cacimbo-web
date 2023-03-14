@@ -24,4 +24,13 @@ export const InputSearch = styled.input`
   border: 1px solid #fff;
   background-color: inherit;
   color: #fff;
+  width: 50%;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
+
+  @media (max-width: 560px) {
+    width: 100%;
+  }
 `;

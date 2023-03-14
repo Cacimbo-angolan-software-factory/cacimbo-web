@@ -37,6 +37,7 @@ interface ICreateContext {
     email: string;
     Nif: string;
   }[];
+  sections: any;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -46,6 +47,7 @@ export const LicContext = createContext<ICreateContext>({
   empresas: [],
   editar: null,
   loadingEditar: false,
+  sections: [],
 });
 
 export const LicProvider = ({ children }: IContext) => {
@@ -60,6 +62,10 @@ export const LicProvider = ({ children }: IContext) => {
   const [IsLoadingTheOrder, setIsLoadingTheOrder] = useState(false);
   const [loadingEmpresas, setLoadingEmpresas] = useState(false);
   const [loadingLicenses, setLoadingLicenses] = useState(false);
+  const [loadingToApproveAndAuction, setLoadingToApproveAndAuction] =
+    useState(false);
+  const [sections, setSections] = useState<any>([]);
+
   const user = {
     id: 1,
     name: 'Arnaldo Domingos',
@@ -233,11 +239,57 @@ export const LicProvider = ({ children }: IContext) => {
     }
   }
 
+  const SectionsRequestToApprove = [
+    { title: 'Por aprovar', data: [] },
+    { title: 'Em leilão', data: [] },
+  ];
+
+  async function getRequestToApproveAndAuctionRequests() {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+    const urlGetAllRequestsToApprove = `solicitacoes/parceiro-canal/${user?.user.parceiro_id}/get-all`;
+    const urlAuction = `solicitacoes/pendentes`;
+
+    try {
+      setLoadingToApproveAndAuction(true);
+      const toApprovePromise = api.get(urlGetAllRequestsToApprove);
+      const AuctionRequestPromise = api.get(urlAuction);
+
+      Promise.all([toApprovePromise, AuctionRequestPromise]).then((res) => {
+        SectionsRequestToApprove.map((section: any) => {
+          if (section.title === 'Por aprovar') {
+            section.data.push(...res[0].data);
+          }
+          if (section.title === 'Em leilão') {
+            section.data.push(...res[1].data);
+          } else {
+            return null;
+          }
+        });
+        setSections(SectionsRequestToApprove);
+        console.log(SectionsRequestToApprove);
+        setLoadingToApproveAndAuction(false);
+      });
+    } catch (err: any) {
+      console.log(err);
+      setLoadingToApproveAndAuction(false);
+      if (err?.response.status === 'undefined') {
+        console.error('Sem ligação à internet', 'error');
+        return;
+      }
+      if (err?.response.status) {
+        console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        return;
+      }
+    }
+  }
+
   useEffect(() => {
     getLic();
     getLicRequest();
     getLicRenovations();
     getEmpresas();
+    getRequestToApproveAndAuctionRequests();
   }, []);
 
   return (
@@ -262,6 +314,7 @@ export const LicProvider = ({ children }: IContext) => {
         loadingEmpresas,
         loadingLicenses,
         getNif,
+        sections,
       }}
     >
       {children}
