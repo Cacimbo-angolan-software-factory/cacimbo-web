@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -11,7 +11,7 @@ import { LicContext } from '../../../context';
 import { Container, InputSearch } from './stylesSoli';
 
 const Solicitaçoes: React.FC = () => {
-  const { lic_requests, IsLoadingTheOrder } = useContext(LicContext);
+  const { lic_requests, IsLoadingTheOrder, sections } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
 
@@ -62,6 +62,13 @@ const Solicitaçoes: React.FC = () => {
                   <Solicitacao lic_request={lic_request} />
                 </div>
               ))}
+          </Container>
+          <Container>
+            {/* {sections.map((section: any) => (
+              <div key={section.id}>
+                <Solicitacao lic_request={section} />
+              </div>
+            ))} */}
           </Container>
         </>
       )}
