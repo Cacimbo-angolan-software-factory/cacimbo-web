@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Animation from '../../../components/Admin/backAnimation/Animation';
 import BottomNav from '../../../components/Admin/bottomNav/BottomNav';
+import Permissions from '../../../components/Admin/createPermissions/Permissions';
 import Notifications from '../../../components/Admin/notifications/Notif';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -8,6 +9,7 @@ import { Section } from './styles';
 
 const AdminHome: React.FC = () => {
   const [fixedNav, setFixedNav] = useState(false);
+  const [criarPermission, setCriarPermission] = useState(false);
 
   function onScroll() {
     if (window.scrollY >= -309) {
@@ -22,12 +24,20 @@ const AdminHome: React.FC = () => {
     <>
       <AdminHeader />
       <HeaderMobile />
-
-      <Section>
-        <Notifications />
-        <Animation />
-      </Section>
-      <BottomNav fixedNav={fixedNav} />
+      {criarPermission ? (
+        <Permissions setCriarPermission={setCriarPermission} />
+      ) : (
+        <>
+          <Section>
+            <Notifications />
+            <Animation />
+          </Section>
+          <BottomNav
+            setCriarPermission={setCriarPermission}
+            fixedNav={fixedNav}
+          />
+        </>
+      )}
     </>
   );
 };
