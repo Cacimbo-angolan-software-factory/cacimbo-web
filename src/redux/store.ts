@@ -9,7 +9,7 @@ export const store = configureStore({
     user: userSlice.reducer,
     empresa: empresaSlice.reducer,
     solicitaçao: solicSlice.reducer,
-    Permission: permissionSlice.reducer,
+    permission: permissionSlice.reducer,
   },
 });
 
