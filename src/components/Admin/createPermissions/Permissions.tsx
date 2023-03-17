@@ -1,9 +1,14 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { criarPermission } from '../../../redux/permissionsFeatures/permissionSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  criarPermission,
+  getPermissions,
+} from '../../../redux/permissionsFeatures/permissionSlice';
 import { AppDispatch } from '../../../redux/store';
 import { Container, Div, Form } from './PermissionsStyles';
 import { Type } from '../../../redux/permissionsFeatures/permissionService';
+import SelectInput from '../../SelectTextField';
+import { MenuItem } from '@mui/material';
 
 interface PermissionsProps {
   setCriarPermission: (value: boolean) => void;
@@ -14,12 +19,20 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
     name: '',
     description: '',
     type: Type.geral,
+    source_name: '',
   });
   const dispatch = useDispatch<AppDispatch>();
+  const { list, isError, isLoading } = useSelector(
+    (state: any) => state.permission
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
+
+  useEffect(() => {
+    dispatch(getPermissions());
+  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -57,6 +70,22 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
             type='text'
           />
         </div>
+
+        <SelectInput
+          value={value.source_name}
+          labelName='Permissão raíz'
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue({ ...value, source_name: e.target.value })
+          }
+        >
+          {list
+            .filter((permission: any) => permission.source_name === null)
+            .map((permission: any) => (
+              <MenuItem key={permission.id} value={permission.name}>
+                {permission.name}
+              </MenuItem>
+            ))}
+        </SelectInput>
 
         <Div className='buttons'>
           <button onClick={() => setCriarPermission(false)}>Cancelar</button>
