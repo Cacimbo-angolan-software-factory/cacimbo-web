@@ -15,16 +15,17 @@ interface PermissionsProps {
 }
 
 const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
+  const { list, isError, isLoading } = useSelector(
+    (state: any) => state.permission
+  );
   const [value, setValue] = React.useState({
     name: '',
     description: '',
     type: Type.geral,
     source_name: '',
+    source_id: '',
   });
   const dispatch = useDispatch<AppDispatch>();
-  const { list, isError, isLoading } = useSelector(
-    (state: any) => state.permission
-  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -35,8 +36,21 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
   }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    let source = list.filter(
+      (permission: any) => permission.name === value.source_name
+    )[0];
+    console.log({ source });
+
     event.preventDefault();
-    dispatch(criarPermission(value));
+    dispatch(
+      criarPermission({
+        name: value.name,
+        description: value.description,
+        type: value.type,
+        source_name: source?.name,
+        source_id: source?.id,
+      })
+    );
 
     // setValue({
     //   name: '',
@@ -79,7 +93,10 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
           }
         >
           {list
-            .filter((permission: any) => permission.source_name === null)
+            .filter(
+              (permission: any) =>
+                permission.source_name === null && permission.source_id !== null
+            )
             .map((permission: any) => (
               <MenuItem key={permission.id} value={permission.name}>
                 {permission.name}
