@@ -7,6 +7,7 @@ import {
   IoSettingsOutline,
   IoLogOutOutline,
   IoBuildOutline,
+  IoPersonAddOutline,
 } from 'react-icons/io5';
 import Modal from '../../modal/Modal';
 
@@ -79,6 +80,10 @@ const BottomNav: React.FC<BottomNavProps> = ({
           <ModalItem onClick={() => setCriarPermission(true)}>
             <IoBuildOutline />
             Permissões
+          </ModalItem>
+          <ModalItem onClick={() => setCriarPermission(true)}>
+            <IoPersonAddOutline />
+            Funções de usuário
           </ModalItem>
         </Modal>
       )}
