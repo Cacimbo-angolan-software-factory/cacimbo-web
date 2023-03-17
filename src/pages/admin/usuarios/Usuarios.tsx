@@ -10,6 +10,7 @@ import { IoPersonCircleOutline } from 'react-icons/io5';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
 import SideBarUsuario from '../../../components/usuarios/SideBarUsuario';
+import UserContainer from '../../../components/usuarios/UserContainerSideBar';
 
 const Usuarios: React.FC = () => {
   const { users, isError, isLoading, isSuccess, user } = useSelector(
@@ -17,6 +18,7 @@ const Usuarios: React.FC = () => {
   );
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const [userSelected, setUserSelected] = useState<any>();
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
 
@@ -69,7 +71,7 @@ const Usuarios: React.FC = () => {
               <span
                 onClick={() => {
                   handleClick && handleClick();
-                  // setEmpresaSelected && setEmpresaSelected(empresa);
+                  setUserSelected && setUserSelected(user);
                 }}
               >
                 <RiMore2Fill />
@@ -80,7 +82,7 @@ const Usuarios: React.FC = () => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <h1>Hello world</h1>
+          <UserContainer userSelected={userSelected} />
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}

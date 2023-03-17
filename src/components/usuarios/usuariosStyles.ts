@@ -38,3 +38,51 @@ export const Wrapper = styled.div`
     z-index: 1000;
   }
 `;
+
+export const Container = styled.div`
+  h2 {
+    margin-top: 4rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    & p {
+      font-size: 1.2rem;
+      color: #bababa;
+    }
+  }
+
+  & svg {
+    font-size: 2rem;
+    cursor: pointer;
+
+    &:hover {
+      color: #acacac;
+    }
+  }
+
+  span {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: rgba(183, 28, 80, 0.2);
+    margin-top: 2rem;
+    width: fit-content;
+
+    p {
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: #b71c50;
+    }
+  }
+`;
