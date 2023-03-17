@@ -17,6 +17,12 @@ const createPermission = async (permissionData: {
   return response.data;
 };
 
+const getPermissions = async () => {
+  const response = await api.get(`permissions`);
+  return response.data;
+};
+
 export default {
   createPermission,
+  getPermissions,
 };
