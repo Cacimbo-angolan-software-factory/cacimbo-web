@@ -22,7 +22,19 @@ const getPermissions = async () => {
   return response.data;
 };
 
+const createRole = async (roleData: {
+  id?: number;
+  name: string;
+  companyId: string;
+  description: string;
+  permissions: [];
+}) => {
+  const response = await api.post(`roles`, { ...roleData });
+  return response.data;
+};
+
 export default {
   createPermission,
   getPermissions,
+  createRole,
 };

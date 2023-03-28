@@ -3,6 +3,7 @@ import permissionService, { Type } from './permissionService';
 
 interface PermissionState {
   permissions: any[];
+  roles: any[];
   list: any[];
   isError: boolean;
   isLoading: boolean;
@@ -11,6 +12,7 @@ interface PermissionState {
 
 const initialState: PermissionState = {
   permissions: [],
+  roles: [],
   list: [],
   isError: false,
   isLoading: false,
@@ -49,6 +51,24 @@ export const getPermissions = createAsyncThunk(
   }
 );
 
+export const criarRole = createAsyncThunk(
+  'permission/criarRole',
+  async (roleData: {
+    id?: number;
+    name: string;
+    companyId: string;
+    description: string;
+    permissions: [];
+  }) => {
+    try {
+      const response = await permissionService.createRole(roleData);
+      return response;
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
 export const permissionSlice = createSlice({
   name: 'permission',
   initialState,
@@ -77,6 +97,20 @@ export const permissionSlice = createSlice({
       state.isSuccess = true;
     });
     builder.addCase(getPermissions.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+
+    // create role
+    builder.addCase(criarRole.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(criarRole.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.roles.push(action.payload);
+    });
+    builder.addCase(criarRole.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
     });
