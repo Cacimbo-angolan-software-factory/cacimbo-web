@@ -56,7 +56,7 @@ export const criarRole = createAsyncThunk(
   async (roleData: {
     id?: number;
     name: string;
-    companyId: string;
+    CompanyID: string;
     description: string;
     permissions: [];
   }) => {
@@ -64,6 +64,7 @@ export const criarRole = createAsyncThunk(
       const response = await permissionService.createRole(roleData);
       return response;
     } catch (error: any) {
+      console.log(error.response);
       return error;
     }
   }

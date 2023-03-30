@@ -25,7 +25,7 @@ const getPermissions = async () => {
 const createRole = async (roleData: {
   id?: number;
   name: string;
-  companyId: string;
+  CompanyID: string;
   description: string;
   permissions: [];
 }) => {
