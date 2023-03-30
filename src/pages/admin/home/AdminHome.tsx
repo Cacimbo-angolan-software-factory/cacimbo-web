@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Animation from '../../../components/Admin/backAnimation/Animation';
 import BottomNav from '../../../components/Admin/bottomNav/BottomNav';
 import Permissions from '../../../components/Admin/createPermissions/Permissions';
-import CreateRole from '../../../components/Admin/createRole/CreateRole';
+import CreateUserRole from '../../../components/Admin/createRole/CreateUserRole';
 import Notifications from '../../../components/Admin/notifications/Notif';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -29,7 +29,7 @@ const AdminHome: React.FC = () => {
       {criarPermission ? (
         <Permissions setCriarPermission={setCriarPermission} />
       ) : criarRole ? (
-        <CreateRole setCriarRole={setCriarRole} />
+        <CreateUserRole setCriarRole={setCriarRole} />
       ) : (
         <>
           <Section>

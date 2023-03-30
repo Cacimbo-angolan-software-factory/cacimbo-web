@@ -19,7 +19,7 @@ interface CreateRoleProps {
   setCriarRole: (value: boolean) => void;
 }
 
-const CreateRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
+const CreateUserRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
   const { list, isError, isLoading } = useSelector(
     (state: any) => state.permission
   );
@@ -138,4 +138,4 @@ const CreateRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
   );
 };
 
-export default CreateRole;
+export default CreateUserRole;
