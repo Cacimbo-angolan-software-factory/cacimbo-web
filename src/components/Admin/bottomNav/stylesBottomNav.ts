@@ -37,14 +37,12 @@ export const ModalItem = styled.p`
   font-size: 1.6rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
-  padding-bottom: 1rem;
-  border-bottom: 0.5px solid #bebebe;
+  padding: 0.5rem 1rem;
 
   &:hover {
-    color: #b71c50;
-    transform: translateX(3px);
+    background: rgba(56 56, 56, 0.6);
   }
 `;
