@@ -66,7 +66,7 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
 
       <Form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor='nome'>Nome</label>
+          <label htmlFor='nome'>Nome da permissão</label>
           <input
             name='name'
             value={value.name}

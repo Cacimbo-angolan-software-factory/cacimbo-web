@@ -12,23 +12,26 @@ import {
 import Modal from '../../modal/Modal';
 
 import { Container, ModalItem } from './stylesBottomNav';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
 
 interface BottomNavProps {
   fixedNav: boolean;
   setCriarPermission: (value: boolean) => void;
+  setCriarRole: (value: boolean) => void;
 }
 
 const BottomNav: React.FC<BottomNavProps> = ({
   fixedNav,
   setCriarPermission,
+  setCriarRole,
 }) => {
   const [isOpenUser, setIsOpenUser] = React.useState(false);
   const [isOpenSettings, setIsOpenSettings] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { user } = useSelector((state: any) => state.user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -65,7 +68,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
         <Modal>
           <ModalItem>
             <IoPeopleOutline />
-            Arnaldo Domingos
+            {user.user.name}
           </ModalItem>
 
           <ModalItem onClick={handleLogout}>
@@ -81,7 +84,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
             <IoBuildOutline />
             Permissões
           </ModalItem>
-          <ModalItem onClick={() => setCriarPermission(true)}>
+          <ModalItem onClick={() => setCriarRole(true)}>
             <IoPersonAddOutline />
             Funções de usuário
           </ModalItem>
