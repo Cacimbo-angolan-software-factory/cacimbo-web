@@ -4,20 +4,22 @@ import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { getUsers, reset } from '../../../redux/userFeatures/usersSlice';
-import { Container, Div } from './stylesUsuarios';
+import { getUsers } from '../../../redux/userFeatures/usersSlice';
+import { Block, Container, Div } from './stylesUsuarios';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
 import SideBarUsuario from '../../../components/usuarios/SideBarUsuario';
 import UserContainer from '../../../components/usuarios/UserContainerSideBar';
+import ModalOptions from '../../../components/usuarios/modalOptions/ModalOptions';
 
 const Usuarios: React.FC = () => {
-  const { users, isError, isLoading, isSuccess, user } = useSelector(
+  const { users, isError, isLoading, user } = useSelector(
     (state: any) => state.user
   );
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [userSelected, setUserSelected] = useState<any>();
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
@@ -32,6 +34,10 @@ const Usuarios: React.FC = () => {
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(!openModal);
   };
 
   useEffect(() => {
@@ -55,7 +61,13 @@ const Usuarios: React.FC = () => {
       <AdminHeader />
       <HeaderMobile />
 
-      <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
+      <Block>
+        <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
+        <span onClick={handleOpenModal}>
+          <RiMore2Fill />
+        </span>
+      </Block>
+
       <Container>
         {users.data &&
           users.data.map((user: any) => (
@@ -86,6 +98,8 @@ const Usuarios: React.FC = () => {
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}
+
+      {openModal && <ModalOptions />}
     </>
   );
 };
