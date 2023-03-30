@@ -1,4 +1,9 @@
-import { MenuItem } from '@mui/material';
+import {
+  Checkbox,
+  ListItemText,
+  MenuItem,
+  SelectChangeEvent,
+} from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,6 +11,7 @@ import {
   getPermissions,
 } from '../../../redux/permissionsFeatures/permissionSlice';
 import { AppDispatch } from '../../../redux/store';
+import CheckMarkField from '../../CheckMarkField';
 import SelectInput from '../../SelectTextField';
 import { Container, Div, Form } from './createRoleStyles';
 
@@ -22,10 +28,11 @@ const CreateRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
 
   const [value, setValue] = React.useState({
     name: '',
-    companyId: user.user.lastCompanyIDUsed,
+    CompanyID: user.user.lastCompanyIDUsed,
     description: '',
     permissions: [] as any,
   });
+  const [permission, setPermission] = React.useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getPermissions());
@@ -35,21 +42,29 @@ const CreateRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
 
+  const handlePermission = (event: SelectChangeEvent<any>) => {
+    const {
+      target: { value },
+    } = event;
+    setPermission(value);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    let source = list.filter(
-      (permission: any) => permission.id === value.permissions
-    )[0];
+    let permissionsId = list
+      .filter((perm: any) => [...permission].includes(perm.id))
+      .map((perm: any) => perm.id);
 
     event.preventDefault();
     dispatch(
       criarRole({
         name: value.name,
-        companyId: value.companyId,
+        CompanyID: value.CompanyID,
         description: value.description,
-        permissions: source,
+        permissions: permissionsId,
       })
     );
     console.log(value);
+    console.log(permissionsId);
   };
 
   return (
@@ -77,7 +92,7 @@ const CreateRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
           />
         </div>
 
-        <SelectInput
+        {/* <SelectInput
           value={value.permissions}
           labelName='Permissão raíz'
           handleChange={(e: React.ChangeEvent<{ value: unknown }>) =>
@@ -94,7 +109,25 @@ const CreateRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
                 {permission.name}
               </MenuItem>
             ))}
-        </SelectInput>
+        </SelectInput> */}
+
+        <CheckMarkField
+          tag={'Permissão raíz'}
+          value={permission}
+          handleChange={handlePermission}
+        >
+          {list
+            .filter(
+              (permission: any) =>
+                permission.source_name === null && permission.source_id !== null
+            )
+            .map((perm: any) => (
+              <MenuItem key={perm.id} value={perm.id}>
+                <Checkbox checked={permission.indexOf(perm.id) > -1} />
+                <ListItemText primary={perm.name} />
+              </MenuItem>
+            ))}
+        </CheckMarkField>
 
         <Div className='buttons'>
           <button onClick={() => setCriarRole(false)}>Cancelar</button>
