@@ -29,7 +29,7 @@ const getUsers = async (companyId: string) => {
 
 const getPerfis = async () => {
   try {
-    const response = await apiCacimbo.get(`prefis`);
+    const response = await api.get(`prefis`);
     return response.data;
   } catch (error) {
     return error;
