@@ -2,10 +2,14 @@ import React from 'react';
 
 import { Container } from './ModalOptionsStyles';
 
-const ModalOptions: React.FC = () => {
+interface Props {
+  setOpenPerfis: (openPerfis: boolean) => void;
+}
+
+const ModalOptions: React.FC<Props> = ({ setOpenPerfis }) => {
   return (
     <Container>
-      <p>Perfis</p>
+      <p onClick={() => setOpenPerfis(true)}>Perfis</p>
       <p>Editar perfil</p>
       <p>testing</p>
     </Container>
