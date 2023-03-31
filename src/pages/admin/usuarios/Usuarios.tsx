@@ -4,7 +4,7 @@ import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { getPerfis, getUsers } from '../../../redux/userFeatures/usersSlice';
+import { getUsers } from '../../../redux/userFeatures/usersSlice';
 import { Block } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
@@ -32,7 +32,6 @@ const Usuarios: React.FC = () => {
     }
 
     dispatch(getUsers(user.user.parceiro_id));
-    dispatch(getPerfis());
   }, [dispatch, isError]);
 
   const handleClick = () => {
