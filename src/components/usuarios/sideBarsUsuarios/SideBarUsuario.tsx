@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper } from './usuariosStyles';
+import { Wrapper } from '../usuariosStyles';
 
 interface UsuariosProps {
   children: React.ReactNode;
