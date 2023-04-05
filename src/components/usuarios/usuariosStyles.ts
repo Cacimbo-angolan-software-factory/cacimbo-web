@@ -111,3 +111,56 @@ export const Div = styled.div`
     color: #bababa;
   }
 `;
+
+// PerfisList
+export const TopDiv = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+
+  & button {
+    background: rgba(56 56, 56, 0.6);
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+
+    & svg {
+      font-size: 2rem;
+      color: #fff;
+      transition: all 0.2s;
+      text-align: center;
+
+      &:hover {
+        color: #b71c50;
+        transform: translateX(-3px);
+      }
+    }
+  }
+`;
+
+export const PerfisContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const PerfisListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(56 56, 56, 0.6);
+  border-radius: 0.5rem;
+
+  & h1 {
+    font-weight: 400;
+  }
+
+  & h3 {
+    font-weight: 400;
+    color: #bababa;
+  }
+`;
