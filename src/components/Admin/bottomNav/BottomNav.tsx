@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { logout } from '../../../redux/userFeatures/usersSlice';
 
 import {
@@ -32,6 +32,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { user } = useSelector((state: any) => state.user);
+  let modalRef = useRef<any>(null);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -52,6 +53,21 @@ const BottomNav: React.FC<BottomNavProps> = ({
     }
   };
 
+  useEffect(() => {
+    let handler = (event: any) => {
+      if (!modalRef.current?.contains(event.target)) {
+        setIsOpenSettings(false);
+        setIsOpenUser(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   return (
     <Container className={fixedNav ? 'nav fixed' : 'nav'}>
       <span onClick={handleSettings}>
@@ -65,7 +81,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
       </span>
 
       {isOpenUser && (
-        <Modal>
+        <Modal modalRef={modalRef}>
           <ModalItem>
             <IoPeopleOutline />
             {user.user.name}
@@ -79,7 +95,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
       )}
 
       {isOpenSettings && (
-        <Modal>
+        <Modal modalRef={modalRef}>
           <ModalItem onClick={() => setCriarPermission(true)}>
             <IoBuildOutline />
             Permissões
