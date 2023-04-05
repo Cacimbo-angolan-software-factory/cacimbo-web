@@ -25,6 +25,7 @@ const Usuarios: React.FC = () => {
   const [userSelected, setUserSelected] = useState<any>();
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
+  let modalRef = useRef<any>(null);
 
   useEffect(() => {
     if (isError) {
@@ -56,6 +57,20 @@ const Usuarios: React.FC = () => {
     };
   });
 
+  useEffect(() => {
+    let handler = (event: any) => {
+      if (!modalRef.current?.contains(event.target)) {
+        setOpenModal(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   const handleClickCreate = () => {};
 
   return (
@@ -71,7 +86,7 @@ const Usuarios: React.FC = () => {
       </Block>
 
       {openPerfis ? (
-        <PerfisList />
+        <PerfisList setOpenPerfis={setOpenPerfis} />
       ) : (
         <UsersList
           users={users}
@@ -87,7 +102,9 @@ const Usuarios: React.FC = () => {
       )}
       {isLoading && <Spinner />}
 
-      {openModal && <ModalOptions setOpenPerfis={setOpenPerfis} />}
+      {openModal && (
+        <ModalOptions modalRef={modalRef} setOpenPerfis={setOpenPerfis} />
+      )}
     </>
   );
 };
