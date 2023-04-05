@@ -4,23 +4,28 @@ import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { getUsers, reset } from '../../../redux/userFeatures/usersSlice';
-import { Container, Div } from './stylesUsuarios';
-import { IoPersonCircleOutline } from 'react-icons/io5';
+import { getUsers } from '../../../redux/userFeatures/usersSlice';
+import { Block } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
 import SideBarUsuario from '../../../components/usuarios/SideBarUsuario';
 import UserContainer from '../../../components/usuarios/UserContainerSideBar';
+import ModalOptions from '../../../components/usuarios/modalOptions/ModalOptions';
+import UsersList from '../../../components/usuarios/UsersList';
+import PerfisList from '../../../components/usuarios/PerfisList';
 
 const Usuarios: React.FC = () => {
-  const { users, isError, isLoading, isSuccess, user } = useSelector(
+  const { users, isError, isLoading, user } = useSelector(
     (state: any) => state.user
   );
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openPerfis, setOpenPerfis] = useState(false);
   const [userSelected, setUserSelected] = useState<any>();
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
+  let modalRef = useRef<any>(null);
 
   useEffect(() => {
     if (isError) {
@@ -34,10 +39,28 @@ const Usuarios: React.FC = () => {
     setOpen(!open);
   };
 
+  const handleOpenModal = () => {
+    setOpenModal(!openModal);
+  };
+
   useEffect(() => {
     let handler = (event: any) => {
       if (!menuRef.current?.contains(event.target)) {
         setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
+  useEffect(() => {
+    let handler = (event: any) => {
+      if (!modalRef.current?.contains(event.target)) {
+        setOpenModal(false);
       }
     };
 
@@ -55,30 +78,22 @@ const Usuarios: React.FC = () => {
       <AdminHeader />
       <HeaderMobile />
 
-      <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
-      <Container>
-        {users.data &&
-          users.data.map((user: any) => (
-            <Div key={user.id}>
-              <div>
-                <IoPersonCircleOutline size={50} />
-                <div>
-                  <h1>{user.name}</h1>
-                  <h3>{user.email}</h3>
-                </div>
-              </div>
+      <Block>
+        <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
+        <span onClick={handleOpenModal}>
+          <RiMore2Fill />
+        </span>
+      </Block>
 
-              <span
-                onClick={() => {
-                  handleClick && handleClick();
-                  setUserSelected && setUserSelected(user);
-                }}
-              >
-                <RiMore2Fill />
-              </span>
-            </Div>
-          ))}
-      </Container>
+      {openPerfis ? (
+        <PerfisList setOpenPerfis={setOpenPerfis} />
+      ) : (
+        <UsersList
+          users={users}
+          handleClick={handleClick}
+          setUserSelected={setUserSelected}
+        />
+      )}
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
@@ -86,6 +101,10 @@ const Usuarios: React.FC = () => {
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}
+
+      {openModal && (
+        <ModalOptions modalRef={modalRef} setOpenPerfis={setOpenPerfis} />
+      )}
     </>
   );
 };

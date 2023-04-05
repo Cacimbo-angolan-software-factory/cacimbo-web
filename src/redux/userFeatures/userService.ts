@@ -27,10 +27,20 @@ const getUsers = async (companyId: string) => {
   }
 };
 
+const getPerfis = async () => {
+  try {
+    const response = await api.get(`prefis`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const userService = {
   login,
   logout,
   getUsers,
+  getPerfis,
 };
 
 export default userService;

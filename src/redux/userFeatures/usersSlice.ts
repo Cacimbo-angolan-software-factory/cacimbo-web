@@ -4,6 +4,7 @@ import userService from './userService';
 interface UserState {
   user: null;
   users: string[];
+  perfis: string[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -15,6 +16,7 @@ const initialState: UserState = {
     ? JSON.parse(localStorage.getItem('user') || 'null')
     : null,
   users: [],
+  perfis: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -47,6 +49,15 @@ export const getUsers = createAsyncThunk(
     }
   }
 );
+
+export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
+  try {
+    const response = await userService.getPerfis();
+    return response;
+  } catch (error: any) {
+    return error;
+  }
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -87,6 +98,21 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Sem usuários cadastrados';
+    });
+
+    // get perfis
+    builder.addCase(getPerfis.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getPerfis.fulfilled, (state, action) => {
+      state.perfis = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getPerfis.rejected, (state, action) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Sem perfis cadastrados';
     });
   },
 });

@@ -86,3 +86,103 @@ export const Header = styled.div`
     }
   }
 `;
+
+export const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  background: rgba(56 56, 56, 0.6);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+
+  & > div {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  & span {
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  & h3 {
+    font-weight: 400;
+    color: #bababa;
+  }
+`;
+
+// PerfisList
+export const TopDiv = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+
+  & button {
+    background: rgba(56 56, 56, 0.6);
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+
+    & svg {
+      font-size: 2rem;
+      color: #fff;
+      transition: all 0.2s;
+      text-align: center;
+
+      &:hover {
+        color: #b71c50;
+        transform: translateX(-3px);
+      }
+    }
+  }
+`;
+
+export const PerfisContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const PerfisListContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(56 56, 56, 0.6);
+  border-radius: 0.5rem;
+  justify-content: space-between;
+
+  & h1 {
+    font-weight: 400;
+  }
+
+  & h3 {
+    font-weight: 400;
+    color: #bababa;
+  }
+
+  & div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  & div:last-child {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+
+    & svg {
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        color: #b71c50;
+      }
+    }
+  }
+`;
