@@ -8,7 +8,7 @@ import { getUsers } from '../../../redux/userFeatures/usersSlice';
 import { Block } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
-import SideBarUsuario from '../../../components/usuarios/SideBarUsuario';
+import SideBarUsuario from '../../../components/usuarios/sideBarsUsuarios/SideBarUsuario';
 import UserContainer from '../../../components/usuarios/UserContainerSideBar';
 import ModalOptions from '../../../components/usuarios/modalOptions/ModalOptions';
 import UsersList from '../../../components/usuarios/UsersList';

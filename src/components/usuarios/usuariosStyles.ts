@@ -115,8 +115,14 @@ export const Div = styled.div`
 // PerfisList
 export const TopDiv = styled.div`
   display: flex;
-  gap: 2rem;
+  justify-content: space-between;
   align-items: center;
+
+  & div {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
 
   & button {
     background: rgba(56 56, 56, 0.6);
@@ -137,6 +143,18 @@ export const TopDiv = styled.div`
         color: #b71c50;
         transform: translateX(-3px);
       }
+    }
+  }
+
+  & span {
+    font-size: 2.5rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #b71c50;
+      font-size: 2.6rem;
     }
   }
 `;

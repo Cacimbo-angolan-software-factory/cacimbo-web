@@ -7,6 +7,7 @@ import {
   IoArrowBackOutline,
   IoPencilOutline,
   IoTrashOutline,
+  IoAddCircleOutline,
 } from 'react-icons/io5';
 
 interface Props {
@@ -26,10 +27,15 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
   return (
     <>
       <TopDiv>
-        <button onClick={() => setOpenPerfis(false)}>
-          <IoArrowBackOutline />
-        </button>
-        <h1>Perfis</h1>
+        <div>
+          <button onClick={() => setOpenPerfis(false)}>
+            <IoArrowBackOutline />
+          </button>
+          <h1>Perfis</h1>
+        </div>
+        <span>
+          <IoAddCircleOutline />
+        </span>
       </TopDiv>
 
       <PerfisContainer>
