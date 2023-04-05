@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { getPerfis } from '../../redux/userFeatures/usersSlice';
 import { PerfisContainer, PerfisListContainer, TopDiv } from './usuariosStyles';
-import { IoArrowBackOutline } from 'react-icons/io5';
+import {
+  IoArrowBackOutline,
+  IoPencilOutline,
+  IoTrashOutline,
+} from 'react-icons/io5';
 
 interface Props {
   setOpenPerfis: (openPerfis: boolean) => void;
@@ -31,12 +35,19 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
       <PerfisContainer>
         {perfis.map((perfil: any) => (
           <PerfisListContainer key={perfil.id}>
-            <h1>{perfil.perfil}</h1>
-            <h3>
-              {perfil.descricaoPerfil === null
-                ? 'Sem descricao disponivel'
-                : perfil.descricaoPerfil}
-            </h3>
+            <div>
+              <h1>{perfil.perfil}</h1>
+              <h3>
+                {perfil.descricaoPerfil === null
+                  ? 'Sem descricao disponivel'
+                  : perfil.descricaoPerfil}
+              </h3>
+            </div>
+
+            <div>
+              <IoPencilOutline />
+              <IoTrashOutline />
+            </div>
           </PerfisListContainer>
         ))}
       </PerfisContainer>
