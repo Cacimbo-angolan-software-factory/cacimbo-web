@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header } from './usuariosStyles';
+import { Container, Header } from './stylesSideBars';
 import { RiPencilFill } from 'react-icons/ri';
 import { IoBusinessOutline } from 'react-icons/io5';
 
