@@ -93,9 +93,39 @@ export const Tabs = styled.div`
   display: flex;
   gap: 2rem;
   margin-top: 4rem;
+  margin-bottom: 4rem;
 
   & p {
     font-size: 1.6rem;
     cursor: pointer;
+    padding-bottom: 0.5rem;
+  }
+
+  & p.active {
+    border-bottom: 2px solid #b71c50;
+    color: #b71c50;
+    font-size: 1.65rem;
+    transition: all 0.2s linear;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  & label {
+    font-size: 1.4rem;
+  }
+
+  & input {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
   }
 `;
