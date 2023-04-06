@@ -46,9 +46,6 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
     <>
       <TopDiv>
         <div>
-          <button onClick={() => setOpenPerfis(false)}>
-            <IoArrowBackOutline />
-          </button>
           <h1>Perfis</h1>
         </div>
         <span onClick={() => setOpen(true)}>
