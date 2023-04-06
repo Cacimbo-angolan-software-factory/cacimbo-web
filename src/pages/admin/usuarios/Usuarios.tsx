@@ -9,7 +9,7 @@ import { Block } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
 import SideBarUsuario from '../../../components/usuarios/sideBarsUsuarios/SideBarUsuario';
-import UserContainer from '../../../components/usuarios/UserContainerSideBar';
+import UserContainer from '../../../components/usuarios/sideBarsUsuarios/UserContainerSideBar';
 import ModalOptions from '../../../components/usuarios/modalOptions/ModalOptions';
 import UsersList from '../../../components/usuarios/UsersList';
 import PerfisList from '../../../components/usuarios/PerfisList';
