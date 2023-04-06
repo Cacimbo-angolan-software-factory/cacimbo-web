@@ -1,4 +1,4 @@
-import { api, apiCacimbo } from '../../service/Service.api';
+import { api } from '../../service/Service.api';
 
 const login = async (userData: {
   email: string;
@@ -36,11 +36,23 @@ const getPerfis = async () => {
   }
 };
 
+const getTarefas = async (user: any) => {
+  try {
+    const response = await api.get(
+      `task-textos?perfil=${user?.user.id_perfil}`
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const userService = {
   login,
   logout,
   getUsers,
   getPerfis,
+  getTarefas,
 };
 
 export default userService;
