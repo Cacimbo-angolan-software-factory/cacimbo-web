@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 
 import { Form, Tabs } from './stylesSideBars';
 
-const PerfisSideBarContainer: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('create');
+interface Props {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
 
+const PerfisSideBarContainer: React.FC<Props> = ({
+  activeTab,
+  setActiveTab,
+}) => {
   const handleCreate = () => {
     if (activeTab === 'create') {
       return (
