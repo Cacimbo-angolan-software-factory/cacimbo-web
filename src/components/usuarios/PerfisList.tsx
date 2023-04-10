@@ -34,9 +34,7 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
         setOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handler);
-
     return () => {
       document.removeEventListener('mousedown', handler);
     };
@@ -45,9 +43,7 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
   return (
     <>
       <TopDiv>
-        <div>
-          <h1>Perfis</h1>
-        </div>
+        <h1>Perfis</h1>
         <span onClick={() => setOpen(true)}>
           <IoAddCircleOutline />
         </span>

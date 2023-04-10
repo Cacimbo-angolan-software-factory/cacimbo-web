@@ -31,12 +31,6 @@ export const TopDiv = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  & div {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
-
   & span {
     font-size: 2.5rem;
     margin-right: 1rem;
