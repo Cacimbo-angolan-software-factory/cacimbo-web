@@ -21,6 +21,7 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
     (state: any) => state.user
   );
   const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('create');
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
 
@@ -34,24 +35,27 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
         setOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handler);
-
     return () => {
       document.removeEventListener('mousedown', handler);
     };
   });
 
+  const handleOpenCreate = () => {
+    setOpen(true);
+    setActiveTab('create');
+  };
+
+  const handleOpenEdit = () => {
+    setOpen(true);
+    setActiveTab('edit');
+  };
+
   return (
     <>
       <TopDiv>
-        <div>
-          <button onClick={() => setOpenPerfis(false)}>
-            <IoArrowBackOutline />
-          </button>
-          <h1>Perfis</h1>
-        </div>
-        <span onClick={() => setOpen(true)}>
+        <h1>Perfis</h1>
+        <span onClick={handleOpenCreate}>
           <IoAddCircleOutline />
         </span>
       </TopDiv>
@@ -69,7 +73,7 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
             </div>
 
             <div>
-              <IoPencilOutline onClick={() => setOpen(true)} />
+              <IoPencilOutline onClick={handleOpenEdit} />
               <IoTrashOutline />
             </div>
           </PerfisListContainer>
@@ -78,7 +82,10 @@ const PerfisList: React.FC<Props> = ({ setOpenPerfis }) => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <PerfisSideBarContainer />
+          <PerfisSideBarContainer
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </SideBarUsuario>
       )}
     </>

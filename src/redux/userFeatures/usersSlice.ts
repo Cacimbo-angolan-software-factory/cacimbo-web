@@ -5,6 +5,7 @@ interface UserState {
   user: null;
   users: string[];
   perfis: string[];
+  tarefas: string[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -17,6 +18,7 @@ const initialState: UserState = {
     : null,
   users: [],
   perfis: [],
+  tarefas: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -58,6 +60,19 @@ export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
     return error;
   }
 });
+
+export const getTarefas = createAsyncThunk(
+  'user/getTarefas',
+  async (user: any) => {
+    try {
+      const response = await userService.getTarefas(user);
+      console.log(response);
+      return response;
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -113,6 +128,21 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Sem perfis cadastrados';
+    });
+
+    // get tarefas
+    builder.addCase(getTarefas.pending, (state) => {
+      state.isLoading = true;
+    }),
+      builder.addCase(getTarefas.fulfilled, (state, action) => {
+        state.tarefas = action.payload;
+        state.isLoading = false;
+        state.isSuccess = true;
+      });
+    builder.addCase(getTarefas.rejected, (state, action) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Sem tarefas disponíveis';
     });
   },
 });

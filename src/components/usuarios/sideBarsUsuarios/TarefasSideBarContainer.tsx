@@ -1,32 +1,51 @@
 import React, { useState } from 'react';
 
 import { Form, Tabs } from './stylesSideBars';
+import CheckMarkField from '../../CheckMarkField';
+import { useSelector } from 'react-redux';
 
 interface Props {
   activeTab: string;
   setActiveTab: (tab: string) => void;
 }
 
-const PerfisSideBarContainer: React.FC<Props> = ({
+const TarefasSideBarContainer: React.FC<Props> = ({
   activeTab,
   setActiveTab,
 }) => {
+  const { perfis } = useSelector((state: any) => state.user);
+
   const handleCreate = () => {
     if (activeTab === 'create') {
       return (
         <Form>
           <div>
-            <label htmlFor=''>Perfil</label>
+            <label htmlFor=''>Descrição</label>
             <input type='text' />
           </div>
+
           <div>
-            <label htmlFor=''>Idioma</label>
+            <label htmlFor=''>Ref. Artigo</label>
             <input type='text' />
           </div>
+
           <div>
-            <label htmlFor=''>Descrição do perfil</label>
+            <label htmlFor=''>Icon</label>
             <input type='text' />
           </div>
+
+          {/* <CheckMarkField
+            tag={'Perfis'}
+            value={padronizar}
+            handleChange={handlePadronizar}
+          >
+            {moduloPadronizar.map((pad: any) => (
+              <MenuItem key={pad.id} value={pad.descricao}>
+                <Checkbox checked={padronizar.indexOf(pad.descricao) > -1} />
+                <ListItemText primary={pad.descricao} />
+              </MenuItem>
+            ))}
+          </CheckMarkField> */}
         </Form>
       );
     }
@@ -37,15 +56,17 @@ const PerfisSideBarContainer: React.FC<Props> = ({
       return (
         <Form>
           <div>
-            <label htmlFor=''>Perfil</label>
+            <label htmlFor=''>Descrição</label>
             <input type='text' />
           </div>
+
           <div>
-            <label htmlFor=''>Idioma</label>
+            <label htmlFor=''>Ref. Artigo</label>
             <input type='text' />
           </div>
+
           <div>
-            <label htmlFor=''>Descrição do perfil</label>
+            <label htmlFor=''>Icon</label>
             <input type='text' />
           </div>
         </Form>
@@ -55,7 +76,7 @@ const PerfisSideBarContainer: React.FC<Props> = ({
 
   return (
     <>
-      <h1>Gerenciamento de perfis</h1>
+      <h1>Gerenciamento de tarefas</h1>
 
       <Tabs>
         <p
@@ -78,4 +99,4 @@ const PerfisSideBarContainer: React.FC<Props> = ({
   );
 };
 
-export default PerfisSideBarContainer;
+export default TarefasSideBarContainer;

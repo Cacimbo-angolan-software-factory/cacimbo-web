@@ -4,15 +4,32 @@ import { Container } from './ModalOptionsStyles';
 
 interface Props {
   setOpenPerfis: (openPerfis: boolean) => void;
+  setOpenTarefas: (openTarefas: boolean) => void;
   modalRef?: React.MutableRefObject<any>;
 }
 
-const ModalOptions: React.FC<Props> = ({ setOpenPerfis, modalRef }) => {
+const ModalOptions: React.FC<Props> = ({
+  setOpenPerfis,
+  modalRef,
+  setOpenTarefas,
+}) => {
+  const handleOpenPerfis = () => {
+    setOpenPerfis(true);
+    setOpenTarefas(false);
+  };
+
+  const handleOpenTarefaas = () => {
+    setOpenTarefas(true);
+    setOpenPerfis(false);
+  };
+
+  const handleOpenAssistencias = () => {};
+
   return (
     <Container ref={modalRef}>
-      <p onClick={() => setOpenPerfis(true)}>Perfis</p>
-      <p>Editar perfil</p>
-      <p>testing</p>
+      <p onClick={handleOpenPerfis}>Perfis</p>
+      <p onClick={handleOpenTarefaas}>Tarefas</p>
+      <p>Tipos de assistencias</p>
     </Container>
   );
 };
