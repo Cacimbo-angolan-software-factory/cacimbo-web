@@ -55,6 +55,7 @@ export const getUsers = createAsyncThunk(
 export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
   try {
     const response = await userService.getPerfis();
+    console.log(response);
     return response;
   } catch (error: any) {
     return error;
@@ -69,6 +70,24 @@ export const getTarefas = createAsyncThunk(
       console.log(response);
       return response;
     } catch (error: any) {
+      return error;
+    }
+  }
+);
+
+export const createTarefas = createAsyncThunk(
+  'user/createTarefas',
+  async (tarefaData: {
+    id?: number;
+    ref: string;
+    task: string;
+    icon: string;
+  }) => {
+    try {
+      const response = await userService.createTarefas(tarefaData);
+      return response;
+    } catch (error: any) {
+      console.log(error.response.data);
       return error;
     }
   }
@@ -143,6 +162,21 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Sem tarefas disponíveis';
+    });
+
+    // create tarefas
+    builder.addCase(createTarefas.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(createTarefas.fulfilled, (state, action) => {
+      state.tarefas.push(action.payload);
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(createTarefas.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao criar tarefa';
     });
   },
 });

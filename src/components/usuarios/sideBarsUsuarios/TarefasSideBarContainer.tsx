@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 
-import { Form, Tabs } from './stylesSideBars';
+import { Form, Tabs, Button } from './stylesSideBars';
 import CheckMarkField from '../../CheckMarkField';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Checkbox,
+  ListItemText,
+  MenuItem,
+  SelectChangeEvent,
+} from '@mui/material';
+import { AppDispatch } from '../../../redux/store';
+import { createTarefas } from '../../../redux/userFeatures/usersSlice';
 
 interface Props {
   activeTab: string;
@@ -13,39 +21,88 @@ const TarefasSideBarContainer: React.FC<Props> = ({
   activeTab,
   setActiveTab,
 }) => {
-  const { perfis } = useSelector((state: any) => state.user);
+  const { perfis, isLoading } = useSelector((state: any) => state.user);
+  const [value, setValue] = useState({
+    task: '',
+    ref: '',
+    icon: '',
+  });
+  const [perfil, setPerfil] = useState<any[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue({ ...value, [event.target.name]: event.target.value });
+  };
+
+  const handlePerfil = (event: SelectChangeEvent<any>) => {
+    const {
+      target: { value },
+    } = event;
+    setPerfil(value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    // dispatch(
+    //   createTarefas({
+    //     task: value.task,
+    //     ref: value.ref,
+    //     icon: value.icon,
+    //   })
+    // );
+
+    console.log(value);
+  };
 
   const handleCreate = () => {
     if (activeTab === 'create') {
       return (
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <div>
             <label htmlFor=''>Descrição</label>
-            <input type='text' />
+            <input
+              value={value.task}
+              onChange={handleOnChange}
+              name='task'
+              type='text'
+            />
           </div>
 
           <div>
             <label htmlFor=''>Ref. Artigo</label>
-            <input type='text' />
+            <input
+              value={value.ref}
+              onChange={handleOnChange}
+              name='ref'
+              type='text'
+            />
           </div>
 
           <div>
             <label htmlFor=''>Icon</label>
-            <input type='text' />
+            <input
+              value={value.icon}
+              onChange={handleOnChange}
+              name='icon'
+              type='text'
+            />
           </div>
 
-          {/* <CheckMarkField
+          <CheckMarkField
             tag={'Perfis'}
-            value={padronizar}
-            handleChange={handlePadronizar}
+            value={perfil}
+            handleChange={handlePerfil}
           >
-            {moduloPadronizar.map((pad: any) => (
-              <MenuItem key={pad.id} value={pad.descricao}>
-                <Checkbox checked={padronizar.indexOf(pad.descricao) > -1} />
-                <ListItemText primary={pad.descricao} />
+            {perfis.map((perf: any) => (
+              <MenuItem key={perf.id} value={perf.perfil}>
+                <Checkbox checked={perfil.indexOf(perf.perfil) > -1} />
+                <ListItemText primary={perf.perfil} />
               </MenuItem>
             ))}
-          </CheckMarkField> */}
+          </CheckMarkField>
+
+          <Button type='submit'>Criar</Button>
         </Form>
       );
     }
@@ -69,6 +126,8 @@ const TarefasSideBarContainer: React.FC<Props> = ({
             <label htmlFor=''>Icon</label>
             <input type='text' />
           </div>
+
+          <Button type='submit'>Editar</Button>
         </Form>
       );
     }

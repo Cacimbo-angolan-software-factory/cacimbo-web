@@ -47,12 +47,27 @@ const getTarefas = async (user: any) => {
   }
 };
 
+const createTarefas = async (tarefaData: {
+  id?: number;
+  ref: string;
+  task: string;
+  icon: string;
+}) => {
+  try {
+    const response = await api.post(`task-textos`, { ...tarefaData });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const userService = {
   login,
   logout,
   getUsers,
   getPerfis,
   getTarefas,
+  createTarefas,
 };
 
 export default userService;

@@ -16,7 +16,6 @@ const TarefasList: React.FC = () => {
   const { user, tarefas } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const [open, setOpen] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
   const [activeTab, setActiveTab] = useState('create');
   let menuRef = useRef<any>(null);
 
