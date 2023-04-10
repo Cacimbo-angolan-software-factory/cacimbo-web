@@ -129,3 +129,22 @@ export const Form = styled.form`
     border-radius: 0.5rem;
   }
 `;
+
+export const Button = styled.button`
+  background-color: #b71c50;
+  border: 0.5px solid #3a3a3a;
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  color: #ebebeb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;
