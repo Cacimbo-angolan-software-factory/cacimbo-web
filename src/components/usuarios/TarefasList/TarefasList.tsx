@@ -10,11 +10,14 @@ import {
   IoTrashOutline,
 } from 'react-icons/io5';
 import SideBarUsuario from '../sideBarsUsuarios/SideBarUsuario';
+import TarefasSideBarContainer from '../sideBarsUsuarios/TarefasSideBarContainer';
 
 const TarefasList: React.FC = () => {
   const { user, tarefas } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [activeTab, setActiveTab] = useState('create');
   let menuRef = useRef<any>(null);
 
   useEffect(() => {
@@ -33,11 +36,21 @@ const TarefasList: React.FC = () => {
     };
   });
 
+  const handleOpenEdit = () => {
+    setOpen(true);
+    setActiveTab('edit');
+  };
+
+  const handleOpenCreate = () => {
+    setOpen(true);
+    setActiveTab('create');
+  };
+
   return (
     <>
       <TopDiv>
         <h1>Tarefas</h1>
-        <span onClick={() => setOpen(true)}>
+        <span onClick={handleOpenCreate}>
           <IoAddCircleOutline />
         </span>
       </TopDiv>
@@ -52,7 +65,7 @@ const TarefasList: React.FC = () => {
             </div>
 
             <div>
-              <IoPencilOutline />
+              <IoPencilOutline onClick={handleOpenEdit} />
               <IoTrashOutline />
             </div>
           </ItemContainer>
@@ -61,7 +74,10 @@ const TarefasList: React.FC = () => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <h1>Adicionar tarefa</h1>
+          <TarefasSideBarContainer
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </SideBarUsuario>
       )}
     </>
