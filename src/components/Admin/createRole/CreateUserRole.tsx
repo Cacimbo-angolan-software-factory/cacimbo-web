@@ -92,25 +92,6 @@ const CreateUserRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
           />
         </div>
 
-        {/* <SelectInput
-          value={value.permissions}
-          labelName='Permissão raíz'
-          handleChange={(e: React.ChangeEvent<{ value: unknown }>) =>
-            setValue({ ...value, permissions: e.target.value as string })
-          }
-        >
-          {list
-            .filter(
-              (permission: any) =>
-                permission.source_name === null && permission.source_id !== null
-            )
-            .map((permission: any) => (
-              <MenuItem key={permission.id} value={permission.id}>
-                {permission.name}
-              </MenuItem>
-            ))}
-        </SelectInput> */}
-
         <CheckMarkField
           tag={'Permissão raíz'}
           value={permission}
