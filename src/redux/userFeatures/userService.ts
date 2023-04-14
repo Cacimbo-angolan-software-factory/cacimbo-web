@@ -50,7 +50,7 @@ const getTarefas = async (user: any) => {
 const createTarefas = async (tarefaData: {
   id?: number;
   ref: string;
-  task: string;
+  tarefa: string;
   icon: string;
 }) => {
   try {
