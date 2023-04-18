@@ -63,8 +63,13 @@ const CreateUserRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
         permissions: permissionsId,
       })
     );
-    console.log(value);
-    console.log(permissionsId);
+
+    setValue({
+      name: '',
+      CompanyID: user.user.lastCompanyIDUsed,
+      description: '',
+      permissions: [] as any,
+    });
   };
 
   return (

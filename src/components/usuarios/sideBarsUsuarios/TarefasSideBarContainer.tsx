@@ -23,7 +23,12 @@ const TarefasSideBarContainer: React.FC<Props> = ({
 }) => {
   const { perfis, isLoading } = useSelector((state: any) => state.user);
   const [value, setValue] = useState({
-    task: '',
+    tarefa: '',
+    ref: '',
+    icon: '',
+  });
+  const [editValue, setEditValue] = useState({
+    tarefa: '',
     ref: '',
     icon: '',
   });
@@ -32,6 +37,10 @@ const TarefasSideBarContainer: React.FC<Props> = ({
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
+  };
+
+  const handleOnEditChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditValue({ ...editValue, [event.target.name]: event.target.value });
   };
 
   const handlePerfil = (event: SelectChangeEvent<any>) => {
@@ -44,15 +53,19 @@ const TarefasSideBarContainer: React.FC<Props> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // dispatch(
-    //   createTarefas({
-    //     task: value.task,
-    //     ref: value.ref,
-    //     icon: value.icon,
-    //   })
-    // );
+    dispatch(
+      createTarefas({
+        tarefa: value.tarefa,
+        ref: value.ref,
+        icon: value.icon,
+      })
+    );
 
-    console.log(value);
+    setValue({
+      tarefa: '',
+      ref: '',
+      icon: '',
+    });
   };
 
   const handleCreate = () => {
@@ -62,9 +75,9 @@ const TarefasSideBarContainer: React.FC<Props> = ({
           <div>
             <label htmlFor=''>Descrição</label>
             <input
-              value={value.task}
+              value={value.tarefa}
               onChange={handleOnChange}
-              name='task'
+              name='tarefa'
               type='text'
             />
           </div>
@@ -102,7 +115,9 @@ const TarefasSideBarContainer: React.FC<Props> = ({
             ))}
           </CheckMarkField>
 
-          <Button type='submit'>Criar</Button>
+          <Button type='submit'>
+            {isLoading ? 'Aguarde...' : 'Criar tarefa'}
+          </Button>
         </Form>
       );
     }
@@ -114,20 +129,38 @@ const TarefasSideBarContainer: React.FC<Props> = ({
         <Form>
           <div>
             <label htmlFor=''>Descrição</label>
-            <input type='text' />
+            <input
+              value={editValue.tarefa}
+              name='tarefa'
+              onChange={handleOnEditChange}
+              type='text'
+            />
           </div>
 
           <div>
             <label htmlFor=''>Ref. Artigo</label>
-            <input type='text' />
+            <input
+              value={editValue.ref}
+              name='ref'
+              onChange={handleOnEditChange}
+              type='text'
+            />
           </div>
 
           <div>
             <label htmlFor=''>Icon</label>
-            <input type='text' />
+            <input
+              value={editValue.icon}
+              name='icon'
+              onChange={handleOnEditChange}
+              type='text'
+            />
           </div>
 
-          <Button type='submit'>Editar</Button>
+          <Button type='submit'>
+            {' '}
+            {isLoading ? 'Aguarde...' : 'Editar tarefa'}
+          </Button>
         </Form>
       );
     }

@@ -52,11 +52,13 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
       })
     );
 
-    // setValue({
-    //   name: '',
-    //   description: '',
-    //   type: Type.geral,
-    // });
+    setValue({
+      name: '',
+      description: '',
+      type: Type.geral,
+      source_name: '',
+      source_id: '',
+    });
     console.log(value);
   };
 
@@ -106,7 +108,9 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
 
         <Div className='buttons'>
           <button onClick={() => setCriarPermission(false)}>Cancelar</button>
-          <button type='submit'>Criar permissão</button>
+          <button type='submit'>
+            {isLoading ? 'Aguarde...' : 'Criar permissão'}
+          </button>
         </Div>
       </Form>
     </Container>

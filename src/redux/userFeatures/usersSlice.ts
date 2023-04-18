@@ -80,7 +80,7 @@ export const createTarefas = createAsyncThunk(
   async (tarefaData: {
     id?: number;
     ref: string;
-    task: string;
+    tarefa: string;
     icon: string;
   }) => {
     try {
