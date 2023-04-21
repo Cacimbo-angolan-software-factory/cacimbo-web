@@ -38,6 +38,7 @@ interface ICreateContext {
     Nif: string;
   }[];
   sections: any;
+  loadingToApproveAndAuction?: boolean;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -267,7 +268,6 @@ export const LicProvider = ({ children }: IContext) => {
           }
         });
         setSections(SectionsRequestToApprove);
-        console.log(SectionsRequestToApprove);
         setLoadingToApproveAndAuction(false);
       });
     } catch (err: any) {
@@ -315,6 +315,7 @@ export const LicProvider = ({ children }: IContext) => {
         loadingLicenses,
         getNif,
         sections,
+        loadingToApproveAndAuction,
       }}
     >
       {children}
