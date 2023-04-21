@@ -2,6 +2,7 @@ import React from 'react';
 import { IoPersonAddOutline } from 'react-icons/io5';
 
 import { Buttons, Container } from './stylesSingleSoli';
+import { useSelector } from 'react-redux';
 
 interface SolicitacaoProps {
   lic_request: any;
@@ -9,6 +10,7 @@ interface SolicitacaoProps {
 
 const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
   const { id, cliente_nome, tipo, cliente_nif, data } = lic_request;
+  const { user } = useSelector((state: any) => state.user);
 
   return (
     <Container>
@@ -18,10 +20,13 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
       <p>{tipo}</p>
       <p>{data}</p>
       <Buttons>
-        <button>
-          <IoPersonAddOutline />
-          Atribuir
-        </button>
+        {user.user.parceiro_id === 1 ? (
+          <button>
+            <IoPersonAddOutline />
+            Atribuir
+          </button>
+        ) : null}
+
         <button>
           <IoPersonAddOutline />
           Interesse
