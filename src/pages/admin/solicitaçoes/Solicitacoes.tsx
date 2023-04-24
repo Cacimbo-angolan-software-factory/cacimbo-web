@@ -94,8 +94,7 @@ const Solicitaçoes: React.FC = () => {
                     </Wrapper>
                   </div>
                 ))}
-          </Container>
-          <Container>
+
             {sections[1]?.data.length > 0 &&
               sections[1].data
                 .filter((item: any) => {
@@ -135,8 +134,7 @@ const Solicitaçoes: React.FC = () => {
                     </Wrapper>
                   </div>
                 ))}
-          </Container>
-          <Container>
+
             {lic_requests
               .filter((item: any) => {
                 if (search === '') {
@@ -230,7 +228,7 @@ const Solicitaçoes: React.FC = () => {
                 <div key={`${section.id} - ${index}`}>
                   <Wrapper>
                     <h2>{section.empresa.nome}</h2>
-                    <p>{section.id}</p>
+                    {/* <p>{section.sol_modulos.modulo.modulo}</p> */}
                     <h2 className='nif'>{section.empresa.nif}</h2>
                     <p>{section.tipo}</p>
                     <p>{section.data}</p>
