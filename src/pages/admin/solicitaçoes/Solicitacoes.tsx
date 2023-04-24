@@ -15,6 +15,9 @@ import {
 } from 'react-icons/io5';
 import FiltersSoli from './FiltersSoli';
 import EmptyState from '../../../components/emptyState/EmptyState';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCanal } from '../../../redux/solicitaçaoFeatures/solicSlice';
+import { AppDispatch } from '../../../redux/store';
 
 const Solicitaçoes: React.FC = () => {
   const {
@@ -22,10 +25,19 @@ const Solicitaçoes: React.FC = () => {
     IsLoadingTheOrder,
     sections,
     loadingToApproveAndAuction,
+    showInterest,
+    loadingInterest,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [filtro, setFiltro] = React.useState('todas');
+  const { user } = useSelector((state: any) => state.user);
+  const { canal } = useSelector((state: any) => state.solicitaçao);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getCanal());
+  }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -33,6 +45,15 @@ const Solicitaçoes: React.FC = () => {
 
   const renderSpinner = () => {
     return IsLoadingTheOrder && loadingToApproveAndAuction;
+  };
+
+  const handleInterest = (item: any) => {
+    showInterest &&
+      showInterest({
+        canal_id: canal?.id,
+        user_id: user?.user.id,
+        solicitacao_id: item.id,
+      });
   };
 
   const showTodas = () => {
@@ -101,8 +122,14 @@ const Solicitaçoes: React.FC = () => {
                       <p>{section.data}</p>
                       <div>
                         <button className='interesse'>
-                          <IoPersonAddOutline />
-                          Interesse
+                          {loadingInterest ? (
+                            'Aguarde...'
+                          ) : (
+                            <>
+                              <IoPersonAddOutline />
+                              Interesse
+                            </>
+                          )}
                         </button>
                       </div>
                     </Wrapper>
@@ -208,7 +235,10 @@ const Solicitaçoes: React.FC = () => {
                     <p>{section.tipo}</p>
                     <p>{section.data}</p>
                     <div>
-                      <button className='interesse'>
+                      <button
+                        className='interesse'
+                        onClick={() => handleInterest(section.id)}
+                      >
                         <IoPersonAddOutline />
                         Interesse
                       </button>

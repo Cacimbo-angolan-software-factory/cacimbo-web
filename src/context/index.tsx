@@ -39,6 +39,8 @@ interface ICreateContext {
   }[];
   sections: any;
   loadingToApproveAndAuction?: boolean;
+  showInterest?: (dataInterest: any) => Promise<void>;
+  loadingInterest?: boolean;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -66,6 +68,7 @@ export const LicProvider = ({ children }: IContext) => {
   const [loadingToApproveAndAuction, setLoadingToApproveAndAuction] =
     useState(false);
   const [sections, setSections] = useState<any>([]);
+  const [loadingInterest, setLoadingInterest] = useState(false);
 
   const user = {
     id: 1,
@@ -284,6 +287,18 @@ export const LicProvider = ({ children }: IContext) => {
     }
   }
 
+  async function showInterest(dataInterest: any) {
+    try {
+      setLoadingInterest(true);
+      await api.put('solicitacoes/mostrar-interesse', dataInterest);
+      await getRequestToApproveAndAuctionRequests();
+      setLoadingInterest(false);
+    } catch (err) {
+      setLoadingInterest(false);
+      throw err;
+    }
+  }
+
   useEffect(() => {
     getLic();
     getLicRequest();
@@ -316,6 +331,8 @@ export const LicProvider = ({ children }: IContext) => {
         getNif,
         sections,
         loadingToApproveAndAuction,
+        showInterest,
+        loadingInterest,
       }}
     >
       {children}
