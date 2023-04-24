@@ -8,15 +8,289 @@ import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
-import { Container, InputSearch } from './stylesSoli';
+import { Container, InputSearch, Wrapper, EmptyDivState } from './stylesSoli';
+import {
+  IoPersonAddOutline,
+  IoCheckmarkDoneCircleOutline,
+} from 'react-icons/io5';
+import FiltersSoli from './FiltersSoli';
+import EmptyState from '../../../components/emptyState/EmptyState';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCanal } from '../../../redux/solicitaçaoFeatures/solicSlice';
+import { AppDispatch } from '../../../redux/store';
 
 const Solicitaçoes: React.FC = () => {
-  const { lic_requests, IsLoadingTheOrder, sections } = useContext(LicContext);
+  const {
+    lic_requests,
+    IsLoadingTheOrder,
+    sections,
+    loadingToApproveAndAuction,
+    showInterest,
+    loadingInterest,
+  } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
+  const [filtro, setFiltro] = React.useState('todas');
+  const { user } = useSelector((state: any) => state.user);
+  const { canal } = useSelector((state: any) => state.solicitaçao);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getCanal());
+  }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
+  };
+
+  const renderSpinner = () => {
+    return IsLoadingTheOrder && loadingToApproveAndAuction;
+  };
+
+  const handleInterest = (item: any) => {
+    showInterest &&
+      showInterest({
+        canal_id: canal?.id,
+        user_id: user?.user.id,
+        solicitacao_id: item.id,
+      });
+  };
+
+  const showTodas = () => {
+    if (filtro === 'todas') {
+      return (
+        <>
+          <Container>
+            {sections[0]?.data.length > 0 &&
+              sections[0].data
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.parceiro.Nome.toLowerCase().includes(
+                      search.toLowerCase()
+                    ) ||
+                    item.parceiro.Nif.toLowerCase().includes(
+                      search.toLowerCase()
+                    )
+                  ) {
+                    return item;
+                  }
+                })
+                .map((section: any, index: number) => (
+                  <div key={`${section.id} - ${index}`}>
+                    <Wrapper>
+                      <h2>{section.parceiro.Nome}</h2>
+                      <p>{section.id}</p>
+                      <h2 className='nif'>{section.parceiro.Nif}</h2>
+                      <p>{section.solicitacao.tipo}</p>
+                      <p>{section.data}</p>
+                      <div>
+                        <button>
+                          <IoCheckmarkDoneCircleOutline />
+                          Aprovar
+                        </button>
+                      </div>
+                    </Wrapper>
+                  </div>
+                ))}
+          </Container>
+          <Container>
+            {sections[1]?.data.length > 0 &&
+              sections[1].data
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.empresa.nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.empresa.nif
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((section: any, index: number) => (
+                  <div key={`${section.id} - ${index}`}>
+                    <Wrapper>
+                      <h2>{section.empresa.nome}</h2>
+                      <p>{section.id}</p>
+                      <h2 className='nif'>{section.empresa.nif}</h2>
+                      <p>{section.tipo}</p>
+                      <p>{section.data}</p>
+                      <div>
+                        <button className='interesse'>
+                          {loadingInterest ? (
+                            'Aguarde...'
+                          ) : (
+                            <>
+                              <IoPersonAddOutline />
+                              Interesse
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </Wrapper>
+                  </div>
+                ))}
+          </Container>
+          <Container>
+            {lic_requests
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((lic_request: any) => (
+                <div key={lic_request.id}>
+                  <Solicitacao lic_request={lic_request} />
+                </div>
+              ))}
+          </Container>
+        </>
+      );
+    }
+  };
+
+  const showPorAprovar = () => {
+    if (filtro === 'porAprovar') {
+      return (
+        <Container>
+          {sections[0]?.data.length > 0 ? (
+            sections[0].data
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.parceiro.Nome.toLowerCase().includes(
+                    search.toLowerCase()
+                  ) ||
+                  item.parceiro.Nif.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((section: any, index: number) => (
+                <div key={`${section.id} - ${index}`}>
+                  <Wrapper>
+                    <h2>{section.parceiro.Nome}</h2>
+                    <p>{section.id}</p>
+                    <h2 className='nif'>{section.parceiro.Nif}</h2>
+                    <p>{section.solicitacao.tipo}</p>
+                    <p>{section.data}</p>
+                    <div>
+                      <button>
+                        <IoCheckmarkDoneCircleOutline />
+                        Aprovar
+                      </button>
+                    </div>
+                  </Wrapper>
+                </div>
+              ))
+          ) : (
+            <EmptyDivState>
+              <EmptyState>
+                <p>Não existem solicitações por aprovar.</p>
+              </EmptyState>
+            </EmptyDivState>
+          )}
+        </Container>
+      );
+    }
+  };
+
+  const showLeilao = () => {
+    if (filtro === 'leilao') {
+      return (
+        <Container>
+          {sections[1]?.data.length > 0 ? (
+            sections[1].data
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.empresa.nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.empresa.nif.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((section: any, index: number) => (
+                <div key={`${section.id} - ${index}`}>
+                  <Wrapper>
+                    <h2>{section.empresa.nome}</h2>
+                    <p>{section.id}</p>
+                    <h2 className='nif'>{section.empresa.nif}</h2>
+                    <p>{section.tipo}</p>
+                    <p>{section.data}</p>
+                    <div>
+                      <button
+                        className='interesse'
+                        onClick={() => handleInterest(section.id)}
+                      >
+                        <IoPersonAddOutline />
+                        Interesse
+                      </button>
+                    </div>
+                  </Wrapper>
+                </div>
+              ))
+          ) : (
+            <EmptyDivState>
+              <EmptyState>
+                <p>Não existem solicitações em leilão.</p>
+              </EmptyState>
+            </EmptyDivState>
+          )}
+        </Container>
+      );
+    }
+  };
+
+  const showAtribuidas = () => {
+    if (filtro === 'atribuidas') {
+      return (
+        <Container>
+          {lic_requests.length > 0 ? (
+            lic_requests
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((lic_request: any) => (
+                <div key={lic_request.id}>
+                  <Solicitacao lic_request={lic_request} />
+                </div>
+              ))
+          ) : (
+            <EmptyDivState>
+              <EmptyState>
+                <p>Não existem solicitações por atribuir.</p>
+              </EmptyState>
+            </EmptyDivState>
+          )}
+        </Container>
+      );
+    }
   };
 
   return (
@@ -43,37 +317,17 @@ const Solicitaçoes: React.FC = () => {
             type='text'
             placeholder='Pesquise solicitação...'
           />
-          <Container>
-            {lic_requests
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((lic_request: any) => (
-                <div key={lic_request.id}>
-                  <Solicitacao lic_request={lic_request} />
-                </div>
-              ))}
-          </Container>
-          <Container>
-            {/* {sections.map((section: any) => (
-              <div key={section.id}>
-                <Solicitacao lic_request={section} />
-              </div>
-            ))} */}
-          </Container>
+
+          <FiltersSoli filtro={filtro} setFiltro={setFiltro} />
+
+          {showPorAprovar && showPorAprovar()}
+          {showLeilao && showLeilao()}
+          {showTodas && showTodas()}
+          {showAtribuidas && showAtribuidas()}
         </>
       )}
 
-      {IsLoadingTheOrder && <Spinner />}
+      {renderSpinner() && <Spinner />}
       <ScrollTop />
     </>
   );

@@ -38,6 +38,9 @@ interface ICreateContext {
     Nif: string;
   }[];
   sections: any;
+  loadingToApproveAndAuction?: boolean;
+  showInterest?: (dataInterest: any) => Promise<void>;
+  loadingInterest?: boolean;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -65,6 +68,7 @@ export const LicProvider = ({ children }: IContext) => {
   const [loadingToApproveAndAuction, setLoadingToApproveAndAuction] =
     useState(false);
   const [sections, setSections] = useState<any>([]);
+  const [loadingInterest, setLoadingInterest] = useState(false);
 
   const user = {
     id: 1,
@@ -267,7 +271,6 @@ export const LicProvider = ({ children }: IContext) => {
           }
         });
         setSections(SectionsRequestToApprove);
-        console.log(SectionsRequestToApprove);
         setLoadingToApproveAndAuction(false);
       });
     } catch (err: any) {
@@ -281,6 +284,18 @@ export const LicProvider = ({ children }: IContext) => {
         console.error('😭 Algo deu errado, Tente mais tarde', 'error');
         return;
       }
+    }
+  }
+
+  async function showInterest(dataInterest: any) {
+    try {
+      setLoadingInterest(true);
+      await api.put('solicitacoes/mostrar-interesse', dataInterest);
+      await getRequestToApproveAndAuctionRequests();
+      setLoadingInterest(false);
+    } catch (err) {
+      setLoadingInterest(false);
+      throw err;
     }
   }
 
@@ -315,6 +330,9 @@ export const LicProvider = ({ children }: IContext) => {
         loadingLicenses,
         getNif,
         sections,
+        loadingToApproveAndAuction,
+        showInterest,
+        loadingInterest,
       }}
     >
       {children}

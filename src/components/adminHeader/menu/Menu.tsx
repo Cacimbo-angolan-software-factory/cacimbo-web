@@ -59,21 +59,10 @@ const Menu: React.FC = () => {
         <p>Solicitações</p>
       </MenuItem>
 
-      {/* <MenuItem to='/Admin'>
-        <span>
-          <RiWechatFill />
-        </span>
-        <p>Comunidade</p>
-      </MenuItem>
-
-      <MenuItem to='/Admin'>
-        <span>
-          <RiNewspaperFill />
-        </span>
-        <p>Noticías</p>
-      </MenuItem> */}
-
-      <MenuItem to='/Usuarios'>
+      <MenuItem
+        className={location.pathname === `/Usuarios` ? 'active' : 'inherit'}
+        to='/Usuarios'
+      >
         <span>
           <RiUserFill />
         </span>
