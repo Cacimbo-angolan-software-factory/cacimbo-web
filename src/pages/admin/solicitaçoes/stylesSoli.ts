@@ -112,3 +112,13 @@ export const DivFilters = styled.div`
     cursor: pointer;
   }
 `;
+
+export const EmptyDivState = styled.div`
+  display: flex;
+  margin-top: 5rem;
+  justify-content: center;
+
+  & p {
+    font-size: 1.6rem;
+  }
+`;

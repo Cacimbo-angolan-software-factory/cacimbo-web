@@ -33,7 +33,7 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
         className={filtro === 'atribuidas' ? 'active' : ''}
         onClick={() => setFiltro('atribuidas')}
       >
-        <h2>Atribuidas</h2>
+        <h2>Por atribuir</h2>
       </span>
       <RiFilter3Fill />
     </DivFilters>

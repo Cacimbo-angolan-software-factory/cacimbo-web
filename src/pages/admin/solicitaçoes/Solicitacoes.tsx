@@ -8,12 +8,13 @@ import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
-import { Container, InputSearch, Wrapper } from './stylesSoli';
+import { Container, InputSearch, Wrapper, EmptyDivState } from './stylesSoli';
 import {
   IoPersonAddOutline,
   IoCheckmarkDoneCircleOutline,
 } from 'react-icons/io5';
 import FiltersSoli from './FiltersSoli';
+import EmptyState from '../../../components/emptyState/EmptyState';
 
 const Solicitaçoes: React.FC = () => {
   const {
@@ -137,7 +138,7 @@ const Solicitaçoes: React.FC = () => {
     if (filtro === 'porAprovar') {
       return (
         <Container>
-          {sections[0]?.data.length > 0 &&
+          {sections[0]?.data.length > 0 ? (
             sections[0].data
               .filter((item: any) => {
                 if (search === '') {
@@ -167,7 +168,14 @@ const Solicitaçoes: React.FC = () => {
                     </div>
                   </Wrapper>
                 </div>
-              ))}
+              ))
+          ) : (
+            <EmptyDivState>
+              <EmptyState>
+                <p>Não existem solicitações por aprovar.</p>
+              </EmptyState>
+            </EmptyDivState>
+          )}
         </Container>
       );
     }
@@ -177,7 +185,7 @@ const Solicitaçoes: React.FC = () => {
     if (filtro === 'leilao') {
       return (
         <Container>
-          {sections[1]?.data.length > 0 &&
+          {sections[1]?.data.length > 0 ? (
             sections[1].data
               .filter((item: any) => {
                 if (search === '') {
@@ -207,7 +215,14 @@ const Solicitaçoes: React.FC = () => {
                     </div>
                   </Wrapper>
                 </div>
-              ))}
+              ))
+          ) : (
+            <EmptyDivState>
+              <EmptyState>
+                <p>Não existem solicitações em leilão.</p>
+              </EmptyState>
+            </EmptyDivState>
+          )}
         </Container>
       );
     }
@@ -217,24 +232,32 @@ const Solicitaçoes: React.FC = () => {
     if (filtro === 'atribuidas') {
       return (
         <Container>
-          {lic_requests
-            .filter((item: any) => {
-              if (search === '') {
-                return item;
-              } else if (
-                item.cliente_nome
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
-                item.cliente_nif.toLowerCase().includes(search.toLowerCase())
-              ) {
-                return item;
-              }
-            })
-            .map((lic_request: any) => (
-              <div key={lic_request.id}>
-                <Solicitacao lic_request={lic_request} />
-              </div>
-            ))}
+          {lic_requests.length > 0 ? (
+            lic_requests
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((lic_request: any) => (
+                <div key={lic_request.id}>
+                  <Solicitacao lic_request={lic_request} />
+                </div>
+              ))
+          ) : (
+            <EmptyDivState>
+              <EmptyState>
+                <p>Não existem solicitações por atribuir.</p>
+              </EmptyState>
+            </EmptyDivState>
+          )}
         </Container>
       );
     }
