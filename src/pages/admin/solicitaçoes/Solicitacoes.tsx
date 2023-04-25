@@ -27,6 +27,7 @@ const Solicitaçoes: React.FC = () => {
     loadingToApproveAndAuction,
     showInterest,
     loadingInterest,
+    empresas,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
@@ -37,6 +38,7 @@ const Solicitaçoes: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCanal());
+    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +56,19 @@ const Solicitaçoes: React.FC = () => {
         user_id: user?.user.id,
         solicitacao_id: item.id,
       });
+  };
+
+  const filterBySearch = (data: any) => {
+    data.filter((item: any) => {
+      if (search === '') {
+        return item;
+      } else if (
+        item.empresa.nome.toLowerCase().includes(search.toLowerCase()) ||
+        item.empresa.nif.toLowerCase().includes(search.toLowerCase())
+      ) {
+        return item;
+      }
+    });
   };
 
   const showTodas = () => {
@@ -76,6 +91,11 @@ const Solicitaçoes: React.FC = () => {
                   ) {
                     return item;
                   }
+                })
+                .sort((a: any, b: any) => {
+                  const dateA = new Date(a.data);
+                  const dateB = new Date(b.data);
+                  return dateB.getTime() - dateA.getTime();
                 })
                 .map((section: any, index: number) => (
                   <div key={`${section.id} - ${index}`}>
@@ -110,6 +130,11 @@ const Solicitaçoes: React.FC = () => {
                   ) {
                     return item;
                   }
+                })
+                .sort((a: any, b: any) => {
+                  const dateA = new Date(a.data);
+                  const dateB = new Date(b.data);
+                  return dateB.getTime() - dateA.getTime();
                 })
                 .map((section: any, index: number) => (
                   <div key={`${section.id} - ${index}`}>
@@ -148,6 +173,11 @@ const Solicitaçoes: React.FC = () => {
                   return item;
                 }
               })
+              .sort((a: any, b: any) => {
+                const dateA = new Date(a.data);
+                const dateB = new Date(b.data);
+                return dateB.getTime() - dateA.getTime();
+              })
               .map((lic_request: any) => (
                 <div key={lic_request.id}>
                   <Solicitacao lic_request={lic_request} />
@@ -176,6 +206,11 @@ const Solicitaçoes: React.FC = () => {
                 ) {
                   return item;
                 }
+              })
+              .sort((a: any, b: any) => {
+                const dateA = new Date(a.data);
+                const dateB = new Date(b.data);
+                return dateB.getTime() - dateA.getTime();
               })
               .map((section: any, index: number) => (
                 <div key={`${section.id} - ${index}`}>
@@ -223,6 +258,11 @@ const Solicitaçoes: React.FC = () => {
                 ) {
                   return item;
                 }
+              })
+              .sort((a: any, b: any) => {
+                const dateA = new Date(a.data);
+                const dateB = new Date(b.data);
+                return dateB.getTime() - dateA.getTime();
               })
               .map((section: any, index: number) => (
                 <div key={`${section.id} - ${index}`}>
@@ -273,6 +313,11 @@ const Solicitaçoes: React.FC = () => {
                 ) {
                   return item;
                 }
+              })
+              .sort((a: any, b: any) => {
+                const dateA = new Date(a.data);
+                const dateB = new Date(b.data);
+                return dateB.getTime() - dateA.getTime();
               })
               .map((lic_request: any) => (
                 <div key={lic_request.id}>
