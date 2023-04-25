@@ -38,7 +38,6 @@ const Solicitaçoes: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCanal());
-    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,19 +55,6 @@ const Solicitaçoes: React.FC = () => {
         user_id: user?.user.id,
         solicitacao_id: item.id,
       });
-  };
-
-  const filterBySearch = (data: any) => {
-    data.filter((item: any) => {
-      if (search === '') {
-        return item;
-      } else if (
-        item.empresa.nome.toLowerCase().includes(search.toLowerCase()) ||
-        item.empresa.nif.toLowerCase().includes(search.toLowerCase())
-      ) {
-        return item;
-      }
-    });
   };
 
   const showTodas = () => {
