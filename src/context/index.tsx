@@ -41,6 +41,9 @@ interface ICreateContext {
   loadingToApproveAndAuction?: boolean;
   showInterest?: (dataInterest: any) => Promise<void>;
   loadingInterest?: boolean;
+  desistirInterest?: (dataInterest: any) => Promise<void>;
+  aprovar?: (aproveData: any) => Promise<void>;
+  rejeitar?: (rejectData: any) => Promise<void>;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -314,6 +317,33 @@ export const LicProvider = ({ children }: IContext) => {
     }
   }
 
+  async function desistirInterest(dataInterest: any) {
+    try {
+      await api.put('solicitacoes/desistir-interesse', dataInterest);
+      await getRequestToApproveAndAuctionRequests();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function aprovar(aproveData: any) {
+    try {
+      await api.put('solicitacoes/aprovar-parceiro-interessado', aproveData);
+      await getRequestToApproveAndAuctionRequests();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function rejeitar(rejectData: any) {
+    try {
+      await api.put('solicitacoes/rejeitar-parceiro-interessado', rejectData);
+      await getRequestToApproveAndAuctionRequests();
+    } catch (err) {
+      throw err;
+    }
+  }
+
   useEffect(() => {
     getLic();
     getLicRequest();
@@ -348,6 +378,9 @@ export const LicProvider = ({ children }: IContext) => {
         loadingToApproveAndAuction,
         showInterest,
         loadingInterest,
+        desistirInterest,
+        aprovar,
+        rejeitar,
       }}
     >
       {children}
