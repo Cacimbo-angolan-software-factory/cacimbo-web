@@ -262,13 +262,28 @@ export const LicProvider = ({ children }: IContext) => {
       Promise.all([toApprovePromise, AuctionRequestPromise]).then((res) => {
         SectionsRequestToApprove.map((section: any) => {
           if (section.title === 'Por aprovar') {
-            section.data.push(...res[0].data);
+            res[0].data.forEach((item: any) => {
+              if (
+                !section.data.find(
+                  (existingItem: any) => existingItem.id === item.id
+                )
+              ) {
+                section.data.push(item);
+              }
+            });
           }
           if (section.title === 'Em leilão') {
-            section.data.push(...res[1].data);
-          } else {
-            return null;
+            res[1].data.forEach((item: any) => {
+              if (
+                !section.data.find(
+                  (existingItem: any) => existingItem.id === item.id
+                )
+              ) {
+                section.data.push(item);
+              }
+            });
           }
+          return null;
         });
         setSections(SectionsRequestToApprove);
         setLoadingToApproveAndAuction(false);
