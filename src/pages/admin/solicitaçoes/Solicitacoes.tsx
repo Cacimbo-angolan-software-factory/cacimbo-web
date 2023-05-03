@@ -16,11 +16,7 @@ import {
   SearchAndFilters,
   ContainerHeader,
 } from './stylesSoli';
-import {
-  IoPersonAddOutline,
-  IoCheckmarkDoneCircleOutline,
-  IoSearchCircleOutline,
-} from 'react-icons/io5';
+import { IoPersonAddOutline } from 'react-icons/io5';
 import FiltersSoli from './FiltersSoli';
 import EmptyState from '../../../components/emptyState/EmptyState';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,7 +31,6 @@ const Solicitaçoes: React.FC = () => {
     loadingToApproveAndAuction,
     showInterest,
     loadingInterest,
-    empresas,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
@@ -179,7 +174,7 @@ const Solicitaçoes: React.FC = () => {
                     <td className='big-text data'>{section.data}</td>
                     <td>N/A</td>
                     <td className='big-text'>{section.empresa.nome}</td>
-                    <td className='nif'>{section.empresa.nif}</td>
+                    <td className='big-text'>{section.empresa.nif}</td>
                     <td className='big-text'>{section.empresa.email}</td>
                     <td>
                       <span
