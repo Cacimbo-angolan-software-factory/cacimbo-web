@@ -9,16 +9,30 @@ interface SolicitacaoProps {
 }
 
 const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
-  const { id, cliente_nome, tipo, cliente_nif, data } = lic_request;
+  const { id, cliente_nome, tipo, cliente_nif, data, parceiro_nome } =
+    lic_request;
   const { user } = useSelector((state: any) => state.user);
 
   return (
-    <Container>
-      <h2>{cliente_nome}</h2>
-      <p>{id}</p>
-      <h2 className='nif'>{cliente_nif}</h2>
-      <p>{tipo}</p>
-      <p>{data}</p>
+    <>
+      <td className='big-text data'>{data}</td>
+      <td className='big-text'>{cliente_nome}</td>
+      <td className='big-text'>{parceiro_nome}</td>
+      <td className='big-text'>{cliente_nif}</td>
+      <td>N/A</td>
+      <td>
+        <span
+          className={
+            tipo === 'Renovação'
+              ? 'renovacao'
+              : tipo === 'Padronizar'
+              ? 'padronizar'
+              : 'comum'
+          }
+        >
+          {tipo}
+        </span>
+      </td>
       <Buttons>
         {user.user.parceiro_id === 1 ? (
           <button>
@@ -32,7 +46,7 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
           Interesse
         </button>
       </Buttons>
-    </Container>
+    </>
   );
 };
 

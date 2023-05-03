@@ -8,11 +8,15 @@ import Solicitacao from '../../../components/solicitacoes/Solicitacao';
 import Spinner from '../../../components/spinner/Spinner';
 import { LicContext } from '../../../context';
 
-import { Container, InputSearch, Wrapper, EmptyDivState } from './stylesSoli';
 import {
-  IoPersonAddOutline,
-  IoCheckmarkDoneCircleOutline,
-} from 'react-icons/io5';
+  Container,
+  InputSearch,
+  Wrapper,
+  EmptyDivState,
+  SearchAndFilters,
+  ContainerHeader,
+} from './stylesSoli';
+import { IoPersonAddOutline } from 'react-icons/io5';
 import FiltersSoli from './FiltersSoli';
 import EmptyState from '../../../components/emptyState/EmptyState';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,13 +34,14 @@ const Solicitaçoes: React.FC = () => {
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
-  const [filtro, setFiltro] = React.useState('todas');
+  const [filtro, setFiltro] = React.useState('porAprovar');
   const { user } = useSelector((state: any) => state.user);
   const { canal } = useSelector((state: any) => state.solicitaçao);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getCanal());
+    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,11 +61,22 @@ const Solicitaçoes: React.FC = () => {
       });
   };
 
-  const showTodas = () => {
-    if (filtro === 'todas') {
+  const showPorAprovar = () => {
+    if (filtro === 'porAprovar') {
       return (
-        <>
-          <Container>
+        <Container>
+          <thead>
+            <ContainerHeader>
+              <th>Data</th>
+              <th>Cliente</th>
+              <th>Solicitante</th>
+              <th>Nif</th>
+              <th>Contacto</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </ContainerHeader>
+          </thead>
+          <tbody>
             {sections[0]?.data.length > 0 &&
               sections[0].data
                 .filter((item: any) => {
@@ -77,26 +93,62 @@ const Solicitaçoes: React.FC = () => {
                     return item;
                   }
                 })
+                .sort((a: any, b: any) => {
+                  const dateA = new Date(a.data);
+                  const dateB = new Date(b.data);
+                  return dateB.getTime() - dateA.getTime();
+                })
                 .map((section: any, index: number) => (
-                  <div key={`${section.id} - ${index}`}>
-                    <Wrapper>
-                      <h2>{section.parceiro.Nome}</h2>
-                      <p>{section.id}</p>
-                      <h2 className='nif'>{section.parceiro.Nif}</h2>
-                      <p>{section.solicitacao.tipo}</p>
-                      <p>{section.data}</p>
-                      <div>
-                        <button>
-                          <IoCheckmarkDoneCircleOutline />
-                          Aprovar
-                        </button>
-                      </div>
-                    </Wrapper>
-                  </div>
+                  <Wrapper key={`${section.id} - ${index}`}>
+                    <td className='big-text data'>{section.data}</td>
+                    <td>N/A</td>
+                    <td className='big-text'>{section.parceiro.Nome}</td>
+                    <td>{section.parceiro.Nif}</td>
+                    <td className='big-text'>{section.parceiro.email}</td>
+                    <td>
+                      <span
+                        className={
+                          section.solicitacao.tipo === 'Renovação'
+                            ? 'renovacao'
+                            : section.solicitacao.tipo === 'Padronizar'
+                            ? 'padronizar'
+                            : 'comum'
+                        }
+                      >
+                        {section.solicitacao.tipo}
+                      </span>
+                    </td>
+                    <td className='big-text'>
+                      <button onClick={() => handleInterest(section.id)}>
+                        <IoPersonAddOutline />
+                        <p>Atribuir</p>
+                      </button>
+                    </td>
+                  </Wrapper>
                 ))}
-          </Container>
-          <Container>
-            {sections[1]?.data.length > 0 &&
+          </tbody>
+        </Container>
+      );
+    }
+  };
+
+  const showLeilao = () => {
+    if (filtro === 'leilao') {
+      return (
+        <Container>
+          <thead>
+            <ContainerHeader>
+              <th>Data</th>
+              <th>Cliente</th>
+              <th>Solicitante</th>
+              <th>Nif</th>
+              <th>Contacto</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </ContainerHeader>
+          </thead>
+          <tbody>
+            {sections[1]?.data.length > 0 ? (
               sections[1].data
                 .filter((item: any) => {
                   if (search === '') {
@@ -112,129 +164,32 @@ const Solicitaçoes: React.FC = () => {
                     return item;
                   }
                 })
+                .sort((a: any, b: any) => {
+                  const dateA = new Date(a.data);
+                  const dateB = new Date(b.data);
+                  return dateB.getTime() - dateA.getTime();
+                })
                 .map((section: any, index: number) => (
-                  <div key={`${section.id} - ${index}`}>
-                    <Wrapper>
-                      <h2>{section.empresa.nome}</h2>
-                      <p>{section.id}</p>
-                      <h2 className='nif'>{section.empresa.nif}</h2>
-                      <p>{section.tipo}</p>
-                      <p>{section.data}</p>
-                      <div>
-                        <button className='interesse'>
-                          {loadingInterest ? (
-                            'Aguarde...'
-                          ) : (
-                            <>
-                              <IoPersonAddOutline />
-                              Interesse
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </Wrapper>
-                  </div>
-                ))}
-          </Container>
-          <Container>
-            {lic_requests
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((lic_request: any) => (
-                <div key={lic_request.id}>
-                  <Solicitacao lic_request={lic_request} />
-                </div>
-              ))}
-          </Container>
-        </>
-      );
-    }
-  };
-
-  const showPorAprovar = () => {
-    if (filtro === 'porAprovar') {
-      return (
-        <Container>
-          {sections[0]?.data.length > 0 ? (
-            sections[0].data
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.parceiro.Nome.toLowerCase().includes(
-                    search.toLowerCase()
-                  ) ||
-                  item.parceiro.Nif.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((section: any, index: number) => (
-                <div key={`${section.id} - ${index}`}>
-                  <Wrapper>
-                    <h2>{section.parceiro.Nome}</h2>
-                    <p>{section.id}</p>
-                    <h2 className='nif'>{section.parceiro.Nif}</h2>
-                    <p>{section.solicitacao.tipo}</p>
-                    <p>{section.data}</p>
-                    <div>
-                      <button>
-                        <IoCheckmarkDoneCircleOutline />
-                        Aprovar
-                      </button>
-                    </div>
-                  </Wrapper>
-                </div>
-              ))
-          ) : (
-            <EmptyDivState>
-              <EmptyState>
-                <p>Não existem solicitações por aprovar.</p>
-              </EmptyState>
-            </EmptyDivState>
-          )}
-        </Container>
-      );
-    }
-  };
-
-  const showLeilao = () => {
-    if (filtro === 'leilao') {
-      return (
-        <Container>
-          {sections[1]?.data.length > 0 ? (
-            sections[1].data
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.empresa.nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.empresa.nif.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((section: any, index: number) => (
-                <div key={`${section.id} - ${index}`}>
-                  <Wrapper>
-                    <h2>{section.empresa.nome}</h2>
-                    <p>{section.id}</p>
-                    <h2 className='nif'>{section.empresa.nif}</h2>
-                    <p>{section.tipo}</p>
-                    <p>{section.data}</p>
-                    <div>
+                  <Wrapper key={`${section.id} - ${index}`}>
+                    <td className='big-text data'>{section.data}</td>
+                    <td>N/A</td>
+                    <td className='big-text'>{section.empresa.nome}</td>
+                    <td className='big-text'>{section.empresa.nif}</td>
+                    <td className='big-text'>{section.empresa.email}</td>
+                    <td>
+                      <span
+                        className={
+                          section.tipo === 'Renovação'
+                            ? 'renovacao'
+                            : section.tipo === 'Padronizar'
+                            ? 'padronizar'
+                            : 'comum'
+                        }
+                      >
+                        {section.tipo}
+                      </span>
+                    </td>
+                    <td>
                       <button
                         className='interesse'
                         onClick={() => handleInterest(section.id)}
@@ -242,17 +197,17 @@ const Solicitaçoes: React.FC = () => {
                         <IoPersonAddOutline />
                         Interesse
                       </button>
-                    </div>
+                    </td>
                   </Wrapper>
-                </div>
-              ))
-          ) : (
-            <EmptyDivState>
-              <EmptyState>
-                <p>Não existem solicitações em leilão.</p>
-              </EmptyState>
-            </EmptyDivState>
-          )}
+                ))
+            ) : (
+              <EmptyDivState>
+                <EmptyState>
+                  <p>Não existem solicitações em leilão.</p>
+                </EmptyState>
+              </EmptyDivState>
+            )}
+          </tbody>
         </Container>
       );
     }
@@ -262,32 +217,52 @@ const Solicitaçoes: React.FC = () => {
     if (filtro === 'atribuidas') {
       return (
         <Container>
-          {lic_requests.length > 0 ? (
-            lic_requests
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nif.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((lic_request: any) => (
-                <div key={lic_request.id}>
-                  <Solicitacao lic_request={lic_request} />
-                </div>
-              ))
-          ) : (
-            <EmptyDivState>
-              <EmptyState>
-                <p>Não existem solicitações por atribuir.</p>
-              </EmptyState>
-            </EmptyDivState>
-          )}
+          <thead>
+            <ContainerHeader>
+              <th>Data</th>
+              <th>Cliente</th>
+              <th>Solicitante</th>
+              <th>Nif</th>
+              <th>Contacto</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </ContainerHeader>
+          </thead>
+          <tbody>
+            {lic_requests.length > 0 ? (
+              lic_requests
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nif
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .sort((a: any, b: any) => {
+                  const dateA = new Date(a.data);
+                  const dateB = new Date(b.data);
+                  return dateB.getTime() - dateA.getTime();
+                })
+                .map((lic_request: any) => (
+                  <Wrapper key={lic_request.id}>
+                    <Solicitacao lic_request={lic_request} />
+                  </Wrapper>
+                ))
+            ) : (
+              <EmptyDivState>
+                <EmptyState>
+                  <p>Não existem solicitações por atribuir.</p>
+                </EmptyState>
+              </EmptyDivState>
+            )}
+          </tbody>
         </Container>
       );
     }
@@ -311,18 +286,18 @@ const Solicitaçoes: React.FC = () => {
         <CriarSolicitaçao setClick={setClick} />
       ) : (
         <>
-          <InputSearch
-            onChange={handleSearch}
-            value={search}
-            type='text'
-            placeholder='Pesquise solicitação...'
-          />
-
-          <FiltersSoli filtro={filtro} setFiltro={setFiltro} />
+          <SearchAndFilters>
+            <FiltersSoli filtro={filtro} setFiltro={setFiltro} />
+            <InputSearch
+              onChange={handleSearch}
+              value={search}
+              type='text'
+              placeholder='Pesquisar...'
+            />
+          </SearchAndFilters>
 
           {showPorAprovar && showPorAprovar()}
           {showLeilao && showLeilao()}
-          {showTodas && showTodas()}
           {showAtribuidas && showAtribuidas()}
         </>
       )}

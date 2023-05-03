@@ -12,12 +12,6 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
   return (
     <DivFilters>
       <span
-        className={filtro === 'todas' ? 'active' : ''}
-        onClick={() => setFiltro('todas')}
-      >
-        <h2>Todas</h2>
-      </span>
-      <span
         className={filtro === 'porAprovar' ? 'active' : ''}
         onClick={() => setFiltro('porAprovar')}
       >

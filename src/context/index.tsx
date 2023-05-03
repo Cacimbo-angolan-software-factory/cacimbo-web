@@ -41,6 +41,9 @@ interface ICreateContext {
   loadingToApproveAndAuction?: boolean;
   showInterest?: (dataInterest: any) => Promise<void>;
   loadingInterest?: boolean;
+  desistirInterest?: (dataInterest: any) => Promise<void>;
+  aprovar?: (aproveData: any) => Promise<void>;
+  rejeitar?: (rejectData: any) => Promise<void>;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -262,13 +265,28 @@ export const LicProvider = ({ children }: IContext) => {
       Promise.all([toApprovePromise, AuctionRequestPromise]).then((res) => {
         SectionsRequestToApprove.map((section: any) => {
           if (section.title === 'Por aprovar') {
-            section.data.push(...res[0].data);
+            res[0].data.forEach((item: any) => {
+              if (
+                !section.data.find(
+                  (existingItem: any) => existingItem.id === item.id
+                )
+              ) {
+                section.data.push(item);
+              }
+            });
           }
           if (section.title === 'Em leilão') {
-            section.data.push(...res[1].data);
-          } else {
-            return null;
+            res[1].data.forEach((item: any) => {
+              if (
+                !section.data.find(
+                  (existingItem: any) => existingItem.id === item.id
+                )
+              ) {
+                section.data.push(item);
+              }
+            });
           }
+          return null;
         });
         setSections(SectionsRequestToApprove);
         setLoadingToApproveAndAuction(false);
@@ -295,6 +313,33 @@ export const LicProvider = ({ children }: IContext) => {
       setLoadingInterest(false);
     } catch (err) {
       setLoadingInterest(false);
+      throw err;
+    }
+  }
+
+  async function desistirInterest(dataInterest: any) {
+    try {
+      await api.put('solicitacoes/desistir-interesse', dataInterest);
+      await getRequestToApproveAndAuctionRequests();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function aprovar(aproveData: any) {
+    try {
+      await api.put('solicitacoes/aprovar-parceiro-interessado', aproveData);
+      await getRequestToApproveAndAuctionRequests();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function rejeitar(rejectData: any) {
+    try {
+      await api.put('solicitacoes/rejeitar-parceiro-interessado', rejectData);
+      await getRequestToApproveAndAuctionRequests();
+    } catch (err) {
       throw err;
     }
   }
@@ -333,6 +378,9 @@ export const LicProvider = ({ children }: IContext) => {
         loadingToApproveAndAuction,
         showInterest,
         loadingInterest,
+        desistirInterest,
+        aprovar,
+        rejeitar,
       }}
     >
       {children}
