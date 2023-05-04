@@ -27,6 +27,22 @@ const getUsers = async (companyId: string) => {
   }
 };
 
+const createUser = async (userData: {
+  name: string;
+  email: string;
+  parceiro_id: number | string;
+  tipo: string;
+  id_perfil: string;
+}) => {
+  try {
+    const response = await api.post(`users`, { ...userData });
+    return response.data;
+  } catch (error: any) {
+    console.log(error.response.data);
+    return error;
+  }
+};
+
 const getPerfis = async () => {
   try {
     const response = await api.get(`prefis`);
@@ -68,6 +84,7 @@ export const userService = {
   getPerfis,
   getTarefas,
   createTarefas,
+  createUser,
 };
 
 export default userService;

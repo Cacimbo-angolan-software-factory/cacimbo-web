@@ -15,6 +15,7 @@ import UsersList from '../../../components/usuarios/UsersList';
 import PerfisList from '../../../components/usuarios/PerfisList';
 import TarefasList from '../../../components/usuarios/TarefasList/TarefasList';
 import { IoArrowBackOutline } from 'react-icons/io5';
+import CriarUsuario from '../../../components/usuarios/criarUsuario/CriarUsuario';
 
 const Usuarios: React.FC = () => {
   const { users, isError, isLoading, user } = useSelector(
@@ -26,6 +27,7 @@ const Usuarios: React.FC = () => {
   const [openPerfis, setOpenPerfis] = useState(false);
   const [openTarefas, setOpenTarefas] = useState(false);
   const [userSelected, setUserSelected] = useState<any>();
+  const [criarUser, setCriarUser] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
   let modalRef = useRef<any>(null);
@@ -74,7 +76,10 @@ const Usuarios: React.FC = () => {
     };
   });
 
-  const handleClickCreate = () => {};
+  const handleClickCreate = () => {
+    setCriarUser(true);
+  };
+
   const handleClose = () => {
     setOpenPerfis(false);
     setOpenTarefas(false);
@@ -85,12 +90,14 @@ const Usuarios: React.FC = () => {
       <AdminHeader />
       <HeaderMobile />
 
-      <Block>
-        <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
-        <span onClick={handleOpenModal}>
-          <RiMore2Fill />
-        </span>
-      </Block>
+      {criarUser ? null : (
+        <Block>
+          <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
+          <span onClick={handleOpenModal}>
+            <RiMore2Fill />
+          </span>
+        </Block>
+      )}
 
       {openPerfis ? (
         <Button onClick={handleClose}>
@@ -106,6 +113,8 @@ const Usuarios: React.FC = () => {
         <PerfisList setOpenPerfis={setOpenPerfis} />
       ) : openTarefas ? (
         <TarefasList />
+      ) : criarUser ? (
+        <CriarUsuario setCriarUser={setCriarUser} />
       ) : (
         <UsersList
           users={users}
