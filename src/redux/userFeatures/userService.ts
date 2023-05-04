@@ -30,14 +30,15 @@ const getUsers = async (companyId: string) => {
 const createUser = async (userData: {
   name: string;
   email: string;
-  parceiro: string;
+  parceiro_id: number | string;
   tipo: string;
   id_perfil: string;
 }) => {
   try {
     const response = await api.post(`users`, { ...userData });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error.response.data);
     return error;
   }
 };
