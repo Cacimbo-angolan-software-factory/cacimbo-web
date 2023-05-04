@@ -55,7 +55,6 @@ export const getUsers = createAsyncThunk(
 export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
   try {
     const response = await userService.getPerfis();
-    console.log(response);
     return response;
   } catch (error: any) {
     return error;
@@ -98,7 +97,7 @@ export const createUser = createAsyncThunk(
   async (userData: {
     name: string;
     email: string;
-    parceiro: string;
+    parceiro_id: string | number;
     tipo: string;
     id_perfil: string;
   }) => {
@@ -106,6 +105,7 @@ export const createUser = createAsyncThunk(
       const response = await userService.createUser(userData);
       return response;
     } catch (error: any) {
+      console.log(error.response.data);
       return error;
     }
   }
@@ -202,7 +202,7 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(createUser.fulfilled, (state, action) => {
-      state.users.push(action.payload);
+      state.users = action.payload;
       state.isLoading = false;
       state.isSuccess = true;
     });
