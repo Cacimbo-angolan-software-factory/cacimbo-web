@@ -93,6 +93,24 @@ export const createTarefas = createAsyncThunk(
   }
 );
 
+export const createUser = createAsyncThunk(
+  'user/createUser',
+  async (userData: {
+    name: string;
+    email: string;
+    parceiro: string;
+    tipo: string;
+    id_perfil: string;
+  }) => {
+    try {
+      const response = await userService.createUser(userData);
+      return response;
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -177,6 +195,21 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Erro ao criar tarefa';
+    });
+
+    // create user
+    builder.addCase(createUser.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      state.users.push(action.payload);
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(createUser.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao criar usuário';
     });
   },
 });
