@@ -14,35 +14,79 @@ interface CriarUsuarioProps {
 
 const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
   const [value, setValue] = useState({
-    nome: '',
+    name: '',
     email: '',
-    parceiro: '',
+    parceiro_id: '',
     tipo: '',
     id_perfil: '',
   });
   const { empresas } = useContext(LicContext);
-  const { perfis } = useSelector((state: any) => state.user);
+  const { perfis, users, isLoading, isError } = useSelector(
+    (state: any) => state.user
+  );
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getPerfis());
+    console.log(empresas);
+    console.log(users.data);
   }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {};
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (
+      !value.name ||
+      !value.email ||
+      !value.parceiro_id ||
+      !value.tipo ||
+      !value.id_perfil
+    ) {
+      alert('Preencha todos os campos');
+      return;
+    }
+
+    let id_perfil = perfis.filter(
+      (perfil: any) => perfil.perfil === value.id_perfil
+    )[0].id;
+
+    let parceiro_id = empresas.filter(
+      (parceiro: any) => parceiro.Nome === value.parceiro_id
+    )[0].id;
+
+    dispatch(
+      createUser({
+        name: value.name,
+        email: value.email,
+        parceiro_id: parceiro_id,
+        tipo: value.tipo,
+        id_perfil: id_perfil,
+      })
+    );
+
+    setValue({
+      name: '',
+      email: '',
+      parceiro_id: '',
+      tipo: '',
+      id_perfil: '',
+    });
+    setCriarUser(false);
+  };
 
   return (
     <Container>
       <h1>Criar Usuário</h1>
 
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='nome'>Nome</label>
           <input
-            name='nome'
-            value={value.nome}
+            name='name'
+            value={value.name}
             onChange={handleChange}
             type='text'
           />
@@ -50,7 +94,7 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
         <div>
           <label htmlFor='nome'>Email</label>
           <input
-            name='nome'
+            name='email'
             value={value.email}
             onChange={handleChange}
             type='text'
@@ -58,14 +102,16 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
         </div>
 
         <SelectInput
-          value={value.parceiro}
+          value={value.parceiro_id}
           labelName='Parceiro'
           handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setValue({ ...value, parceiro: e.target.value })
+            setValue({ ...value, parceiro_id: e.target.value })
           }
         >
           {empresas.map((empresa) => (
-            <MenuItem value={empresa.Nome}>{empresa.Nome}</MenuItem>
+            <MenuItem key={empresa.id} value={empresa.Nome}>
+              {empresa.Nome}
+            </MenuItem>
           ))}
         </SelectInput>
 
@@ -93,15 +139,16 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
           }
         >
           {perfis.map((perfil: any) => (
-            <MenuItem value={perfil.id}>{perfil.perfil}</MenuItem>
+            <MenuItem key={perfil.id} value={perfil.perfil}>
+              {perfil.perfil}
+            </MenuItem>
           ))}
         </SelectInput>
 
         <Div className='buttons'>
           <button onClick={() => setCriarUser(false)}>Cancelar</button>
           <button type='submit'>
-            {/* {isLoading ? 'Aguarde...' : 'Criar empresa'} */}
-            Criar usuário
+            {isLoading ? 'Aguarde...' : 'Criar usuário'}
           </button>
         </Div>
       </Form>
