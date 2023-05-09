@@ -1,17 +1,23 @@
 import React from 'react';
 import { IoPersonAddOutline } from 'react-icons/io5';
 
-import { Buttons, Container } from './stylesSingleSoli';
+import { Buttons } from './stylesSingleSoli';
 import { useSelector } from 'react-redux';
 
 interface SolicitacaoProps {
   lic_request: any;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
-  const { id, cliente_nome, tipo, cliente_nif, data, parceiro_nome } =
-    lic_request;
+const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request, setOpen }) => {
+  const { cliente_nome, tipo, cliente_nif, data, parceiro_nome } = lic_request;
   const { user } = useSelector((state: any) => state.user);
+  const [interesse, setInteresse] = React.useState(0);
+
+  const incrementInteresse = () => {
+    setInteresse(interesse + 1);
+  };
 
   return (
     <>
@@ -19,7 +25,12 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
       <td className='big-text'>{cliente_nome}</td>
       <td className='big-text'>{parceiro_nome}</td>
       <td className='big-text'>{cliente_nif}</td>
-      <td>N/A</td>
+      <td>
+        <span className='number'>
+          <IoPersonAddOutline />
+          {interesse}
+        </span>
+      </td>
       <td>
         <span
           className={
@@ -35,13 +46,17 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request }) => {
       </td>
       <Buttons>
         {user.user.parceiro_id === 1 ? (
-          <button>
+          <button
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
             <IoPersonAddOutline />
             Atribuir
           </button>
         ) : null}
 
-        <button>
+        <button onClick={incrementInteresse}>
           <IoPersonAddOutline />
           Interesse
         </button>
