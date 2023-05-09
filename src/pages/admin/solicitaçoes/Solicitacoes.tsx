@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -22,6 +22,8 @@ import EmptyState from '../../../components/emptyState/EmptyState';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCanal } from '../../../redux/solicitaçaoFeatures/solicSlice';
 import { AppDispatch } from '../../../redux/store';
+import SideBarSoli from '../../../components/solicitacoes/sideBarSoli/SideBarSoli';
+import ListIntContainer from '../../../components/solicitacoes/sideBarSoli/ListaIntContainer';
 
 const Solicitaçoes: React.FC = () => {
   const {
@@ -30,14 +32,31 @@ const Solicitaçoes: React.FC = () => {
     sections,
     loadingToApproveAndAuction,
     showInterest,
+    aprovar,
     loadingInterest,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [filtro, setFiltro] = React.useState('porAprovar');
+  const [openInteressados, setOpenInteressados] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
   const { canal } = useSelector((state: any) => state.solicitaçao);
   const dispatch = useDispatch<AppDispatch>();
+  let menuRef = useRef<any>(null);
+
+  useEffect(() => {
+    let handler = (event: any) => {
+      if (!menuRef.current?.contains(event.target)) {
+        setOpenInteressados(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
 
   useEffect(() => {
     dispatch(getCanal());
@@ -55,6 +74,15 @@ const Solicitaçoes: React.FC = () => {
   const handleInterest = (item: any) => {
     showInterest &&
       showInterest({
+        canal_id: canal?.id,
+        user_id: user?.user.id,
+        solicitacao_id: item.id,
+      });
+  };
+
+  const handleAprovar = (item: any) => {
+    aprovar &&
+      aprovar({
         canal_id: canal?.id,
         user_id: user?.user.id,
         solicitacao_id: item.id,
@@ -103,7 +131,7 @@ const Solicitaçoes: React.FC = () => {
                     <td className='big-text data'>{section.data}</td>
                     <td>N/A</td>
                     <td className='big-text'>{section.parceiro.Nome}</td>
-                    <td>{section.parceiro.Nif}</td>
+                    <td className='big-text'>{section.parceiro.Nif}</td>
                     <td className='big-text'>{section.parceiro.email}</td>
                     <td>
                       <span
@@ -119,9 +147,9 @@ const Solicitaçoes: React.FC = () => {
                       </span>
                     </td>
                     <td className='big-text'>
-                      <button onClick={() => handleInterest(section.id)}>
+                      <button onClick={() => handleAprovar(section.id)}>
                         <IoPersonAddOutline />
-                        <p>Atribuir</p>
+                        <p>Aprovar</p>
                       </button>
                     </td>
                   </Wrapper>
@@ -214,7 +242,7 @@ const Solicitaçoes: React.FC = () => {
   };
 
   const showAtribuidas = () => {
-    if (filtro === 'atribuidas') {
+    if (filtro === 'pendentes') {
       return (
         <Container>
           <thead>
@@ -223,7 +251,7 @@ const Solicitaçoes: React.FC = () => {
               <th>Cliente</th>
               <th>Solicitante</th>
               <th>Nif</th>
-              <th>Contacto</th>
+              <th>Interessados</th>
               <th>Status</th>
               <th>Ações</th>
             </ContainerHeader>
@@ -252,13 +280,17 @@ const Solicitaçoes: React.FC = () => {
                 })
                 .map((lic_request: any) => (
                   <Wrapper key={lic_request.id}>
-                    <Solicitacao lic_request={lic_request} />
+                    <Solicitacao
+                      open={openInteressados}
+                      setOpen={setOpenInteressados}
+                      lic_request={lic_request}
+                    />
                   </Wrapper>
                 ))
             ) : (
               <EmptyDivState>
                 <EmptyState>
-                  <p>Não existem solicitações por atribuir.</p>
+                  <p>Não existem solicitações pendentes.</p>
                 </EmptyState>
               </EmptyDivState>
             )}
@@ -304,6 +336,11 @@ const Solicitaçoes: React.FC = () => {
 
       {renderSpinner() && <Spinner />}
       <ScrollTop />
+      {openInteressados && (
+        <SideBarSoli menuRef={menuRef}>
+          <ListIntContainer />
+        </SideBarSoli>
+      )}
     </>
   );
 };
