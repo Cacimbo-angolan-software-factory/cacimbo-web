@@ -351,6 +351,11 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             {licencasDaEmpresa.map((licenca: any) => (
               <MenuItem key={licenca.id} value={licenca.cliente_nome}>
                 {licenca.cliente_nome}
+                <span style={{ fontWeight: 600 }}> - {licenca.id}</span>
+                <span style={{ color: '#bebebe' }}>
+                  {' '}
+                  - {licenca.data_validade}
+                </span>
               </MenuItem>
             ))}
           </SelectInput>
