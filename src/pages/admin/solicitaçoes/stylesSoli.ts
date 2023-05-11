@@ -36,10 +36,21 @@ export const Wrapper = styled.tr`
     color: #bebebe;
   }
 
+  & td.number {
+  }
+
   & td {
     & span {
       border-radius: 2rem;
       padding: 0.5rem 1.2rem;
+    }
+
+    & span.number {
+      background-color: rgb(0, 150, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
     }
 
     & span.comum {

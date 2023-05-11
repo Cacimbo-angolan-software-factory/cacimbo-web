@@ -24,10 +24,10 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
         <h2>Em leilão</h2>
       </span>
       <span
-        className={filtro === 'atribuidas' ? 'active' : ''}
-        onClick={() => setFiltro('atribuidas')}
+        className={filtro === 'pendentes' ? 'active' : ''}
+        onClick={() => setFiltro('pendentes')}
       >
-        <h2>Por atribuir</h2>
+        <h2>Pendentes</h2>
       </span>
       <RiFilter3Fill />
     </DivFilters>
