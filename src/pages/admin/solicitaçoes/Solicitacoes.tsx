@@ -37,7 +37,9 @@ const Solicitaçoes: React.FC = () => {
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
-  const [filtro, setFiltro] = React.useState('porAprovar');
+  const [filtro, setFiltro] = React.useState(
+    'porAprovar' ? 'leilao' : 'porAprovar'
+  );
   const [openInteressados, setOpenInteressados] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
   const { canal } = useSelector((state: any) => state.solicitaçao);
@@ -60,7 +62,6 @@ const Solicitaçoes: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCanal());
-    console.log(sections[1]);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

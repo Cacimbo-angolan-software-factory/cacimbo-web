@@ -9,6 +9,7 @@ import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import EmptyState from '../../../components/emptyState/EmptyState';
 import Spinner from '../../../components/spinner/Spinner';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
+import { useSelector } from 'react-redux';
 
 const Licenças: React.FC = () => {
   const { licences, loadingLicenses } = useContext(LicContext);
@@ -16,10 +17,13 @@ const Licenças: React.FC = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [filtro, setFiltro] = useState('all');
   const [childFitro, setChildFiltro] = useState('todas');
+  const { user } = useSelector((state: any) => state.user);
 
   const itemsPerPage = 50;
   const endOffset = pageNumber + itemsPerPage;
+
   const currentItems = licences.slice(endOffset, endOffset + itemsPerPage);
+
   const pageCount = Math.ceil(licences.length / itemsPerPage);
   let today = new Date().toISOString().slice(0, 10);
   const todasActivas = licences.filter(

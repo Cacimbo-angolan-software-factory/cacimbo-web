@@ -96,10 +96,12 @@ const BottomNav: React.FC<BottomNavProps> = ({
 
       {isOpenSettings && (
         <Modal modalRef={modalRef}>
-          <ModalItem onClick={() => setCriarPermission(true)}>
-            <IoBuildOutline />
-            Permissões
-          </ModalItem>
+          {user.user.tipo === 'Parceiro' ? null : (
+            <ModalItem onClick={() => setCriarPermission(true)}>
+              <IoBuildOutline />
+              Permissões
+            </ModalItem>
+          )}
           <ModalItem onClick={() => setCriarRole(true)}>
             <IoPersonAddOutline />
             Funções de usuário

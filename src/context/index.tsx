@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { api, baseUrlGetNif } from '../service/Service.api';
+import { useSelector } from 'react-redux';
 
 interface IContext {
   children: React.ReactNode;
@@ -72,6 +73,7 @@ export const LicProvider = ({ children }: IContext) => {
     useState(false);
   const [sections, setSections] = useState<any>([]);
   const [loadingInterest, setLoadingInterest] = useState(false);
+  const { user: currentUser } = useSelector((state: any) => state.user);
 
   const user = {
     id: 1,
@@ -157,8 +159,20 @@ export const LicProvider = ({ children }: IContext) => {
       setLoadingLicenses(true);
       const { data } = await api.get(urlGeral);
       if (data.length > 0) {
-        setTotalLicenses(data.length);
-        setLicences(data);
+        setTotalLicenses(
+          currentUser.user.parceiro_id === 1
+            ? data.length
+            : data.filter(
+                (item: any) => item.parceiro_id === currentUser.user.parceiro_id
+              ).length
+        );
+        setLicences(
+          currentUser.user.parceiro_id === 1
+            ? data
+            : data.filter(
+                (item: any) => item.parceiro_id === currentUser.user.parceiro_id
+              )
+        );
       }
       setLoadingLicenses(false);
     } catch (err: any) {

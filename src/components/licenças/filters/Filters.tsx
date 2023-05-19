@@ -2,6 +2,7 @@ import React from 'react';
 import { RiFilter3Fill } from 'react-icons/ri';
 
 import { Container, SecondFilter } from './stylesFilter';
+import { useSelector } from 'react-redux';
 
 interface FiltersProps {
   fixedFilter: boolean;
@@ -18,6 +19,8 @@ const Filters: React.FC<FiltersProps> = ({
   childFiltro,
   setChildFiltro,
 }) => {
+  const { user } = useSelector((state: any) => state.user);
+
   const handleClickFiltro = () => {
     setFiltro('all');
     setChildFiltro('todas');
@@ -30,23 +33,25 @@ const Filters: React.FC<FiltersProps> = ({
 
   return (
     <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
-      <div>
-        <h2
-          className={filtro === 'all' ? 'active' : ''}
-          onClick={handleClickFiltro}
-        >
-          Todos
-        </h2>
-        <h2
-          className={filtro === 'parceiro' ? 'active' : ''}
-          onClick={handleClickFiltroParceiro}
-        >
-          Parceiro
-        </h2>
-        <span>
-          <RiFilter3Fill />
-        </span>
-      </div>
+      {user.user.parceiro_id === 1 ? (
+        <div>
+          <h2
+            className={filtro === 'all' ? 'active' : ''}
+            onClick={handleClickFiltro}
+          >
+            Todos
+          </h2>
+          <h2
+            className={filtro === 'parceiro' ? 'active' : ''}
+            onClick={handleClickFiltroParceiro}
+          >
+            Parceiro
+          </h2>
+          <span>
+            <RiFilter3Fill />
+          </span>
+        </div>
+      ) : null}
 
       {filtro === 'all' ? (
         <SecondFilter>
