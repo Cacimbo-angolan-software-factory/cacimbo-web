@@ -60,7 +60,7 @@ const Solicitaçoes: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCanal());
-    console.log(lic_requests);
+    console.log(sections[1]);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +71,10 @@ const Solicitaçoes: React.FC = () => {
     return IsLoadingTheOrder && loadingToApproveAndAuction;
   };
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   const handleInterest = (item: any) => {
     showInterest &&
       showInterest({
@@ -78,6 +82,7 @@ const Solicitaçoes: React.FC = () => {
         user_id: user?.user.id,
         solicitacao_id: item.id,
       });
+    refreshPage();
   };
 
   const handleAprovar = (item: any) => {
@@ -129,7 +134,9 @@ const Solicitaçoes: React.FC = () => {
                 .map((section: any, index: number) => (
                   <Wrapper key={`${section.id} - ${index}`}>
                     <td className='big-text data'>{section.data}</td>
-                    <td>N/A</td>
+                    <td className='big-text'>
+                      {section.solicitacao.empresa.nome}
+                    </td>
                     <td className='big-text'>{section.parceiro.Nome}</td>
                     <td className='big-text'>{section.parceiro.Nif}</td>
                     <td className='big-text'>{section.parceiro.email}</td>
@@ -200,8 +207,8 @@ const Solicitaçoes: React.FC = () => {
                 .map((section: any, index: number) => (
                   <Wrapper key={`${section.id} - ${index}`}>
                     <td className='big-text data'>{section.data}</td>
-                    <td>N/A</td>
                     <td className='big-text'>{section.empresa.nome}</td>
+                    <td>N/A</td>
                     <td className='big-text'>{section.empresa.nif}</td>
                     <td className='big-text'>{section.empresa.email}</td>
                     <td>
