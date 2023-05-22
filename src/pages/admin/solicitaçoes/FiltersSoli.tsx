@@ -28,12 +28,14 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
       >
         <h2>Em leilão</h2>
       </span>
-      <span
-        className={filtro === 'pendentes' ? 'active' : ''}
-        onClick={() => setFiltro('pendentes')}
-      >
-        <h2>Pendentes</h2>
-      </span>
+      {user.user.parceiro_id === 1 ? (
+        <span
+          className={filtro === 'pendentes' ? 'active' : ''}
+          onClick={() => setFiltro('pendentes')}
+        >
+          <h2>Pendentes</h2>
+        </span>
+      ) : null}
       <RiFilter3Fill />
     </DivFilters>
   );
