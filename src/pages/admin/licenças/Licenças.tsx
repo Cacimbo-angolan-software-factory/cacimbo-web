@@ -17,7 +17,6 @@ const Licenças: React.FC = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [filtro, setFiltro] = useState('all');
   const [childFitro, setChildFiltro] = useState('todas');
-  const { user } = useSelector((state: any) => state.user);
 
   const itemsPerPage = 50;
   const endOffset = pageNumber + itemsPerPage;
