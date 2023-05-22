@@ -15,15 +15,23 @@ import {
   EmptyDivState,
   SearchAndFilters,
   ContainerHeader,
+  Card,
+  Cards,
 } from './stylesSoli';
-import { IoPersonAddOutline } from 'react-icons/io5';
+import { IoPersonAddOutline, IoLocationOutline } from 'react-icons/io5';
 import FiltersSoli from './FiltersSoli';
 import EmptyState from '../../../components/emptyState/EmptyState';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCanal } from '../../../redux/solicitaçaoFeatures/solicSlice';
+import {
+  getCanal,
+  getModuloComum,
+  getModuloPadronizar,
+} from '../../../redux/solicitaçaoFeatures/solicSlice';
 import { AppDispatch } from '../../../redux/store';
 import SideBarSoli from '../../../components/solicitacoes/sideBarSoli/SideBarSoli';
 import ListIntContainer from '../../../components/solicitacoes/sideBarSoli/ListaIntContainer';
+import SelectInput from '../../../components/SelectTextField';
+import { MenuItem } from '@mui/material';
 
 const Solicitaçoes: React.FC = () => {
   const {
@@ -33,7 +41,6 @@ const Solicitaçoes: React.FC = () => {
     loadingToApproveAndAuction,
     showInterest,
     aprovar,
-    loadingInterest,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
@@ -42,9 +49,14 @@ const Solicitaçoes: React.FC = () => {
   );
   const [openInteressados, setOpenInteressados] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
-  const { canal } = useSelector((state: any) => state.solicitaçao);
+  const { canal, moduloComum, moduloPadronizar } = useSelector(
+    (state: any) => state.solicitaçao
+  );
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
+  const [value, setValue] = React.useState({
+    canal_id: '',
+  });
 
   useEffect(() => {
     let handler = (event: any) => {
@@ -62,6 +74,9 @@ const Solicitaçoes: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCanal());
+    dispatch(getModuloComum());
+    dispatch(getModuloPadronizar());
+    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,9 +92,13 @@ const Solicitaçoes: React.FC = () => {
   };
 
   const handleInterest = (item: any) => {
+    let canal_id = canal.filter(
+      (canal: any) => canal.Nome === value.canal_id
+    )[0].id;
+
     showInterest &&
       showInterest({
-        canal_id: canal?.id,
+        canal_id: canal_id,
         user_id: user?.user.id,
         solicitacao_id: item.id,
       });
@@ -93,6 +112,14 @@ const Solicitaçoes: React.FC = () => {
         user_id: user?.user.id,
         solicitacao_id: item.id,
       });
+  };
+
+  const getModulosId = (modulos: any) => {
+    const modulosId = [...moduloComum, moduloPadronizar].filter((modulo) =>
+      modulos.includes(modulo.id)
+    );
+
+    return modulosId.map((obj) => obj.modulo);
   };
 
   const showPorAprovar = () => {
@@ -249,6 +276,79 @@ const Solicitaçoes: React.FC = () => {
     }
   };
 
+  const LeilaoParceiros = () => {
+    return (
+      <Cards>
+        {sections[1]?.data.length > 0 &&
+          sections[1].data.map((section: any, index: number) => (
+            <Card key={`${section.id} - ${index}`}>
+              <p className='id'>
+                <span></span>
+                Solicitação {section.id} -{' '}
+                {section.sol_modulos.map((module: any) => module.modulo.modulo)}
+              </p>
+              <p className='location'>
+                <IoLocationOutline />
+                {section.empresa.localidade} - {section.empresa.provincia}
+              </p>
+              <SelectInput
+                value={value.canal_id}
+                labelName='Canal'
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setValue({ ...value, canal_id: e.target.value })
+                }
+              >
+                {canal.map((canal: any) => (
+                  <MenuItem key={canal.id} value={canal.Nome}>
+                    {canal.Nome}
+                  </MenuItem>
+                ))}
+              </SelectInput>
+              <button
+                onClick={() => {
+                  handleInterest(section.id);
+                }}
+              >
+                Interessado
+              </button>
+            </Card>
+          ))}
+
+        {lic_requests.map((pendente: any, index: number) => (
+          <Card key={`${pendente.id} - ${index}`}>
+            <p className='id'>
+              <span></span> Solicitação {pendente.id} -{' '}
+              {getModulosId(
+                pendente.sol_modulos.map((module: any) => module.modulo_id)
+              )}
+            </p>
+            <p>localizaçao</p>
+            <SelectInput
+              value={value.canal_id}
+              labelName='Canal'
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setValue({ ...value, canal_id: e.target.value })
+              }
+            >
+              {canal.map((canal: any) => (
+                <MenuItem key={canal.id} value={canal.Nome}>
+                  {canal.Nome}
+                </MenuItem>
+              ))}
+            </SelectInput>
+            <button
+              onClick={() => {
+                handleInterest(pendente.id);
+              }}
+            >
+              Interessado
+            </button>
+          </Card>
+        ))}
+      </Cards>
+    );
+  };
+
   const showAtribuidas = () => {
     if (filtro === 'pendentes') {
       return (
@@ -337,7 +437,11 @@ const Solicitaçoes: React.FC = () => {
           </SearchAndFilters>
 
           {showPorAprovar && showPorAprovar()}
-          {showLeilao && showLeilao()}
+
+          {user.user.parceiro_id === 1
+            ? showLeilao && showLeilao()
+            : LeilaoParceiros && LeilaoParceiros()}
+
           {showAtribuidas && showAtribuidas()}
         </>
       )}
