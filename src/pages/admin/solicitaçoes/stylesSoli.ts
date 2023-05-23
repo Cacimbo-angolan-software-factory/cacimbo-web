@@ -217,6 +217,11 @@ export const Card = styled.div`
     display: flex;
     gap: 1rem;
     align-items: center;
+
+    & div.modulos {
+      display: flex;
+      gap: 1rem;
+    }
   }
 
   & span {

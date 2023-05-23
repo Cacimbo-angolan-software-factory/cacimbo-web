@@ -24,8 +24,8 @@ import EmptyState from '../../../components/emptyState/EmptyState';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getCanal,
-  getModuloComum,
-  getModuloPadronizar,
+  getEmpresas,
+  getModulo,
 } from '../../../redux/solicitaçaoFeatures/solicSlice';
 import { AppDispatch } from '../../../redux/store';
 import SideBarSoli from '../../../components/solicitacoes/sideBarSoli/SideBarSoli';
@@ -41,6 +41,7 @@ const Solicitaçoes: React.FC = () => {
     loadingToApproveAndAuction,
     showInterest,
     aprovar,
+    empresas,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
@@ -49,7 +50,7 @@ const Solicitaçoes: React.FC = () => {
   );
   const [openInteressados, setOpenInteressados] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
-  const { canal, moduloComum, moduloPadronizar } = useSelector(
+  const { canal, modulosList, empresasList } = useSelector(
     (state: any) => state.solicitaçao
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -74,9 +75,10 @@ const Solicitaçoes: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCanal());
-    dispatch(getModuloComum());
-    dispatch(getModuloPadronizar());
+    dispatch(getModulo());
+    dispatch(getEmpresas());
     console.log(lic_requests);
+    console.log(empresasList);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,11 +117,19 @@ const Solicitaçoes: React.FC = () => {
   };
 
   const getModulosId = (modulos: any) => {
-    const modulosId = [...moduloComum, moduloPadronizar].filter((modulo) =>
+    const modulosId = modulosList.filter((modulo: any) =>
       modulos.includes(modulo.id)
     );
 
-    return modulosId.map((obj) => obj.modulo);
+    return modulosId.map((obj: any) => obj.modulo);
+  };
+
+  const getLocation = (location: any) => {
+    const empresa = empresasList.find(
+      (empresaLocation: any) => empresaLocation.id === location
+    );
+
+    return empresa?.localidade;
   };
 
   const showPorAprovar = () => {
@@ -280,49 +290,60 @@ const Solicitaçoes: React.FC = () => {
     return (
       <Cards>
         {sections[1]?.data.length > 0 &&
-          sections[1].data.map((section: any, index: number) => (
-            <Card key={`${section.id} - ${index}`}>
-              <p className='id'>
-                <span></span>
-                Solicitação {section.id} -{' '}
-                {section.sol_modulos.map((module: any) => module.modulo.modulo)}
-              </p>
-              <p className='location'>
-                <IoLocationOutline />
-                {section.empresa.localidade} - {section.empresa.provincia}
-              </p>
-              <SelectInput
-                value={value.canal_id}
-                labelName='Canal'
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setValue({ ...value, canal_id: e.target.value })
-                }
-              >
-                {canal.map((canal: any) => (
-                  <MenuItem key={canal.id} value={canal.Nome}>
-                    {canal.Nome}
-                  </MenuItem>
-                ))}
-              </SelectInput>
-              <button
-                onClick={() => {
-                  handleInterest(section.id);
-                }}
-              >
-                Interessado
-              </button>
-            </Card>
-          ))}
+          sections[1].data
+            .sort((a: any, b: any) => {
+              const dateA = new Date(a.data);
+              const dateB = new Date(b.data);
+              return dateB.getTime() - dateA.getTime();
+            })
+            .map((section: any, index: number) => (
+              <Card key={`${section.id} - ${index}`}>
+                <p className='id'>
+                  <span></span>
+                  Solicitação {section.id} -{' '}
+                  {section.sol_modulos.map(
+                    (module: any) => module.modulo.modulo
+                  )}
+                </p>
+                <p className='location'>
+                  <IoLocationOutline />
+                  {section.empresa.localidade} - {section.empresa.provincia}
+                </p>
+                <SelectInput
+                  value={value.canal_id}
+                  labelName='Canal'
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setValue({ ...value, canal_id: e.target.value })
+                  }
+                >
+                  {canal.map((canal: any) => (
+                    <MenuItem key={canal.id} value={canal.Nome}>
+                      {canal.Nome}
+                    </MenuItem>
+                  ))}
+                </SelectInput>
+                <button
+                  onClick={() => {
+                    handleInterest(section.id);
+                  }}
+                >
+                  Interessado
+                </button>
+              </Card>
+            ))}
 
         {lic_requests.map((pendente: any, index: number) => (
           <Card key={`${pendente.id} - ${index}`}>
             <p className='id'>
               <span></span> Solicitação {pendente.id} -{' '}
               {getModulosId(
-                pendente.sol_modulos.map((module: any) => module.modulo_id)
+                pendente.sol_modulos.map((mod: any) => mod.modulo_id)
               )}
             </p>
-            <p>localizaçao</p>
+            <p className='location'>
+              <IoLocationOutline />
+              {getLocation(pendente.empresa_id)}
+            </p>
             <SelectInput
               value={value.canal_id}
               labelName='Canal'
