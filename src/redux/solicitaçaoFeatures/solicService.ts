@@ -43,9 +43,15 @@ const criarSolicitaçao = async (solicData: {
   return response.data;
 };
 
+const getEmpresas = async () => {
+  const response = await api.get(`empresas`);
+  return response.data;
+};
+
 export default {
   criarSolicitaçao,
   getCanal,
   getModulo,
   getLicencaPorEmpresa,
+  getEmpresas,
 };
