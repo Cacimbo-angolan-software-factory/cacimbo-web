@@ -175,3 +175,59 @@ export const EmptyDivState = styled.div`
     font-size: 1.6rem;
   }
 `;
+
+export const Cards = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 2rem;
+`;
+
+export const Card = styled.div`
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-color: #5555;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1.4rem;
+  min-width: 40rem;
+
+  & p.location {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  & button {
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+    background-color: #33c4ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    width: 50%;
+  }
+
+  & p.id {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    & div.modulos {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  & span {
+    height: 0.8rem;
+    width: 0.8rem;
+    border-radius: 50%;
+    background: #33c4ff;
+  }
+`;

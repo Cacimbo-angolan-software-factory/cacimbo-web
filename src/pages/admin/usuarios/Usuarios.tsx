@@ -93,9 +93,12 @@ const Usuarios: React.FC = () => {
       {criarUser ? null : (
         <Block>
           <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
-          <span onClick={handleOpenModal}>
-            <RiMore2Fill />
-          </span>
+
+          {user.user.parceiro_id === 1 ? (
+            <span onClick={handleOpenModal}>
+              <RiMore2Fill />
+            </span>
+          ) : null}
         </Block>
       )}
 
@@ -120,6 +123,7 @@ const Usuarios: React.FC = () => {
           users={users}
           handleClick={handleClick}
           setUserSelected={setUserSelected}
+          parceiroId={user.user.parceiro_id}
         />
       )}
 

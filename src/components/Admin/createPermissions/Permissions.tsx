@@ -33,6 +33,7 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
 
   useEffect(() => {
     dispatch(getPermissions());
+    console.log(list);
   }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

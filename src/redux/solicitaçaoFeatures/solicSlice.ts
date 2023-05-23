@@ -7,6 +7,8 @@ interface SolicState {
   moduloComum: any[];
   moduloPadronizar: any[];
   licencasDaEmpresa: any[];
+  modulosList: any[];
+  empresasList: any[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -19,6 +21,8 @@ const initialState: SolicState = {
   moduloComum: [],
   moduloPadronizar: [],
   licencasDaEmpresa: [],
+  modulosList: [],
+  empresasList: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -37,6 +41,7 @@ export const getCanal = createAsyncThunk('solic/getCanal', async () => {
 export const getModuloComum = createAsyncThunk('solic/getModulo', async () => {
   try {
     const response = await solicService.getModulo();
+    console.log(response);
     return response.filter((item: any) => item.tipo === 1);
   } catch (error: any) {
     return error;
@@ -48,6 +53,7 @@ export const getModuloPadronizar = createAsyncThunk(
   async () => {
     try {
       const response = await solicService.getModulo();
+      console.log(response);
       return response.filter((item: any) => item.tipo === 0);
     } catch (error: any) {
       return error;
@@ -66,6 +72,24 @@ export const getLicencaPorEmpresa = createAsyncThunk(
     }
   }
 );
+
+export const getModulo = createAsyncThunk('solic/getModuloList', async () => {
+  try {
+    const response = await solicService.getModulo();
+    return response;
+  } catch (error: any) {
+    return error;
+  }
+});
+
+export const getEmpresas = createAsyncThunk('solic/getEmpresas', async () => {
+  try {
+    const response = await solicService.getEmpresas();
+    return response;
+  } catch (error: any) {
+    return error;
+  }
+});
 
 export const criarSolic = createAsyncThunk(
   'solic/criar',
@@ -180,6 +204,34 @@ export const solicSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Erro ao buscar licenças';
+    });
+    // get Modulos
+    builder.addCase(getModulo.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getModulo.fulfilled, (state, action) => {
+      state.modulosList = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getModulo.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao buscar módulos';
+    });
+    // get Empresas
+    builder.addCase(getEmpresas.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getEmpresas.fulfilled, (state, action) => {
+      state.empresasList = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getEmpresas.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao buscar empresas';
     });
   },
 });

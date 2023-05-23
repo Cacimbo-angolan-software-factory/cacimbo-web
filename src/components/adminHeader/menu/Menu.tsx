@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RiHome5Fill } from 'react-icons/ri';
 import { RiServiceFill } from 'react-icons/ri';
 import { RiFolderKeyholeFill } from 'react-icons/ri';
@@ -9,9 +9,11 @@ import { RiUserFill } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
+import { useSelector } from 'react-redux';
 
 const Menu: React.FC = () => {
   const location = useLocation();
+  const { user } = useSelector((state: any) => state.user);
 
   return (
     <MenuContainer>
@@ -25,15 +27,17 @@ const Menu: React.FC = () => {
         <p>Home</p>
       </MenuItem>
 
-      <MenuItem
-        className={location.pathname === `/empresas` ? 'active' : 'inherit'}
-        to='/empresas'
-      >
-        <span>
-          <RiServiceFill />
-        </span>
-        <p>Empresa</p>
-      </MenuItem>
+      {user.user.tipo === 'Parceiro' ? null : (
+        <MenuItem
+          className={location.pathname === `/empresas` ? 'active' : 'inherit'}
+          to='/empresas'
+        >
+          <span>
+            <RiServiceFill />
+          </span>
+          <p>Empresa</p>
+        </MenuItem>
+      )}
 
       <MenuItem
         className={

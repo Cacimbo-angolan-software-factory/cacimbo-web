@@ -3,17 +3,20 @@ import { IoPersonCircleOutline } from 'react-icons/io5';
 import { RiMore2Fill } from 'react-icons/ri';
 
 import { Div } from './usuariosStyles';
+import { useSelector } from 'react-redux';
 
 interface Props {
   users: any;
   setUserSelected: (user: any) => void;
   handleClick: () => void;
+  parceiroId: number;
 }
 
 const UsersList: React.FC<Props> = ({
   users,
   setUserSelected,
   handleClick,
+  parceiroId,
 }) => {
   return (
     <div>
@@ -28,14 +31,16 @@ const UsersList: React.FC<Props> = ({
               </div>
             </div>
 
-            <span
-              onClick={() => {
-                handleClick && handleClick();
-                setUserSelected && setUserSelected(user);
-              }}
-            >
-              <RiMore2Fill />
-            </span>
+            {parceiroId === 1 ? (
+              <span
+                onClick={() => {
+                  handleClick && handleClick();
+                  setUserSelected && setUserSelected(user);
+                }}
+              >
+                <RiMore2Fill />
+              </span>
+            ) : null}
           </Div>
         ))}
     </div>
