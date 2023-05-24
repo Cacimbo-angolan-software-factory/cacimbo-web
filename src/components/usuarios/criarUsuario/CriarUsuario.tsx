@@ -21,14 +21,10 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
     id_perfil: '',
   });
   const { empresas } = useContext(LicContext);
-  const { perfis, users, isLoading, isError } = useSelector(
-    (state: any) => state.user
-  );
+  const { perfis, isLoading, user } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getPerfis());
-    console.log(empresas);
-    console.log(users.data);
   }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +57,8 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
       createUser({
         name: value.name,
         email: value.email,
-        parceiro_id: parceiro_id,
+        parceiro_id:
+          user.user.parceiro_id === 1 ? parceiro_id : user.user.parceiro_id,
         tipo: value.tipo,
         id_perfil: id_perfil,
       })
@@ -75,6 +72,7 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
       id_perfil: '',
     });
     setCriarUser(false);
+    console.log(value);
   };
 
   return (
@@ -101,6 +99,7 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
           />
         </div>
 
+        {/* {user.user.parceiro_id === 1 ? ( */}
         <SelectInput
           value={value.parceiro_id}
           labelName='Parceiro'
@@ -108,12 +107,21 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
             setValue({ ...value, parceiro_id: e.target.value })
           }
         >
-          {empresas.map((empresa) => (
-            <MenuItem key={empresa.id} value={empresa.Nome}>
-              {empresa.Nome}
-            </MenuItem>
-          ))}
+          {user.user.parceiro_id === 1
+            ? empresas.map((empresa) => (
+                <MenuItem key={empresa.id} value={empresa.Nome}>
+                  {empresa.Nome}
+                </MenuItem>
+              ))
+            : empresas
+                .filter((empresa: any) => empresa.id === user.user.parceiro_id)
+                .map((empresa) => (
+                  <MenuItem key={empresa.id} value={empresa.Nome}>
+                    {empresa.Nome}
+                  </MenuItem>
+                ))}
         </SelectInput>
+        {/* ) : null} */}
 
         <SelectInput
           value={value.tipo}

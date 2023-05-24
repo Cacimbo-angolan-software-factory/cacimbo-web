@@ -19,6 +19,7 @@ const FormContainer = styled(FormControl)`
     background-color: #1d1d1d;
     border-radius: 0.5rem;
     height: 5rem;
+    width: 100%;
     &.Mui-focused fieldset {
       border-color: white;
     }

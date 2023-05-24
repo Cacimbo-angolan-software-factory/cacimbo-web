@@ -187,7 +187,7 @@ export const Cards = styled.div`
 export const Card = styled.div`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   background-color: #5555;
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
@@ -210,7 +210,7 @@ export const Card = styled.div`
     color: #fff;
     font-weight: 600;
     cursor: pointer;
-    width: 50%;
+    width: 100%;
   }
 
   & p.id {
