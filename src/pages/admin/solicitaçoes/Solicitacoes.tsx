@@ -77,8 +77,6 @@ const Solicitaçoes: React.FC = () => {
     dispatch(getCanal());
     dispatch(getModulo());
     dispatch(getEmpresas());
-    console.log(lic_requests);
-    console.log(empresasList);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

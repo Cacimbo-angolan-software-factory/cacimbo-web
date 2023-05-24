@@ -21,14 +21,10 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
     id_perfil: '',
   });
   const { empresas } = useContext(LicContext);
-  const { perfis, users, isLoading, isError } = useSelector(
-    (state: any) => state.user
-  );
+  const { perfis, isLoading } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getPerfis());
-    console.log(empresas);
-    console.log(users.data);
   }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +96,6 @@ const CriarUsuario: React.FC<CriarUsuarioProps> = ({ setCriarUser }) => {
             type='text'
           />
         </div>
-
         <SelectInput
           value={value.parceiro_id}
           labelName='Parceiro'
