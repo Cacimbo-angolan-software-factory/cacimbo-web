@@ -289,6 +289,17 @@ const Solicitaçoes: React.FC = () => {
       <Cards>
         {sections[1]?.data.length > 0 &&
           sections[1].data
+            .filter((item: any) => {
+              if (search === '') {
+                return item;
+              } else if (
+                item.empresa.localidade
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
+              ) {
+                return item;
+              }
+            })
             .sort((a: any, b: any) => {
               const dateA = new Date(a.data);
               const dateB = new Date(b.data);
@@ -330,40 +341,57 @@ const Solicitaçoes: React.FC = () => {
               </Card>
             ))}
 
-        {lic_requests.map((pendente: any, index: number) => (
-          <Card key={`${pendente.id} - ${index}`}>
-            <p className='id'>
-              <span></span> Solicitação {pendente.id} -{' '}
-              {getModulosId(
-                pendente.sol_modulos.map((mod: any) => mod.modulo_id)
-              )}
-            </p>
-            <p className='location'>
-              <IoLocationOutline />
-              {getLocation(pendente.empresa_id)}
-            </p>
-            <SelectInput
-              value={value.canal_id}
-              labelName='Canal'
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setValue({ ...value, canal_id: e.target.value })
-              }
-            >
-              {canal.map((canal: any) => (
-                <MenuItem key={canal.id} value={canal.Nome}>
-                  {canal.Nome}
-                </MenuItem>
-              ))}
-            </SelectInput>
-            <button
-              onClick={() => {
-                handleInterest(pendente.id);
-              }}
-            >
-              Interessado
-            </button>
-          </Card>
-        ))}
+        {lic_requests
+          .filter((item: any) => {
+            if (search === '') {
+              return item;
+            } else if (
+              getLocation(item.empresa_id)
+                .toLowerCase()
+                .includes(search.toLowerCase())
+            ) {
+              return item;
+            }
+          })
+          .sort((a: any, b: any) => {
+            const dateA = new Date(a.data);
+            const dateB = new Date(b.data);
+            return dateB.getTime() - dateA.getTime();
+          })
+          .map((pendente: any, index: number) => (
+            <Card key={`${pendente.id} - ${index}`}>
+              <p className='id'>
+                <span></span> Solicitação {pendente.id} -{' '}
+                {getModulosId(
+                  pendente.sol_modulos.map((mod: any) => mod.modulo_id)
+                )}
+              </p>
+              <p className='location'>
+                <IoLocationOutline />
+                {getLocation(pendente.empresa_id)}
+              </p>
+              <SelectInput
+                value={value.canal_id}
+                labelName='Canal'
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setValue({ ...value, canal_id: e.target.value })
+                }
+              >
+                {canal.map((canal: any) => (
+                  <MenuItem key={canal.id} value={canal.Nome}>
+                    {canal.Nome}
+                  </MenuItem>
+                ))}
+              </SelectInput>
+              <button
+                onClick={() => {
+                  handleInterest(pendente.id);
+                }}
+              >
+                Interessado
+              </button>
+            </Card>
+          ))}
       </Cards>
     );
   };

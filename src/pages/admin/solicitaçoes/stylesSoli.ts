@@ -210,7 +210,7 @@ export const Card = styled.div`
     color: #fff;
     font-weight: 600;
     cursor: pointer;
-    width: 50%;
+    width: 100%;
   }
 
   & p.id {
