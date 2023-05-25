@@ -64,10 +64,6 @@ const Login: React.FC = () => {
       {error && <p style={{ color: '#B71c51', margin: '15px 0' }}>{error}</p>}
 
       <p>
-        <Link to='/NovaPalavraPasse'>Deseja alterar a sua palavra passe?</Link>
-      </p>
-
-      <p>
         <a href='#'>Esqueceu a sua palavra passe?</a>
       </p>
     </Container>
