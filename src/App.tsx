@@ -26,9 +26,9 @@ function App() {
             <Route path='/solicitaçoes' element={<Solicitaçoes />} />
             <Route path='/empresas' element={<Empresas />} />
             <Route path='/Usuarios' element={<Usuarios />} />
+            <Route path='/NovaPalavraPasse' element={<ResetPassword />} />
           </Route>
           <Route path='/Login' element={<Login />} />
-          <Route path='/NovaPalavraPasse' element={<ResetPassword />} />
         </Routes>
       </AppContainer>
     </>
