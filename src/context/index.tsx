@@ -27,6 +27,7 @@ interface ICreateContext {
   TotalLicenses?: number;
   setTotalLicenses?: (value: number) => void;
   editEmpresa?: (id: number, formData: any) => Promise<void | number>;
+  changePassword: (formData: any) => Promise<void>;
   setEditar?: (value: any) => void;
   loadingEditar: boolean;
   loadingEmpresas?: boolean;
@@ -45,6 +46,7 @@ interface ICreateContext {
   desistirInterest?: (dataInterest: any) => Promise<void>;
   aprovar?: (aproveData: any) => Promise<void>;
   rejeitar?: (rejectData: any) => Promise<void>;
+  loadingPassword?: boolean;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -55,6 +57,7 @@ export const LicContext = createContext<ICreateContext>({
   editar: null,
   loadingEditar: false,
   sections: [],
+  changePassword: () => Promise.resolve(),
 });
 
 export const LicProvider = ({ children }: IContext) => {
@@ -73,6 +76,7 @@ export const LicProvider = ({ children }: IContext) => {
     useState(false);
   const [sections, setSections] = useState<any>([]);
   const [loadingInterest, setLoadingInterest] = useState(false);
+  const [loadingPassword, setLoadingPassword] = useState(false);
   const { user: currentUser } = useSelector((state: any) => state.user);
 
   const user = {
@@ -207,6 +211,35 @@ export const LicProvider = ({ children }: IContext) => {
       }
       if (err?.response.status) {
         console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        return;
+      }
+    }
+  }
+
+  async function changePassword(formData: {
+    current_password: string;
+    new_password: string;
+    new_password_confirm: string;
+  }): Promise<void> {
+    try {
+      setLoadingPassword(true);
+      const res = await api.put(
+        `/users/${currentUser?.user.id}/change-password`,
+        formData
+      );
+      if (res.status === 200) {
+        setLoadingPassword(false);
+        console.log('Senha alterada com sucesso', 'success');
+      }
+    } catch (err: any) {
+      setLoadingPassword(false);
+      if (err?.response.status === 'undefined') {
+        console.error('Sem ligação à internet', 'error');
+        return;
+      }
+      if (err?.response.status) {
+        console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        console.log(err.response.data);
         return;
       }
     }
@@ -395,6 +428,8 @@ export const LicProvider = ({ children }: IContext) => {
         desistirInterest,
         aprovar,
         rejeitar,
+        changePassword,
+        loadingPassword,
       }}
     >
       {children}
