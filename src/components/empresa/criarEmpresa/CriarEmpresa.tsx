@@ -145,7 +145,11 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
         </Form>
       </Container>
 
-      {showModal && <ModalConcluido />}
+      {showModal && (
+        <ModalConcluido>
+          <h2>Cadastro feito com sucesso! 🎉</h2>
+        </ModalConcluido>
+      )}
     </>
   );
 };
