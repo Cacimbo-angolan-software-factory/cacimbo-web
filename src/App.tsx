@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminHome from './pages/admin/home/AdminHome';
 import Licenças from './pages/admin/licenças/Licenças';
