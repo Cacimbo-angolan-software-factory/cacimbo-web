@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminHome from './pages/admin/home/AdminHome';
 import Licenças from './pages/admin/licenças/Licenças';
@@ -7,6 +8,7 @@ import Login from './pages/login/Login';
 import styled from 'styled-components';
 import PrivateRoutes from './PrivateRoutes';
 import Usuarios from './pages/admin/usuarios/Usuarios';
+import ResetPassword from './pages/login/ResetPassword';
 
 const AppContainer = styled.div`
   display: flex;
@@ -25,6 +27,7 @@ function App() {
             <Route path='/solicitaçoes' element={<Solicitaçoes />} />
             <Route path='/empresas' element={<Empresas />} />
             <Route path='/Usuarios' element={<Usuarios />} />
+            <Route path='/NovaPalavraPasse' element={<ResetPassword />} />
           </Route>
           <Route path='/Login' element={<Login />} />
         </Routes>

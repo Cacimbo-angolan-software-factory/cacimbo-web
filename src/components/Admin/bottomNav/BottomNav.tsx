@@ -8,13 +8,14 @@ import {
   IoLogOutOutline,
   IoBuildOutline,
   IoPersonAddOutline,
+  IoKeyOutline,
 } from 'react-icons/io5';
 import Modal from '../../modal/Modal';
 
 import { Container, ModalItem } from './stylesBottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface BottomNavProps {
   fixedNav: boolean;
@@ -87,6 +88,12 @@ const BottomNav: React.FC<BottomNavProps> = ({
             {user.user.name}
           </ModalItem>
 
+          <Link to='/NovaPalavraPasse'>
+            <ModalItem>
+              <IoKeyOutline />
+              Mudar palavra-passe
+            </ModalItem>
+          </Link>
           <ModalItem onClick={handleLogout}>
             <IoLogOutOutline />
             Logout

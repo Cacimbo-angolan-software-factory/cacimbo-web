@@ -3,11 +3,15 @@ import React from 'react';
 import { Wrapper } from './modalConcluidoStyles';
 import concluido from '../../assets/concluido.svg';
 
-const ModalConcluido: React.FC = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const ModalConcluido: React.FC<Props> = ({ children }) => {
   return (
     <Wrapper>
       <img src={concluido} alt='concluido' />
-      <h2>Cadastro feito com sucesso! 🎉</h2>
+      {children}
     </Wrapper>
   );
 };

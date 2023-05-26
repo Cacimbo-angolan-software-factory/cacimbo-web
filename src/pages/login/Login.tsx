@@ -5,6 +5,7 @@ import { login } from '../../redux/userFeatures/usersSlice';
 
 import { Container } from './stylesLogin';
 import { reset } from '../../redux/userFeatures/usersSlice';
+import { Link } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ const Login: React.FC = () => {
           name='password'
           value={formData.password}
           onChange={handleChange}
-          placeholder='palavra-passe'
+          placeholder='Palavra-passe'
         />
         <button type='submit'>Entrar</button>
       </form>
@@ -63,7 +64,7 @@ const Login: React.FC = () => {
       {error && <p style={{ color: '#B71c51', margin: '15px 0' }}>{error}</p>}
 
       <p>
-        Esqueceu sua palavra-passe? <a href='#'>Clique aqui</a>
+        <a href='#'>Esqueceu a sua palavra passe?</a>
       </p>
     </Container>
   );
