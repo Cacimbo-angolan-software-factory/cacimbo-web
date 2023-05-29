@@ -3,8 +3,6 @@ import { RiHome5Fill } from 'react-icons/ri';
 import { RiServiceFill } from 'react-icons/ri';
 import { RiFolderKeyholeFill } from 'react-icons/ri';
 import { RiShieldCheckFill } from 'react-icons/ri';
-import { RiWechatFill } from 'react-icons/ri';
-import { RiNewspaperFill } from 'react-icons/ri';
 import { RiUserFill } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 

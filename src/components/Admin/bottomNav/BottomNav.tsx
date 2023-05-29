@@ -70,52 +70,54 @@ const BottomNav: React.FC<BottomNavProps> = ({
   });
 
   return (
-    <Container className={fixedNav ? 'nav fixed' : 'nav'}>
-      <span onClick={handleSettings}>
-        <IoSettingsOutline />
-      </span>
-      <span>
-        <IoListOutline />
-      </span>
-      <span onClick={handleUser}>
-        <IoPeopleOutline />
-      </span>
+    <>
+      <Container className={fixedNav ? 'nav fixed' : 'nav'}>
+        <span onClick={handleSettings}>
+          <IoSettingsOutline />
+        </span>
+        <span>
+          <IoListOutline />
+        </span>
+        <span onClick={handleUser}>
+          <IoPeopleOutline />
+        </span>
 
-      {isOpenUser && (
-        <Modal modalRef={modalRef}>
-          <ModalItem>
-            <IoPeopleOutline />
-            {user.user.name}
-          </ModalItem>
-
-          <Link to='/NovaPalavraPasse'>
+        {isOpenUser && (
+          <Modal modalRef={modalRef}>
             <ModalItem>
-              <IoKeyOutline />
-              Mudar palavra-passe
+              <IoPeopleOutline />
+              {user.user.name}
             </ModalItem>
-          </Link>
-          <ModalItem onClick={handleLogout}>
-            <IoLogOutOutline />
-            Logout
-          </ModalItem>
-        </Modal>
-      )}
 
-      {isOpenSettings && (
-        <Modal modalRef={modalRef}>
-          {user.user.tipo === 'Parceiro' ? null : (
-            <ModalItem onClick={() => setCriarPermission(true)}>
-              <IoBuildOutline />
-              Permissões
+            <Link to='/NovaPalavraPasse'>
+              <ModalItem>
+                <IoKeyOutline />
+                Mudar palavra-passe
+              </ModalItem>
+            </Link>
+            <ModalItem onClick={handleLogout}>
+              <IoLogOutOutline />
+              Logout
             </ModalItem>
-          )}
-          <ModalItem onClick={() => setCriarRole(true)}>
-            <IoPersonAddOutline />
-            Funções de usuário
-          </ModalItem>
-        </Modal>
-      )}
-    </Container>
+          </Modal>
+        )}
+
+        {isOpenSettings && (
+          <Modal modalRef={modalRef}>
+            {user.user.tipo === 'Parceiro' ? null : (
+              <ModalItem onClick={() => setCriarPermission(true)}>
+                <IoBuildOutline />
+                Permissões
+              </ModalItem>
+            )}
+            <ModalItem onClick={() => setCriarRole(true)}>
+              <IoPersonAddOutline />
+              Funções de usuário
+            </ModalItem>
+          </Modal>
+        )}
+      </Container>
+    </>
   );
 };
 
