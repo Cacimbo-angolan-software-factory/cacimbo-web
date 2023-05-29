@@ -1,10 +1,11 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useContext, useEffect } from 'react';
 
-import { Container } from './stylesLogin';
+import { Buttons, Container } from './stylesLogin';
 import { LicContext } from '../../context';
 import { ToastContainer, toast } from 'react-toastify';
-import ModalConcluido from '../../components/modalConcluido/ModalConcluido';
+import { Link } from 'react-router-dom';
+import { current } from '@reduxjs/toolkit';
 
 const ResetPassword: React.FC = () => {
   const [formData, setFormData] = React.useState({
@@ -12,7 +13,6 @@ const ResetPassword: React.FC = () => {
     new_password: '',
     new_confirm_password: '',
   });
-  const [showModal, setShowModal] = React.useState(false);
   const { changePassword, loadingPassword } = useContext(LicContext);
 
   useEffect(() => {}, []);
@@ -23,6 +23,23 @@ const ResetPassword: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      formData.current_password === '' ||
+      formData.new_password === '' ||
+      formData.new_confirm_password === ''
+    ) {
+      toast.error('Preencha todos os campos!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
+      return;
+    }
 
     changePassword({
       current_password: formData.current_password,
@@ -79,9 +96,14 @@ const ResetPassword: React.FC = () => {
             onChange={handleChange}
             placeholder='Confirmar palavra-passe'
           />
-          <button type='submit'>
-            {loadingPassword ? 'Aguarde...' : 'Mudar palavra-passe'}
-          </button>
+          <Buttons>
+            <button>
+              <Link to='/'>Cancelar</Link>
+            </button>
+            <button type='submit'>
+              {loadingPassword ? 'Aguarde...' : 'Confirmar'}
+            </button>
+          </Buttons>
         </form>
 
         <p>

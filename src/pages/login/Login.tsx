@@ -58,7 +58,9 @@ const Login: React.FC = () => {
           onChange={handleChange}
           placeholder='Palavra-passe'
         />
-        <button type='submit'>Entrar</button>
+        <button className='single-btn' type='submit'>
+          Entrar
+        </button>
       </form>
 
       {error && <p style={{ color: '#B71c51', margin: '15px 0' }}>{error}</p>}
