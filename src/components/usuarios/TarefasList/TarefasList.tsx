@@ -48,7 +48,7 @@ const TarefasList: React.FC = () => {
   return (
     <>
       <TopDiv>
-        <h1>Tarefas</h1>
+        <h1>Lista de descrições de tarefas</h1>
         <span onClick={handleOpenCreate}>
           <IoAddCircleOutline />
         </span>

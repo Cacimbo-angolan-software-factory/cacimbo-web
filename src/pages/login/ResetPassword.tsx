@@ -1,11 +1,9 @@
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useContext, useEffect } from 'react';
 
-import { Buttons, Container } from './stylesLogin';
+import { Buttons, Container, WrapperBtn } from './stylesLogin';
 import { LicContext } from '../../context';
 import { ToastContainer, toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import { current } from '@reduxjs/toolkit';
 
 const ResetPassword: React.FC = () => {
   const [formData, setFormData] = React.useState({
@@ -97,9 +95,9 @@ const ResetPassword: React.FC = () => {
             placeholder='Confirmar palavra-passe'
           />
           <Buttons>
-            <button>
-              <Link to='/'>Cancelar</Link>
-            </button>
+            <WrapperBtn to='/'>
+              <button type='button'>Cancelar</button>
+            </WrapperBtn>
             <button type='submit'>
               {loadingPassword ? 'Aguarde...' : 'Confirmar'}
             </button>

@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const StatsContainer = styled.div`
   display: flex;
   gap: 3rem;

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -78,4 +79,8 @@ export const Buttons = styled.div`
     background-color: #b71c50;
     color: #ebebeb;
   }
+`;
+
+export const WrapperBtn = styled(Link)`
+  width: 100%;
 `;

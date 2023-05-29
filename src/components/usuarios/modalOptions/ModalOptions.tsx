@@ -28,7 +28,7 @@ const ModalOptions: React.FC<Props> = ({
   return (
     <Container ref={modalRef}>
       <p onClick={handleOpenPerfis}>Perfis</p>
-      <p onClick={handleOpenTarefaas}>Tarefas</p>
+      <p onClick={handleOpenTarefaas}>Descrições de tarefas</p>
       <p>Tipos de assistencias</p>
     </Container>
   );
