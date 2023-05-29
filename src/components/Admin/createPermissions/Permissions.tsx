@@ -33,7 +33,6 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
 
   useEffect(() => {
     dispatch(getPermissions());
-    console.log(list);
   }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -96,13 +95,13 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
           }
         >
           {list
-            .filter(
-              (permission: any) =>
-                permission.source_name === null && permission.source_id !== null
-            )
+            // .filter(
+            //   (permission: any) =>
+            //     permission.source_name === null && permission.source_id !== null
+            // )
             .map((permission: any) => (
               <MenuItem key={permission.id} value={permission.name}>
-                {permission.name}
+                {permission.name} - {permission.description}
               </MenuItem>
             ))}
         </SelectInput>
