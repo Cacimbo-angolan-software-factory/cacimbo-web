@@ -171,7 +171,7 @@ const Solicitaçoes: React.FC = () => {
                   <Wrapper key={`${section.id} - ${index}`}>
                     <td className='big-text data'>{section.data}</td>
                     <td className='big-text'>
-                      {section.solicitacao.empresa.nome}
+                      {section?.solicitacao?.empresa.nome}
                     </td>
                     <td className='big-text'>{section.parceiro.Nome}</td>
                     <td className='big-text'>{section.parceiro.Nif}</td>
@@ -179,14 +179,14 @@ const Solicitaçoes: React.FC = () => {
                     <td>
                       <span
                         className={
-                          section.solicitacao.tipo === 'Renovação'
+                          section?.solicitacao?.tipo === 'Renovação'
                             ? 'renovacao'
-                            : section.solicitacao.tipo === 'Padronizar'
+                            : section?.solicitacao?.tipo === 'Padronizar'
                             ? 'padronizar'
                             : 'comum'
                         }
                       >
-                        {section.solicitacao.tipo}
+                        {section?.solicitacao?.tipo}
                       </span>
                     </td>
                     <td className='big-text'>
