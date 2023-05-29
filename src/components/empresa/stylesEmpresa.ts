@@ -6,6 +6,8 @@ export const Container = styled.div`
   justify-content: space-between;
   background: rgba(56 56, 56, 0.6);
   border-radius: 0.5rem;
+  width: 100%;
+  cursor: pointer;
 
   & div {
     display: flex;

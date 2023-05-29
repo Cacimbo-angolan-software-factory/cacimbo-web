@@ -1,5 +1,4 @@
 import React from 'react';
-import { RiMore2Fill } from 'react-icons/ri';
 import { Container } from './stylesEmpresa';
 
 interface EmpresaProps {
@@ -19,21 +18,17 @@ const Empresa: React.FC<EmpresaProps> = ({
   setEmpresaSelected,
 }) => {
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        handleClick && handleClick();
+        setEmpresaSelected && setEmpresaSelected(empresa);
+      }}
+    >
       <div>
         <h1>{empresa.Nome}</h1>
         <p>{empresa.email}</p>
         <p>{empresa.Nif}</p>
       </div>
-
-      <span
-        onClick={() => {
-          handleClick && handleClick();
-          setEmpresaSelected && setEmpresaSelected(empresa);
-        }}
-      >
-        <RiMore2Fill />
-      </span>
     </Container>
   );
 };
