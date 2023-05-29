@@ -103,14 +103,14 @@ const CreateUserRole: React.FC<CreateRoleProps> = ({ setCriarRole }) => {
           handleChange={handlePermission}
         >
           {list
-            .filter(
-              (permission: any) =>
-                permission.source_name === null && permission.source_id !== null
-            )
+            // .filter(
+            //   (permission: any) =>
+            //     permission.source_name === null && permission.source_id !== null
+            // )
             .map((perm: any) => (
               <MenuItem key={perm.id} value={perm.id}>
                 <Checkbox checked={permission.indexOf(perm.id) > -1} />
-                <ListItemText primary={perm.name} />
+                <ListItemText primary={`${perm.name} - ${perm.description}`} />
               </MenuItem>
             ))}
         </CheckMarkField>

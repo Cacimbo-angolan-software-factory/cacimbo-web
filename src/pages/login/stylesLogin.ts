@@ -4,7 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 50%;
+  max-width: 600px;
+  width: 100%;
   gap: 2rem;
   margin-top: 4rem;
 
@@ -31,7 +32,7 @@ export const Container = styled.div`
       border-radius: 0.5rem;
     }
 
-    & button {
+    & button.single-btn {
       padding: 1rem;
       background-color: #b71c50;
       font-size: 1.6rem;
@@ -52,5 +53,29 @@ export const Container = styled.div`
   }
   & a {
     color: #b71c50;
+  }
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+
+  & button {
+    padding: 1.2rem 2rem;
+    font-size: 1.6rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  & button:nth-child(1) {
+    background-color: #bebebe;
+  }
+
+  & button:nth-child(2) {
+    background-color: #b71c50;
+    color: #ebebeb;
   }
 `;
