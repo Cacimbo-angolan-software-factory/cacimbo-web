@@ -168,7 +168,7 @@ const TarefasSideBarContainer: React.FC<Props> = ({
 
   return (
     <>
-      <h1>Gerenciamento de tarefas</h1>
+      <h1>Gerenciamento de descrições de tarefas</h1>
 
       <Tabs>
         <p
