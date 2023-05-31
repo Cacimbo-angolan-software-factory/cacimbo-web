@@ -19,10 +19,12 @@ const Menu: React.FC = () => {
         className={location.pathname === `/` ? 'active' : 'inherit'}
         to='/'
       >
-        <span>
+        <span className={location.pathname === `/` ? 'active-text' : 'inherit'}>
           <RiHome5Fill />
         </span>
-        <p>Home</p>
+        <p className={location.pathname === `/` ? 'active-text' : 'inherit'}>
+          Home
+        </p>
       </MenuItem>
 
       {user.user.tipo === 'Parceiro' ? null : (
@@ -30,10 +32,20 @@ const Menu: React.FC = () => {
           className={location.pathname === `/empresas` ? 'active' : 'inherit'}
           to='/empresas'
         >
-          <span>
+          <span
+            className={
+              location.pathname === `/empresas` ? 'active-text' : 'inherit'
+            }
+          >
             <RiServiceFill />
           </span>
-          <p>Empresa</p>
+          <p
+            className={
+              location.pathname === `/empresas` ? 'active-text' : 'inherit'
+            }
+          >
+            Empresa
+          </p>
         </MenuItem>
       )}
 
@@ -43,10 +55,20 @@ const Menu: React.FC = () => {
         }
         to='/licenças'
       >
-        <span>
+        <span
+          className={
+            location.pathname === `/licen%C3%A7as` ? 'active-text' : 'inherit'
+          }
+        >
           <RiFolderKeyholeFill />
         </span>
-        <p>Licenças</p>
+        <p
+          className={
+            location.pathname === `/licen%C3%A7as` ? 'active-text' : 'inherit'
+          }
+        >
+          Licenças
+        </p>
       </MenuItem>
 
       <MenuItem
@@ -55,20 +77,44 @@ const Menu: React.FC = () => {
         }
         to='/solicitaçoes'
       >
-        <span>
+        <span
+          className={
+            location.pathname === `/solicita%C3%A7oes`
+              ? 'active-text'
+              : 'inherit'
+          }
+        >
           <RiShieldCheckFill />
         </span>
-        <p>Solicitações</p>
+        <p
+          className={
+            location.pathname === `/solicita%C3%A7oes`
+              ? 'active-text'
+              : 'inherit'
+          }
+        >
+          Solicitações
+        </p>
       </MenuItem>
 
       <MenuItem
         className={location.pathname === `/Usuarios` ? 'active' : 'inherit'}
         to='/Usuarios'
       >
-        <span>
+        <span
+          className={
+            location.pathname === `/Usuarios` ? 'active-text' : 'inherit'
+          }
+        >
           <RiUserFill />
         </span>
-        <p>Usuários</p>
+        <p
+          className={
+            location.pathname === `/Usuarios` ? 'active-text' : 'inherit'
+          }
+        >
+          Usuários
+        </p>
       </MenuItem>
     </MenuContainer>
   );
