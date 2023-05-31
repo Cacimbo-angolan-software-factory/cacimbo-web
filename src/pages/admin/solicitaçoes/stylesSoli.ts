@@ -1,95 +1,116 @@
 import styled from 'styled-components';
 
 export const Container = styled.table`
-  width: 100%;
-  background-color: #5555;
-  padding: 1.5rem;
-  border-radius: 1rem;
-
-  th {
-    border-bottom: 1px solid #bebebe;
-    /* border: 1px solid ; */
-    padding: 0 1rem 1.5rem 1rem;
-    text-align: left;
-    font-size: 1.4rem;
-  }
-
-  td {
-    padding: 1.5rem 1rem;
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
-export const ContainerHeader = styled.tr``;
+export const Wrapper = styled.div`
+  min-width: 35rem;
+  max-width: 35rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: #5555;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 0.5rem;
 
-export const Wrapper = styled.tr`
-  & td.big-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-between;
+
+  & h3 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 10rem;
   }
 
-  & td.data {
-    font-weight: 400;
-    color: #bebebe;
-  }
+  & div.companies {
+    display: flex;
+    justify-content: space-between;
 
-  & td.number {
-  }
-
-  & td {
-    & span {
-      border-radius: 2rem;
-      padding: 0.5rem 1.2rem;
-    }
-
-    & span.number {
-      background-color: rgb(0, 150, 255, 0.2);
+    & div {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      width: fit-content;
-    }
 
-    & span.comum {
-      background-color: RGBA(95, 108, 218, 0.2);
-      color: #5f6cda;
-    }
-
-    & span.renovacao {
-      background-color: RGBA(183, 28, 80, 0.2);
-      color: #b71c50;
-    }
-
-    & span.padronizar {
-      background-color: RGBA(0, 163, 0, 0.2);
-      color: #00a300;
-    }
-
-    & button {
-      padding: 0.8rem;
-      border: none;
-      border-radius: 1rem;
-      font-size: 1.4rem;
-      gap: 0.5rem;
-      cursor: pointer;
-      display: flex;
-      background-color: #00a300;
-      color: #ebebeb;
-      display: flex;
-      align-items: center;
-      margin: 0;
-    }
-
-    & button.interesse {
-      background-color: #766868;
-      color: #ebebeb;
+      & svg {
+        font-size: 1.3rem;
+      }
     }
   }
 
-  div {
+  & div.nif-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & p {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  & p.date {
+    color: #6c6c6c;
+  }
+
+  & span {
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+  }
+
+  & span.number {
+    background-color: rgb(0, 150, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+  }
+
+  & span.comum {
+    background-color: RGBA(95, 108, 218, 0.2);
+    color: #5f6cda;
+  }
+
+  & span.renovacao {
+    background-color: RGBA(183, 28, 80, 0.2);
+    color: #b71c50;
+  }
+
+  & span.padronizar {
+    background-color: RGBA(0, 163, 0, 0.2);
+    color: #00a300;
+  }
+
+  & button {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    gap: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    background-color: #00a300;
+    color: #ebebeb;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    width: fit-content;
+  }
+
+  & button.interesse {
+    background-color: #766868;
+    color: #ebebeb;
+  }
+
+  /* div {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
@@ -112,7 +133,7 @@ export const Wrapper = styled.tr`
       background-color: #766868;
       color: #ebebeb;
     }
-  }
+  } */
 `;
 
 export const SearchAndFilters = styled.div`

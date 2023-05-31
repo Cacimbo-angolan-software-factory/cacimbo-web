@@ -1,5 +1,12 @@
 import React from 'react';
-import { IoPersonAddOutline } from 'react-icons/io5';
+import {
+  IoBusinessOutline,
+  IoCalendarOutline,
+  IoDocumentTextOutline,
+  IoMailUnreadOutline,
+  IoPeopleOutline,
+  IoPersonAddOutline,
+} from 'react-icons/io5';
 
 import { Buttons } from './stylesSingleSoli';
 import { useSelector } from 'react-redux';
@@ -21,17 +28,22 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request, setOpen }) => {
 
   return (
     <>
-      <td className='big-text data'>{data}</td>
-      <td className='big-text'>{cliente_nome}</td>
-      <td className='big-text'>{parceiro_nome}</td>
-      <td className='big-text'>{cliente_nif}</td>
-      <td>
-        <span className='number'>
-          <IoPersonAddOutline />
-          {interesse}
-        </span>
-      </td>
-      <td>
+      <div className='companies'>
+        <div>
+          <IoPeopleOutline />
+          <h3 className='big-text'>{cliente_nome}</h3>
+        </div>
+        <div>
+          <IoBusinessOutline />
+          <h3 className='big-text'>{parceiro_nome}</h3>
+        </div>
+      </div>
+
+      <div className='nif-status'>
+        <p className='nif'>
+          <IoDocumentTextOutline />
+          {cliente_nif}
+        </p>
         <span
           className={
             tipo === 'Renovação'
@@ -43,7 +55,17 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request, setOpen }) => {
         >
           {tipo}
         </span>
-      </td>
+      </div>
+
+      <span className='number'>
+        <IoPersonAddOutline />
+        {interesse}
+      </span>
+      <p className='date'>
+        <IoCalendarOutline />
+        {data}
+      </p>
+
       <Buttons>
         {user.user.parceiro_id === 1 ? (
           <button
