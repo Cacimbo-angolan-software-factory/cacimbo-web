@@ -63,6 +63,7 @@ interface CheckMarkFieldProps {
   value: string[];
   handleChange: (event: SelectChangeEvent<string[]>) => void;
   tag: string;
+  disabled?: boolean;
 }
 
 const CheckMarkField: React.FC<CheckMarkFieldProps> = ({
@@ -70,10 +71,11 @@ const CheckMarkField: React.FC<CheckMarkFieldProps> = ({
   value,
   handleChange,
   tag,
+  disabled,
 }) => {
   return (
     <div>
-      <FormContainer sx={{ maxWidth: '50%' }}>
+      <FormContainer disabled={disabled} sx={{ maxWidth: '50%' }}>
         <InputLabel id='demo-multiple-checkbox-label'>{tag}</InputLabel>
         <Select
           labelId='demo-multiple-checkbox-label'

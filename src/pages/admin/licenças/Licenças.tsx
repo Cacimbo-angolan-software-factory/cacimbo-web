@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LicContext } from '../../../context';
 import Licence from '../../../components/licenças/Licence';
 
-import { Pagination } from './styles';
+import { Div, FiltersContainer, InputSearch, Pagination } from './styles';
 import Filters from '../../../components/licenças/filters/Filters';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import EmptyState from '../../../components/emptyState/EmptyState';
 import Spinner from '../../../components/spinner/Spinner';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEmpresas } from '../../../redux/solicitaçaoFeatures/solicSlice';
+import { AppDispatch } from '../../../redux/store';
 
 const Licenças: React.FC = () => {
   const { licences, loadingLicenses } = useContext(LicContext);
@@ -17,6 +19,23 @@ const Licenças: React.FC = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [filtro, setFiltro] = useState('all');
   const [childFitro, setChildFiltro] = useState('todas');
+  const [search, setSearch] = useState('');
+  const { empresasList } = useSelector((state: any) => state.solicitaçao);
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  useEffect(() => {
+    dispatch(getEmpresas());
+    console.log(licences);
+  }, []);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
   const itemsPerPage = 50;
   const endOffset = pageNumber + itemsPerPage;
@@ -63,17 +82,45 @@ const Licenças: React.FC = () => {
     endOffset + itemsPerPage
   );
 
+  // get nif from empresasList
+  const getNif = (nif: any) => {
+    const empresa = empresasList.find(
+      (empresaNif: any) => empresaNif.id === nif
+    );
+
+    return empresa?.nif;
+  };
+
   // handling the filter
   const todos = () => {
     if (filtro === 'all' && childFitro === 'todas') {
       return (
         <div>
           {currentItems.length > 0 ? (
-            currentItems.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
+            currentItems
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.data_emissao
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.data_validade
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  getNif(item.empresa_id).includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((licence) => (
+                <div key={licence.id}>
+                  <Licence licence={licence} />
+                </div>
+              ))
           ) : (
             <EmptyState>
               <h2>Não existem licenças</h2>
@@ -89,11 +136,30 @@ const Licenças: React.FC = () => {
       return (
         <div>
           {todasActivasPaginated.length > 0 ? (
-            todasActivasPaginated.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
+            todasActivasPaginated
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.data_emissao
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.data_validade
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  getNif(item.empresa_id).includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((licence) => (
+                <div key={licence.id}>
+                  <Licence licence={licence} />
+                </div>
+              ))
           ) : (
             <EmptyState>
               <h2>Não existem licenças</h2>
@@ -109,11 +175,30 @@ const Licenças: React.FC = () => {
       return (
         <div>
           {porRenovarPaginated.length > 0 ? (
-            porRenovarPaginated.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
+            porRenovarPaginated
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.data_emissao
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.data_validade
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  getNif(item.empresa_id).includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((licence) => (
+                <div key={licence.id}>
+                  <Licence licence={licence} />
+                </div>
+              ))
           ) : (
             <EmptyState>
               <h2>Não existem licenças</h2>
@@ -130,7 +215,24 @@ const Licenças: React.FC = () => {
       return (
         <div>
           {SelectedPartnerPaginated.length > 0 ? (
-            SelectedPartnerPaginated.map((licence) => (
+            SelectedPartnerPaginated.filter((item: any) => {
+              if (search === '') {
+                return item;
+              } else if (
+                item.data_emissao
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                item.data_validade
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                item.cliente_nome
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                getNif(item.empresa_id).includes(search.toLowerCase())
+              ) {
+                return item;
+              }
+            }).map((licence) => (
               <div key={licence.id}>
                 <Licence licence={licence} />
               </div>
@@ -150,11 +252,30 @@ const Licenças: React.FC = () => {
       return (
         <div>
           {activasParceiroPaginated.length > 0 ? (
-            activasParceiroPaginated.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
+            activasParceiroPaginated
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.data_emissao
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.data_validade
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  getNif(item.empresa_id).includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((licence) => (
+                <div key={licence.id}>
+                  <Licence licence={licence} />
+                </div>
+              ))
           ) : (
             <EmptyState>
               <h2>Não existem licenças</h2>
@@ -170,11 +291,30 @@ const Licenças: React.FC = () => {
       return (
         <div>
           {porRenovarParceiroPaginated.length > 0 ? (
-            porRenovarParceiroPaginated.map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
+            porRenovarParceiroPaginated
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.data_emissao
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.data_validade
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  getNif(item.empresa_id).includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((licence) => (
+                <div key={licence.id}>
+                  <Licence licence={licence} />
+                </div>
+              ))
           ) : (
             <EmptyState>
               <h2>Não existem licenças</h2>
@@ -205,13 +345,21 @@ const Licenças: React.FC = () => {
       <AdminHeader />
       <HeaderMobile />
 
-      <Filters
-        filtro={filtro}
-        setFiltro={setFiltro}
-        childFiltro={childFitro}
-        setChildFiltro={setChildFiltro}
-        fixedFilter={fixedFilter}
-      />
+      <FiltersContainer>
+        <Filters
+          filtro={filtro}
+          setFiltro={setFiltro}
+          childFiltro={childFitro}
+          setChildFiltro={setChildFiltro}
+          fixedFilter={fixedFilter}
+        />
+        <InputSearch
+          onChange={handleSearch}
+          value={search}
+          type='text'
+          placeholder='Pesquise licenças por nome, data ou nif...'
+        />
+      </FiltersContainer>
 
       <div>
         {todos && todos()}

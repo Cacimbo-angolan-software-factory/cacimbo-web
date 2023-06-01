@@ -26,6 +26,10 @@ export const MenuItem = styled(Link)`
 
   & span {
     font-size: 3.6rem;
+
+    &.active-text {
+      color: #b71c50;
+    }
   }
 
   & p {
@@ -39,5 +43,9 @@ export const MenuItem = styled(Link)`
 
   &.active {
     border: 1px solid #b71c50;
+  }
+
+  & p.active-text {
+    color: #b71c50;
   }
 `;

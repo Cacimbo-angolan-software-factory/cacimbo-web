@@ -47,6 +47,7 @@ interface ICreateContext {
   aprovar?: (aproveData: any) => Promise<void>;
   rejeitar?: (rejectData: any) => Promise<void>;
   loadingPassword?: boolean;
+  loadingAprovar?: boolean;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -77,6 +78,7 @@ export const LicProvider = ({ children }: IContext) => {
   const [sections, setSections] = useState<any>([]);
   const [loadingInterest, setLoadingInterest] = useState(false);
   const [loadingPassword, setLoadingPassword] = useState(false);
+  const [loadingAprovar, setLoadingAprovar] = useState(false);
   const { user: currentUser } = useSelector((state: any) => state.user);
 
   const user = {
@@ -375,16 +377,20 @@ export const LicProvider = ({ children }: IContext) => {
 
   async function aprovar(aproveData: any) {
     try {
-      await api.put('solicitacoes/aprovar-parceiro-interessado', aproveData);
+      console.log(aproveData);
+      setLoadingAprovar(true);
+      await api.put('solicitacao/aprovar-parceiro-interessado', aproveData);
       await getRequestToApproveAndAuctionRequests();
+      setLoadingAprovar(false);
     } catch (err) {
+      setLoadingAprovar(false);
       throw err;
     }
   }
 
   async function rejeitar(rejectData: any) {
     try {
-      await api.put('solicitacoes/rejeitar-parceiro-interessado', rejectData);
+      await api.put('solicitacao/rejeitar-parceiro-interessado', rejectData);
       await getRequestToApproveAndAuctionRequests();
     } catch (err) {
       throw err;
@@ -430,6 +436,7 @@ export const LicProvider = ({ children }: IContext) => {
         rejeitar,
         changePassword,
         loadingPassword,
+        loadingAprovar,
       }}
     >
       {children}
