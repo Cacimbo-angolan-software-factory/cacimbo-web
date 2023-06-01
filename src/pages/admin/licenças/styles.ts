@@ -25,3 +25,27 @@ export const Pagination = styled(ReactPaginate)`
     width: 100%;
   }
 `;
+
+export const FiltersContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InputSearch = styled.input`
+  padding: 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  border: 1px solid #fff;
+  background-color: inherit;
+  color: #fff;
+  width: 25%;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
+
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+`;
