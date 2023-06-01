@@ -12,7 +12,6 @@ import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmpresas } from '../../../redux/solicitaçaoFeatures/solicSlice';
 import { AppDispatch } from '../../../redux/store';
-import SideBarLicence from '../../../components/licenças/sidebarLicences/SideBarLicence';
 
 const Licenças: React.FC = () => {
   const { licences, loadingLicenses } = useContext(LicContext);
@@ -22,7 +21,6 @@ const Licenças: React.FC = () => {
   const [childFitro, setChildFiltro] = useState('todas');
   const [search, setSearch] = useState('');
   const { empresasList } = useSelector((state: any) => state.solicitaçao);
-  const [licenceSelected, setLicenceSelected] = useState<any>();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -120,11 +118,7 @@ const Licenças: React.FC = () => {
               })
               .map((licence) => (
                 <div key={licence.id}>
-                  <Licence
-                    handleClick={handleClick}
-                    setLicenceSelected={setLicenceSelected}
-                    licence={licence}
-                  />
+                  <Licence licence={licence} />
                 </div>
               ))
           ) : (
@@ -378,14 +372,6 @@ const Licenças: React.FC = () => {
       <ScrollTop />
 
       {loadingLicenses && <Spinner />}
-      {open && (
-        <SideBarLicence>
-          <Div>
-            <h1>Licença id: {licenceSelected.id}</h1>
-            <h3>{licenceSelected.cliente_nome}</h3>
-          </Div>
-        </SideBarLicence>
-      )}
 
       <Pagination
         previousLabel={'<'}

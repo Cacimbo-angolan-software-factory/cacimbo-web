@@ -1,4 +1,5 @@
 import React from 'react';
+import { IoCloudDownloadOutline } from 'react-icons/io5';
 
 import { Container, Details } from './styles';
 
@@ -10,22 +11,11 @@ interface IProps {
     data_validade: string;
     parceiro_id: number;
   };
-  setLicenceSelected?: (id: any) => void;
-  handleClick?: () => void;
 }
 
-const Licence: React.FC<IProps> = ({
-  licence,
-  setLicenceSelected,
-  handleClick,
-}) => {
+const Licence: React.FC<IProps> = ({ licence }) => {
   return (
-    <Container
-      onClick={() => {
-        handleClick && handleClick();
-        setLicenceSelected && setLicenceSelected(licence);
-      }}
-    >
+    <Container>
       <h2>{licence.cliente_nome}</h2>
       <Details>
         <p>id: {licence.id}</p>
