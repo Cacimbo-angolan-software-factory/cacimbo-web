@@ -48,14 +48,15 @@ const Solicitaçoes: React.FC = () => {
     loadingToApproveAndAuction,
     showInterest,
     aprovar,
+    loadingAprovar,
   } = useContext(LicContext);
   const [click, setClick] = React.useState(false);
   const [search, setSearch] = React.useState('');
+  const { user } = useSelector((state: any) => state.user);
   const [filtro, setFiltro] = React.useState(
-    'porAprovar' ? 'leilao' : 'porAprovar'
+    user.user.parceiro_id === 1 ? 'porAprovar' : 'leilao'
   );
   const [openInteressados, setOpenInteressados] = React.useState(false);
-  const { user } = useSelector((state: any) => state.user);
   const { canal, modulosList, empresasList } = useSelector(
     (state: any) => state.solicitaçao
   );
@@ -114,9 +115,9 @@ const Solicitaçoes: React.FC = () => {
   const handleAprovar = (item: any) => {
     aprovar &&
       aprovar({
-        canal_id: canal?.id,
+        parceiro_id: item.parceiro_id,
         user_id: user?.user.id,
-        solicitacao_id: item.id,
+        solicitacao_id: item.solicitacao_id,
       });
   };
 
@@ -202,88 +203,14 @@ const Solicitaçoes: React.FC = () => {
                     <IoCalendarOutline />
                     {section.data}
                   </p>
-                  <button onClick={() => handleAprovar(section.id)}>
+                  <button onClick={() => handleAprovar(section)}>
                     <IoPersonAddOutline />
                     <p>Aprovar</p>
                   </button>
                 </Wrapper>
               ))}
-        </Container>
-      );
-    }
-  };
 
-  const showLeilao = () => {
-    if (filtro === 'leilao') {
-      return (
-        <Container>
-          {sections[1]?.data.length > 0 ? (
-            sections[1].data
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.empresa.nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.empresa.nif.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .sort((a: any, b: any) => {
-                const dateA = new Date(a.data);
-                const dateB = new Date(b.data);
-                return dateB.getTime() - dateA.getTime();
-              })
-              .map((section: any, index: number) => (
-                <Wrapper key={`${section.id} - ${index}`}>
-                  <div className='companies'>
-                    <div>
-                      <IoPeopleOutline />
-                      <h3 className='big-text'>{section.empresa?.nome}</h3>
-                    </div>
-                    <span
-                      className={
-                        section.tipo === 'Renovação'
-                          ? 'renovacao'
-                          : section.tipo === 'Padronizar'
-                          ? 'padronizar'
-                          : 'comum'
-                      }
-                    >
-                      {section.tipo}
-                    </span>
-                  </div>
-                  <p className='nif'>
-                    <IoDocumentTextOutline />
-                    {section.empresa.nif}
-                  </p>
-                  <p>
-                    <IoMailUnreadOutline />
-                    {section.empresa.email}
-                  </p>
-                  <p className='date'>
-                    <IoCalendarOutline />
-                    {section.data}
-                  </p>
-
-                  <button
-                    className='interesse'
-                    onClick={() => handleInterest(section.id)}
-                  >
-                    <IoPersonAddOutline />
-                    Interesse
-                  </button>
-                </Wrapper>
-              ))
-          ) : (
-            <EmptyDivState>
-              <EmptyState>
-                <p>Não existem solicitações em leilão.</p>
-              </EmptyState>
-            </EmptyDivState>
-          )}
+          {loadingAprovar && <Spinner />}
         </Container>
       );
     }
@@ -476,7 +403,7 @@ const Solicitaçoes: React.FC = () => {
           {showPorAprovar && showPorAprovar()}
 
           {user.user.parceiro_id === 1
-            ? showLeilao && showLeilao()
+            ? null
             : LeilaoParceiros && LeilaoParceiros()}
 
           {showAtribuidas && showAtribuidas()}
