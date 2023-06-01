@@ -49,3 +49,9 @@ export const InputSearch = styled.input`
     width: 100%;
   }
 `;
+
+export const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;

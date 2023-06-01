@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import { Container, Form, Div, DivChild } from './stylesCriarSol';
 import { Checkbox, ListItemText, MenuItem, TextField } from '@mui/material';
@@ -53,6 +53,16 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
   const [showPadronizar, setShowPadronizar] = React.useState(false);
   const [showLicencas, setShowLicencas] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const inputRefs = useRef<any>([]);
+  const numberOfInputs = Object.keys(value).length;
+
+  const handleOnKeyDown = (event: any, index: number) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const nextIndex = (index + 1) % numberOfInputs;
+      inputRefs.current[nextIndex].focus();
+    }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
