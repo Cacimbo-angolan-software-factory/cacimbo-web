@@ -9,6 +9,7 @@ interface SelectInputProps {
   value: string;
   handleChange: any;
   labelName: string;
+  disabled?: boolean;
 }
 
 const FormContainer = styled(FormControl)`
@@ -40,9 +41,13 @@ const SelectInput: React.FC<SelectInputProps> = ({
   value,
   handleChange,
   labelName,
+  disabled,
 }) => {
   return (
-    <FormContainer sx={{ minWidth: 120, fontSize: '16px', color: 'white' }}>
+    <FormContainer
+      disabled={disabled}
+      sx={{ minWidth: 120, fontSize: '16px', color: 'white' }}
+    >
       <InputLabel sx={{ color: 'white' }} id='demo-simple-select-helper-label'>
         {labelName}
       </InputLabel>

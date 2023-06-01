@@ -192,6 +192,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             onChange={handleChange}
             onBlur={handleGetNif}
             type='text'
+            required
           />
         </div>
         <div>
@@ -201,6 +202,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             value={value.empresa}
             onChange={handleChange}
             type='text'
+            disabled={value.nif.length === 0 || value.nif === ''}
           />
         </div>
         <DivChild>
@@ -211,6 +213,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
               value={value.telefone}
               onChange={handleChange}
               type='text'
+              disabled={value.nif.length === 0 || value.nif === ''}
             />
           </div>
           <div>
@@ -220,23 +223,29 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
               value={value.email}
               onChange={handleChange}
               type='email'
+              disabled={value.nif.length === 0 || value.nif === ''}
             />
           </div>
         </DivChild>
         <SelectInput
           value={value.pais}
+          disabled={value.nif.length === 0 || value.nif === ''}
           labelName='País'
           handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setValue({ ...value, pais: e.target.value })
           }
         >
-          <MenuItem value={'Angola'}>Angola</MenuItem>
-          <MenuItem value={'Portugal'}>Portugal</MenuItem>
-          <MenuItem value={'Brasil'}>Brasil</MenuItem>
-          <MenuItem value={'Cabo Verde'}>Cabo Verde</MenuItem>
-          <MenuItem value={'Moçambique'}>Moçambique</MenuItem>
-          <MenuItem value={'São Tome'}>São Tomé</MenuItem>
-          <MenuItem value={'Guiné'}>Guiné</MenuItem>
+          {value.nif === '' ? null : (
+            <>
+              <MenuItem value={'Angola'}>Angola</MenuItem>
+              <MenuItem value={'Portugal'}>Portugal</MenuItem>
+              <MenuItem value={'Brasil'}>Brasil</MenuItem>
+              <MenuItem value={'Cabo Verde'}>Cabo Verde</MenuItem>
+              <MenuItem value={'Moçambique'}>Moçambique</MenuItem>
+              <MenuItem value={'São Tome'}>São Tomé</MenuItem>
+              <MenuItem value={'Guiné'}>Guiné</MenuItem>
+            </>
+          )}
         </SelectInput>
         <DivChild>
           <div>
@@ -246,6 +255,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
               value={value.provincia}
               onChange={handleChange}
               type='text'
+              disabled={value.nif.length === 0 || value.nif === ''}
             />
           </div>
           <div>
@@ -255,6 +265,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
               value={value.localidade}
               onChange={handleChange}
               type='address'
+              disabled={value.nif.length === 0 || value.nif === ''}
             />
           </div>
         </DivChild>
@@ -265,6 +276,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             value={value.morada}
             onChange={handleChange}
             type='address'
+            disabled={value.nif.length === 0 || value.nif === ''}
           />
         </div>
         <DivChild>
@@ -275,6 +287,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
               value={value.cargo}
               onChange={handleChange}
               type='text'
+              disabled={value.nif.length === 0 || value.nif === ''}
             />
           </div>
           <div>
@@ -284,12 +297,14 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
               value={value.responsavel}
               onChange={handleChange}
               type='name'
+              disabled={value.nif.length === 0 || value.nif === ''}
             />
           </div>
         </DivChild>
         <DivChild>
           <SelectInput
             value={value.tipo}
+            disabled={value.nif.length === 0 || value.nif === ''}
             labelName='Tipo de licença'
             handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setValue({ ...value, tipo: e.target.value })
@@ -303,6 +318,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           </SelectInput>
           <SelectInput
             value={value.canal_id}
+            disabled={value.nif.length === 0 || value.nif === ''}
             labelName='Canal'
             handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setValue({ ...value, canal_id: e.target.value })
@@ -316,7 +332,12 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           </SelectInput>
         </DivChild>
 
-        <CheckMarkField tag={'Comum'} value={comum} handleChange={handleComum}>
+        <CheckMarkField
+          disabled={value.nif.length === 0 || value.nif === ''}
+          tag={'Comum'}
+          value={comum}
+          handleChange={handleComum}
+        >
           {moduloComum.map((com: any) => (
             <MenuItem key={com.id} value={com.descricao}>
               <Checkbox checked={comum.indexOf(com.descricao) > -1} />
@@ -344,6 +365,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           <SelectInput
             value={value.licencaId}
             labelName='Licenças'
+            disabled={value.nif.length === 0 || value.nif === ''}
             handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setValue({ ...value, licencaId: e.target.value })
             }
