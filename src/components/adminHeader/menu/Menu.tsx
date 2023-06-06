@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
-import { RiHome5Fill } from 'react-icons/ri';
-import { RiServiceFill } from 'react-icons/ri';
-import { RiFolderKeyholeFill } from 'react-icons/ri';
-import { RiShieldCheckFill } from 'react-icons/ri';
-import { RiUserFill } from 'react-icons/ri';
+import React from 'react';
+import {
+  RiHome5Fill,
+  RiServiceFill,
+  RiShieldCheckFill,
+  RiUserFill,
+  RiFileList3Fill,
+  RiSurveyFill,
+} from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
@@ -60,7 +63,7 @@ const Menu: React.FC = () => {
             location.pathname === `/licen%C3%A7as` ? 'active-text' : 'inherit'
           }
         >
-          <RiFolderKeyholeFill />
+          <RiFileList3Fill />
         </span>
         <p
           className={
@@ -84,7 +87,7 @@ const Menu: React.FC = () => {
               : 'inherit'
           }
         >
-          <RiShieldCheckFill />
+          <RiSurveyFill />
         </span>
         <p
           className={
@@ -114,6 +117,26 @@ const Menu: React.FC = () => {
           }
         >
           Usuários
+        </p>
+      </MenuItem>
+
+      <MenuItem
+        className={location.pathname === `/Acesso` ? 'active' : 'inherit'}
+        to='/Acesso'
+      >
+        <span
+          className={
+            location.pathname === `/Acesso` ? 'active-text' : 'inherit'
+          }
+        >
+          <RiShieldCheckFill />
+        </span>
+        <p
+          className={
+            location.pathname === `/Acesso` ? 'active-text' : 'inherit'
+          }
+        >
+          Acesso
         </p>
       </MenuItem>
     </MenuContainer>

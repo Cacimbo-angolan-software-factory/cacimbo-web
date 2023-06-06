@@ -47,5 +47,6 @@ export const MenuItem = styled(Link)`
 
   & p.active-text {
     color: #b71c50;
+    font-weight: 600;
   }
 `;
