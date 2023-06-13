@@ -6,6 +6,8 @@ import {
   IoChevronUpOutline,
   IoInformationCircleOutline,
   IoAddCircleOutline,
+  IoRemoveCircleOutline,
+  IoCloseCircleOutline,
 } from 'react-icons/io5';
 
 interface RoleProps {
@@ -14,20 +16,18 @@ interface RoleProps {
 
 const Role: React.FC<RoleProps> = ({ role }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [value, setValue] = useState<any>([]);
-
-  const handleChange = (index: number, subIndex: number, roleIndex: number) => {
-    const newValue: any = [...value];
-    newValue[roleIndex].permissions[index].youCan[subIndex].checked =
-      !newValue[roleIndex].permissions[index].youCan[subIndex].checked;
-    setValue(newValue);
-  };
+  const [isExpandedYouCan, setIsExpandedYouCan] = useState(false);
+  const [selectedPermissions, setSelectedPermissions] = useState<any>({});
 
   const sortedPermissions = [...role.permissions].sort((a, b) => {
     if (a.name !== '' && b.name === '') return -1;
     if (a.name === '' && b.name !== '') return 1;
     return 0;
   });
+
+  const handleClick = () => {
+    setIsExpandedYouCan(!isExpandedYouCan);
+  };
 
   return (
     <RoleContainer>
@@ -46,50 +46,42 @@ const Role: React.FC<RoleProps> = ({ role }) => {
             <>
               {permission.name !== '' && (
                 <Permission key={index}>
-                  <IoAddCircleOutline />
-                  <div>
-                    <span>
-                      <input
-                        type='checkbox'
-                        id={`switch-permission-${role.id}-${index}`}
-                        checked={value[role.id]?.permissions[index]?.checked}
-                        onChange={() => handleChange(role.id, index, 0)}
-                      />
-                      <label htmlFor={`switch-permission-${role.id}-${index}`}>
-                        Toggle
-                      </label>
-                    </span>
-                    <p>{permission.name}</p>
-                    <button>Editar</button>
-                  </div>
+                  <section
+                    className={isExpandedYouCan ? 'active' : ''}
+                    onClick={handleClick}
+                  >
+                    <div>
+                      {isExpandedYouCan ? (
+                        <IoRemoveCircleOutline />
+                      ) : (
+                        <IoAddCircleOutline />
+                      )}
+                    </div>
+                    <div className='block'>
+                      <p>{permission.name}</p>
+                    </div>
+                  </section>
+
+                  {isExpandedYouCan &&
+                    permission.youCan.map(
+                      (youCanItem: any, subIndex: number) => (
+                        <div key={subIndex} className='small'>
+                          <IoCloseCircleOutline />
+                          <p>{youCanItem}</p>
+                        </div>
+                      )
+                    )}
                 </Permission>
               )}
               {permission.name === '' &&
                 permission.youCan.map((youCanItem: any, subIndex: number) => (
                   <Permission key={subIndex}>
-                    {permission.name === '' && !(<IoAddCircleOutline />)}
-                    <div className='youCan'>
-                      <span>
-                        <input
-                          type='checkbox'
-                          id={`switch-youcan-${role.id}-${index}-${subIndex}`}
-                          checked={
-                            value[role.id]?.permissions[index]?.youCan[subIndex]
-                              ?.checked
-                          }
-                          onChange={() =>
-                            handleChange(role.id, index, subIndex)
-                          }
-                        />
-                        <label
-                          htmlFor={`switch-youcan-${role.id}-${index}-${subIndex}`}
-                        >
-                          Toggle
-                        </label>
-                      </span>
-                      <p>{youCanItem}</p>
-                      <button>Editar</button>
-                    </div>
+                    <section className='section-2'>
+                      {permission.name === '' && <IoCloseCircleOutline />}
+                      <div className='block youCan'>
+                        <p>{youCanItem}</p>
+                      </div>
+                    </section>
                   </Permission>
                 ))}
             </>
