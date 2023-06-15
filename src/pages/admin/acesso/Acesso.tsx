@@ -5,11 +5,12 @@ import { Container } from './AcessoStyles';
 import AcessoTabs from '../../../components/acesso/AcessoTabs';
 import AcessoRoles from '../../../components/acesso/acessoRoles/AcessoRoles';
 import AcessoCustomRoles from '../../../components/acesso/acessoRoles/AcessoCustomRoles';
-
-// import { Container } from './styles';
+import ModalRoles from '../../../components/acesso/modalRoles/ModalRoles';
+import { IoAddCircleOutline } from 'react-icons/io5';
 
 const Acesso: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState('padrao');
+  const [openModal, setOpenModal] = React.useState(false);
 
   return (
     <>
@@ -17,10 +18,18 @@ const Acesso: React.FC = () => {
       <HeaderMobile />
 
       <Container>
-        <AcessoTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className='div'>
+          <AcessoTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <button onClick={() => setOpenModal(true)}>
+            <IoAddCircleOutline />
+            Criar função
+          </button>
+        </div>
 
         {activeTab === 'padrao' ? <AcessoRoles /> : <AcessoCustomRoles />}
       </Container>
+
+      <ModalRoles openModal={openModal} setOpenModal={setOpenModal} />
     </>
   );
 };
