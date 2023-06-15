@@ -32,6 +32,10 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <ModalRolesContainer className={openModal ? 'open' : ''}>
@@ -40,7 +44,7 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
           <IoCloseCircleOutline onClick={() => setOpenModal(false)} />
         </Header>
 
-        <form>
+        <form onClick={handleSubmit}>
           <Content>
             <Inputs>
               <InputDiv>
