@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ModalRolesContainer = styled.div`
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 9999;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -16,6 +16,7 @@ export const ModalRolesContainer = styled.div`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 0.5rem;
   border: 1px solid #383838;
+  transition: all 0.2s ease-in;
 
   &.open {
     display: flex;
@@ -89,7 +90,6 @@ export const FooterDiv = styled.div`
     font-size: 1.5rem;
     border-radius: 0.5rem;
     border: none;
-    /* font-weight: 600; */
     cursor: pointer;
     color: #ebebeb;
   }
@@ -102,4 +102,14 @@ export const FooterDiv = styled.div`
   & button:last-child {
     background-color: #b71c50;
   }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 `;
