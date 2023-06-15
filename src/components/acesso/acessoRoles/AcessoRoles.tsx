@@ -26,7 +26,7 @@ const AcessoRoles: React.FC = () => {
       ) : (
         <Container>
           {rolesList.map((role: any) => (
-            <Role role={role} />
+            <Role key={role.id} role={role} />
           ))}
         </Container>
       )}
