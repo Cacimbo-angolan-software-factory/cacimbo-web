@@ -5,6 +5,7 @@ interface PermissionState {
   permissions: any[];
   roles: any[];
   list: any[];
+  rolesList: any[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -14,6 +15,7 @@ const initialState: PermissionState = {
   permissions: [],
   roles: [],
   list: [],
+  rolesList: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -50,6 +52,15 @@ export const getPermissions = createAsyncThunk(
     }
   }
 );
+
+export const getRoles = createAsyncThunk('permission/getRoles', async () => {
+  try {
+    const response = await permissionService.getRoles();
+    return response;
+  } catch (error: any) {
+    return error;
+  }
+});
 
 export const criarRole = createAsyncThunk(
   'permission/criarRole',
@@ -112,6 +123,20 @@ export const permissionSlice = createSlice({
       state.roles.push(action.payload);
     });
     builder.addCase(criarRole.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+
+    // get roles
+    builder.addCase(getRoles.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getRoles.fulfilled, (state, action) => {
+      state.rolesList = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getRoles.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
     });

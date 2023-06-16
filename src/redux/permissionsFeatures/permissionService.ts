@@ -22,6 +22,11 @@ const getPermissions = async () => {
   return response.data;
 };
 
+const getRoles = async () => {
+  const response = await api.get(`roles`);
+  return response.data;
+};
+
 const createRole = async (roleData: {
   id?: number;
   name: string;
@@ -36,5 +41,6 @@ const createRole = async (roleData: {
 export default {
   createPermission,
   getPermissions,
+  getRoles,
   createRole,
 };

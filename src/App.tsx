@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import PrivateRoutes from './PrivateRoutes';
 import Usuarios from './pages/admin/usuarios/Usuarios';
 import ResetPassword from './pages/login/ResetPassword';
+import Acesso from './pages/admin/acesso/Acesso';
 
 const AppContainer = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ function App() {
             <Route path='/empresas' element={<Empresas />} />
             <Route path='/Usuarios' element={<Usuarios />} />
             <Route path='/NovaPalavraPasse' element={<ResetPassword />} />
+            <Route path='/Acesso' element={<Acesso />} />
           </Route>
           <Route path='/Login' element={<Login />} />
         </Routes>
