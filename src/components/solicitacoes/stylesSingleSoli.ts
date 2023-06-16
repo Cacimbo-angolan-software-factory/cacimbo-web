@@ -26,7 +26,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Buttons = styled.td`
+export const Buttons = styled.div`
   display: flex;
   gap: 0.8rem;
   max-width: 15rem;

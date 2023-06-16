@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.table`
+export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -21,15 +21,13 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 
   & h3 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 10rem;
+    word-wrap: break-word;
   }
 
   & div.companies {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
 
     & div {
       display: flex;

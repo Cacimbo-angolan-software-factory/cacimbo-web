@@ -84,6 +84,7 @@ const Solicitaçoes: React.FC = () => {
     dispatch(getCanal());
     dispatch(getModulo());
     dispatch(getEmpresas());
+    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,13 +168,11 @@ const Solicitaçoes: React.FC = () => {
                   <div className='companies'>
                     <div>
                       <IoPeopleOutline />
-                      <h3 className='big-text'>
-                        {section?.solicitacao?.empresa.nome}
-                      </h3>
+                      <h3>{section?.solicitacao?.empresa.nome}</h3>
                     </div>
                     <div>
                       <IoBusinessOutline />
-                      <h3 className='big-text'>{section.parceiro.Nome}</h3>
+                      <h3>{section.parceiro.Nome}</h3>
                     </div>
                   </div>
 
