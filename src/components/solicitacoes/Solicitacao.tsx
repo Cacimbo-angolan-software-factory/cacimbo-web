@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   IoBusinessOutline,
   IoCalendarOutline,
@@ -8,22 +8,40 @@ import {
   IoPersonAddOutline,
 } from 'react-icons/io5';
 
-import { Buttons } from './stylesSingleSoli';
-import { useSelector } from 'react-redux';
+import { Buttons, SmallDiv } from './stylesSingleSoli';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { getModulo } from '../../redux/solicitaçaoFeatures/solicSlice';
 
 interface SolicitacaoProps {
   lic_request: any;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  getModulosId: (id: number) => void;
 }
 
 const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request, setOpen }) => {
-  const { cliente_nome, tipo, cliente_nif, data, parceiro_nome } = lic_request;
+  const { cliente_nome, tipo, cliente_nif, data, parceiro_nome, sol_modulos } =
+    lic_request;
   const { user } = useSelector((state: any) => state.user);
+  const { modulosList } = useSelector((state: any) => state.solicitaçao);
+  const dispatch = useDispatch<AppDispatch>();
   const [interesse, setInteresse] = React.useState(0);
 
   const incrementInteresse = () => {
     setInteresse(interesse + 1);
+  };
+
+  useEffect(() => {
+    dispatch(getModulo());
+  }, []);
+
+  const getModulosId = (modulos: any) => {
+    const modulosId = modulosList.filter((modulo: any) =>
+      modulos.includes(modulo.id)
+    );
+
+    return modulosId.map((obj: any) => <li key={obj.id}>{obj.modulo}</li>);
   };
 
   return (
@@ -57,10 +75,15 @@ const Solicitacao: React.FC<SolicitacaoProps> = ({ lic_request, setOpen }) => {
         </span>
       </div>
 
-      <span className='number'>
-        <IoPersonAddOutline />
-        {interesse}
-      </span>
+      <SmallDiv>
+        <span className='number'>
+          <IoPersonAddOutline />
+          {interesse}
+        </span>
+
+        <ul>{getModulosId(sol_modulos.map((mod: any) => mod.modulo_id))}</ul>
+      </SmallDiv>
+
       <p className='date'>
         <IoCalendarOutline />
         {data}

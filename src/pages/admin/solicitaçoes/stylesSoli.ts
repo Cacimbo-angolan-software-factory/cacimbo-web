@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.table`
+export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -21,15 +21,13 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 
   & h3 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 10rem;
+    word-wrap: break-word;
   }
 
   & div.companies {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
 
     & div {
       display: flex;
@@ -109,31 +107,6 @@ export const Wrapper = styled.div`
     background-color: #766868;
     color: #ebebeb;
   }
-
-  /* div {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-
-    & button {
-      padding: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 1.6rem;
-      cursor: pointer;
-      display: flex;
-      gap: 0.5rem;
-      background-color: #00a300;
-      color: #ebebeb;
-      display: flex;
-      align-items: center;
-    }
-
-    & button.interesse {
-      background-color: #766868;
-      color: #ebebeb;
-    }
-  } */
 `;
 
 export const SearchAndFilters = styled.div`
@@ -216,6 +189,31 @@ export const Card = styled.div`
   font-size: 1.4rem;
   min-width: 40rem;
 
+  & div.Div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & ul {
+      display: flex;
+      gap: 0.2rem;
+
+      & li {
+        list-style: none;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2.8rem;
+        width: 2.8rem;
+        border-radius: 50%;
+        font-weight: 600;
+        background-color: #395661;
+        color: #ebebeb;
+      }
+    }
+  }
+
   & p.location {
     display: flex;
     gap: 0.5rem;
@@ -238,11 +236,6 @@ export const Card = styled.div`
     display: flex;
     gap: 1rem;
     align-items: center;
-
-    & div.modulos {
-      display: flex;
-      gap: 1rem;
-    }
   }
 
   & span {

@@ -120,25 +120,27 @@ const Menu: React.FC = () => {
         </p>
       </MenuItem>
 
-      <MenuItem
-        className={location.pathname === `/Acesso` ? 'active' : 'inherit'}
-        to='/Acesso'
-      >
-        <span
-          className={
-            location.pathname === `/Acesso` ? 'active-text' : 'inherit'
-          }
+      {user.user.parceiro_id === 1 ? (
+        <MenuItem
+          className={location.pathname === `/Acesso` ? 'active' : 'inherit'}
+          to='/Acesso'
         >
-          <RiShieldCheckFill />
-        </span>
-        <p
-          className={
-            location.pathname === `/Acesso` ? 'active-text' : 'inherit'
-          }
-        >
-          Acesso
-        </p>
-      </MenuItem>
+          <span
+            className={
+              location.pathname === `/Acesso` ? 'active-text' : 'inherit'
+            }
+          >
+            <RiShieldCheckFill />
+          </span>
+          <p
+            className={
+              location.pathname === `/Acesso` ? 'active-text' : 'inherit'
+            }
+          >
+            Acesso
+          </p>
+        </MenuItem>
+      ) : null}
     </MenuContainer>
   );
 };

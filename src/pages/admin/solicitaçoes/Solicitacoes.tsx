@@ -84,6 +84,7 @@ const Solicitaçoes: React.FC = () => {
     dispatch(getCanal());
     dispatch(getModulo());
     dispatch(getEmpresas());
+    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +127,7 @@ const Solicitaçoes: React.FC = () => {
       modulos.includes(modulo.id)
     );
 
-    return modulosId.map((obj: any) => obj.modulo);
+    return modulosId.map((obj: any) => <li key={obj.id}>{obj.modulo}</li>);
   };
 
   const getLocation = (location: any) => {
@@ -167,13 +168,11 @@ const Solicitaçoes: React.FC = () => {
                   <div className='companies'>
                     <div>
                       <IoPeopleOutline />
-                      <h3 className='big-text'>
-                        {section?.solicitacao?.empresa.nome}
-                      </h3>
+                      <h3>{section?.solicitacao?.empresa.nome}</h3>
                     </div>
                     <div>
                       <IoBusinessOutline />
-                      <h3 className='big-text'>{section.parceiro.Nome}</h3>
+                      <h3>{section.parceiro.Nome}</h3>
                     </div>
                   </div>
 
@@ -239,13 +238,22 @@ const Solicitaçoes: React.FC = () => {
             })
             .map((section: any, index: number) => (
               <Card key={`${section.id} - ${index}`}>
-                <p className='id'>
-                  <span></span>
-                  Solicitação {section.id} -{' '}
-                  {section.sol_modulos.map(
-                    (module: any) => module.modulo.modulo
-                  )}
-                </p>
+                <div className='Div'>
+                  <p className='id'>
+                    <span></span>
+                    Solicitação {section.id} -{' '}
+                  </p>
+
+                  <ul>
+                    {section.sol_modulos.map(
+                      (module: any) =>
+                        module.modulo && (
+                          <li key={module.id}>{module.modulo.modulo}</li>
+                        )
+                    )}
+                  </ul>
+                </div>
+
                 <p className='location'>
                   <IoLocationOutline />
                   {section.empresa.localidade} - {section.empresa.provincia}
@@ -292,12 +300,18 @@ const Solicitaçoes: React.FC = () => {
           })
           .map((pendente: any, index: number) => (
             <Card key={`${pendente.id} - ${index}`}>
-              <p className='id'>
-                <span></span> Solicitação {pendente.id} -{' '}
-                {getModulosId(
-                  pendente.sol_modulos.map((mod: any) => mod.modulo_id)
-                )}
-              </p>
+              <div className='Div'>
+                <p className='id'>
+                  <span></span> Solicitação {pendente.id} -{' '}
+                </p>
+
+                <ul>
+                  {getModulosId(
+                    pendente.sol_modulos.map((mod: any) => mod.modulo_id)
+                  )}
+                </ul>
+              </div>
+
               <p className='location'>
                 <IoLocationOutline />
                 {getLocation(pendente.empresa_id)}
@@ -357,6 +371,7 @@ const Solicitaçoes: React.FC = () => {
                     open={openInteressados}
                     setOpen={setOpenInteressados}
                     lic_request={lic_request}
+                    getModulosId={getModulosId}
                   />
                 </Wrapper>
               ))
@@ -395,6 +410,7 @@ const Solicitaçoes: React.FC = () => {
             <InputSearch
               onChange={handleSearch}
               value={search}
+              name='search'
               type='text'
               placeholder='Pesquisar...'
             />

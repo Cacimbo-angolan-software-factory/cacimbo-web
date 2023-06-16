@@ -26,7 +26,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Buttons = styled.td`
+export const Buttons = styled.div`
   display: flex;
   gap: 0.8rem;
   max-width: 15rem;
@@ -39,5 +39,34 @@ export const Buttons = styled.td`
   & button:last-child {
     background-color: #766868;
     color: #ebebeb;
+  }
+`;
+
+export const SmallDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & ul {
+    display: flex;
+    gap: 0.2rem;
+    transition: 0.2s all ease-in;
+
+    &:hover {
+      gap: 0.5rem;
+    }
+
+    & li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      width: 3rem;
+      border-radius: 50%;
+      font-weight: 600;
+      background-color: RGBA(183, 28, 80, 0.2);
+      color: #bebebe;
+    }
   }
 `;
