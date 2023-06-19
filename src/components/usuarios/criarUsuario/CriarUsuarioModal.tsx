@@ -85,7 +85,6 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
       id_perfil: '',
     });
     setCriarUser(false);
-    console.log(value);
   };
 
   return (
