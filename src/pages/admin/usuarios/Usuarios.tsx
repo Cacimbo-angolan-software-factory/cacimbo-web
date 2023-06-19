@@ -15,7 +15,7 @@ import UsersList from '../../../components/usuarios/UsersList';
 import PerfisList from '../../../components/usuarios/PerfisList';
 import TarefasList from '../../../components/usuarios/TarefasList/TarefasList';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import CriarUsuario from '../../../components/usuarios/criarUsuario/CriarUsuario';
+import CriarUsuarioModal from '../../../components/usuarios/criarUsuario/CriarUsuarioModal';
 
 const Usuarios: React.FC = () => {
   const { users, isError, isLoading, user } = useSelector(
@@ -90,17 +90,15 @@ const Usuarios: React.FC = () => {
       <AdminHeader />
       <HeaderMobile />
 
-      {criarUser ? null : (
-        <Block>
-          <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
+      <Block>
+        <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
 
-          {user.user.parceiro_id === 1 ? (
-            <span onClick={handleOpenModal}>
-              <RiMore2Fill />
-            </span>
-          ) : null}
-        </Block>
-      )}
+        {user.user.parceiro_id === 1 ? (
+          <span onClick={handleOpenModal}>
+            <RiMore2Fill />
+          </span>
+        ) : null}
+      </Block>
 
       {openPerfis ? (
         <Button onClick={handleClose}>
@@ -116,8 +114,6 @@ const Usuarios: React.FC = () => {
         <PerfisList setOpenPerfis={setOpenPerfis} />
       ) : openTarefas ? (
         <TarefasList />
-      ) : criarUser ? (
-        <CriarUsuario setCriarUser={setCriarUser} />
       ) : (
         <UsersList
           users={users}
@@ -125,6 +121,10 @@ const Usuarios: React.FC = () => {
           setUserSelected={setUserSelected}
           parceiroId={user.user.parceiro_id}
         />
+      )}
+
+      {criarUser && (
+        <CriarUsuarioModal criarUser={criarUser} setCriarUser={setCriarUser} />
       )}
 
       {open && (
