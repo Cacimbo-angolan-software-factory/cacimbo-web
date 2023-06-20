@@ -6,12 +6,14 @@ import CreateUserRole from '../../../components/Admin/createRole/CreateUserRole'
 import Notifications from '../../../components/Admin/notifications/Notif';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
-import { Section } from './styles';
+import { Section, Title } from './styles';
+import { useSelector } from 'react-redux';
 
 const AdminHome: React.FC = () => {
   const [fixedNav, setFixedNav] = useState(false);
   const [criarPermission, setCriarPermission] = useState(false);
   const [criarRole, setCriarRole] = useState(false);
+  const { user } = useSelector((state: any) => state.user);
 
   function onScroll() {
     if (window.scrollY >= -309) {
@@ -32,6 +34,7 @@ const AdminHome: React.FC = () => {
         <CreateUserRole setCriarRole={setCriarRole} />
       ) : (
         <>
+          <Title>Bem-vindo de volta, {user.user.name}!</Title>
           <Section>
             <Notifications />
             <Animation />

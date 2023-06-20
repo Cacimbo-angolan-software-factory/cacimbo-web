@@ -26,3 +26,9 @@ export const Section = styled.section`
     padding: 0;
   }
 `;
+
+export const Title = styled.p`
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+`;
