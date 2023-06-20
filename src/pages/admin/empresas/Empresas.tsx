@@ -61,7 +61,7 @@ const Empresas: React.FC = () => {
         }}
         onClick={handleCreate}
       >
-        Criar empresa
+        Criar parceiro
       </BtnCreate>
 
       {criarEmpresa ? (
