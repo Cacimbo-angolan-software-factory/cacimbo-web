@@ -16,7 +16,6 @@ interface RoleProps {
 
 const Role: React.FC<RoleProps> = ({ role }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [isExpandedYouCan, setIsExpandedYouCan] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<any>({});
 
   const sortedPermissions = [...role.permissions].sort((a, b) => {
@@ -24,10 +23,6 @@ const Role: React.FC<RoleProps> = ({ role }) => {
     if (a.name === '' && b.name !== '') return 1;
     return 0;
   });
-
-  const handleClick = () => {
-    setIsExpandedYouCan(!isExpandedYouCan);
-  };
 
   return (
     <RoleContainer>
@@ -47,11 +42,19 @@ const Role: React.FC<RoleProps> = ({ role }) => {
               {permission.name !== '' && (
                 <Permission key={index}>
                   <section
-                    className={isExpandedYouCan ? 'active' : ''}
-                    onClick={handleClick}
+                    className={
+                      selectedPermissions[permission.name] ? 'active' : ''
+                    }
+                    onClick={() => {
+                      setSelectedPermissions({
+                        ...selectedPermissions,
+                        [permission.name]:
+                          !selectedPermissions[permission.name],
+                      });
+                    }}
                   >
                     <div>
-                      {isExpandedYouCan ? (
+                      {selectedPermissions[permission.name] ? (
                         <IoRemoveCircleOutline />
                       ) : (
                         <IoAddCircleOutline />
@@ -62,7 +65,7 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                     </div>
                   </section>
 
-                  {isExpandedYouCan &&
+                  {selectedPermissions[permission.name] &&
                     permission.youCan.map(
                       (youCanItem: any, subIndex: number) => (
                         <div key={subIndex} className='small'>
