@@ -6,8 +6,14 @@ import CreateUserRole from '../../../components/Admin/createRole/CreateUserRole'
 import Notifications from '../../../components/Admin/notifications/Notif';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
-import { Section, Title } from './styles';
+import { BtnsDiv, Section, Title } from './styles';
 import { useSelector } from 'react-redux';
+import {
+  IoAddOutline,
+  IoDocumentTextOutline,
+  IoCheckmarkCircleOutline,
+} from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 const AdminHome: React.FC = () => {
   const [fixedNav, setFixedNav] = useState(false);
@@ -35,6 +41,26 @@ const AdminHome: React.FC = () => {
       ) : (
         <>
           <Title>Bem-vindo de volta, {user.user.name}!</Title>
+          <BtnsDiv>
+            <button className='criar'>
+              <IoAddOutline />
+              Criar solicitação
+            </button>
+            {user.user.parceiro_id === 1 ? (
+              <Link to='/solicita%C3%A7oes'>
+                <button className='aprovar'>
+                  <IoCheckmarkCircleOutline />
+                  Aprovar solicitações
+                </button>
+              </Link>
+            ) : null}
+            <Link to='/licenças'>
+              <button className='ver'>
+                <IoDocumentTextOutline />
+                Ver licenças
+              </button>
+            </Link>
+          </BtnsDiv>
           <Section>
             <Notifications />
             <Animation />

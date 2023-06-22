@@ -32,3 +32,39 @@ export const Title = styled.p`
   font-weight: 300;
   letter-spacing: 0.1rem;
 `;
+
+export const BtnsDiv = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  & button {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: flex;
+    /* align-items: center; */
+    gap: 0.5rem;
+
+    & svg {
+      font-size: 1.8rem;
+    }
+  }
+
+  & button.criar {
+    background-color: #b71c50;
+    color: #fff;
+  }
+
+  & button.aprovar {
+    background-color: #55c743;
+    color: #fff;
+  }
+
+  & button.ver {
+    background-color: #585858;
+    color: #fff;
+  }
+`;
