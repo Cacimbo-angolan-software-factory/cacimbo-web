@@ -4,7 +4,7 @@ import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { getUsers } from '../../../redux/userFeatures/usersSlice';
+import { getUsers, getAllUsers } from '../../../redux/userFeatures/usersSlice';
 import { Block, Button } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
@@ -18,7 +18,7 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 import CriarUsuarioModal from '../../../components/usuarios/criarUsuario/CriarUsuarioModal';
 
 const Usuarios: React.FC = () => {
-  const { users, isError, isLoading, user } = useSelector(
+  const { users, isError, isLoading, user, allUsers } = useSelector(
     (state: any) => state.user
   );
   const [error, setError] = useState('');
@@ -39,6 +39,10 @@ const Usuarios: React.FC = () => {
 
     dispatch(getUsers(user.user.parceiro_id));
   }, [dispatch, isError]);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
 
   const handleClick = () => {
     setOpen(!open);
@@ -116,6 +120,7 @@ const Usuarios: React.FC = () => {
         <TarefasList />
       ) : (
         <UsersList
+          allUsers={allUsers}
           users={users}
           handleClick={handleClick}
           setUserSelected={setUserSelected}
