@@ -26,6 +26,8 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
     CompanyID: user.user.lastCompanyIDUsed,
     description: '',
     permissions: [] as any,
+    // role_type
+    // role_type_series
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

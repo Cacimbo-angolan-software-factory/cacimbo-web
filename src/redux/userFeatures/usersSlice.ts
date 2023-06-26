@@ -10,6 +10,7 @@ interface UserState {
   isLoading: boolean;
   isSuccess: boolean;
   message: string;
+  allUsers: string[];
 }
 
 const initialState: UserState = {
@@ -23,6 +24,7 @@ const initialState: UserState = {
   isLoading: false,
   isSuccess: false,
   message: '',
+  allUsers: [],
 };
 
 export const login = createAsyncThunk(
@@ -51,6 +53,15 @@ export const getUsers = createAsyncThunk(
     }
   }
 );
+
+export const getAllUsers = createAsyncThunk('user/allUsers', async () => {
+  try {
+    const response = await userService.getAllUsers();
+    return response;
+  } catch (error: any) {
+    return error;
+  }
+});
 
 export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
   try {
@@ -210,6 +221,21 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Erro ao criar usuário';
+    });
+
+    // get all users
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllUsers.fulfilled, (state, action) => {
+      state.allUsers = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getAllUsers.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao buscar usuários';
     });
   },
 });

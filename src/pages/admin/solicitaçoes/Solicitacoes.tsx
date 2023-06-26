@@ -57,7 +57,7 @@ const Solicitaçoes: React.FC = () => {
     user.user.parceiro_id === 1 ? 'porAprovar' : 'leilao'
   );
   const [openInteressados, setOpenInteressados] = React.useState(false);
-  const { canal, modulosList, empresasList } = useSelector(
+  const { canal, modulosList, empresasList, isLoading } = useSelector(
     (state: any) => state.solicitaçao
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -84,7 +84,6 @@ const Solicitaçoes: React.FC = () => {
     dispatch(getCanal());
     dispatch(getModulo());
     dispatch(getEmpresas());
-    console.log(lic_requests);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

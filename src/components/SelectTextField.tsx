@@ -46,7 +46,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   return (
     <FormContainer
       disabled={disabled}
-      sx={{ minWidth: 120, fontSize: '16px', color: 'white' }}
+      sx={{ minWidth: 120, fontSize: '16px', color: 'white', zIndex: 99999 }}
     >
       <InputLabel sx={{ color: 'white' }} id='demo-simple-select-helper-label'>
         {labelName}

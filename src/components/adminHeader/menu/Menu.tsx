@@ -47,7 +47,7 @@ const Menu: React.FC = () => {
               location.pathname === `/empresas` ? 'active-text' : 'inherit'
             }
           >
-            Empresa
+            Parceiros
           </p>
         </MenuItem>
       )}

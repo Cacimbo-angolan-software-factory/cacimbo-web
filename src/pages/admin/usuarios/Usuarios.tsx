@@ -4,7 +4,7 @@ import BtnCreate from '../../../components/btnCreate/BtnCreate';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { getUsers } from '../../../redux/userFeatures/usersSlice';
+import { getUsers, getAllUsers } from '../../../redux/userFeatures/usersSlice';
 import { Block, Button } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
@@ -15,10 +15,10 @@ import UsersList from '../../../components/usuarios/UsersList';
 import PerfisList from '../../../components/usuarios/PerfisList';
 import TarefasList from '../../../components/usuarios/TarefasList/TarefasList';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import CriarUsuario from '../../../components/usuarios/criarUsuario/CriarUsuario';
+import CriarUsuarioModal from '../../../components/usuarios/criarUsuario/CriarUsuarioModal';
 
 const Usuarios: React.FC = () => {
-  const { users, isError, isLoading, user } = useSelector(
+  const { users, isError, isLoading, user, allUsers } = useSelector(
     (state: any) => state.user
   );
   const [error, setError] = useState('');
@@ -39,6 +39,10 @@ const Usuarios: React.FC = () => {
 
     dispatch(getUsers(user.user.parceiro_id));
   }, [dispatch, isError]);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
 
   const handleClick = () => {
     setOpen(!open);
@@ -90,17 +94,15 @@ const Usuarios: React.FC = () => {
       <AdminHeader />
       <HeaderMobile />
 
-      {criarUser ? null : (
-        <Block>
-          <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
+      <Block>
+        <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
 
-          {user.user.parceiro_id === 1 ? (
-            <span onClick={handleOpenModal}>
-              <RiMore2Fill />
-            </span>
-          ) : null}
-        </Block>
-      )}
+        {user.user.parceiro_id === 1 ? (
+          <span onClick={handleOpenModal}>
+            <RiMore2Fill />
+          </span>
+        ) : null}
+      </Block>
 
       {openPerfis ? (
         <Button onClick={handleClose}>
@@ -116,15 +118,18 @@ const Usuarios: React.FC = () => {
         <PerfisList setOpenPerfis={setOpenPerfis} />
       ) : openTarefas ? (
         <TarefasList />
-      ) : criarUser ? (
-        <CriarUsuario setCriarUser={setCriarUser} />
       ) : (
         <UsersList
+          allUsers={allUsers}
           users={users}
           handleClick={handleClick}
           setUserSelected={setUserSelected}
           parceiroId={user.user.parceiro_id}
         />
+      )}
+
+      {criarUser && (
+        <CriarUsuarioModal criarUser={criarUser} setCriarUser={setCriarUser} />
       )}
 
       {open && (

@@ -27,6 +27,15 @@ const getUsers = async (companyId: string) => {
   }
 };
 
+const getAllUsers = async () => {
+  try {
+    const response = await api.get(`users`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 const createUser = async (userData: {
   name: string;
   email: string;
@@ -85,6 +94,7 @@ export const userService = {
   getTarefas,
   createTarefas,
   createUser,
+  getAllUsers,
 };
 
 export default userService;
