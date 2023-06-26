@@ -11,12 +11,12 @@ export const ModalContainer = styled.div`
   height: 100%;
   max-width: 46.5rem;
   max-height: 65rem;
-  overflow: auto;
   background-color: #1d1d1d;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 0.5rem;
   border: 1px solid #383838;
   transition: all 0.2s ease-in;
+  overflow: auto;
 
   &.open {
     display: flex;
@@ -30,6 +30,8 @@ export const Content = styled.div`
   flex-direction: column;
   gap: 2rem;
   padding: 2rem;
+  flex-grow: 1;
+  overflow-y: auto;
 `;
 
 export const Inputs = styled.div`
@@ -79,8 +81,9 @@ export const FooterDiv = styled.div`
   border-top: 1px solid #383838;
   padding: 1.5rem 2rem;
   width: 100%;
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
+  flex-grow: 1;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;

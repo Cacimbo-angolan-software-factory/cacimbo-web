@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { createUser, getPerfis } from '../../../redux/userFeatures/usersSlice';
 import SelectInput from '../../SelectTextField';
-import { MenuItem } from '@mui/material';
+import { Input, MenuItem } from '@mui/material';
 
 interface CriarUsuarioModalProps {
   criarUser: boolean;
@@ -26,15 +26,19 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
   criarUser,
   setCriarUser,
 }) => {
+  const { perfis, isLoading, user } = useSelector((state: any) => state.user);
+  const { rolesList, isError } = useSelector((state: any) => state.permission);
   const [value, setValue] = useState({
     name: '',
     email: '',
     parceiro_id: '',
     tipo: '',
     id_perfil: '',
+    roles: [],
+    companyId: user.user.parceiro_id === 1 ? '' : user.user.lastCompanyIDUsed,
+    nif: '',
   });
   const { empresas } = useContext(LicContext);
-  const { perfis, isLoading, user } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getPerfis());
@@ -74,6 +78,9 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
           user.user.parceiro_id === 1 ? parceiro_id : user.user.parceiro_id,
         tipo: value.tipo,
         id_perfil: id_perfil,
+        roles: [],
+        companyId: value.companyId,
+        nif: value.nif,
       })
     );
 
@@ -83,6 +90,9 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
       parceiro_id: '',
       tipo: '',
       id_perfil: '',
+      roles: [],
+      companyId: '',
+      nif: '',
     });
     setCriarUser(false);
   };
@@ -97,6 +107,17 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
 
         <form onSubmit={handleSubmit}>
           <Content>
+            {user.user.parceiro_id === 1 ? (
+              <InputDiv>
+                <p>Id da empresa</p>
+                <input
+                  name='companyId'
+                  value={value.companyId}
+                  onChange={handleChange}
+                  type='text'
+                />
+              </InputDiv>
+            ) : null}
             <Inputs>
               <InputDiv>
                 <p>Nome</p>
@@ -117,6 +138,15 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
                 />
               </InputDiv>
             </Inputs>
+            <InputDiv>
+              <p>Nif</p>
+              <input
+                name='nif'
+                value={value.nif}
+                onChange={handleChange}
+                type='text'
+              />
+            </InputDiv>
 
             <SelectInput
               value={value.parceiro_id}
@@ -172,6 +202,20 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
                 </MenuItem>
               ))}
             </SelectInput>
+
+            <div>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+              <h3>Permissões</h3>
+            </div>
           </Content>
 
           <FooterDiv>
