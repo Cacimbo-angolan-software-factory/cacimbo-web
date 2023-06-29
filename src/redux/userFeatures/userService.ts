@@ -42,6 +42,9 @@ const createUser = async (userData: {
   parceiro_id: number | string;
   tipo: string;
   id_perfil: string;
+  roles: string[];
+  companyId: string;
+  nif: string;
 }) => {
   try {
     const response = await api.post(`users`, { ...userData });

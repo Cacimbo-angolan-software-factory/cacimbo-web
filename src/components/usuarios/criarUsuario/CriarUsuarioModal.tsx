@@ -8,6 +8,7 @@ import {
   Inputs,
   ModalContainer,
   Overlay,
+  RolesDiv,
 } from './criarUsuarioStyles';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { LicContext } from '../../../context';
@@ -16,6 +17,12 @@ import { AppDispatch } from '../../../redux/store';
 import { createUser, getPerfis } from '../../../redux/userFeatures/usersSlice';
 import SelectInput from '../../SelectTextField';
 import { MenuItem } from '@mui/material';
+import {
+  getPermissions,
+  getRoles,
+} from '../../../redux/permissionsFeatures/permissionSlice';
+import RolesModal from './RolesModal';
+import { apiCacimbo } from '../../../service/Service.api';
 
 interface CriarUsuarioModalProps {
   criarUser: boolean;
@@ -26,22 +33,62 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
   criarUser,
   setCriarUser,
 }) => {
+  const { perfis, isLoading, user } = useSelector((state: any) => state.user);
+  const {
+    rolesList,
+    isError,
+    permissions,
+    isLoading: loadingRoles,
+  } = useSelector((state: any) => state.permission);
   const [value, setValue] = useState({
     name: '',
     email: '',
     parceiro_id: '',
     tipo: '',
     id_perfil: '',
+    roles: [] as any,
+    companyId: user.user.parceiro_id === 1 ? '' : user.user.lastCompanyIDUsed,
+    nif: '',
   });
   const { empresas } = useContext(LicContext);
-  const { perfis, isLoading, user } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getPerfis());
+    dispatch(getRoles());
+    dispatch(getPermissions());
   }, [dispatch]);
+  const [showRoles, setShowRoles] = useState(false);
+  const [filteredRoles, setFilteredRoles] = useState([]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const getPermissionDesc = (code: any) => {
+    const description = permissions.find((permission: any) => {
+      permission.name === code;
+    });
+
+    return description?.slug;
+  };
+
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
+  };
+
+  const handleBlur = async () => {
+    try {
+      const response = await apiCacimbo.get(`docs_empresas/${value.companyId}`);
+      const companyData = response.data.data.CompanyID;
+
+      if (companyData) {
+        setFilteredRoles(
+          rolesList.filter((role: any) => role.companyId === value.companyId)
+        );
+        setShowRoles(true);
+        console.log('true');
+      } else {
+        setShowRoles(false);
+      }
+    } catch (error) {
+      setShowRoles(false);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -74,6 +121,9 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
           user.user.parceiro_id === 1 ? parceiro_id : user.user.parceiro_id,
         tipo: value.tipo,
         id_perfil: id_perfil,
+        roles: [],
+        companyId: value.companyId,
+        nif: value.nif,
       })
     );
 
@@ -83,8 +133,12 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
       parceiro_id: '',
       tipo: '',
       id_perfil: '',
+      roles: [],
+      companyId: '',
+      nif: '',
     });
     setCriarUser(false);
+    console.log(value);
   };
 
   return (
@@ -97,6 +151,18 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
 
         <form onSubmit={handleSubmit}>
           <Content>
+            {user.user.parceiro_id === 1 ? (
+              <InputDiv>
+                <p>Id da empresa</p>
+                <input
+                  name='companyId'
+                  value={value.companyId}
+                  onChange={handleChange}
+                  type='text'
+                  onBlur={handleBlur}
+                />
+              </InputDiv>
+            ) : null}
             <Inputs>
               <InputDiv>
                 <p>Nome</p>
@@ -117,6 +183,15 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
                 />
               </InputDiv>
             </Inputs>
+            <InputDiv>
+              <p>Nif</p>
+              <input
+                name='nif'
+                value={value.nif}
+                onChange={handleChange}
+                type='text'
+              />
+            </InputDiv>
 
             <SelectInput
               value={value.parceiro_id}
@@ -141,7 +216,6 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
                       </MenuItem>
                     ))}
             </SelectInput>
-            {/* ) : null} */}
 
             <SelectInput
               value={value.tipo}
@@ -172,6 +246,23 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
                 </MenuItem>
               ))}
             </SelectInput>
+
+            <h2>Funções</h2>
+
+            {showRoles && (
+              <RolesDiv>
+                {filteredRoles.map((role: any) => (
+                  <RolesModal
+                    key={role.id}
+                    role={role}
+                    value={value}
+                    setValue={setValue}
+                    loadingRoles={loadingRoles}
+                    getDesc={getPermissionDesc}
+                  />
+                ))}
+              </RolesDiv>
+            )}
           </Content>
 
           <FooterDiv>

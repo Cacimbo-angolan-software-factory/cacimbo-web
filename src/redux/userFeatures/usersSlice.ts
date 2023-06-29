@@ -111,6 +111,9 @@ export const createUser = createAsyncThunk(
     parceiro_id: string | number;
     tipo: string;
     id_perfil: string;
+    roles: string[];
+    companyId: string;
+    nif: string;
   }) => {
     try {
       const response = await userService.createUser(userData);
