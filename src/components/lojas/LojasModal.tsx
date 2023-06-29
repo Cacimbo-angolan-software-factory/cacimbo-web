@@ -152,7 +152,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
             <button onClick={() => setShowModal(false)}>Cancelar</button>
             <button type='submit'>
               {' '}
-              {isLoading ? 'Aguarde...' : 'Criar usuário'}
+              {isLoading ? 'Aguarde...' : 'Criar loja'}
             </button>
           </FooterDiv>
         </Form>
