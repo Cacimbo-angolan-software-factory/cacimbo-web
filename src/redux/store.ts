@@ -3,6 +3,7 @@ import { userSlice } from './userFeatures/usersSlice';
 import { empresaSlice } from './empresaFeatures/empresaSlice';
 import { solicSlice } from './solicitaçaoFeatures/solicSlice';
 import { permissionSlice } from './permissionsFeatures/permissionSlice';
+import { lojasSlice } from './lojasFeatures/lojasSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     empresa: empresaSlice.reducer,
     solicitaçao: solicSlice.reducer,
     permission: permissionSlice.reducer,
+    lojas: lojasSlice.reducer,
   },
 });
 
