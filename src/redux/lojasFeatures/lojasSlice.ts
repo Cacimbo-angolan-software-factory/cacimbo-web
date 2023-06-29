@@ -3,6 +3,7 @@ import lojasService from './LojasService';
 
 interface LojasState {
   loja: null;
+  companyIds: any[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -11,6 +12,7 @@ interface LojasState {
 
 const initialState: LojasState = {
   loja: null,
+  companyIds: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -19,19 +21,23 @@ const initialState: LojasState = {
 
 export const criarLoja = createAsyncThunk(
   'lojas/criar',
-  async (
-    lojaData: {
-      CompanyID: string;
-      StoreName: string;
-      StoreLogoUrl: string;
-      StoreSlogan: string;
-    },
-    { rejectWithValue }
-  ) => {
+  async (formData: any, { rejectWithValue }) => {
     try {
-      return await lojasService.criarLoja(lojaData);
+      return await lojasService.criarLoja(formData);
     } catch (err: any) {
       return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getCompanyIdWithNif = createAsyncThunk(
+  'lojas/getCompanyIdWithNif',
+  async (nif: string) => {
+    try {
+      const response = await lojasService.getCompanyIdWithNif(nif);
+      return response.data.map((item: any) => item.CompanyID);
+    } catch (error: any) {
+      return error;
     }
   }
 );
@@ -57,11 +63,27 @@ export const lojasSlice = createSlice({
       state.isSuccess = true;
       state.message = 'Loja criada com sucesso';
     });
-    builder.addCase(criarLoja.rejected, (state, action) => {
+    builder.addCase(criarLoja.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
       state.isSuccess = false;
       state.message = 'Erro ao criar loja, tente novamente mais tarde';
+    });
+
+    // getCompanyIdWithNif
+    builder.addCase(getCompanyIdWithNif.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getCompanyIdWithNif.fulfilled, (state, action) => {
+      state.companyIds = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getCompanyIdWithNif.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = 'Erro ao buscar empresa, tente novamente mais tarde';
     });
   },
 });

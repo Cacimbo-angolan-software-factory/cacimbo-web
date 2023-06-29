@@ -64,6 +64,10 @@ export const InputDiv = styled.label`
   gap: 1rem;
   width: 100%;
 
+  &.nif {
+    padding: 2rem;
+  }
+
   font-size: 1.5rem;
   font-weight: 700;
   & input {
@@ -72,5 +76,42 @@ export const InputDiv = styled.label`
     border-radius: 0.5rem;
     background-color: #242424;
     color: #fff;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+`;
+
+export const FooterDiv = styled.div`
+  background-color: #242424;
+  border-top: 1px solid #383838;
+  padding: 1.5rem 2rem;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+
+  & button {
+    padding: 0.8rem 2rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    color: #ebebeb;
+  }
+
+  & button:first-child {
+    background-color: #bebebe;
+    color: #242424;
+  }
+
+  & button:last-child {
+    background-color: #b71c50;
   }
 `;
