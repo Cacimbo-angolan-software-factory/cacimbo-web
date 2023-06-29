@@ -116,3 +116,45 @@ export const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9;
 `;
+
+export const RolesDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  & div.rolesDiv {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  & input {
+    cursor: pointer;
+  }
+
+  & label {
+    font-size: 1.5rem;
+  }
+`;
+
+export const PermissionsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: 2rem;
+
+  & div.parent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    & svg {
+      font-size: 1.5rem;
+      color: #bebebe;
+    }
+
+    & p {
+      font-size: 1.5rem;
+    }
+  }
+`;
