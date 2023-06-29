@@ -10,6 +10,7 @@ import PrivateRoutes from './PrivateRoutes';
 import Usuarios from './pages/admin/usuarios/Usuarios';
 import ResetPassword from './pages/login/ResetPassword';
 import Acesso from './pages/admin/acesso/Acesso';
+import Lojas from './pages/admin/lojas/Lojas';
 
 const AppContainer = styled.div`
   display: flex;
@@ -29,7 +30,8 @@ function App() {
             <Route path='/empresas' element={<Empresas />} />
             <Route path='/Usuarios' element={<Usuarios />} />
             <Route path='/NovaPalavraPasse' element={<ResetPassword />} />
-            <Route path='/Acesso' element={<Acesso />} />
+            <Route path='/acesso' element={<Acesso />} />
+            <Route path='/lojas' element={<Lojas />} />
           </Route>
           <Route path='/Login' element={<Login />} />
         </Routes>

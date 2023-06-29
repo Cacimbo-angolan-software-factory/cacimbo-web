@@ -6,6 +6,7 @@ import {
   RiUserFill,
   RiFileList3Fill,
   RiSurveyFill,
+  RiStore3Fill,
 } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 
@@ -122,22 +123,44 @@ const Menu: React.FC = () => {
 
       {user.user.parceiro_id === 1 ? (
         <MenuItem
-          className={location.pathname === `/Acesso` ? 'active' : 'inherit'}
-          to='/Acesso'
+          className={location.pathname === `/acesso` ? 'active' : 'inherit'}
+          to='/acesso'
         >
           <span
             className={
-              location.pathname === `/Acesso` ? 'active-text' : 'inherit'
+              location.pathname === `/acesso` ? 'active-text' : 'inherit'
             }
           >
             <RiShieldCheckFill />
           </span>
           <p
             className={
-              location.pathname === `/Acesso` ? 'active-text' : 'inherit'
+              location.pathname === `/acesso` ? 'active-text' : 'inherit'
             }
           >
             Acesso
+          </p>
+        </MenuItem>
+      ) : null}
+
+      {user.user.parceiro_id === 1 ? (
+        <MenuItem
+          className={location.pathname === `/lojas` ? 'active' : 'inherit'}
+          to='/lojas'
+        >
+          <span
+            className={
+              location.pathname === `/lojas` ? 'active-text' : 'inherit'
+            }
+          >
+            <RiStore3Fill />
+          </span>
+          <p
+            className={
+              location.pathname === `/lojas` ? 'active-text' : 'inherit'
+            }
+          >
+            Lojas
           </p>
         </MenuItem>
       ) : null}
