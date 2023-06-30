@@ -117,7 +117,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
               ))}
             </SelectInput>
             <InputDiv>
-              Nome da empresa:
+              Nome da loja:
               <input
                 disabled={value.nif.length === 0 || value.nif === ''}
                 value={value.StoreName}
