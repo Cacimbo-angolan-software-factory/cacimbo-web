@@ -14,9 +14,7 @@ const UserContainer: React.FC<UserContainerProps> = ({
   empresas,
   userCompanies,
 }) => {
-  useEffect(() => {
-    console.log(userCompanies);
-  }, [userSelected]);
+  useEffect(() => {}, [userSelected]);
 
   return (
     <Container>

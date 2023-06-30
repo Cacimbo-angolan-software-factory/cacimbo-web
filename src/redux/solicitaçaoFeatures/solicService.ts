@@ -38,7 +38,6 @@ const criarSolicitaçao = async (solicData: {
   canal_id: string;
   user_id: string;
 }) => {
-  console.log(solicData);
   const response = await api.post(`solicitacao/store`, { ...solicData });
   return response.data;
 };

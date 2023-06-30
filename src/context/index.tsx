@@ -231,7 +231,6 @@ export const LicProvider = ({ children }: IContext) => {
       );
       if (res.status === 200) {
         setLoadingPassword(false);
-        console.log('Senha alterada com sucesso', 'success');
       }
     } catch (err: any) {
       setLoadingPassword(false);
@@ -377,7 +376,6 @@ export const LicProvider = ({ children }: IContext) => {
 
   async function aprovar(aproveData: any) {
     try {
-      console.log(aproveData);
       setLoadingAprovar(true);
       await api.put('solicitacao/aprovar-parceiro-interessado', aproveData);
       await getRequestToApproveAndAuctionRequests();

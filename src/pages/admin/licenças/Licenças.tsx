@@ -30,7 +30,6 @@ const Licenças: React.FC = () => {
 
   useEffect(() => {
     dispatch(getEmpresas());
-    console.log(licences);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

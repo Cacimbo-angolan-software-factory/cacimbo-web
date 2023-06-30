@@ -60,11 +60,6 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
             (permission: any) => permission.CompanyID === searchCompanyId
           )
         );
-        console.log(
-          list.filter(
-            (permission: any) => permission.CompanyID === searchCompanyId
-          )
-        );
         setShowPermissions(true);
       } else {
         setShowPermissions(false);

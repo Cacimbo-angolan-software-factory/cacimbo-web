@@ -63,8 +63,6 @@ const ResetPassword: React.FC = () => {
         window.location.pathname = '/';
       }, 2500);
     });
-
-    console.log(formData);
   };
 
   return (

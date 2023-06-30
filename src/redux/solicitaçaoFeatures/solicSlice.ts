@@ -41,7 +41,6 @@ export const getCanal = createAsyncThunk('solic/getCanal', async () => {
 export const getModuloComum = createAsyncThunk('solic/getModulo', async () => {
   try {
     const response = await solicService.getModulo();
-    console.log(response);
     return response.filter((item: any) => item.tipo === 1);
   } catch (error: any) {
     return error;
@@ -53,7 +52,6 @@ export const getModuloPadronizar = createAsyncThunk(
   async () => {
     try {
       const response = await solicService.getModulo();
-      console.log(response);
       return response.filter((item: any) => item.tipo === 0);
     } catch (error: any) {
       return error;

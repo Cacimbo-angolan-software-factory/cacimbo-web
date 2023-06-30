@@ -39,7 +39,6 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
     let source = list.filter(
       (permission: any) => permission.name === value.source_name
     )[0];
-    console.log({ source });
 
     event.preventDefault();
     dispatch(
@@ -59,7 +58,6 @@ const Permissions: React.FC<PermissionsProps> = ({ setCriarPermission }) => {
       source_name: '',
       source_id: '',
     });
-    console.log(value);
   };
 
   return (

@@ -82,7 +82,6 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
           rolesList.filter((role: any) => role.companyId === value.companyId)
         );
         setShowRoles(true);
-        console.log('true');
       } else {
         setShowRoles(false);
       }
@@ -138,7 +137,6 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
       nif: '',
     });
     setCriarUser(false);
-    console.log(value);
   };
 
   return (
