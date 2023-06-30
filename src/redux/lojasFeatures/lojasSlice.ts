@@ -4,6 +4,7 @@ import lojasService from './LojasService';
 interface LojasState {
   loja: null;
   companyIds: any[];
+  lojas: any[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -13,6 +14,7 @@ interface LojasState {
 const initialState: LojasState = {
   loja: null,
   companyIds: [],
+  lojas: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -41,6 +43,14 @@ export const getCompanyIdWithNif = createAsyncThunk(
     }
   }
 );
+
+export const getLojas = createAsyncThunk('lojas/getLojas', async () => {
+  try {
+    return await lojasService.getLojas();
+  } catch (error: any) {
+    return error;
+  }
+});
 
 export const lojasSlice = createSlice({
   name: 'lojas',
@@ -84,6 +94,22 @@ export const lojasSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = false;
       state.message = 'Erro ao buscar empresa, tente novamente mais tarde';
+    });
+
+    // getLojas
+    builder.addCase(getLojas.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getLojas.fulfilled, (state, action) => {
+      state.lojas = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getLojas.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = 'Erro ao buscar lojas, tente novamente mais tarde';
     });
   },
 });
