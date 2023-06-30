@@ -6,6 +6,7 @@ import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import LojasModal from '../../../components/lojas/LojasModal';
+import emptyStore from '../../../assets/emptyStore.svg';
 
 const Lojas: React.FC = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -37,7 +38,7 @@ const Lojas: React.FC = () => {
             ))
           ) : (
             <EmptyStore>
-              <img src='/src/assets/emptyStore.svg' alt='empty' />
+              <img src={emptyStore} alt='empty' />
               <h2>Não existem lojas disponíveis no momento.</h2>
             </EmptyStore>
           )}
