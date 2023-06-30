@@ -101,27 +101,29 @@ const Menu: React.FC = () => {
         </p>
       </MenuItem>
 
-      <MenuItem
-        className={location.pathname === `/Usuarios` ? 'active' : 'inherit'}
-        to='/Usuarios'
-      >
-        <span
-          className={
-            location.pathname === `/Usuarios` ? 'active-text' : 'inherit'
-          }
+      {user.user.parceiro_id === 1 || user.user.tipo === 'Parceiro' ? (
+        <MenuItem
+          className={location.pathname === `/Usuarios` ? 'active' : 'inherit'}
+          to='/Usuarios'
         >
-          <RiUserFill />
-        </span>
-        <p
-          className={
-            location.pathname === `/Usuarios` ? 'active-text' : 'inherit'
-          }
-        >
-          Usuários
-        </p>
-      </MenuItem>
+          <span
+            className={
+              location.pathname === `/Usuarios` ? 'active-text' : 'inherit'
+            }
+          >
+            <RiUserFill />
+          </span>
+          <p
+            className={
+              location.pathname === `/Usuarios` ? 'active-text' : 'inherit'
+            }
+          >
+            Usuários
+          </p>
+        </MenuItem>
+      ) : null}
 
-      {user.user.parceiro_id === 1 ? (
+      {user.user.lastCompanyIDUsed === null ? null : (
         <MenuItem
           className={location.pathname === `/acesso` ? 'active' : 'inherit'}
           to='/acesso'
@@ -141,7 +143,7 @@ const Menu: React.FC = () => {
             Acesso
           </p>
         </MenuItem>
-      ) : null}
+      )}
 
       {user.user.parceiro_id === 1 ? (
         <MenuItem

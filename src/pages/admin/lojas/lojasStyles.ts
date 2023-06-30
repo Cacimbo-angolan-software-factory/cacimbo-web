@@ -29,3 +29,14 @@ export const BtnCreate = styled.button`
     padding: 0.8rem 2.35rem;
   }
 `;
+
+export const EmptyStore = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+
+  & img {
+    width: 38.5rem;
+  }
+`;

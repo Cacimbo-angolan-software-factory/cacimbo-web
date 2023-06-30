@@ -10,7 +10,13 @@ const getCompanyIdWithNif = async (nif: string) => {
   return response.data;
 };
 
+const getLojas = async () => {
+  const response = await apiCacimbo.get(`online-stores`);
+  return response.data;
+};
+
 export default {
   criarLoja,
   getCompanyIdWithNif,
+  getLojas,
 };

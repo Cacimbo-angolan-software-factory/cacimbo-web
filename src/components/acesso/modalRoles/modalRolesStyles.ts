@@ -79,11 +79,14 @@ export const FooterDiv = styled.div`
   border-top: 1px solid #383838;
   padding: 1.5rem 2rem;
   width: 100%;
-  position: fixed;
-  bottom: 0;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+
+  &.noPermission {
+    position: fixed;
+    bottom: 0;
+  }
 
   & button {
     padding: 0.8rem 2rem;
@@ -112,4 +115,21 @@ export const Overlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+`;
+
+export const PermissionsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & h2 {
+    margin-bottom: 2rem;
+  }
+
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+  }
 `;

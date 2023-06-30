@@ -92,7 +92,6 @@ export const Permission = styled.div`
   & div.block {
     display: flex;
     gap: 0.5rem;
-    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
     min-width: 20.5rem;
     cursor: pointer;
 
@@ -135,50 +134,19 @@ export const Permission = styled.div`
   }
 `;
 
-export const ToggleSwitch = styled.span`
+export const NoRoles = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  text-align: center;
   justify-content: center;
   align-items: center;
 
-  & input {
-    height: 0;
-    width: 0;
-    visibility: hidden;
+  & img {
+    width: 30rem;
   }
 
-  & label {
-    cursor: pointer;
-    text-indent: -9999px;
-    width: 4rem;
-    height: 2rem;
-    background: grey;
-    display: block;
-    border-radius: 1rem;
-    position: relative;
-  }
-
-  & label:after {
-    content: '';
-    position: absolute;
-    top: 0.1rem;
-    left: 0.1rem;
-    width: 1.8rem;
-    height: 1.8rem;
-    background: #fff;
-    border-radius: 1rem;
-    transition: 0.3s;
-  }
-
-  & input:checked + label {
-    background: #b71c50;
-  }
-
-  & input:checked + label:after {
-    left: calc(100% - 0.1rem);
-    transform: translateX(-100%);
-  }
-
-  & label:active:after {
-    width: 3rem;
+  & h1 {
+    font-weight: 300;
   }
 `;

@@ -1,13 +1,23 @@
-import React from 'react';
-import { Container, Header } from './stylesSideBars';
+import React, { useEffect } from 'react';
+import { Companies, Container, Header } from './stylesSideBars';
 import { RiPencilFill } from 'react-icons/ri';
-import { IoBusinessOutline } from 'react-icons/io5';
+import { IoBusinessOutline, IoPeopleOutline } from 'react-icons/io5';
 
 interface UserContainerProps {
   userSelected: any;
+  empresas: any;
+  userCompanies: any;
 }
 
-const UserContainer: React.FC<UserContainerProps> = ({ userSelected }) => {
+const UserContainer: React.FC<UserContainerProps> = ({
+  userSelected,
+  empresas,
+  userCompanies,
+}) => {
+  useEffect(() => {
+    console.log(userCompanies);
+  }, [userSelected]);
+
   return (
     <Container>
       <Header>
@@ -21,10 +31,20 @@ const UserContainer: React.FC<UserContainerProps> = ({ userSelected }) => {
         <RiPencilFill />
       </Header>
 
-      <h2>
-        <IoBusinessOutline />
-        {userSelected.parceiro}
-      </h2>
+      <div>
+        <h2>
+          <IoPeopleOutline />
+          Empresas associadas
+        </h2>
+        {/* <Companies>
+          {empresas.map((empresa: any) => (
+            <div key={empresa.id}>
+              <IoBusinessOutline />
+              <p>{empresa.CompanyName}</p>
+            </div>
+          ))}
+        </Companies> */}
+      </div>
 
       <div></div>
     </Container>

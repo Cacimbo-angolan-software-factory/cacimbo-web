@@ -16,17 +16,20 @@ import PerfisList from '../../../components/usuarios/PerfisList';
 import TarefasList from '../../../components/usuarios/TarefasList/TarefasList';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import CriarUsuarioModal from '../../../components/usuarios/criarUsuario/CriarUsuarioModal';
+import { getEmpresasAssociadas } from '../../../redux/empresaFeatures/empresaSlice';
 
 const Usuarios: React.FC = () => {
   const { users, isError, isLoading, user, allUsers } = useSelector(
     (state: any) => state.user
   );
+  const { empresasAssociadas } = useSelector((state: any) => state.empresa);
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openPerfis, setOpenPerfis] = useState(false);
   const [openTarefas, setOpenTarefas] = useState(false);
   const [userSelected, setUserSelected] = useState<any>();
+  const [userCompanies, setUserCompanies] = useState([]);
   const [criarUser, setCriarUser] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
@@ -38,6 +41,7 @@ const Usuarios: React.FC = () => {
     }
 
     dispatch(getUsers(user.user.parceiro_id));
+    console.log(user);
   }, [dispatch, isError]);
 
   useEffect(() => {
@@ -89,6 +93,11 @@ const Usuarios: React.FC = () => {
     setOpenTarefas(false);
   };
 
+  const handleSelected = (userId: any) => {
+    const selected = allUsers.find((user: any) => user.id === userId);
+    setUserCompanies(selected);
+  };
+
   return (
     <>
       <AdminHeader />
@@ -98,6 +107,7 @@ const Usuarios: React.FC = () => {
         <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
 
         {user.user.parceiro_id === 1 ? (
+          //  || user.user.tipo === 'Parceiro'
           <span onClick={handleOpenModal}>
             <RiMore2Fill />
           </span>
@@ -134,7 +144,11 @@ const Usuarios: React.FC = () => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <UserContainer userSelected={userSelected} />
+          <UserContainer
+            userCompanies={userCompanies}
+            empresas={user.empresas}
+            userSelected={userSelected}
+          />
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}

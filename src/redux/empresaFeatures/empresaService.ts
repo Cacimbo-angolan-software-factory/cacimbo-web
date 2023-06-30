@@ -1,4 +1,4 @@
-import { api } from '../../service/Service.api';
+import { api, apiCacimbo } from '../../service/Service.api';
 
 const criarEmpresa = async (empresaData: {
   nome: string;
@@ -13,6 +13,12 @@ const criarEmpresa = async (empresaData: {
   return response.data;
 };
 
+const getEmpresasAssociadas = async (companyId: any) => {
+  const response = await apiCacimbo.get(`docs_empresas/${companyId}}`);
+  return response.data;
+};
+
 export default {
   criarEmpresa,
+  getEmpresasAssociadas,
 };

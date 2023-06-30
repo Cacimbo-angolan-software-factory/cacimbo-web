@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BtnCreate, Container } from './lojasStyles';
+import { BtnCreate, Container, EmptyStore } from './lojasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { IoAddCircleOutline } from 'react-icons/io5';
@@ -10,6 +10,7 @@ import LojasModal from '../../../components/lojas/LojasModal';
 const Lojas: React.FC = () => {
   const [showModal, setShowModal] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
+  const { lojas } = useSelector((state: any) => state.lojas);
 
   const handleClick = () => {
     setShowModal(true);
@@ -26,7 +27,21 @@ const Lojas: React.FC = () => {
           Criar Loja
         </BtnCreate>
 
-        <h1>hello world</h1>
+        <div>
+          {lojas.length > 0 ? (
+            lojas.map((loja: any, index: number) => (
+              <div key={index}>
+                <h2>{loja.StoreName}</h2>
+                <p>{loja.StoreSlogan}</p>
+              </div>
+            ))
+          ) : (
+            <EmptyStore>
+              <img src='/src/assets/emptyStore.svg' alt='empty' />
+              <h2>Não existem lojas disponíveis no momento.</h2>
+            </EmptyStore>
+          )}
+        </div>
       </Container>
 
       {showModal && (
