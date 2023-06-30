@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Content,
@@ -8,10 +8,13 @@ import {
   Inputs,
   ModalRolesContainer,
   Overlay,
+  PermissionsDiv,
 } from './modalRolesStyles';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
+import { getPermissions } from '../../../redux/permissionsFeatures/permissionSlice';
+import { apiCacimbo } from '../../../service/Service.api';
 
 interface ModalRolesProps {
   openModal: boolean;
@@ -20,15 +23,23 @@ interface ModalRolesProps {
 
 const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
   const { user } = useSelector((state: any) => state.user);
+  const { list } = useSelector((state: any) => state.permission);
   const dispatch = useDispatch<AppDispatch>();
   const [value, setValue] = React.useState({
     name: '',
     CompanyID: user.user.lastCompanyIDUsed,
     description: '',
     permissions: [] as any,
-    // role_type
-    // role_type_series
   });
+  // role_type
+  // role_type_series
+  const [searchCompanyId, setSearchCompanyId] = React.useState('');
+  const [filteredPermissions, setFilteredPermissions] = React.useState([]);
+  const [showPermissions, setShowPermissions] = React.useState(false);
+
+  useEffect(() => {
+    dispatch(getPermissions());
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -36,6 +47,31 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+  };
+
+  const handleBlur = async () => {
+    try {
+      const response = await apiCacimbo.get(`docs_empresas/${searchCompanyId}`);
+      const companyData = response.data.data.CompanyID;
+
+      if (companyData) {
+        setFilteredPermissions(
+          list.filter(
+            (permission: any) => permission.CompanyID === searchCompanyId
+          )
+        );
+        console.log(
+          list.filter(
+            (permission: any) => permission.CompanyID === searchCompanyId
+          )
+        );
+        setShowPermissions(true);
+      } else {
+        setShowPermissions(false);
+      }
+    } catch (error) {
+      setShowPermissions(false);
+    }
   };
 
   return (
@@ -48,6 +84,18 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
 
         <form onClick={handleSubmit}>
           <Content>
+            <InputDiv>
+              <p>Id da empresa</p>
+              <input
+                placeholder='Pesquise uma empresa...'
+                name='searchCompanyId'
+                value={searchCompanyId}
+                onChange={(e: any) => setSearchCompanyId(e.target.value)}
+                type='text'
+                onBlur={handleBlur}
+              />
+            </InputDiv>
+
             <Inputs>
               <InputDiv>
                 <p>Nome</p>
@@ -69,15 +117,43 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
               </InputDiv>
             </Inputs>
 
-            <div>
-              <h2>Permissões</h2>
-              <h2>Permissões</h2>
-              <h2>Permissões</h2>
-              <h2>Permissões</h2>
-            </div>
+            <PermissionsDiv>
+              {showPermissions && <h2>Permissões</h2>}
+              {showPermissions &&
+                filteredPermissions.map((permission: any) => (
+                  <div key={permission.id}>
+                    <input
+                      type='checkbox'
+                      name={permission.name}
+                      id={permission.id}
+                      value={permission.id}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setValue({
+                            ...value,
+                            permissions: [...value.permissions, permission.id],
+                          });
+                        } else {
+                          setValue({
+                            ...value,
+                            permissions: value.permissions.filter(
+                              (perm: any) => perm !== permission.id
+                            ),
+                          });
+                        }
+                      }}
+                    />
+                    <label htmlFor={permission.id}>
+                      {permission.description} - {permission.source_name}
+                    </label>
+                  </div>
+                ))}
+            </PermissionsDiv>
           </Content>
 
-          <FooterDiv>
+          <FooterDiv
+            className={showPermissions === false ? 'noPermission' : ''}
+          >
             <button onClick={() => setOpenModal(false)}>Cancelar</button>
             <button type='submit'>Criar função</button>
           </FooterDiv>

@@ -98,6 +98,7 @@ const Usuarios: React.FC = () => {
         <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
 
         {user.user.parceiro_id === 1 ? (
+          //  || user.user.tipo === 'Parceiro'
           <span onClick={handleOpenModal}>
             <RiMore2Fill />
           </span>
