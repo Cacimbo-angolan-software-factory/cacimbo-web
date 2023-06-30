@@ -77,7 +77,6 @@ export const getTarefas = createAsyncThunk(
   async (user: any) => {
     try {
       const response = await userService.getTarefas(user);
-      console.log(response);
       return response;
     } catch (error: any) {
       return error;

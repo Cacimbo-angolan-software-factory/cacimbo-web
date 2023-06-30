@@ -78,7 +78,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     formData.append('CompanyID', value.CompanyID);
 
     dispatch(criarLoja(formData));
-    console.log(formData.getAll('StoreLogoUrl'));
   };
 
   return (
