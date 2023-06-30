@@ -3,6 +3,7 @@ import empresaService from './empresaService';
 
 interface EmpresaState {
   empresa: null;
+  empresasAssociadas: any[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -11,6 +12,7 @@ interface EmpresaState {
 
 const initialState: EmpresaState = {
   empresa: null,
+  empresasAssociadas: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -33,6 +35,17 @@ export const criarEmpresa = createAsyncThunk(
   ) => {
     try {
       return await empresaService.criarEmpresa(empresaData);
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getEmpresasAssociadas = createAsyncThunk(
+  'empresa/getEmpresasAssociadas',
+  async (companyId: any, { rejectWithValue }) => {
+    try {
+      return await empresaService.getEmpresasAssociadas(companyId);
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -63,6 +76,21 @@ export const empresaSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Erro ao criar empresa';
+    });
+
+    // getEmpresasAssociadas
+    builder.addCase(getEmpresasAssociadas.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getEmpresasAssociadas.fulfilled, (state, action) => {
+      state.empresasAssociadas = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getEmpresasAssociadas.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao buscar empresas associadas';
     });
   },
 });

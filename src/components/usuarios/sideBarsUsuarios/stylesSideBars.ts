@@ -88,6 +88,21 @@ export const Header = styled.div`
   }
 `;
 
+export const Companies = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  margin-top: 2rem;
+
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+  }
+`;
+
 // Perfis Container Sidebar
 export const Tabs = styled.div`
   display: flex;
