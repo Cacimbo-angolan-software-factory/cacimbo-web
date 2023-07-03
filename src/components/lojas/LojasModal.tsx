@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
   ModalContainer,
@@ -19,6 +20,7 @@ import {
 import SelectInput from '../SelectTextField';
 import { MenuItem } from '@mui/material';
 import { api } from '../../service/Service.api';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface LojasModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,7 +38,8 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
   });
   const [StoreLogoUrl, setStoreLogoUrl] = useState<FormDataOrNull>(null);
 
-  const { companyIds, isLoading } = useSelector((state: any) => state.lojas);
+  const { companyIds, isLoading, loja, isErrorCriar, message, isSuccessCriar } =
+    useSelector((state: any) => state.lojas);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {}, []);
@@ -70,18 +73,61 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('StoreLogoUrl', StoreLogoUrl as any);
-    formData.append('StoreName', value.StoreName);
-    formData.append('StoreSlogan', value.StoreSlogan);
-    formData.append('CompanyID', value.CompanyID);
+    if (
+      value.CompanyID === '' ||
+      value.StoreName === '' ||
+      StoreLogoUrl === null
+    ) {
+      toast.error('Preencha todos os campos!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
+    } else {
+      const formData = new FormData();
+      formData.append('StoreLogoUrl', StoreLogoUrl as any);
+      formData.append('StoreName', value.StoreName);
+      formData.append('StoreSlogan', value.StoreSlogan);
+      formData.append('CompanyID', value.CompanyID);
 
-    dispatch(criarLoja(formData));
-    console.log(formData.get('CompanyID'));
-    console.log(formData.get('StoreName'));
-    console.log(formData.get('StoreSlogan'));
-    console.log(formData.get('StoreLogoUrl'));
+      dispatch(criarLoja(formData)).then(() => {
+        toast.success('Loja criada com sucesso! 🎉', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
+
+        setTimeout(() => {
+          setValue({
+            nif: '',
+            CompanyID: '',
+            StoreName: '',
+            StoreSlogan: '',
+          });
+          setStoreLogoUrl(null);
+          setShowModal(false);
+        }, 2000);
+      });
+    }
   };
+
+  useEffect(() => {
+    if (isErrorCriar === true) {
+    }
+
+    if (isSuccessCriar) {
+      alert(message);
+    }
+  }, []);
 
   return (
     <>
@@ -127,6 +173,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
                 type='text'
                 name='StoreName'
                 onChange={handleChange}
+                required
               />
             </InputDiv>
             <InputDiv>
@@ -161,6 +208,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
       </ModalContainer>
 
       {showModal && <Overlay onClick={() => setShowModal(false)} />}
+      <ToastContainer />
     </>
   );
 };
