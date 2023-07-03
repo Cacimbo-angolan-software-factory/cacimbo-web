@@ -7,6 +7,7 @@ import UserDropDown from '../../userDropDown/UserDropdown';
 const Stats: React.FC = () => {
   const { TotalLicenses, totalPedidos } = useContext(LicContext);
   const { user } = useSelector((state: any) => state.user);
+  const { lojas } = useSelector((state: any) => state.lojas);
 
   return (
     <Div>
@@ -23,6 +24,12 @@ const Stats: React.FC = () => {
           <Stat>
             <h2>2786</h2>
             <p>Atribuídas</p>
+          </Stat>
+        ) : null}
+        {user.user.parceiro_id === 1 ? (
+          <Stat>
+            <h2>{lojas.length}</h2>
+            <p>Lojas</p>
           </Stat>
         ) : null}
       </StatsContainer>
