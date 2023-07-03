@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { BtnCreate, Container, EmptyStore } from './lojasStyles';
+import {
+  BtnCreate,
+  Container,
+  EmptyStore,
+  LojasContainer,
+  SpinnerDiv,
+} from './lojasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { IoAddCircleOutline } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LojasModal from '../../../components/lojas/LojasModal';
 import emptyStore from '../../../assets/emptyStore.svg';
+import { AppDispatch } from '../../../redux/store';
+import { getLojas } from '../../../redux/lojasFeatures/lojasSlice';
+import Spinner from '../../../components/spinner/Spinner';
+import Loja from './Loja';
 
 const Lojas: React.FC = () => {
   const [showModal, setShowModal] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
-  const { lojas } = useSelector((state: any) => state.lojas);
+  const { lojas, isLoading } = useSelector((state: any) => state.lojas);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getLojas());
+    console.log(lojas);
+  }, []);
 
   const handleClick = () => {
     setShowModal(true);
@@ -28,21 +44,22 @@ const Lojas: React.FC = () => {
           Criar Loja
         </BtnCreate>
 
-        <div>
+        <LojasContainer>
           {lojas.length > 0 ? (
             lojas.map((loja: any, index: number) => (
-              <div key={index}>
-                <h2>{loja.StoreName}</h2>
-                <p>{loja.StoreSlogan}</p>
-              </div>
+              <Loja key={loja.id} loja={loja} />
             ))
+          ) : isLoading ? (
+            <SpinnerDiv>
+              <Spinner />
+            </SpinnerDiv>
           ) : (
             <EmptyStore>
               <img src={emptyStore} alt='empty' />
               <h2>Não existem lojas disponíveis no momento.</h2>
             </EmptyStore>
           )}
-        </div>
+        </LojasContainer>
       </Container>
 
       {showModal && (
