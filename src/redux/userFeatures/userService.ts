@@ -39,6 +39,15 @@ const getAllUsers = async () => {
   }
 };
 
+const getUsersEmpresas = async (userId: any) => {
+  try {
+    const response = await apiCacimbo.get(`users/${userId}/empresas`);
+    return response.data.empresas;
+  } catch (error) {
+    return error;
+  }
+};
+
 const createUser = async (userData: {
   name: string;
   email: string;
@@ -101,6 +110,7 @@ export const userService = {
   createTarefas,
   createUser,
   getAllUsers,
+  getUsersEmpresas,
 };
 
 export default userService;
