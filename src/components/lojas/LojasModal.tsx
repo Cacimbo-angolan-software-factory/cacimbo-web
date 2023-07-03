@@ -18,7 +18,7 @@ import {
 } from '../../redux/lojasFeatures/lojasSlice';
 import SelectInput from '../SelectTextField';
 import { MenuItem } from '@mui/material';
-import { apiCacimbo } from '../../service/Service.api';
+import { api } from '../../service/Service.api';
 
 interface LojasModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,10 +50,9 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
 
   const handleBlur = async () => {
     try {
-      const response = await apiCacimbo.get(
-        `docs_empresas/all-by-nif/${value.nif}`
-      );
+      const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
       const company = response.data.data[0];
+      console.log(company);
       dispatch(getCompanyIdWithNif(value.nif));
 
       if (company) {
