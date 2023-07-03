@@ -5,7 +5,7 @@ import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getUsers, getAllUsers } from '../../../redux/userFeatures/usersSlice';
-import { Block, Button } from './stylesUsuarios';
+import { Block, Button, Input } from './stylesUsuarios';
 import Spinner from '../../../components/spinner/Spinner';
 import { RiMore2Fill } from 'react-icons/ri';
 import SideBarUsuario from '../../../components/usuarios/sideBarsUsuarios/SideBarUsuario';
@@ -16,21 +16,19 @@ import PerfisList from '../../../components/usuarios/PerfisList';
 import TarefasList from '../../../components/usuarios/TarefasList/TarefasList';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import CriarUsuarioModal from '../../../components/usuarios/criarUsuario/CriarUsuarioModal';
-import { getEmpresasAssociadas } from '../../../redux/empresaFeatures/empresaSlice';
 
 const Usuarios: React.FC = () => {
-  const { users, isError, isLoading, user, allUsers } = useSelector(
-    (state: any) => state.user
-  );
-  const { empresasAssociadas } = useSelector((state: any) => state.empresa);
+  const { users, isError, isLoading, user, allUsers, userEmpresas } =
+    useSelector((state: any) => state.user);
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openPerfis, setOpenPerfis] = useState(false);
   const [openTarefas, setOpenTarefas] = useState(false);
   const [userSelected, setUserSelected] = useState<any>();
-  const [userCompanies, setUserCompanies] = useState([]);
   const [criarUser, setCriarUser] = useState(false);
+  const [search, setSearch] = useState('');
+
   const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
   let modalRef = useRef<any>(null);
@@ -41,7 +39,6 @@ const Usuarios: React.FC = () => {
     }
 
     dispatch(getUsers(user.user.parceiro_id));
-    console.log(user);
   }, [dispatch, isError]);
 
   useEffect(() => {
@@ -93,9 +90,8 @@ const Usuarios: React.FC = () => {
     setOpenTarefas(false);
   };
 
-  const handleSelected = (userId: any) => {
-    const selected = allUsers.find((user: any) => user.id === userId);
-    setUserCompanies(selected);
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
   };
 
   return (
@@ -106,12 +102,18 @@ const Usuarios: React.FC = () => {
       <Block>
         <BtnCreate onClick={handleClickCreate}>Criar usuário</BtnCreate>
 
-        {user.user.parceiro_id === 1 ? (
+        {/* {user.user.parceiro_id === 1 ? (
           //  || user.user.tipo === 'Parceiro'
           <span onClick={handleOpenModal}>
             <RiMore2Fill />
           </span>
-        ) : null}
+        ) : null} */}
+        <Input
+          onChange={handleSearch}
+          value={search}
+          type='text'
+          placeholder='Pesquise por nome ou email...'
+        />
       </Block>
 
       {openPerfis ? (
@@ -135,6 +137,7 @@ const Usuarios: React.FC = () => {
           handleClick={handleClick}
           setUserSelected={setUserSelected}
           parceiroId={user.user.parceiro_id}
+          search={search}
         />
       )}
 
@@ -144,11 +147,7 @@ const Usuarios: React.FC = () => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <UserContainer
-            userCompanies={userCompanies}
-            empresas={user.empresas}
-            userSelected={userSelected}
-          />
+          <UserContainer userSelected={userSelected} />
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}

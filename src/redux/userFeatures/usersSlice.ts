@@ -11,6 +11,7 @@ interface UserState {
   isSuccess: boolean;
   message: string;
   allUsers: string[];
+  userEmpresas: string[];
 }
 
 const initialState: UserState = {
@@ -25,6 +26,7 @@ const initialState: UserState = {
   isSuccess: false,
   message: '',
   allUsers: [],
+  userEmpresas: [],
 };
 
 export const login = createAsyncThunk(
@@ -62,6 +64,19 @@ export const getAllUsers = createAsyncThunk('user/allUsers', async () => {
     return error;
   }
 });
+
+export const getUsersEmpresas = createAsyncThunk(
+  'user/getUsersEmpresas',
+  async (userId: any) => {
+    try {
+      const response = await userService.getUsersEmpresas(userId);
+      console.log(response);
+      return response;
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
 
 export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
   try {
@@ -238,6 +253,21 @@ export const userSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
       state.message = 'Erro ao buscar usuários';
+    });
+
+    // get user empresas
+    builder.addCase(getUsersEmpresas.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getUsersEmpresas.fulfilled, (state, action) => {
+      state.userEmpresas = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getUsersEmpresas.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao buscar empresas do usuário';
     });
   },
 });

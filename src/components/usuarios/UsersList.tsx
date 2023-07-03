@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { RiMore2Fill } from 'react-icons/ri';
 
-import { Div, Input } from './usuariosStyles';
+import { Div } from './usuariosStyles';
 import { useSelector } from 'react-redux';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
   setUserSelected: (user: any) => void;
   handleClick: () => void;
   parceiroId: number;
+  search: string;
 }
 
 const UsersList: React.FC<Props> = ({
@@ -19,13 +20,9 @@ const UsersList: React.FC<Props> = ({
   setUserSelected,
   handleClick,
   parceiroId,
+  search,
 }) => {
   const { user } = useSelector((state: any) => state.user);
-  const [search, setSearch] = useState('');
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
 
   const handleAllUsers = () => {
     return (
@@ -107,12 +104,12 @@ const UsersList: React.FC<Props> = ({
 
   return (
     <div>
-      <Input
+      {/* <Input
         onChange={handleSearch}
         value={search}
         type='text'
         placeholder='Pesquise por nome ou email'
-      />
+      /> */}
 
       {user.user.tipo === 'Admin' ? handleAllUsers() : handleUsers()}
     </div>
