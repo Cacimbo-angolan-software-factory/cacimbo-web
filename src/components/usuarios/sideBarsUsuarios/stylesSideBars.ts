@@ -41,6 +41,7 @@ export const Wrapper = styled.div`
 
 // User Container Sidebar
 export const Container = styled.div`
+  overflow: auto;
   h2 {
     margin-top: 4rem;
     display: flex;
@@ -88,6 +89,12 @@ export const Header = styled.div`
   }
 `;
 
+export const Parceiro = styled.section`
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+`;
+
 export const Companies = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,6 +107,18 @@ export const Companies = styled.div`
     align-items: center;
     gap: 0.5rem;
     font-size: 1.2rem;
+  }
+`;
+
+export const NoCompanies = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+
+  & img {
+    width: 25rem;
+    margin-bottom: 3rem;
   }
 `;
 
