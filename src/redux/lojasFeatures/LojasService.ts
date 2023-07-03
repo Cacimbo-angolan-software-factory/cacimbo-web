@@ -1,7 +1,7 @@
 import { apiCacimbo, api } from '../../service/Service.api';
 
 const criarLoja = async (formData: any) => {
-  const response = await apiCacimbo.post(`online-stores`, { ...formData });
+  const response = await apiCacimbo.post(`online-stores`, formData);
   return response.data;
 };
 
@@ -12,7 +12,7 @@ const getCompanyIdWithNif = async (nif: string) => {
 
 const getLojas = async () => {
   const response = await apiCacimbo.get(`online-stores`);
-  return response.data;
+  return response.data.data;
 };
 
 export default {

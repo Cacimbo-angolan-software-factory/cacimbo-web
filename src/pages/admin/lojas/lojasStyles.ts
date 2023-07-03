@@ -40,3 +40,48 @@ export const EmptyStore = styled.div`
     width: 38.5rem;
   }
 `;
+
+export const SpinnerDiv = styled.div`
+  margin-top: 4rem;
+  display: flex;
+  justify-self: center;
+`;
+
+export const LojasContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`;
+
+// Single loja
+export const LojaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(56 56, 56, 0.6);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: 60%;
+
+  & img {
+    width: fit-content;
+    max-width: 9rem;
+    height: 9rem;
+    border-radius: 0.5rem;
+    object-fit: contain;
+  }
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    & h1 {
+      font-weight: 400;
+    }
+
+    & p {
+      font-size: 1.6rem;
+    }
+  }
+`;
