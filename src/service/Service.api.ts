@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 const apiCacimbo = axios.create({
-  baseURL: 'http://cacimboerp.cacimboweb.com/api/',
+  baseURL: 'https://cacimboerp.cacimboweb.com/api/',
 });
 
 const apiCreate = axios.create({
