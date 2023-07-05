@@ -55,7 +55,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     try {
       const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
       const company = response.data.data[0];
-      console.log(company);
       dispatch(getCompanyIdWithNif(value.nif));
 
       if (company) {
