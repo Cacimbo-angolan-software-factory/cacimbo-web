@@ -42,8 +42,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     useSelector((state: any) => state.lojas);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {}, []);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({
       ...value,
@@ -118,15 +116,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
       });
     }
   };
-
-  useEffect(() => {
-    if (isErrorCriar === true) {
-    }
-
-    if (isSuccessCriar) {
-      alert(message);
-    }
-  }, []);
 
   return (
     <>

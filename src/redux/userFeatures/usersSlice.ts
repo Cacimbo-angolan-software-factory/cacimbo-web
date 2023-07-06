@@ -70,7 +70,6 @@ export const getUsersEmpresas = createAsyncThunk(
   async (userId: any) => {
     try {
       const response = await userService.getUsersEmpresas(userId);
-      console.log(response);
       return response;
     } catch (error: any) {
       return error;

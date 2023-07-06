@@ -14,23 +14,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import LojasModal from '../../../components/lojas/LojasModal';
 import emptyStore from '../../../assets/emptyStore.svg';
 import { AppDispatch } from '../../../redux/store';
-import { getLojas } from '../../../redux/lojasFeatures/lojasSlice';
+import { getLojas, deleteLoja } from '../../../redux/lojasFeatures/lojasSlice';
 import Spinner from '../../../components/spinner/Spinner';
 import Loja from './Loja';
+import DeleteModal from './DeleteModal';
 
 const Lojas: React.FC = () => {
   const [showModal, setShowModal] = React.useState(false);
   const { user } = useSelector((state: any) => state.user);
   const { lojas, isLoading } = useSelector((state: any) => state.lojas);
   const dispatch = useDispatch<AppDispatch>();
+  const [deleteModal, setDeleteModal] = React.useState(false);
 
   useEffect(() => {
     dispatch(getLojas());
-    console.log(lojas);
   }, []);
 
   const handleClick = () => {
     setShowModal(true);
+  };
+
+  const handleDelete = (id: any) => {
+    dispatch(deleteLoja(id));
+
+    setTimeout(() => {
+      dispatch(getLojas());
+      setDeleteModal(false);
+    }, 1000);
   };
 
   return (
@@ -46,9 +56,18 @@ const Lojas: React.FC = () => {
 
         <LojasContainer>
           {lojas.length > 0 ? (
-            lojas.map((loja: any, index: number) => (
-              <Loja key={loja.id} loja={loja} />
-            ))
+            lojas
+              .slice(0)
+              .reverse()
+              .map((loja: any, index: number) => (
+                <Loja
+                  setDeleteModal={setDeleteModal}
+                  deleteModal={deleteModal}
+                  deleteLoja={handleDelete}
+                  key={loja.id}
+                  loja={loja}
+                />
+              ))
           ) : isLoading ? (
             <SpinnerDiv>
               <Spinner />

@@ -56,6 +56,28 @@ export const getLojas = createAsyncThunk('lojas/getLojas', async () => {
   }
 });
 
+export const deleteLoja = createAsyncThunk(
+  'lojas/deleteLoja',
+  async (id: any) => {
+    try {
+      return await lojasService.deleteLoja(id);
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
+export const updateLoja = createAsyncThunk(
+  'lojas/updateLoja',
+  async (id: string) => {
+    try {
+      return await lojasService.updateLoja(id);
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
 export const lojasSlice = createSlice({
   name: 'lojas',
   initialState,
@@ -115,6 +137,23 @@ export const lojasSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = false;
       state.message = 'Erro ao buscar lojas, tente novamente mais tarde';
+    });
+
+    // deleteLoja
+    builder.addCase(deleteLoja.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteLoja.fulfilled, (state, action) => {
+      state.lojas = state.lojas.filter((loja) => loja.id !== action.payload);
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.message = 'Loja apagada com sucesso! 🎉';
+    });
+    builder.addCase(deleteLoja.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = 'Erro ao remover loja, tente novamente mais tarde';
     });
   },
 });
