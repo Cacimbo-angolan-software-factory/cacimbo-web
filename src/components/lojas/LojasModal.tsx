@@ -42,8 +42,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     useSelector((state: any) => state.lojas);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {}, []);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({
       ...value,
@@ -55,7 +53,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     try {
       const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
       const company = response.data.data[0];
-      console.log(company);
       dispatch(getCompanyIdWithNif(value.nif));
 
       if (company) {
@@ -119,15 +116,6 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
       });
     }
   };
-
-  useEffect(() => {
-    if (isErrorCriar === true) {
-    }
-
-    if (isSuccessCriar) {
-      alert(message);
-    }
-  }, []);
 
   return (
     <>

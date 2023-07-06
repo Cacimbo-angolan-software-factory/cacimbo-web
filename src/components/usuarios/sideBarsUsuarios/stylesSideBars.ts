@@ -89,6 +89,32 @@ export const Header = styled.div`
   }
 `;
 
+export const Div1 = styled.div`
+  display: flex;
+  align-items: baseline;
+
+  & p {
+    margin-left: 2rem;
+    /* background: rgba(56 56, 56, 0.6); */
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    & svg {
+      font-size: 1.4rem;
+    }
+
+    &:hover {
+      background: rgba(56 56, 56, 0.8);
+    }
+  }
+`;
+
 export const Parceiro = styled.section`
   display: flex;
   align-items: baseline;

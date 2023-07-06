@@ -15,8 +15,20 @@ const getLojas = async () => {
   return response.data.data;
 };
 
+const deleteLoja = async (id: any) => {
+  const response = await apiCacimbo.delete(`online-stores/${id}`);
+  return response.data;
+};
+
+const updateLoja = async (id: string) => {
+  const response = await apiCacimbo.put(`online-stores/${id}`);
+  return response.data;
+};
+
 export default {
   criarLoja,
   getCompanyIdWithNif,
   getLojas,
+  deleteLoja,
+  updateLoja,
 };

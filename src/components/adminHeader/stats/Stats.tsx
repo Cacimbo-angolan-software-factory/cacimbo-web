@@ -1,13 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { LicContext } from '../../../context';
 import { StatsContainer, Stat, Div } from './styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UserDropDown from '../../userDropDown/UserDropdown';
+import { AppDispatch } from '../../../redux/store';
+import { getLojas } from '../../../redux/lojasFeatures/lojasSlice';
 
 const Stats: React.FC = () => {
   const { TotalLicenses, totalPedidos } = useContext(LicContext);
   const { user } = useSelector((state: any) => state.user);
   const { lojas } = useSelector((state: any) => state.lojas);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getLojas());
+  }, []);
 
   return (
     <Div>

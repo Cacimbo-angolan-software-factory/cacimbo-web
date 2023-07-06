@@ -2,12 +2,18 @@ import React, { useEffect } from 'react';
 import {
   Companies,
   Container,
+  Div1,
   Header,
   NoCompanies,
   Parceiro,
 } from './stylesSideBars';
 import { RiPencilFill } from 'react-icons/ri';
-import { IoBusinessOutline, IoPeopleOutline } from 'react-icons/io5';
+import {
+  IoBusinessOutline,
+  IoPeopleOutline,
+  IoAddCircleOutline,
+  IoPersonAddOutline,
+} from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getUsersEmpresas } from '../../../redux/userFeatures/usersSlice';
@@ -45,10 +51,15 @@ const UserContainer: React.FC<UserContainerProps> = ({ userSelected }) => {
       </Header>
 
       <div>
-        <h2>
-          <IoPeopleOutline />
-          Empresas associadas
-        </h2>
+        <Div1>
+          <h2>
+            <IoPeopleOutline />
+            Empresas associadas
+          </h2>
+          <p>
+            <IoPersonAddOutline />
+          </p>
+        </Div1>
         <Companies>
           {isLoading ? (
             <Spinner />

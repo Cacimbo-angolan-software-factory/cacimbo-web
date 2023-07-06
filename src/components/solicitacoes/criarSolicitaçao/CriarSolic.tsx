@@ -245,17 +245,13 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             setValue({ ...value, pais: e.target.value })
           }
         >
-          {value.nif === '' ? null : (
-            <>
-              <MenuItem value={'Angola'}>Angola</MenuItem>
-              <MenuItem value={'Portugal'}>Portugal</MenuItem>
-              <MenuItem value={'Brasil'}>Brasil</MenuItem>
-              <MenuItem value={'Cabo Verde'}>Cabo Verde</MenuItem>
-              <MenuItem value={'Moçambique'}>Moçambique</MenuItem>
-              <MenuItem value={'São Tome'}>São Tomé</MenuItem>
-              <MenuItem value={'Guiné'}>Guiné</MenuItem>
-            </>
-          )}
+          <MenuItem value={'Angola'}>Angola</MenuItem>
+          <MenuItem value={'Portugal'}>Portugal</MenuItem>
+          <MenuItem value={'Brasil'}>Brasil</MenuItem>
+          <MenuItem value={'Cabo Verde'}>Cabo Verde</MenuItem>
+          <MenuItem value={'Moçambique'}>Moçambique</MenuItem>
+          <MenuItem value={'São Tome'}>São Tomé</MenuItem>
+          <MenuItem value={'Guiné'}>Guiné</MenuItem>
         </SelectInput>
         <DivChild>
           <div>
