@@ -46,7 +46,6 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
       const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
       const company = response.data.data;
       setFilteredEmpresas(company);
-      console.log(company);
     } catch (error) {
       console.log(error);
     }
@@ -58,7 +57,6 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
       ...value,
       empresaSelecionada: selectedValue,
     });
-    console.log('Selected option: ' + selectedValue);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,7 +68,6 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
         companyId: value.empresaSelecionada,
       });
       dispatch(getUsersEmpresas(userSelected.id));
-      console.log(value.empresaSelecionada, userSelected.id);
     } catch (error) {
       console.log(error);
     }
