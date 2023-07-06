@@ -49,9 +49,9 @@ const Usuarios: React.FC = () => {
     setOpen(!open);
   };
 
-  const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
+  // const handleOpenModal = () => {
+  //   setOpenModal(!openModal);
+  // };
 
   useEffect(() => {
     let handler = (event: any) => {
@@ -67,19 +67,19 @@ const Usuarios: React.FC = () => {
     };
   });
 
-  useEffect(() => {
-    let handler = (event: any) => {
-      if (!modalRef.current?.contains(event.target)) {
-        setOpenModal(false);
-      }
-    };
+  // useEffect(() => {
+  //   let handler = (event: any) => {
+  //     if (!modalRef.current?.contains(event.target)) {
+  //       setOpenModal(false);
+  //     }
+  //   };
 
-    document.addEventListener('mousedown', handler);
+  //   document.addEventListener('mousedown', handler);
 
-    return () => {
-      document.removeEventListener('mousedown', handler);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener('mousedown', handler);
+  //   };
+  // });
 
   const handleClickCreate = () => {
     setCriarUser(true);
@@ -147,18 +147,18 @@ const Usuarios: React.FC = () => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <UserContainer userSelected={userSelected} />
+          <UserContainer menuRef={menuRef} userSelected={userSelected} />
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}
 
-      {openModal && (
+      {/* {openModal && (
         <ModalOptions
           modalRef={modalRef}
           setOpenTarefas={setOpenTarefas}
           setOpenPerfis={setOpenPerfis}
         />
-      )}
+      )} */}
     </>
   );
 };

@@ -138,6 +138,19 @@ export const createUser = createAsyncThunk(
   }
 );
 
+export const AssociarUser = createAsyncThunk(
+  'user/AssociarUser',
+  async (companyId: any, user_id: any) => {
+    try {
+      const response = await userService.AssociarUser(companyId, user_id);
+      return response;
+    } catch (error: any) {
+      console.log(error.response.data);
+      return error;
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
