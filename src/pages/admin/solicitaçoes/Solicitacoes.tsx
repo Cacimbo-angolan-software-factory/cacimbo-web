@@ -215,15 +215,78 @@ const Solicitaçoes: React.FC = () => {
   };
 
   const LeilaoParceiros = () => {
-    return (
-      <Cards>
-        {sections[1]?.data.length > 0 &&
-          sections[1].data
+    if (filtro === 'leilao') {
+      return (
+        <Cards>
+          {sections[1]?.data.length > 0 &&
+            sections[1].data
+              .filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.empresa.localidade
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .sort((a: any, b: any) => {
+                const dateA = new Date(a.data);
+                const dateB = new Date(b.data);
+                return dateB.getTime() - dateA.getTime();
+              })
+              .map((section: any, index: number) => (
+                <Card key={`${section.id} - ${index}`}>
+                  <div className='Div'>
+                    <p className='id'>
+                      <span></span>
+                      Solicitação {section.id} -{' '}
+                    </p>
+
+                    <ul>
+                      {section.sol_modulos.map(
+                        (module: any) =>
+                          module.modulo && (
+                            <li key={module.id}>{module.modulo.modulo}</li>
+                          )
+                      )}
+                    </ul>
+                  </div>
+
+                  <p className='location'>
+                    <IoLocationOutline />
+                    {section.empresa.localidade} - {section.empresa.provincia}
+                  </p>
+                  <SelectInput
+                    value={value.canal_id}
+                    labelName='Canal'
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setValue({ ...value, canal_id: e.target.value })
+                    }
+                  >
+                    {canal.map((canal: any) => (
+                      <MenuItem key={canal.id} value={canal.Nome}>
+                        {canal.Nome}
+                      </MenuItem>
+                    ))}
+                  </SelectInput>
+                  <button
+                    onClick={() => {
+                      handleInterest(section.id);
+                    }}
+                  >
+                    Interessado
+                  </button>
+                </Card>
+              ))}
+
+          {lic_requests
             .filter((item: any) => {
               if (search === '') {
                 return item;
               } else if (
-                item.empresa.localidade
+                getLocation(item.empresa_id)
                   .toLowerCase()
                   .includes(search.toLowerCase())
               ) {
@@ -235,27 +298,23 @@ const Solicitaçoes: React.FC = () => {
               const dateB = new Date(b.data);
               return dateB.getTime() - dateA.getTime();
             })
-            .map((section: any, index: number) => (
-              <Card key={`${section.id} - ${index}`}>
+            .map((pendente: any, index: number) => (
+              <Card key={`${pendente.id} - ${index}`}>
                 <div className='Div'>
                   <p className='id'>
-                    <span></span>
-                    Solicitação {section.id} -{' '}
+                    <span></span> Solicitação {pendente.id} -{' '}
                   </p>
 
                   <ul>
-                    {section.sol_modulos.map(
-                      (module: any) =>
-                        module.modulo && (
-                          <li key={module.id}>{module.modulo.modulo}</li>
-                        )
+                    {getModulosId(
+                      pendente.sol_modulos.map((mod: any) => mod.modulo_id)
                     )}
                   </ul>
                 </div>
 
                 <p className='location'>
                   <IoLocationOutline />
-                  {section.empresa.localidade} - {section.empresa.provincia}
+                  {getLocation(pendente.empresa_id)}
                 </p>
                 <SelectInput
                   value={value.canal_id}
@@ -272,73 +331,16 @@ const Solicitaçoes: React.FC = () => {
                 </SelectInput>
                 <button
                   onClick={() => {
-                    handleInterest(section.id);
+                    handleInterest(pendente.id);
                   }}
                 >
                   Interessado
                 </button>
               </Card>
             ))}
-
-        {lic_requests
-          .filter((item: any) => {
-            if (search === '') {
-              return item;
-            } else if (
-              getLocation(item.empresa_id)
-                .toLowerCase()
-                .includes(search.toLowerCase())
-            ) {
-              return item;
-            }
-          })
-          .sort((a: any, b: any) => {
-            const dateA = new Date(a.data);
-            const dateB = new Date(b.data);
-            return dateB.getTime() - dateA.getTime();
-          })
-          .map((pendente: any, index: number) => (
-            <Card key={`${pendente.id} - ${index}`}>
-              <div className='Div'>
-                <p className='id'>
-                  <span></span> Solicitação {pendente.id} -{' '}
-                </p>
-
-                <ul>
-                  {getModulosId(
-                    pendente.sol_modulos.map((mod: any) => mod.modulo_id)
-                  )}
-                </ul>
-              </div>
-
-              <p className='location'>
-                <IoLocationOutline />
-                {getLocation(pendente.empresa_id)}
-              </p>
-              <SelectInput
-                value={value.canal_id}
-                labelName='Canal'
-                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setValue({ ...value, canal_id: e.target.value })
-                }
-              >
-                {canal.map((canal: any) => (
-                  <MenuItem key={canal.id} value={canal.Nome}>
-                    {canal.Nome}
-                  </MenuItem>
-                ))}
-              </SelectInput>
-              <button
-                onClick={() => {
-                  handleInterest(pendente.id);
-                }}
-              >
-                Interessado
-              </button>
-            </Card>
-          ))}
-      </Cards>
-    );
+        </Cards>
+      );
+    }
   };
 
   const showAtribuidas = () => {
@@ -417,9 +419,7 @@ const Solicitaçoes: React.FC = () => {
 
           {showPorAprovar && showPorAprovar()}
 
-          {user.user.parceiro_id === 1
-            ? null
-            : LeilaoParceiros && LeilaoParceiros()}
+          {LeilaoParceiros && LeilaoParceiros()}
 
           {showAtribuidas && showAtribuidas()}
         </>
