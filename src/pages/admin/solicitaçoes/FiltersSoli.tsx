@@ -22,14 +22,14 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
           <h2>Por aprovar</h2>
         </span>
       ) : null}
-      {user.user.parceiro_id === 1 ? null : (
-        <span
-          className={filtro === 'leilao' ? 'active' : ''}
-          onClick={() => setFiltro('leilao')}
-        >
-          <h2>Em leilão</h2>
-        </span>
-      )}
+
+      <span
+        className={filtro === 'leilao' ? 'active' : ''}
+        onClick={() => setFiltro('leilao')}
+      >
+        <h2>Em leilão</h2>
+      </span>
+
       {user.user.parceiro_id === 1 ? (
         <span
           className={filtro === 'pendentes' ? 'active' : ''}
