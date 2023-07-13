@@ -43,11 +43,11 @@ export const criarEmpresa = createAsyncThunk(
 
 export const getEmpresasAssociadas = createAsyncThunk(
   'empresa/getEmpresasAssociadas',
-  async (companyId: any, { rejectWithValue }) => {
+  async () => {
     try {
-      return await empresaService.getEmpresasAssociadas(companyId);
+      return await empresaService.getEmpresasAssociadas();
     } catch (err: any) {
-      return rejectWithValue(err.response.data);
+      return err.response.data;
     }
   }
 );
