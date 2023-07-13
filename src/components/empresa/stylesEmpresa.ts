@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   padding: 1.5rem;
   justify-content: space-between;
-  background: rgba(56 56, 56, 0.6);
+  background-color: #5555;
   border-radius: 0.5rem;
   width: 100%;
   cursor: pointer;

@@ -28,7 +28,7 @@ export const ItemContainer = styled.div`
   display: flex;
   padding: 1rem;
   gap: 0.5rem;
-  background-color: rgba(56 56, 56, 0.6);
+  background-color: #5555;
   border-radius: 0.5rem;
   justify-content: space-between;
 

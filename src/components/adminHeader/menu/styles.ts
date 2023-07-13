@@ -17,7 +17,7 @@ export const MenuItem = styled(Link)`
   justify-content: center;
   gap: 0.3rem;
   cursor: pointer;
-  background-color: rgba(56 56, 56, 0.6);
+  background-color: #5555;
   border-radius: 2rem;
   height: 10rem;
   min-width: 10rem;
