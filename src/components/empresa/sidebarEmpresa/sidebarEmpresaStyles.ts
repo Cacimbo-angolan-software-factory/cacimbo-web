@@ -111,7 +111,7 @@ export const Licenca = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  background: rgba(56 56, 56, 0.6);
+  background-color: #5555;
   border-radius: 0.5rem;
 `;
 

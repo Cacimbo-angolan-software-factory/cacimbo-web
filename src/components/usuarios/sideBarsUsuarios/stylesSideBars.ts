@@ -110,7 +110,7 @@ export const Div1 = styled.div`
     }
 
     &:hover {
-      background-color: rgba(56 56, 56, 0.8);
+      background-color: #5555;
     }
   }
 `;
