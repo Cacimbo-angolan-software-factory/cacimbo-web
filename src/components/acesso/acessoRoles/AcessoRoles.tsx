@@ -7,7 +7,11 @@ import { getRoles } from '../../../redux/permissionsFeatures/permissionSlice';
 import Spinner from '../../spinner/Spinner';
 import Role from './Role';
 
-const AcessoRoles: React.FC = () => {
+interface Props {
+  rolesDeEmpresas: any;
+}
+
+const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
   const { rolesList, isError, isLoading } = useSelector(
     (state: any) => state.permission
   );
@@ -41,7 +45,13 @@ const AcessoRoles: React.FC = () => {
         </SpinnerDiv>
       ) : (
         <>
-          <Container></Container>
+          <Container>
+            {rolesDeEmpresas.length > 0
+              ? rolesDeEmpresas.map((role: any) => (
+                  <Role key={role.id} role={role} />
+                ))
+              : handleUserRoles()}
+          </Container>
         </>
       )}
     </>

@@ -18,10 +18,15 @@ const Acesso: React.FC = () => {
   );
   const { empresasAssociadas } = useSelector((state: any) => state.empresa);
   const dispatch = useDispatch<AppDispatch>();
+  const [selectedEmpresa, setSelectedEmpresa] = React.useState<any>({});
 
   useEffect(() => {
     dispatch(getEmpresasAssociadas());
   }, []);
+
+  const rolesDeEmpresas = rolesList.filter((role: any) => {
+    return role.companyId === selectedEmpresa?.CompanyID;
+  });
 
   return (
     <>
@@ -38,10 +43,10 @@ const Acesso: React.FC = () => {
         </div>
 
         <Button onClick={() => setOpenModalEmpresas(true)}>
-          Escolha uma empresa
+          {selectedEmpresa?.CompanyName || 'Selecione uma empresa'}
         </Button>
 
-        <AcessoRoles />
+        <AcessoRoles rolesDeEmpresas={rolesDeEmpresas} />
       </Container>
 
       <ModalRoles openModal={openModal} setOpenModal={setOpenModal} />
@@ -49,6 +54,8 @@ const Acesso: React.FC = () => {
         <ModalAcessoEmpresas
           empresasAssociadas={empresasAssociadas}
           openModalEmpresas={openModalEmpresas}
+          setSelectedEmpresa={setSelectedEmpresa}
+          setOpenModalEmpresas={setOpenModalEmpresas}
         />
       )}
       {openModalEmpresas && (
