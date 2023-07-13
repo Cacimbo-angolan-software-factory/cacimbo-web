@@ -32,7 +32,7 @@ export const Container = styled.div`
   }
 
   & h2 {
-    background: rgba(56, 56, 56, 0.6);
+    background-color: rgba(56, 56, 56, 0.6);
     border-radius: 1rem;
     padding: 0.5rem 1.2rem;
   }
@@ -52,4 +52,15 @@ export const SecondFilter = styled.div`
   gap: 2rem;
   cursor: pointer;
   align-items: center;
+`;
+
+export const Select = styled.select`
+  padding: 0.7rem 0;
+  border-radius: 1rem;
+  border: 1px solid #383838;
+  background-color: #242424;
+  color: #fff;
+  font-size: 1.2rem;
+  width: 8rem;
+  text-align: center;
 `;

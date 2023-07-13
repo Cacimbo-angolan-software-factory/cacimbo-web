@@ -4,7 +4,7 @@ export const Div = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
-  background: rgba(56 56, 56, 0.6);
+  background-color: rgba(56 56, 56, 0.6);
   border-radius: 0.5rem;
   padding: 1.5rem;
 
@@ -54,7 +54,7 @@ export const PerfisListContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
-  background: rgba(56 56, 56, 0.6);
+  background-color: rgba(56 56, 56, 0.6);
   border-radius: 0.5rem;
   justify-content: space-between;
 

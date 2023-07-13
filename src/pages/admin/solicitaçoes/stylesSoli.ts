@@ -139,7 +139,7 @@ export const DivFilters = styled.div`
   align-items: center;
 
   & span {
-    background: rgba(56, 56, 56, 0.6);
+    background-color: rgba(56, 56, 56, 0.6);
     border-radius: 1rem;
     padding: 0.5rem 1.2rem;
     cursor: pointer;
@@ -242,6 +242,6 @@ export const Card = styled.div`
     height: 0.8rem;
     width: 0.8rem;
     border-radius: 50%;
-    background: #33c4ff;
+    background-color: #33c4ff;
   }
 `;

@@ -24,7 +24,7 @@ html {
 body {
     font-family: system-ui;
     padding: 6rem 6rem;
-    background: #1d1d1d;
+    background-color: #1d1d1d;
     color: #ebebeb;
 
     @media (max-width: 500px) {

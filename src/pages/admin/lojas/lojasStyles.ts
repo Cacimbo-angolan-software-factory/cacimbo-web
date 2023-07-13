@@ -58,7 +58,7 @@ export const LojaContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background: rgba(56 56, 56, 0.6);
+  background-color: rgba(56 56, 56, 0.6);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   width: 60%;

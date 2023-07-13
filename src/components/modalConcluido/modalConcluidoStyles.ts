@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   width: 40rem;
-  background: #242424;
+  background-color: #242424;
   display: flex;
   flex-direction: column;
   gap: 2rem;

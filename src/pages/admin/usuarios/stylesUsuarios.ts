@@ -16,13 +16,13 @@ export const Block = styled.div`
     transition: all 0.2s;
 
     &:hover {
-      background: rgba(56 56, 56, 0.6);
+      background-color: rgba(56 56, 56, 0.6);
     }
   }
 `;
 
 export const Button = styled.button`
-  background: rgba(56 56, 56, 0.6);
+  background-color: rgba(56 56, 56, 0.6);
   height: 3rem;
   width: 3rem;
   border-radius: 50%;
