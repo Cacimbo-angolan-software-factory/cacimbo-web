@@ -1,34 +1,17 @@
 import React, { useState } from 'react';
 import Animation from '../../../components/Admin/backAnimation/Animation';
-import BottomNav from '../../../components/Admin/bottomNav/BottomNav';
 import Permissions from '../../../components/Admin/createPermissions/Permissions';
 import CreateUserRole from '../../../components/Admin/createRole/CreateUserRole';
 import Notifications from '../../../components/Admin/notifications/Notif';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
-import { BtnsDiv, Section, Title } from './styles';
+import { Section, Title } from './styles';
 import { useSelector } from 'react-redux';
-import {
-  IoAddOutline,
-  IoDocumentTextOutline,
-  IoCheckmarkCircleOutline,
-} from 'react-icons/io5';
-import { Link } from 'react-router-dom';
 
 const AdminHome: React.FC = () => {
-  const [fixedNav, setFixedNav] = useState(false);
   const [criarPermission, setCriarPermission] = useState(false);
   const [criarRole, setCriarRole] = useState(false);
   const { user } = useSelector((state: any) => state.user);
-
-  function onScroll() {
-    if (window.scrollY >= -309) {
-      setFixedNav(true);
-    } else {
-      setFixedNav(false);
-    }
-  }
-  window.addEventListener('scroll', onScroll);
 
   return (
     <>
@@ -45,11 +28,6 @@ const AdminHome: React.FC = () => {
             <Notifications />
             <Animation />
           </Section>
-          <BottomNav
-            setCriarPermission={setCriarPermission}
-            setCriarRole={setCriarRole}
-            fixedNav={fixedNav}
-          />
         </>
       )}
     </>

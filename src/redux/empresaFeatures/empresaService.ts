@@ -13,9 +13,9 @@ const criarEmpresa = async (empresaData: {
   return response.data;
 };
 
-const getEmpresasAssociadas = async (companyId: any) => {
-  const response = await apiCacimbo.get(`docs_empresas/${companyId}}`);
-  return response.data;
+const getEmpresasAssociadas = async () => {
+  const response = await apiCacimbo.get(`docs_empresas`);
+  return response.data.data;
 };
 
 export default {
