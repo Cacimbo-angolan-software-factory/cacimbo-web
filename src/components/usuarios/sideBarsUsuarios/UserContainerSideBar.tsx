@@ -11,7 +11,6 @@ import { RiPencilFill } from 'react-icons/ri';
 import {
   IoBusinessOutline,
   IoPeopleOutline,
-  IoAddCircleOutline,
   IoPersonAddOutline,
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,10 +25,7 @@ interface UserContainerProps {
   menuRef?: React.MutableRefObject<any>;
 }
 
-const UserContainer: React.FC<UserContainerProps> = ({
-  userSelected,
-  menuRef,
-}) => {
+const UserContainer: React.FC<UserContainerProps> = ({ userSelected }) => {
   const { userEmpresas, isLoading } = useSelector((state: any) => state.user);
   const [openAssociar, setOpenAssociar] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
