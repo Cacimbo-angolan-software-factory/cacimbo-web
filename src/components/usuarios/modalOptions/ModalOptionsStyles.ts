@@ -27,7 +27,7 @@ export const Container = styled.div`
     padding: 0.5rem 1.5rem;
     transition: 0.2s;
     &:hover {
-      background: rgba(56 56, 56, 0.6);
+      background-color: rgba(56 56, 56, 0.6);
     }
   }
 `;

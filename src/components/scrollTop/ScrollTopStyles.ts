@@ -5,7 +5,7 @@ export const Button = styled.button`
   bottom: 5rem;
   left: 6rem;
   z-index: 10;
-  background: #1d1d1d;
+  background-color: #1d1d1d;
   padding: 1rem;
   border-radius: 50%;
   border: none;
@@ -13,7 +13,7 @@ export const Button = styled.button`
   transition: 0.5s;
 
   &:hover {
-    background: #0d0d0d;
+    background-color: #0d0d0d;
     transform: translateY(-3px);
   }
 
