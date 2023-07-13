@@ -15,7 +15,7 @@ interface RoleProps {
 }
 
 const Role: React.FC<RoleProps> = ({ role }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<any>({});
 
   const sortedPermissions = [...role.permissions].sort((a, b) => {
