@@ -13,7 +13,7 @@ export const Container = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 9;
     background-color: #1d1d1d;
     padding: 3rem 6rem 3rem 6rem;
     border-bottom: 0.5px solid #3a3a3a;
@@ -54,13 +54,16 @@ export const SecondFilter = styled.div`
   align-items: center;
 `;
 
-export const Select = styled.select`
-  padding: 0.7rem 0;
+export const BtnParceiro = styled.button`
+  background-color: #5555;
   border-radius: 1rem;
-  border: 1px solid #383838;
-  background-color: #242424;
+  padding: 0.5rem 1.2rem;
   color: #fff;
-  font-size: 1.2rem;
-  width: 8rem;
-  text-align: center;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+
+  &.active {
+    border: 0.5px solid #b71c50;
+  }
 `;

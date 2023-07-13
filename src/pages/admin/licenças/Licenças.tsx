@@ -2,7 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LicContext } from '../../../context';
 import Licence from '../../../components/licenças/Licence';
 
-import { Div, FiltersContainer, InputSearch, Pagination } from './styles';
+import {
+  Div,
+  FiltersContainer,
+  InputSearch,
+  Overlay,
+  Pagination,
+} from './styles';
 import Filters from '../../../components/licenças/filters/Filters';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
@@ -12,6 +18,7 @@ import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmpresas } from '../../../redux/solicitaçaoFeatures/solicSlice';
 import { AppDispatch } from '../../../redux/store';
+import ModalParceiros from '../../../components/licenças/modalParceiros/ModalParceiros';
 
 const Licenças: React.FC = () => {
   const { licences, loadingLicenses } = useContext(LicContext);
@@ -22,6 +29,9 @@ const Licenças: React.FC = () => {
   const [search, setSearch] = useState('');
   const { empresasList } = useSelector((state: any) => state.solicitaçao);
   const [open, setOpen] = useState(false);
+  const [openModalParceiros, setOpenModalParceiros] = useState(false);
+  const [empresaSelected, setEmpresaSelected] = useState<any>();
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleClick = () => {
@@ -59,21 +69,25 @@ const Licenças: React.FC = () => {
   );
 
   // filter by partner
+  const licencasDeParceiro = licences.filter((licence) => {
+    return licence.parceiro_id === empresaSelected?.id;
+  });
+
   const selectedPartner = licences.filter(
     (licence) => licence.parceiro_id === 1
   );
-  const SelectedPartnerPaginated = selectedPartner.slice(
+  const SelectedPartnerPaginated = licencasDeParceiro.slice(
     endOffset,
     endOffset + itemsPerPage
   );
-  const activasParceiro = selectedPartner.filter(
+  const activasParceiro = licencasDeParceiro.filter(
     (licence) => licence.data_validade > today
   );
   const activasParceiroPaginated = activasParceiro.slice(
     endOffset,
     endOffset + itemsPerPage
   );
-  const porRenovarParceiro = selectedPartner.filter(
+  const porRenovarParceiro = licencasDeParceiro.filter(
     (licence) => licence.data_validade < today
   );
   const porRenovarParceiroPaginated = porRenovarParceiro.slice(
@@ -351,6 +365,9 @@ const Licenças: React.FC = () => {
           childFiltro={childFitro}
           setChildFiltro={setChildFiltro}
           fixedFilter={fixedFilter}
+          openModalParceiros={openModalParceiros}
+          setOpenModalParceiros={setOpenModalParceiros}
+          empresaSelected={empresaSelected}
         />
         <InputSearch
           onChange={handleSearch}
@@ -371,6 +388,18 @@ const Licenças: React.FC = () => {
       <ScrollTop />
 
       {loadingLicenses && <Spinner />}
+
+      {openModalParceiros && (
+        <ModalParceiros
+          openModalParceiros={openModalParceiros}
+          setOpenModalParceiros={setOpenModalParceiros}
+          setEmpresaSelected={setEmpresaSelected}
+          empresaSelected={empresaSelected}
+        />
+      )}
+      {openModalParceiros && (
+        <Overlay onClick={() => setOpenModalParceiros(false)} />
+      )}
 
       <Pagination
         previousLabel={'<'}
