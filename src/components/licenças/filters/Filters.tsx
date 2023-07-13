@@ -1,7 +1,7 @@
 import React from 'react';
 import { RiFilter3Fill } from 'react-icons/ri';
 
-import { Container, SecondFilter } from './stylesFilter';
+import { BtnParceiro, Container, SecondFilter } from './stylesFilter';
 import { useSelector } from 'react-redux';
 
 interface FiltersProps {
@@ -10,6 +10,9 @@ interface FiltersProps {
   setFiltro: React.Dispatch<React.SetStateAction<string>>;
   childFiltro: string;
   setChildFiltro: React.Dispatch<React.SetStateAction<string>>;
+  openModalParceiros: boolean;
+  setOpenModalParceiros: React.Dispatch<React.SetStateAction<boolean>>;
+  empresaSelected: any;
 }
 
 const Filters: React.FC<FiltersProps> = ({
@@ -18,6 +21,8 @@ const Filters: React.FC<FiltersProps> = ({
   setFiltro,
   childFiltro,
   setChildFiltro,
+  setOpenModalParceiros,
+  empresaSelected,
 }) => {
   const { user } = useSelector((state: any) => state.user);
 
@@ -29,6 +34,7 @@ const Filters: React.FC<FiltersProps> = ({
   const handleClickFiltroParceiro = () => {
     setFiltro('parceiro');
     setChildFiltro('parceiroTodas');
+    setOpenModalParceiros(true);
   };
 
   return (
@@ -41,12 +47,14 @@ const Filters: React.FC<FiltersProps> = ({
           >
             Todos
           </h2>
-          <h2
-            className={filtro === 'parceiro' ? 'active' : ''}
+          <BtnParceiro
             onClick={handleClickFiltroParceiro}
+            className={filtro === 'parceiro' ? 'active' : ''}
           >
-            Parceiro
-          </h2>
+            {empresaSelected && filtro === 'parceiro'
+              ? empresaSelected.Nome
+              : 'Parceiro'}
+          </BtnParceiro>
           <span>
             <RiFilter3Fill />
           </span>
