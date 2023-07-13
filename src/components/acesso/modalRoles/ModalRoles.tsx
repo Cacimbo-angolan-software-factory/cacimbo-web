@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getPermissions } from '../../../redux/permissionsFeatures/permissionSlice';
 import { apiCacimbo } from '../../../service/Service.api';
+import PermissionsInModal from './PermissionsInModal';
 
 interface ModalRolesProps {
   openModal: boolean;
@@ -23,7 +24,7 @@ interface ModalRolesProps {
 
 const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
   const { user } = useSelector((state: any) => state.user);
-  const { list } = useSelector((state: any) => state.permission);
+  const { list, isLoading } = useSelector((state: any) => state.permission);
   const dispatch = useDispatch<AppDispatch>();
   const [value, setValue] = React.useState({
     name: '',
@@ -60,6 +61,7 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
             (permission: any) => permission.CompanyID === searchCompanyId
           )
         );
+        console.log(filteredPermissions);
         setShowPermissions(true);
       } else {
         setShowPermissions(false);
@@ -116,32 +118,13 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
               {showPermissions && <h2>Permissões</h2>}
               {showPermissions &&
                 filteredPermissions.map((permission: any) => (
-                  <div key={permission.id}>
-                    <input
-                      type='checkbox'
-                      name={permission.name}
-                      id={permission.id}
-                      value={permission.id}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setValue({
-                            ...value,
-                            permissions: [...value.permissions, permission.id],
-                          });
-                        } else {
-                          setValue({
-                            ...value,
-                            permissions: value.permissions.filter(
-                              (perm: any) => perm !== permission.id
-                            ),
-                          });
-                        }
-                      }}
-                    />
-                    <label htmlFor={permission.id}>
-                      {permission.description} - {permission.source_name}
-                    </label>
-                  </div>
+                  <PermissionsInModal
+                    key={permission.id}
+                    permission={permission}
+                    value={value}
+                    setValue={setValue}
+                    isLoading={isLoading}
+                  />
                 ))}
             </PermissionsDiv>
           </Content>
