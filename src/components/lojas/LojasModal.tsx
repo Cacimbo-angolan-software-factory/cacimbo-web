@@ -16,6 +16,7 @@ import { AppDispatch } from '../../redux/store';
 import {
   getCompanyIdWithNif,
   criarLoja,
+  getPaymentMethods,
 } from '../../redux/lojasFeatures/lojasSlice';
 import SelectInput from '../SelectTextField';
 import { MenuItem } from '@mui/material';
@@ -35,11 +36,14 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     CompanyID: '',
     StoreName: '',
     StoreSlogan: '',
+    ArmazenID: 0,
+    payments_methods: [] as any,
   });
   const [StoreLogoUrl, setStoreLogoUrl] = useState<FormDataOrNull>(null);
 
-  const { companyIds, isLoading, loja, isErrorCriar, message, isSuccessCriar } =
-    useSelector((state: any) => state.lojas);
+  const { companyIds, isLoading, loja, paymentMethods } = useSelector(
+    (state: any) => state.lojas
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +52,11 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    dispatch(getPaymentMethods());
+    // console.log(paymentMethods);
+  }, []);
 
   const handleBlur = async () => {
     try {
@@ -90,6 +99,14 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
       formData.append('StoreName', value.StoreName);
       formData.append('StoreSlogan', value.StoreSlogan);
       formData.append('CompanyID', value.CompanyID);
+      formData.append('ArmazenID', value.ArmazenID.toString());
+      formData.append(
+        'payments_methods',
+        JSON.stringify(value.payments_methods)
+      );
+
+      // console.log(formData);
+      // console.log(value);
 
       dispatch(criarLoja(formData)).then(() => {
         toast.success('Loja criada com sucesso! 🎉', {
@@ -109,6 +126,8 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
             CompanyID: '',
             StoreName: '',
             StoreSlogan: '',
+            ArmazenID: 0,
+            payments_methods: [] as any,
           });
           setStoreLogoUrl(null);
           setShowModal(false);
@@ -182,6 +201,61 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
                 name='StoreSlogan'
                 onChange={handleChange}
               />
+            </InputDiv>
+
+            <InputDiv>
+              Armazém:
+              <input
+                disabled={value.nif.length === 0 || value.nif === ''}
+                value={value.ArmazenID}
+                type='number'
+                name='ArmazenID'
+                onChange={handleChange}
+              />
+            </InputDiv>
+
+            <InputDiv>
+              Métodos de pagamento:
+              {paymentMethods.map((method: any) => (
+                <label className='checkbox' key={method.id}>
+                  <input
+                    type='checkbox'
+                    value={`${method.Mechanism},${method.Description}`}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const selectedMethod = e.target.value.split(',');
+                      const selectedMechanism = selectedMethod[0];
+                      const selectedDescription = selectedMethod[1];
+
+                      if (e.target.checked) {
+                        const updatedMethods = [
+                          ...value.payments_methods,
+                          {
+                            Mechanism: selectedMechanism,
+                            Description: selectedDescription,
+                          },
+                        ];
+
+                        setValue({
+                          ...value,
+                          payments_methods: updatedMethods,
+                        });
+                      } else {
+                        const updatedMethods = value.payments_methods.filter(
+                          (method: any) =>
+                            method.Mechanism !== selectedMechanism &&
+                            method.Description !== selectedDescription
+                        );
+
+                        setValue({
+                          ...value,
+                          payments_methods: updatedMethods,
+                        });
+                      }
+                    }}
+                  />
+                  {method.Description}
+                </label>
+              ))}
             </InputDiv>
           </Content>
 
