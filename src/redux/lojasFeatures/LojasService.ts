@@ -25,10 +25,16 @@ const updateLoja = async (id: string) => {
   return response.data;
 };
 
+const getPaymentMethods = async () => {
+  const response = await apiCacimbo.get(`config-payments-mechanism`);
+  return response.data.data;
+};
+
 export default {
   criarLoja,
   getCompanyIdWithNif,
   getLojas,
   deleteLoja,
   updateLoja,
+  getPaymentMethods,
 };

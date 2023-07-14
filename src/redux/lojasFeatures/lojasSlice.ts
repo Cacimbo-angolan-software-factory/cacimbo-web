@@ -5,6 +5,7 @@ interface LojasState {
   loja: null;
   companyIds: any[];
   lojas: any[];
+  paymentMethods: any[];
   isError: boolean;
   isErrorCriar: boolean;
   isLoading: boolean;
@@ -17,6 +18,7 @@ const initialState: LojasState = {
   loja: null,
   companyIds: [],
   lojas: [],
+  paymentMethods: [],
   isError: false,
   isErrorCriar: false,
   isSuccessCriar: false,
@@ -72,6 +74,17 @@ export const updateLoja = createAsyncThunk(
   async (id: string) => {
     try {
       return await lojasService.updateLoja(id);
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
+export const getPaymentMethods = createAsyncThunk(
+  'lojas/getPaymentMethods',
+  async () => {
+    try {
+      return await lojasService.getPaymentMethods();
     } catch (error: any) {
       return error;
     }
@@ -154,6 +167,23 @@ export const lojasSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = false;
       state.message = 'Erro ao remover loja, tente novamente mais tarde';
+    });
+
+    // paymentMethods
+    builder.addCase(getPaymentMethods.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getPaymentMethods.fulfilled, (state, action) => {
+      state.paymentMethods = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getPaymentMethods.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message =
+        'Erro ao buscar métodos de pagamento, tente novamente mais tarde';
     });
   },
 });

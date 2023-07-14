@@ -16,7 +16,7 @@ export const ModalContainer = styled.div`
   border-radius: 0.5rem;
   border: 1px solid #383838;
   transition: all 0.2s ease-in;
-  overflow: auto;
+  overflow-y: scroll;
 
   &.open {
     display: flex;
@@ -45,7 +45,7 @@ export const Content = styled.div`
   gap: 2rem;
   padding: 2rem;
   flex-grow: 1;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 `;
 
 export const Overlay = styled.div`
@@ -77,6 +77,12 @@ export const InputDiv = styled.label`
     background-color: #242424;
     color: #fff;
   }
+
+  & label.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 
 export const Form = styled.form`
@@ -90,8 +96,8 @@ export const FooterDiv = styled.div`
   border-top: 1px solid #383838;
   padding: 1.5rem 2rem;
   width: 100%;
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
   flex-grow: 1;
   display: flex;
   justify-content: flex-end;
