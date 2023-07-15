@@ -29,11 +29,11 @@ const Loja: React.FC<Props> = ({
             <p>{loja.CompanyID}</p>
           </div>
 
-          <div>
+          {/* <div>
             <span onClick={() => setDeleteModal(true)}>
               <IoTrashOutline />
             </span>
-          </div>
+          </div> */}
         </section>
       </LojaContainer>
 
