@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { DeleteWrapper, FooterDiv, Overlay } from './lojasStyles';
 import deleteImg from '../../../assets/delete.svg';
@@ -16,6 +16,10 @@ const DeleteModal: React.FC<Props> = ({
   deleteLoja,
   loja,
 }) => {
+  useEffect(() => {
+    console.log(loja);
+  }, []);
+
   return (
     <DeleteWrapper className={deleteModal ? 'open' : ''}>
       <img src={deleteImg} alt='delete' />
