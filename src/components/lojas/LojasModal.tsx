@@ -36,8 +36,8 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
     CompanyID: '',
     StoreName: '',
     StoreSlogan: '',
-    ArmazenID: 0,
-    payments_methods: [] as any,
+    ArmazemID: 0,
+    payments_mechanisms: [] as any,
   });
   const [StoreLogoUrl, setStoreLogoUrl] = useState<FormDataOrNull>(null);
 
@@ -99,10 +99,10 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
       formData.append('StoreName', value.StoreName);
       formData.append('StoreSlogan', value.StoreSlogan);
       formData.append('CompanyID', value.CompanyID);
-      formData.append('ArmazenID', value.ArmazenID.toString());
+      formData.append('ArmazemID', value.ArmazemID.toString());
       formData.append(
-        'payments_methods',
-        JSON.stringify(value.payments_methods)
+        'payments_mechanisms',
+        JSON.stringify(value.payments_mechanisms)
       );
 
       // console.log(formData);
@@ -126,8 +126,8 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
             CompanyID: '',
             StoreName: '',
             StoreSlogan: '',
-            ArmazenID: 0,
-            payments_methods: [] as any,
+            ArmazemID: 0,
+            payments_mechanisms: [] as any,
           });
           setStoreLogoUrl(null);
           setShowModal(false);
@@ -207,9 +207,9 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
               Armazém:
               <input
                 disabled={value.nif.length === 0 || value.nif === ''}
-                value={value.ArmazenID}
+                value={value.ArmazemID}
                 type='number'
-                name='ArmazenID'
+                name='ArmazemID'
                 onChange={handleChange}
               />
             </InputDiv>
@@ -228,7 +228,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
 
                       if (e.target.checked) {
                         const updatedMethods = [
-                          ...value.payments_methods,
+                          ...value.payments_mechanisms,
                           {
                             Mechanism: selectedMechanism,
                             Description: selectedDescription,
@@ -237,10 +237,10 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
 
                         setValue({
                           ...value,
-                          payments_methods: updatedMethods,
+                          payments_mechanisms: updatedMethods,
                         });
                       } else {
-                        const updatedMethods = value.payments_methods.filter(
+                        const updatedMethods = value.payments_mechanisms.filter(
                           (method: any) =>
                             method.Mechanism !== selectedMechanism &&
                             method.Description !== selectedDescription
@@ -248,7 +248,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
 
                         setValue({
                           ...value,
-                          payments_methods: updatedMethods,
+                          payments_mechanisms: updatedMethods,
                         });
                       }
                     }}
