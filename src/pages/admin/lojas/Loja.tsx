@@ -1,8 +1,9 @@
-import React from 'react';
-import { IoTrashOutline } from 'react-icons/io5';
+import React, { useEffect, useRef } from 'react';
+import { IoTrashOutline, IoEllipsisVertical } from 'react-icons/io5';
 
 import { LojaContainer, Overlay } from './lojasStyles';
 import DeleteModal from './DeleteModal';
+import SideBarLoja from '../../../components/lojas/sideBarLojas/SideBarLoja';
 
 interface Props {
   loja: any;
@@ -17,6 +18,24 @@ const Loja: React.FC<Props> = ({
   setDeleteModal,
   deleteModal,
 }) => {
+  const [showOptions, setShowOptions] = React.useState(false);
+  // const [deleteModal, setDeleteModal] = React.useState(false);
+  let menuRef = useRef<any>(null);
+
+  useEffect(() => {
+    let handler = (event: any) => {
+      if (!menuRef.current?.contains(event.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   return (
     <>
       <LojaContainer>
@@ -29,13 +48,15 @@ const Loja: React.FC<Props> = ({
             <p>{loja.CompanyID}</p>
           </div>
 
-          {/* <div>
-            <span onClick={() => setDeleteModal(true)}>
-              <IoTrashOutline />
+          <div>
+            <span onClick={() => setShowOptions(true)}>
+              <IoEllipsisVertical />
             </span>
-          </div> */}
+          </div>
         </section>
       </LojaContainer>
+
+      {showOptions && <SideBarLoja loja={loja} menuRef={menuRef} />}
 
       {deleteModal && (
         <DeleteModal
