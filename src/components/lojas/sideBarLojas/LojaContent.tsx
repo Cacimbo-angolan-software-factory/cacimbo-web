@@ -16,9 +16,10 @@ import noPaymentMechanisms from '../../../assets/noPaymentsMechanisms.svg';
 interface Props {
   loja: any;
   setEditar: any;
+  setDeleteModal: any;
 }
 
-const LojaContent: React.FC<Props> = ({ loja, setEditar }) => {
+const LojaContent: React.FC<Props> = ({ loja, setEditar, setDeleteModal }) => {
   return (
     <Container>
       <img src={loja.StoreLogoUrl} alt='loja' />
@@ -68,7 +69,7 @@ const LojaContent: React.FC<Props> = ({ loja, setEditar }) => {
           <IoPencilOutline />
           Editar
         </button>
-        <button>
+        <button onClick={() => setDeleteModal(true)}>
           <IoTrashBinOutline />
           Excluir
         </button>

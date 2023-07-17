@@ -4,23 +4,37 @@ import { IoTrashOutline, IoEllipsisVertical } from 'react-icons/io5';
 import { LojaContainer, Overlay } from './lojasStyles';
 import DeleteModal from './DeleteModal';
 import SideBarLoja from '../../../components/lojas/sideBarLojas/SideBarLoja';
+import { deleteLoja, getLojas } from '../../../redux/lojasFeatures/lojasSlice';
+import { AppDispatch } from '../../../redux/store';
+import { useDispatch } from 'react-redux';
 
 interface Props {
   loja: any;
-  deleteLoja: any;
   setDeleteModal: any;
   deleteModal: any;
+  setSelectedLoja: any;
+  selectedLoja: any;
 }
 
 const Loja: React.FC<Props> = ({
   loja,
-  deleteLoja,
   setDeleteModal,
   deleteModal,
+  setSelectedLoja,
+  selectedLoja,
 }) => {
   const [showOptions, setShowOptions] = React.useState(false);
-  // const [deleteModal, setDeleteModal] = React.useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
+
+  const handleDelete = (id: any) => {
+    dispatch(deleteLoja(id));
+
+    setTimeout(() => {
+      dispatch(getLojas());
+      setDeleteModal(false);
+    }, 1000);
+  };
 
   useEffect(() => {
     let handler = (event: any) => {
@@ -49,19 +63,30 @@ const Loja: React.FC<Props> = ({
           </div>
 
           <div>
-            <span onClick={() => setShowOptions(true)}>
+            <span
+              onClick={() => {
+                setShowOptions(true);
+                setSelectedLoja(loja.id);
+              }}
+            >
               <IoEllipsisVertical />
             </span>
           </div>
         </section>
       </LojaContainer>
 
-      {showOptions && <SideBarLoja loja={loja} menuRef={menuRef} />}
+      {showOptions && (
+        <SideBarLoja
+          setDeleteModal={setDeleteModal}
+          loja={loja}
+          menuRef={menuRef}
+        />
+      )}
 
       {deleteModal && (
         <DeleteModal
-          loja={loja.id}
-          deleteLoja={deleteLoja}
+          loja={selectedLoja}
+          deleteLoja={handleDelete}
           deleteModal={deleteModal}
           setDeleteModal={setDeleteModal}
         />

@@ -7,9 +7,10 @@ import EditarLoja from './EditarLoja';
 interface IProps {
   menuRef: any;
   loja: any;
+  setDeleteModal: any;
 }
 
-const SideBarLoja: React.FC<IProps> = ({ menuRef, loja }) => {
+const SideBarLoja: React.FC<IProps> = ({ menuRef, loja, setDeleteModal }) => {
   const [editar, setEditar] = React.useState(false);
 
   return (
@@ -17,7 +18,11 @@ const SideBarLoja: React.FC<IProps> = ({ menuRef, loja }) => {
       {editar ? (
         <EditarLoja />
       ) : (
-        <LojaContent loja={loja} setEditar={setEditar} />
+        <LojaContent
+          setDeleteModal={setDeleteModal}
+          loja={loja}
+          setEditar={setEditar}
+        />
       )}
     </Wrapper>
   );
