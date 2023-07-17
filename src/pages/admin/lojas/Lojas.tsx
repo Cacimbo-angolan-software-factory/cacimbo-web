@@ -25,6 +25,7 @@ const Lojas: React.FC = () => {
   const { lojas, isLoading } = useSelector((state: any) => state.lojas);
   const dispatch = useDispatch<AppDispatch>();
   const [deleteModal, setDeleteModal] = React.useState(false);
+  const [selectedLoja, setSelectedLoja] = React.useState<any>('');
 
   useEffect(() => {
     dispatch(getLojas());
@@ -32,15 +33,6 @@ const Lojas: React.FC = () => {
 
   const handleClick = () => {
     setShowModal(true);
-  };
-
-  const handleDelete = (id: any) => {
-    dispatch(deleteLoja(id));
-
-    setTimeout(() => {
-      dispatch(getLojas());
-      setDeleteModal(false);
-    }, 1000);
   };
 
   return (
@@ -56,18 +48,18 @@ const Lojas: React.FC = () => {
 
         <LojasContainer>
           {lojas.length > 0 ? (
-            lojas
-              .slice(0)
-              .reverse()
-              .map((loja: any, index: number) => (
+            lojas.map((loja: any) => {
+              return (
                 <Loja
                   setDeleteModal={setDeleteModal}
                   deleteModal={deleteModal}
-                  deleteLoja={handleDelete}
                   key={loja.id}
                   loja={loja}
+                  selectedLoja={selectedLoja}
+                  setSelectedLoja={setSelectedLoja}
                 />
-              ))
+              );
+            })
           ) : isLoading ? (
             <SpinnerDiv>
               <Spinner />

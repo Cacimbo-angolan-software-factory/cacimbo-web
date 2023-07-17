@@ -16,10 +16,6 @@ const DeleteModal: React.FC<Props> = ({
   deleteLoja,
   loja,
 }) => {
-  useEffect(() => {
-    console.log(loja);
-  }, []);
-
   return (
     <DeleteWrapper className={deleteModal ? 'open' : ''}>
       <img src={deleteImg} alt='delete' />

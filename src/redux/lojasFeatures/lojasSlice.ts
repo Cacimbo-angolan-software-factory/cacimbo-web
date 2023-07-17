@@ -157,7 +157,7 @@ export const lojasSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(deleteLoja.fulfilled, (state, action) => {
-      state.lojas = state.lojas.filter((loja) => loja.id !== action.payload);
+      state.lojas = state.lojas.filter((loja) => loja !== action.payload);
       state.isLoading = false;
       state.isSuccess = true;
       state.message = 'Loja apagada com sucesso! 🎉';

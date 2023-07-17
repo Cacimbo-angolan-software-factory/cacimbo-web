@@ -70,6 +70,7 @@ export const LojaContainer = styled.div`
     height: 9rem;
     border-radius: 0.5rem;
     object-fit: contain;
+    background-color: #fff;
   }
 
   & section {
