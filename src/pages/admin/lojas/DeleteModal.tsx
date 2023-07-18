@@ -23,7 +23,7 @@ const DeleteModal: React.FC<Props> = ({
 
       <FooterDiv>
         <button onClick={() => setDeleteModal(false)}>Cancelar</button>
-        <button onClick={() => deleteLoja(loja)}>excluir</button>
+        <button onClick={() => deleteLoja(loja.id)}>excluir</button>
       </FooterDiv>
     </DeleteWrapper>
   );

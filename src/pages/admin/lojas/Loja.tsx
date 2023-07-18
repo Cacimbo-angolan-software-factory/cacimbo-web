@@ -66,7 +66,7 @@ const Loja: React.FC<Props> = ({
             <span
               onClick={() => {
                 setShowOptions(true);
-                setSelectedLoja(loja.id);
+                setSelectedLoja(loja);
               }}
             >
               <IoEllipsisVertical />
@@ -80,6 +80,7 @@ const Loja: React.FC<Props> = ({
           setDeleteModal={setDeleteModal}
           loja={loja}
           menuRef={menuRef}
+          selectedLoja={selectedLoja}
         />
       )}
 
