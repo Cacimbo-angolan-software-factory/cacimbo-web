@@ -185,5 +185,22 @@ export const lojasSlice = createSlice({
       state.message =
         'Erro ao buscar métodos de pagamento, tente novamente mais tarde';
     });
+
+    // updateLoja
+    builder.addCase(updateLoja.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateLoja.fulfilled, (state, action) => {
+      state.lojas = state.lojas.filter((loja) => loja !== action.payload);
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.message = 'Loja atualizada com sucesso! 🎉';
+    });
+    builder.addCase(updateLoja.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = 'Erro ao atualizar loja, tente novamente mais tarde';
+    });
   },
 });
