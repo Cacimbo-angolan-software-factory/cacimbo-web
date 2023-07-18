@@ -15,11 +15,15 @@ import noPaymentMechanisms from '../../../assets/noPaymentsMechanisms.svg';
 
 interface Props {
   loja: any;
-  setEditar: any;
   setDeleteModal: any;
+  setShowModal: any;
 }
 
-const LojaContent: React.FC<Props> = ({ loja, setEditar, setDeleteModal }) => {
+const LojaContent: React.FC<Props> = ({
+  loja,
+  setDeleteModal,
+  setShowModal,
+}) => {
   return (
     <Container>
       <img src={loja.StoreLogoUrl} alt='loja' />
@@ -65,7 +69,7 @@ const LojaContent: React.FC<Props> = ({ loja, setEditar, setDeleteModal }) => {
       </ul>
 
       <DivButtons>
-        <button onClick={() => setEditar(true)}>
+        <button onClick={() => setShowModal(true)}>
           <IoPencilOutline />
           Editar
         </button>

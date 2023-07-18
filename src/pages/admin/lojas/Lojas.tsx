@@ -33,6 +33,7 @@ const Lojas: React.FC = () => {
 
   const handleClick = () => {
     setShowModal(true);
+    setSelectedLoja(null);
   };
 
   return (
@@ -57,6 +58,7 @@ const Lojas: React.FC = () => {
                   loja={loja}
                   selectedLoja={selectedLoja}
                   setSelectedLoja={setSelectedLoja}
+                  setShowModal={setShowModal}
                 />
               );
             })
@@ -74,7 +76,11 @@ const Lojas: React.FC = () => {
       </Container>
 
       {showModal && (
-        <LojasModal showModal={showModal} setShowModal={setShowModal} />
+        <LojasModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          selectedLoja={selectedLoja}
+        />
       )}
     </>
   );
