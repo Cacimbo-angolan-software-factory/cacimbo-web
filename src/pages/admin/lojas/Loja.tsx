@@ -14,6 +14,7 @@ interface Props {
   deleteModal: any;
   setSelectedLoja: any;
   selectedLoja: any;
+  setShowModal: any;
 }
 
 const Loja: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const Loja: React.FC<Props> = ({
   deleteModal,
   setSelectedLoja,
   selectedLoja,
+  setShowModal,
 }) => {
   const [showOptions, setShowOptions] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -66,7 +68,7 @@ const Loja: React.FC<Props> = ({
             <span
               onClick={() => {
                 setShowOptions(true);
-                setSelectedLoja(loja.id);
+                setSelectedLoja(loja);
               }}
             >
               <IoEllipsisVertical />
@@ -80,6 +82,8 @@ const Loja: React.FC<Props> = ({
           setDeleteModal={setDeleteModal}
           loja={loja}
           menuRef={menuRef}
+          selectedLoja={selectedLoja}
+          setShowModal={setShowModal}
         />
       )}
 

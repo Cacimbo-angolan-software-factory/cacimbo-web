@@ -17,6 +17,7 @@ import {
   getCompanyIdWithNif,
   criarLoja,
   getPaymentMethods,
+  updateLoja,
 } from '../../redux/lojasFeatures/lojasSlice';
 import SelectInput from '../SelectTextField';
 import { MenuItem } from '@mui/material';
@@ -26,11 +27,27 @@ import { ToastContainer, toast } from 'react-toastify';
 interface LojasModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   showModal: boolean;
+  selectedLoja?: LojaData;
+}
+
+interface LojaData {
+  id: string;
+  nif: string;
+  CompanyID: string;
+  StoreName: string;
+  StoreSlogan: string;
+  ArmazemID: number;
+  payments_mechanisms: any;
+  company: any;
 }
 
 type FormDataOrNull = FormData | null;
 
-const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
+const LojasModal: React.FC<LojasModalProps> = ({
+  setShowModal,
+  showModal,
+  selectedLoja,
+}) => {
   const [value, setValue] = useState({
     nif: '',
     CompanyID: '',
@@ -54,9 +71,37 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
   };
 
   useEffect(() => {
+    if (selectedLoja) {
+      setValue({
+        nif: selectedLoja.company?.TaxRegistrationNumber,
+        CompanyID: selectedLoja.CompanyID,
+        StoreName: selectedLoja.StoreName,
+        StoreSlogan: selectedLoja.StoreSlogan,
+        ArmazemID: selectedLoja.ArmazemID,
+        payments_mechanisms:
+          selectedLoja.company?.online_payments_mechanisms.map(
+            (method: any) => ({
+              Mechanism: method.Mechanism,
+              Description: method.Description,
+            })
+          ),
+      });
+      dispatch(
+        getCompanyIdWithNif(selectedLoja.company?.TaxRegistrationNumber)
+      );
+    } else {
+      setValue({
+        nif: '',
+        CompanyID: '',
+        StoreName: '',
+        StoreSlogan: '',
+        ArmazemID: 0,
+        payments_mechanisms: [] as any,
+      });
+    }
+
     dispatch(getPaymentMethods());
-    // console.log(paymentMethods);
-  }, []);
+  }, [selectedLoja]);
 
   const handleBlur = async () => {
     try {
@@ -105,34 +150,59 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
         JSON.stringify(value.payments_mechanisms)
       );
 
-      // console.log(formData);
-      // console.log(value);
-
-      dispatch(criarLoja(formData)).then(() => {
-        toast.success('Loja criada com sucesso! 🎉', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        });
-
-        setTimeout(() => {
-          setValue({
-            nif: '',
-            CompanyID: '',
-            StoreName: '',
-            StoreSlogan: '',
-            ArmazemID: 0,
-            payments_mechanisms: [] as any,
+      if (selectedLoja) {
+        dispatch(updateLoja(selectedLoja.id)).then(() => {
+          toast.success('Loja actualizada com sucesso! 🎉', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
           });
-          setStoreLogoUrl(null);
-          setShowModal(false);
-        }, 2000);
-      });
+
+          setTimeout(() => {
+            setValue({
+              nif: '',
+              CompanyID: '',
+              StoreName: '',
+              StoreSlogan: '',
+              ArmazemID: 0,
+              payments_mechanisms: [] as any,
+            });
+            setStoreLogoUrl(null);
+            setShowModal(false);
+          }, 2000);
+        });
+      } else {
+        dispatch(criarLoja(formData)).then(() => {
+          toast.success('Loja criada com sucesso! 🎉', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          });
+
+          setTimeout(() => {
+            setValue({
+              nif: '',
+              CompanyID: '',
+              StoreName: '',
+              StoreSlogan: '',
+              ArmazemID: 0,
+              payments_mechanisms: [] as any,
+            });
+            setStoreLogoUrl(null);
+            setShowModal(false);
+          }, 2000);
+        });
+      }
     }
   };
 
@@ -152,7 +222,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
             placeholder='pesquise pelo nif...'
             name='nif'
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={selectedLoja ? undefined : handleBlur}
           />
         </InputDiv>
 
@@ -263,7 +333,11 @@ const LojasModal: React.FC<LojasModalProps> = ({ setShowModal, showModal }) => {
             <button onClick={() => setShowModal(false)}>Cancelar</button>
             <button type='submit'>
               {' '}
-              {isLoading ? 'Aguarde...' : 'Criar loja'}
+              {isLoading
+                ? 'Aguarde...'
+                : selectedLoja
+                ? 'Editar loja'
+                : 'Criar loja'}
             </button>
           </FooterDiv>
         </Form>
