@@ -39,7 +39,7 @@ const Filters: React.FC<FiltersProps> = ({
 
   return (
     <Container className={fixedFilter ? 'filter fixed' : 'filter'}>
-      {user.user.parceiro_id === 1 ? (
+      {user.user.tipo === 'Admin' ? (
         <div>
           <h2
             className={filtro === 'all' ? 'active' : ''}

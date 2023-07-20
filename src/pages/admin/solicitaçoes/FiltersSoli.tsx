@@ -14,7 +14,7 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
 
   return (
     <DivFilters>
-      {user.user.parceiro_id === 1 ? (
+      {user.user.tipo === 'Admin' ? (
         <span
           className={filtro === 'porAprovar' ? 'active' : ''}
           onClick={() => setFiltro('porAprovar')}
@@ -30,7 +30,7 @@ const FiltersSoli: React.FC<FiltersSoliProps> = ({ filtro, setFiltro }) => {
         <h2>Em leilão</h2>
       </span>
 
-      {user.user.parceiro_id === 1 ? (
+      {user.user.tipo === 'Admin' ? (
         <span
           className={filtro === 'pendentes' ? 'active' : ''}
           onClick={() => setFiltro('pendentes')}
