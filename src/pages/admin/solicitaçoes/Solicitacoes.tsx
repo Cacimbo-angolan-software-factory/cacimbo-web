@@ -84,6 +84,7 @@ const Solicitaçoes: React.FC = () => {
     dispatch(getCanal());
     dispatch(getModulo());
     dispatch(getEmpresas());
+    console.log(sections[0]);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,7 +179,7 @@ const Solicitaçoes: React.FC = () => {
                   <div className='nif-status'>
                     <p className='nif'>
                       <IoDocumentTextOutline />
-                      {section.parceiro.Nif}
+                      {section?.solicitacao?.empresa.nif}
                     </p>
                     <span
                       className={
@@ -195,7 +196,7 @@ const Solicitaçoes: React.FC = () => {
 
                   <p>
                     <IoMailUnreadOutline />
-                    {section.parceiro.email}
+                    {section.solicitacao?.empresa.email}
                   </p>
                   <p className='date'>
                     <IoCalendarOutline />
