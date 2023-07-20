@@ -54,7 +54,7 @@ const Solicitaçoes: React.FC = () => {
   const [search, setSearch] = React.useState('');
   const { user } = useSelector((state: any) => state.user);
   const [filtro, setFiltro] = React.useState(
-    user.user.parceiro_id === 1 ? 'porAprovar' : 'leilao'
+    user.user.tipo === 'Admin' ? 'porAprovar' : 'leilao'
   );
   const [openInteressados, setOpenInteressados] = React.useState(false);
   const { canal, modulosList, empresasList, isLoading } = useSelector(
@@ -84,7 +84,6 @@ const Solicitaçoes: React.FC = () => {
     dispatch(getCanal());
     dispatch(getModulo());
     dispatch(getEmpresas());
-    console.log(sections[0]);
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

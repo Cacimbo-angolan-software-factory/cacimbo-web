@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
         </p>
       </MenuItem>
 
-      {user.user.tipo === 'Parceiro' ? null : (
+      {user.user.id === 1 ? (
         <MenuItem
           className={location.pathname === `/empresas` ? 'active' : 'inherit'}
           to='/empresas'
@@ -51,7 +51,7 @@ const Menu: React.FC = () => {
             Parceiros
           </p>
         </MenuItem>
-      )}
+      ) : null}
 
       <MenuItem
         className={
@@ -101,7 +101,7 @@ const Menu: React.FC = () => {
         </p>
       </MenuItem>
 
-      {user.user.parceiro_id === 1 || user.user.tipo === 'Parceiro' ? (
+      {user.user.tipo === 'Admin' || user.user.tipo === 'Parceiro' ? (
         <MenuItem
           className={location.pathname === `/Usuarios` ? 'active' : 'inherit'}
           to='/Usuarios'
@@ -123,7 +123,8 @@ const Menu: React.FC = () => {
         </MenuItem>
       ) : null}
 
-      {user.user.lastCompanyIDUsed === null ? null : (
+      {user.user.lastCompanyIDUsed === null ||
+      user.user.tipo === 'User' ? null : (
         <MenuItem
           className={location.pathname === `/acesso` ? 'active' : 'inherit'}
           to='/acesso'
@@ -145,7 +146,7 @@ const Menu: React.FC = () => {
         </MenuItem>
       )}
 
-      {user.user.parceiro_id === 1 ? (
+      {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
         <MenuItem
           className={location.pathname === `/lojas` ? 'active' : 'inherit'}
           to='/lojas'
