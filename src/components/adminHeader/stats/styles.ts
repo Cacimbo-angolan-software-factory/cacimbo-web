@@ -9,6 +9,10 @@ export const StatsContainer = styled.div`
   display: flex;
   gap: 3rem;
 
+  @media (max-width: 940px) {
+    gap: 2rem;
+  }
+
   @media (max-width: 630px) {
     margin-top: 6rem;
   }
@@ -27,7 +31,7 @@ export const Stat = styled.div`
     font-size: 3.2rem;
     color: #b71c50;
 
-    @media (max-width: 630px) {
+    @media (max-width: 940px) {
       font-size: 2.8rem;
     }
   }
@@ -36,7 +40,7 @@ export const Stat = styled.div`
     font-size: 3.2rem;
     font-weight: 300;
 
-    @media (max-width: 630px) {
+    @media (max-width: 940px) {
       font-size: 2.8rem;
     }
   }

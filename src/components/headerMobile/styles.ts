@@ -5,7 +5,7 @@ export const Container = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9999999;
   background-color: #1d1d1d;
   padding: 2rem 6rem;
   border-bottom: 0.5px solid #3a3a3a;
@@ -27,6 +27,10 @@ export const Container = styled.nav`
 
   @media (min-width: 630px) {
     display: none;
+  }
+
+  @media (max-width: 500px) {
+    padding: 2rem 3rem;
   }
 `;
 

@@ -7,7 +7,7 @@ import {
   NoCompanies,
   Parceiro,
 } from './stylesSideBars';
-import { RiPencilFill } from 'react-icons/ri';
+import { RiCloseCircleLine, RiPencilFill } from 'react-icons/ri';
 import {
   IoBusinessOutline,
   IoPeopleOutline,
@@ -23,9 +23,13 @@ import AssociarUser from '../associarUser/AssociarUser';
 interface UserContainerProps {
   userSelected: any;
   menuRef?: React.MutableRefObject<any>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserContainer: React.FC<UserContainerProps> = ({ userSelected }) => {
+const UserContainer: React.FC<UserContainerProps> = ({
+  userSelected,
+  setOpen,
+}) => {
   const { userEmpresas, isLoading } = useSelector((state: any) => state.user);
   const [openAssociar, setOpenAssociar] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +57,7 @@ const UserContainer: React.FC<UserContainerProps> = ({ userSelected }) => {
               -<p>{userSelected.parceiro}</p>
             </Parceiro>
           </div>
-          <RiPencilFill />
+          <RiCloseCircleLine onClick={() => setOpen(false)} />
         </Header>
 
         <div>

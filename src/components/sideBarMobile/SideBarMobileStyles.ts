@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 
   @media (max-width: 630px) {
     width: 100%;
-    z-index: 998;
+    z-index: 999999;
   }
 
   @media (min-width: 630px) {

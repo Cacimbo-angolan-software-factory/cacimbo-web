@@ -17,9 +17,6 @@ const Usuarios: React.FC = () => {
     useSelector((state: any) => state.user);
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [openPerfis, setOpenPerfis] = useState(false);
-  const [openTarefas, setOpenTarefas] = useState(false);
   const [userSelected, setUserSelected] = useState<any>();
   const [criarUser, setCriarUser] = useState(false);
   const [search, setSearch] = useState('');
@@ -75,11 +72,6 @@ const Usuarios: React.FC = () => {
     setCriarUser(true);
   };
 
-  const handleClose = () => {
-    setOpenPerfis(false);
-    setOpenTarefas(false);
-  };
-
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
@@ -115,7 +107,11 @@ const Usuarios: React.FC = () => {
 
       {open && (
         <SideBarUsuario menuRef={menuRef}>
-          <UserContainer menuRef={menuRef} userSelected={userSelected} />
+          <UserContainer
+            setOpen={setOpen}
+            menuRef={menuRef}
+            userSelected={userSelected}
+          />
         </SideBarUsuario>
       )}
       {isLoading && <Spinner />}
