@@ -40,7 +40,13 @@ const UsersList: React.FC<Props> = ({
               }
             })
             .map((user: any) => (
-              <Div key={user.id}>
+              <Div
+                key={user.id}
+                onClick={() => {
+                  handleClick && handleClick();
+                  setUserSelected && setUserSelected(user);
+                }}
+              >
                 <div>
                   <IoPersonCircleOutline size={50} />
                   <div>
