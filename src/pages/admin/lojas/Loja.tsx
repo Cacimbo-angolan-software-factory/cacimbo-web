@@ -59,7 +59,14 @@ const Loja: React.FC<Props> = ({
 
         <section>
           <div>
-            <h1>{loja.StoreName}</h1>
+            <h1
+              onClick={() => {
+                setShowOptions(true);
+                setSelectedLoja(loja);
+              }}
+            >
+              {loja.StoreName}
+            </h1>
             <p>{loja.StoreSlogan}</p>
             <p>{loja.CompanyID}</p>
           </div>

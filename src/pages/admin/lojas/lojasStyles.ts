@@ -86,6 +86,7 @@ export const LojaContainer = styled.div`
 
     & h1 {
       font-weight: 400;
+      cursor: pointer;
     }
 
     & p {
