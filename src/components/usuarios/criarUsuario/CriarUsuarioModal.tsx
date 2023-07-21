@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
   Content,
@@ -14,7 +15,12 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { LicContext } from '../../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { createUser, getPerfis } from '../../../redux/userFeatures/usersSlice';
+import {
+  createUser,
+  getAllUsers,
+  getPerfis,
+  getUsers,
+} from '../../../redux/userFeatures/usersSlice';
 import SelectInput from '../../SelectTextField';
 import { MenuItem } from '@mui/material';
 import {
@@ -23,6 +29,7 @@ import {
 } from '../../../redux/permissionsFeatures/permissionSlice';
 import RolesModal from './RolesModal';
 import { apiCacimbo } from '../../../service/Service.api';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface CriarUsuarioModalProps {
   criarUser: boolean;
@@ -124,19 +131,35 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
         companyId: value.companyId,
         nif: value.nif,
       })
-    );
+    ).then(() => {
+      toast.success('Usuario criado com sucesso! 🎉', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
 
-    setValue({
-      name: '',
-      email: '',
-      parceiro_id: '',
-      tipo: '',
-      id_perfil: '',
-      roles: [],
-      companyId: '',
-      nif: '',
+      setTimeout(() => {
+        dispatch(getAllUsers());
+        dispatch(getUsers(user.user.parceiro_id));
+
+        setValue({
+          name: '',
+          email: '',
+          parceiro_id: '',
+          tipo: '',
+          id_perfil: '',
+          roles: [],
+          companyId: '',
+          nif: '',
+        });
+        setCriarUser(false);
+      }, 1000);
     });
-    setCriarUser(false);
   };
 
   return (
@@ -274,6 +297,7 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
       </ModalContainer>
 
       {criarUser && <Overlay onClick={() => setCriarUser(false)} />}
+      <ToastContainer />
     </>
   );
 };
