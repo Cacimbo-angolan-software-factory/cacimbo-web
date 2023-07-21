@@ -5,13 +5,14 @@ export const Container = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9999999;
   background-color: #1d1d1d;
   padding: 2rem 6rem;
   border-bottom: 0.5px solid #3a3a3a;
   box-shadow: 0px 11px 11px -14px rgba(0, 0, 0, 0.75);
 
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   & span {
@@ -27,4 +28,18 @@ export const Container = styled.nav`
   @media (min-width: 630px) {
     display: none;
   }
+
+  @media (max-width: 500px) {
+    padding: 2rem 3rem;
+  }
+`;
+
+export const UserLogo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  background-color: #b71c50;
 `;

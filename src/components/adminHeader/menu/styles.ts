@@ -5,6 +5,10 @@ export const MenuContainer = styled.nav`
   display: flex;
   gap: 2rem;
 
+  @media (max-width: 940px) {
+    gap: 1rem;
+  }
+
   @media (max-width: 630px) {
     display: none;
   }

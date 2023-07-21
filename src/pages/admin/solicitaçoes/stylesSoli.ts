@@ -20,6 +20,10 @@ export const Wrapper = styled.div`
   gap: 2rem;
   justify-content: space-between;
 
+  @media (max-width: 560px) {
+    min-width: 100%;
+  }
+
   & h3 {
     word-wrap: break-word;
   }
@@ -113,6 +117,12 @@ export const SearchAndFilters = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
 `;
 
 export const InputSearch = styled.input`
@@ -125,7 +135,7 @@ export const InputSearch = styled.input`
   width: 25%;
 
   @media (max-width: 700px) {
-    width: 80%;
+    width: 65%;
   }
 
   @media (max-width: 560px) {

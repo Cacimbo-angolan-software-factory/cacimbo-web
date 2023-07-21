@@ -3,6 +3,11 @@ import styled from 'styled-components';
 export const Block = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 530px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
 `;
 
 export const Input = styled.input`
@@ -14,4 +19,8 @@ export const Input = styled.input`
   width: 22rem;
 
   margin-bottom: 2rem;
+
+  @media (max-width: 530px) {
+    width: 100%;
+  }
 `;

@@ -30,6 +30,12 @@ export const FiltersContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 940px) {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
 `;
 
 export const InputSearch = styled.input`
@@ -41,7 +47,7 @@ export const InputSearch = styled.input`
   color: #fff;
   width: 25%;
 
-  @media (max-width: 700px) {
+  @media (max-width: 940px) {
     width: 80%;
   }
 
