@@ -17,19 +17,14 @@ const AdminHome: React.FC = () => {
     <>
       <AdminHeader />
       <HeaderMobile />
-      {criarPermission ? (
-        <Permissions setCriarPermission={setCriarPermission} />
-      ) : criarRole ? (
-        <CreateUserRole setCriarRole={setCriarRole} />
-      ) : (
-        <>
-          <Title>Bem-vindo de volta, {user.user.name}!</Title>
-          <Section>
-            <Notifications />
-            <Animation />
-          </Section>
-        </>
-      )}
+
+      <>
+        <Title>Bem-vindo de volta, {user.user.name}!</Title>
+        <Section>
+          <Notifications />
+          <Animation />
+        </Section>
+      </>
     </>
   );
 };

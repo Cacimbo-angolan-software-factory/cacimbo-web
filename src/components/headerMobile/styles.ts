@@ -12,6 +12,7 @@ export const Container = styled.nav`
   box-shadow: 0px 11px 11px -14px rgba(0, 0, 0, 0.75);
 
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   & span {
@@ -27,4 +28,14 @@ export const Container = styled.nav`
   @media (min-width: 630px) {
     display: none;
   }
+`;
+
+export const UserLogo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  background-color: #b71c50;
 `;

@@ -15,6 +15,10 @@ export const Container = styled.div`
   cursor: pointer;
   position: relative;
 
+  @media (max-width: 630px) {
+    display: none;
+  }
+
   & ul {
     display: none;
     position: absolute;

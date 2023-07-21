@@ -26,10 +26,18 @@ export const Stat = styled.div`
   & h2 {
     font-size: 3.2rem;
     color: #b71c50;
+
+    @media (max-width: 630px) {
+      font-size: 2.8rem;
+    }
   }
 
   & p {
     font-size: 3.2rem;
     font-weight: 300;
+
+    @media (max-width: 630px) {
+      font-size: 2.8rem;
+    }
   }
 `;
