@@ -32,6 +32,7 @@ export const Wrapper = styled.div`
 
   @media (min-width: 630px) {
     display: none;
+    z-index: 0;
   }
 `;
 

@@ -147,12 +147,12 @@ const Solicitaçoes: React.FC = () => {
                 if (search === '') {
                   return item;
                 } else if (
-                  item.parceiro?.Nome?.toLowerCase().includes(
-                    search.toLowerCase()
-                  ) ||
-                  item.parceiro?.Nif?.toLowerCase().includes(
-                    search.toLowerCase()
-                  )
+                  item.solicitacao?.empresa.nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.solicitacao?.empresa.nif
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
                 ) {
                   return item;
                 }
