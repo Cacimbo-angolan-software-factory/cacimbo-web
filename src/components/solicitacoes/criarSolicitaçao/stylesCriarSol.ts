@@ -84,3 +84,13 @@ export const DivChild = styled.span`
     flex-direction: column;
   }
 `;
+
+export const Select = styled.select`
+  padding: 1rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid #383838;
+  background-color: #242424;
+  color: #fff;
+  font-size: 1.3rem;
+  width: 100%;
+`;
