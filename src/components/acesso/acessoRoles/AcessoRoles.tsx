@@ -6,6 +6,7 @@ import { AppDispatch } from '../../../redux/store';
 import { getRoles } from '../../../redux/permissionsFeatures/permissionSlice';
 import Spinner from '../../spinner/Spinner';
 import Role from './Role';
+import noAcess from '../../../assets/noAccess.svg';
 
 interface Props {
   rolesDeEmpresas: any;
@@ -29,7 +30,7 @@ const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
           user.roles.map((role: any) => <Role key={role.id} role={role} />)
         ) : (
           <NoRoles>
-            <img src='/src/assets/noAccess.svg' alt='empty' />
+            <img src={noAcess} alt='empty' />
             <h1>Usuário não possui nenhuma função atribuída no momento.</h1>
           </NoRoles>
         )}
