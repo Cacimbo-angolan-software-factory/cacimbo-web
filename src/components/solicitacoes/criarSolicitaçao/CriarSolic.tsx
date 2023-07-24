@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 
-import { Container, Form, Div, DivChild } from './stylesCriarSol';
+import { Container, Form, Div, DivChild, Select } from './stylesCriarSol';
 import { Checkbox, ListItemText, MenuItem, TextField } from '@mui/material';
 import SelectInput from '../../SelectTextField';
 import { LicContext } from '../../../context';
@@ -161,6 +161,22 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     }
   };
 
+  const handleInputChange = (e: any) => {
+    const selectedValue = e.target.value;
+    setValue({
+      ...value,
+      pais: selectedValue,
+    });
+  };
+
+  const handleInputTipos = (e: any) => {
+    const selectedValue = e.target.value;
+    setValue({
+      ...value,
+      tipo: selectedValue,
+    });
+  };
+
   useEffect(() => {
     if (isError) {
       alert('Erro ao criar solicitação');
@@ -237,22 +253,22 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             />
           </div>
         </DivChild>
-        <SelectInput
+
+        <Select
           value={value.pais}
           disabled={value.nif.length === 0 || value.nif === ''}
-          labelName='País'
-          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setValue({ ...value, pais: e.target.value })
-          }
+          onChange={handleInputChange}
         >
-          <MenuItem value={'Angola'}>Angola</MenuItem>
-          <MenuItem value={'Portugal'}>Portugal</MenuItem>
-          <MenuItem value={'Brasil'}>Brasil</MenuItem>
-          <MenuItem value={'Cabo Verde'}>Cabo Verde</MenuItem>
-          <MenuItem value={'Moçambique'}>Moçambique</MenuItem>
-          <MenuItem value={'São Tome'}>São Tomé</MenuItem>
-          <MenuItem value={'Guiné'}>Guiné</MenuItem>
-        </SelectInput>
+          <option value=''>País</option>
+          <option value='Angola'>Angola</option>
+          <option value='Portugal'>Portugal</option>
+          <option value='Brasil'>Brasil</option>
+          <option value='Cabo Verde'>Cabo Verde</option>
+          <option value='Moçambique'>Moçambique</option>
+          <option value='São Tome'>São Tomé</option>
+          <option value='Guiné'>Guiné</option>
+        </Select>
+
         <DivChild>
           <div>
             <label htmlFor='provincia'>Província</label>
@@ -308,34 +324,30 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           </div>
         </DivChild>
         <DivChild>
-          <SelectInput
+          <Select
             value={value.tipo}
             disabled={value.nif.length === 0 || value.nif === ''}
-            labelName='Tipo de licença'
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setValue({ ...value, tipo: e.target.value })
-            }
+            onChange={handleInputTipos}
           >
-            {tipoDeLicenca.map((tipo) => (
-              <MenuItem key={tipo} value={tipo}>
+            {tipoDeLicenca.map((tipo: any) => (
+              <option key={tipo} value={tipo}>
                 {tipo}
-              </MenuItem>
+              </option>
             ))}
-          </SelectInput>
-          <SelectInput
+          </Select>
+          <Select
             value={value.canal_id}
             disabled={value.nif.length === 0 || value.nif === ''}
-            labelName='Canal'
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: any) =>
               setValue({ ...value, canal_id: e.target.value })
             }
           >
             {canal.map((canal: any) => (
-              <MenuItem key={canal.id} value={canal.Nome}>
+              <option key={canal.id} value={canal.Nome}>
                 {canal.Nome}
-              </MenuItem>
+              </option>
             ))}
-          </SelectInput>
+          </Select>
         </DivChild>
 
         <CheckMarkField

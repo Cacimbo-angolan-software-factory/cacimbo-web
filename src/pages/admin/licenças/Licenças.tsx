@@ -47,9 +47,10 @@ const Licenças: React.FC = () => {
   };
 
   const itemsPerPage = 50;
-  const endOffset = pageNumber + itemsPerPage;
+  const startOffset = pageNumber * itemsPerPage;
+  const endOffset = startOffset + itemsPerPage;
 
-  const currentItems = licences.slice(endOffset, endOffset + itemsPerPage);
+  const currentItems = licences.slice(startOffset, endOffset);
 
   const pageCount = Math.ceil(licences.length / itemsPerPage);
   let today = new Date().toISOString().slice(0, 10);
@@ -57,15 +58,15 @@ const Licenças: React.FC = () => {
     (licence) => licence.data_validade > today
   );
   const todasActivasPaginated = todasActivas.slice(
-    endOffset,
-    endOffset + itemsPerPage
+    startOffset,
+    startOffset + itemsPerPage
   );
   const porRenovar = licences.filter(
     (licence) => licence.data_validade < today
   );
   const porRenovarPaginated = porRenovar.slice(
-    endOffset,
-    endOffset + itemsPerPage
+    startOffset,
+    startOffset + itemsPerPage
   );
 
   // filter by partner
@@ -73,26 +74,25 @@ const Licenças: React.FC = () => {
     return licence.parceiro_id === empresaSelected?.id;
   });
 
-  const selectedPartner = licences.filter(
-    (licence) => licence.parceiro_id === 1
-  );
   const SelectedPartnerPaginated = licencasDeParceiro.slice(
-    endOffset,
-    endOffset + itemsPerPage
+    startOffset,
+    startOffset + itemsPerPage
   );
+
   const activasParceiro = licencasDeParceiro.filter(
     (licence) => licence.data_validade > today
   );
   const activasParceiroPaginated = activasParceiro.slice(
-    endOffset,
-    endOffset + itemsPerPage
+    startOffset,
+    startOffset + itemsPerPage
   );
+
   const porRenovarParceiro = licencasDeParceiro.filter(
     (licence) => licence.data_validade < today
   );
   const porRenovarParceiroPaginated = porRenovarParceiro.slice(
-    endOffset,
-    endOffset + itemsPerPage
+    startOffset,
+    startOffset + itemsPerPage
   );
 
   // get nif from empresasList
@@ -339,8 +339,8 @@ const Licenças: React.FC = () => {
   };
 
   const handlePageClick = (event: any) => {
-    const newOffset =
-      ((event as any).selected * itemsPerPage) % licences.length;
+    const selectedPage = event.selected;
+    const newOffset = selectedPage * itemsPerPage;
     setPageNumber(newOffset);
   };
 
@@ -401,15 +401,17 @@ const Licenças: React.FC = () => {
         <Overlay onClick={() => setOpenModalParceiros(false)} />
       )}
 
-      <Pagination
-        previousLabel={'<'}
-        nextLabel={'>'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        activeClassName={'active'}
-      />
+      {pageCount > 1 && (
+        <Pagination
+          previousLabel={'<'}
+          nextLabel={'>'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          activeClassName={'active'}
+        />
+      )}
     </>
   );
 };
