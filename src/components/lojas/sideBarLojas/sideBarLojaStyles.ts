@@ -36,6 +36,7 @@ export const Wrapper = styled.div`
   @media (max-width: 630px) {
     width: 100%;
     z-index: 1000;
+    padding: 10rem 1.5rem 6rem 1.5rem;
   }
 `;
 
