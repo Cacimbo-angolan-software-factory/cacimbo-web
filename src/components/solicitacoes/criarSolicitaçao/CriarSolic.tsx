@@ -315,7 +315,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           <div>
             <label htmlFor='responsavel'>Responsável</label>
             <input
-              name='responsável'
+              name='responsavel'
               value={value.responsavel}
               onChange={handleChange}
               type='name'
