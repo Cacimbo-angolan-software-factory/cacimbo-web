@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Container, Form, Div, DivChild, Select } from './stylesCriarSol';
 import { Checkbox, ListItemText, MenuItem, TextField } from '@mui/material';
@@ -16,12 +17,14 @@ import {
   getModuloPadronizar,
   getLicencaPorEmpresa,
 } from '../../../redux/solicitaçaoFeatures/solicSlice';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface CriarSolicitaçaoProps {
   setClick: (value: boolean) => void;
 }
 
 const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
+  const { getLicRequest } = useContext(LicContext);
   const {
     solic,
     isError,
@@ -155,7 +158,18 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           parceiro_id: user?.user.parceiro_id,
           user_id: user?.user.id,
         })
-      );
+      ).then(() => {
+        toast.success('Solicitação criada com sucesso!', {
+          position: 'top-right',
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
+      });
     } catch (error: any) {
       console.log(error.response);
     }
@@ -201,6 +215,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
       });
       setTimeout(() => {
         setClick(false);
+        getLicRequest && getLicRequest();
       }, 2500);
     }
   }, [isError, solic]);
