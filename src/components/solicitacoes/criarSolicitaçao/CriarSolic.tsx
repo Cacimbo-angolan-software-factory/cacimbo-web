@@ -128,11 +128,11 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     const modulosId = modulos
       .filter((modulo) => [...comum, ...padronizar].includes(modulo.descricao))
       .map((obj) => obj.id);
+    console.log(modulosId);
 
-    let canal_id = canal.filter(
-      (canal: any) => canal.Nome === value.canal_id
-    )[0].id;
-
+    let canal_id = canal?.filter(
+      (canal: any) => canal?.Nome === value.canal_id
+    )[0]?.id;
     try {
       const user = JSON.parse(localStorage.getItem('user') || 'null');
 
@@ -170,6 +170,27 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           theme: 'colored',
         });
       });
+
+      setTimeout(() => {
+        setValue({
+          nif: '',
+          empresa: '',
+          telefone: '',
+          email: '',
+          pais: '',
+          provincia: '',
+          localidade: '',
+          morada: '',
+          cargo: '',
+          responsavel: '',
+          tipo: '',
+          canal_id: '',
+          licencaId: '',
+          modulo: [],
+        });
+        setClick(false);
+        getLicRequest && getLicRequest();
+      }, 2500);
     } catch (error: any) {
       console.log(error.response);
     }
@@ -191,34 +212,14 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     });
   };
 
-  useEffect(() => {
-    if (isError) {
-      alert('Erro ao criar solicitação');
-    }
-
-    if (solic) {
-      setValue({
-        nif: '',
-        empresa: '',
-        telefone: '',
-        email: '',
-        pais: '',
-        provincia: '',
-        localidade: '',
-        morada: '',
-        cargo: '',
-        responsavel: '',
-        tipo: '',
-        canal_id: '',
-        licencaId: '',
-        modulo: [],
-      });
-      setTimeout(() => {
-        setClick(false);
-        getLicRequest && getLicRequest();
-      }, 2500);
-    }
-  }, [isError, solic]);
+  const handleInputLicencaId = (e: any) => {
+    const selectedValue = e.target.value;
+    console.log(selectedValue);
+    setValue({
+      ...value,
+      licencaId: selectedValue,
+    });
+  };
 
   return (
     <Container>
@@ -344,6 +345,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             disabled={value.nif.length === 0 || value.nif === ''}
             onChange={handleInputTipos}
           >
+            <option value=''>Selecione o tipo de licença</option>
             {tipoDeLicenca.map((tipo: any) => (
               <option key={tipo} value={tipo}>
                 {tipo}
@@ -352,11 +354,14 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           </Select>
           <Select
             value={value.canal_id}
+            required
             disabled={value.nif.length === 0 || value.nif === ''}
-            onChange={(e: any) =>
-              setValue({ ...value, canal_id: e.target.value })
-            }
+            onChange={(e: any) => {
+              setValue({ ...value, canal_id: e.target.value });
+              console.log(value.canal_id);
+            }}
           >
+            <option value=''>Selecione o canal</option>
             {canal.map((canal: any) => (
               <option key={canal.id} value={canal.Nome}>
                 {canal.Nome}
@@ -395,25 +400,18 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
         )}
 
         {showLicencas && (
-          <SelectInput
+          <Select
             value={value.licencaId}
-            labelName='Licenças'
             disabled={value.nif.length === 0 || value.nif === ''}
-            handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setValue({ ...value, licencaId: e.target.value })
-            }
+            onChange={handleInputLicencaId}
           >
+            <option value=''>Selecione a licença</option>
             {licencasDaEmpresa.map((licenca: any) => (
-              <MenuItem key={licenca.id} value={licenca.cliente_nome}>
-                {licenca.cliente_nome}
-                <span style={{ fontWeight: 600 }}> - {licenca.id}</span>
-                <span style={{ color: '#bebebe' }}>
-                  {' '}
-                  - {licenca.data_validade}
-                </span>
-              </MenuItem>
+              <option key={licenca.id} value={licenca.id}>
+                {licenca.cliente_nome} - {licenca.id} - {licenca.data_validade}
+              </option>
             ))}
-          </SelectInput>
+          </Select>
         )}
 
         <Div className='buttons'>
