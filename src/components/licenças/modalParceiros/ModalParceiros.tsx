@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { H1, Ul, Wrapper } from './modalParceirosStyles';
+import { H1, SpinnerDiv, Ul, Wrapper } from './modalParceirosStyles';
 import { LicContext } from '../../../context';
 import Spinner from '../../spinner/Spinner';
 
@@ -29,7 +29,9 @@ const ModalParceiros: React.FC<ModalParceirosProps> = ({
       <H1>Escolha um parceiro</H1>
       <div>
         {loadingEmpresas ? (
-          <Spinner />
+          <SpinnerDiv>
+            <Spinner />
+          </SpinnerDiv>
         ) : (
           <Ul>
             {empresas.map((empresa) => {

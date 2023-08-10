@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import PrivateRoutes from './PrivateRoutes';
 import ResetPassword from './pages/login/ResetPassword';
 import Acesso from './pages/admin/acesso/Acesso';
-import Lojas from './pages/admin/lojas/Lojas';
 import Spinner from './components/spinner/Spinner';
 
 const AppContainer = styled.div`
@@ -16,18 +15,32 @@ const AppContainer = styled.div`
   gap: 6rem;
 `;
 
+const SpinnerDiv = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const Licenças = lazy(() => import('./pages/admin/licenças/Licenças'));
 const Solicitaçoes = lazy(
   () => import('./pages/admin/solicitaçoes/Solicitacoes')
 );
 const Empresas = lazy(() => import('./pages/admin/empresas/Empresas'));
 const Usuarios = lazy(() => import('./pages/admin/usuarios/Usuarios'));
+const Lojas = lazy(() => import('./pages/admin/lojas/Lojas'));
 
 function App() {
   return (
     <>
       <AppContainer>
-        <Suspense fallback={<Spinner />}>
+        <Suspense
+          fallback={
+            <SpinnerDiv>
+              <Spinner />
+            </SpinnerDiv>
+          }
+        >
           <Routes>
             <Route element={<PrivateRoutes />}>
               <Route path='/' element={<AdminHome />} />
