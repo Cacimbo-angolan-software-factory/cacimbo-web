@@ -41,3 +41,10 @@ export const Ul = styled.ul`
     cursor: pointer;
   }
 `;
+
+export const SpinnerDiv = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;

@@ -95,6 +95,12 @@ const Licenças: React.FC = () => {
     startOffset + itemsPerPage
   );
 
+  const handlePageClick = (event: any) => {
+    const selectedPage = event.selected;
+    const newOffset = selectedPage * itemsPerPage;
+    setPageNumber(newOffset);
+  };
+
   // get nif from empresasList
   const getNif = (nif: any) => {
     const empresa = empresasList.find(
@@ -109,36 +115,36 @@ const Licenças: React.FC = () => {
     if (filtro === 'all' && childFitro === 'todas') {
       return (
         <div>
-          {currentItems.length > 0 ? (
-            currentItems
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.data_emissao
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.data_validade
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  getNif(item.empresa_id).includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((licence) => (
-                <div key={licence.id}>
-                  <Licence licence={licence} />
-                </div>
-              ))
-          ) : (
-            <EmptyState>
-              <h2>Não existem licenças</h2>
-            </EmptyState>
-          )}
+          {currentItems.length > 0
+            ? currentItems
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.data_emissao
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.data_validade
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    getNif(item.empresa_id).includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((licence) => (
+                  <div key={licence.id}>
+                    <Licence licence={licence} />
+                  </div>
+                ))
+            : !loadingLicenses && (
+                <EmptyState>
+                  <h2>Não existem licenças</h2>
+                </EmptyState>
+              )}
         </div>
       );
     }
@@ -148,36 +154,36 @@ const Licenças: React.FC = () => {
     if (filtro === 'all' && childFitro === 'activasAll') {
       return (
         <div>
-          {todasActivasPaginated.length > 0 ? (
-            todasActivasPaginated
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.data_emissao
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.data_validade
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  getNif(item.empresa_id).includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((licence) => (
-                <div key={licence.id}>
-                  <Licence licence={licence} />
-                </div>
-              ))
-          ) : (
-            <EmptyState>
-              <h2>Não existem licenças</h2>
-            </EmptyState>
-          )}
+          {todasActivasPaginated.length > 0
+            ? todasActivasPaginated
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.data_emissao
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.data_validade
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    getNif(item.empresa_id).includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((licence) => (
+                  <div key={licence.id}>
+                    <Licence licence={licence} />
+                  </div>
+                ))
+            : !loadingLicenses && (
+                <EmptyState>
+                  <h2>Não existem licenças</h2>
+                </EmptyState>
+              )}
         </div>
       );
     }
@@ -187,36 +193,36 @@ const Licenças: React.FC = () => {
     if (filtro === 'all' && childFitro === 'porRenovarAll') {
       return (
         <div>
-          {porRenovarPaginated.length > 0 ? (
-            porRenovarPaginated
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.data_emissao
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.data_validade
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  getNif(item.empresa_id).includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((licence) => (
-                <div key={licence.id}>
-                  <Licence licence={licence} />
-                </div>
-              ))
-          ) : (
-            <EmptyState>
-              <h2>Não existem licenças</h2>
-            </EmptyState>
-          )}
+          {porRenovarPaginated.length > 0
+            ? porRenovarPaginated
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.data_emissao
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.data_validade
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    getNif(item.empresa_id).includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((licence) => (
+                  <div key={licence.id}>
+                    <Licence licence={licence} />
+                  </div>
+                ))
+            : !loadingLicenses && (
+                <EmptyState>
+                  <h2>Não existem licenças</h2>
+                </EmptyState>
+              )}
         </div>
       );
     }
@@ -227,34 +233,34 @@ const Licenças: React.FC = () => {
     if (filtro === 'parceiro' && childFitro === 'parceiroTodas') {
       return (
         <div>
-          {SelectedPartnerPaginated.length > 0 ? (
-            SelectedPartnerPaginated.filter((item: any) => {
-              if (search === '') {
-                return item;
-              } else if (
-                item.data_emissao
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
-                item.data_validade
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
-                item.cliente_nome
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
-                getNif(item.empresa_id).includes(search.toLowerCase())
-              ) {
-                return item;
-              }
-            }).map((licence) => (
-              <div key={licence.id}>
-                <Licence licence={licence} />
-              </div>
-            ))
-          ) : (
-            <EmptyState>
-              <h2>Não existem licenças</h2>
-            </EmptyState>
-          )}
+          {SelectedPartnerPaginated.length > 0
+            ? SelectedPartnerPaginated.filter((item: any) => {
+                if (search === '') {
+                  return item;
+                } else if (
+                  item.data_emissao
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.data_validade
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  item.cliente_nome
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  getNif(item.empresa_id).includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              }).map((licence) => (
+                <div key={licence.id}>
+                  <Licence licence={licence} />
+                </div>
+              ))
+            : !loadingLicenses && (
+                <EmptyState>
+                  <h2>Não existem licenças</h2>
+                </EmptyState>
+              )}
         </div>
       );
     }
@@ -264,36 +270,36 @@ const Licenças: React.FC = () => {
     if (filtro === 'parceiro' && childFitro === 'activasParceiro') {
       return (
         <div>
-          {activasParceiroPaginated.length > 0 ? (
-            activasParceiroPaginated
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.data_emissao
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.data_validade
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  getNif(item.empresa_id).includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((licence) => (
-                <div key={licence.id}>
-                  <Licence licence={licence} />
-                </div>
-              ))
-          ) : (
-            <EmptyState>
-              <h2>Não existem licenças</h2>
-            </EmptyState>
-          )}
+          {activasParceiroPaginated.length > 0
+            ? activasParceiroPaginated
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.data_emissao
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.data_validade
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    getNif(item.empresa_id).includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((licence) => (
+                  <div key={licence.id}>
+                    <Licence licence={licence} />
+                  </div>
+                ))
+            : !loadingLicenses && (
+                <EmptyState>
+                  <h2>Não existem licenças</h2>
+                </EmptyState>
+              )}
         </div>
       );
     }
@@ -303,45 +309,39 @@ const Licenças: React.FC = () => {
     if (filtro === 'parceiro' && childFitro === 'porRenovarParceiro') {
       return (
         <div>
-          {porRenovarParceiroPaginated.length > 0 ? (
-            porRenovarParceiroPaginated
-              .filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.data_emissao
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.data_validade
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  getNif(item.empresa_id).includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((licence) => (
-                <div key={licence.id}>
-                  <Licence licence={licence} />
-                </div>
-              ))
-          ) : (
-            <EmptyState>
-              <h2>Não existem licenças</h2>
-            </EmptyState>
-          )}
+          {porRenovarParceiroPaginated.length > 0
+            ? porRenovarParceiroPaginated
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.data_emissao
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.data_validade
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    getNif(item.empresa_id).includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((licence) => (
+                  <div key={licence.id}>
+                    <Licence licence={licence} />
+                  </div>
+                ))
+            : !loadingLicenses && (
+                <EmptyState>
+                  <h2>Não existem licenças</h2>
+                </EmptyState>
+              )}
         </div>
       );
     }
-  };
-
-  const handlePageClick = (event: any) => {
-    const selectedPage = event.selected;
-    const newOffset = selectedPage * itemsPerPage;
-    setPageNumber(newOffset);
   };
 
   function onScroll() {
