@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch } from '../../../redux/store';
 import {
   criarLoja,
   getCompanyIdWithNif,
   getPaymentMethods,
-} from '../../redux/lojasFeatures/lojasSlice';
-import { api } from '../../service/Service.api';
+} from '../../../redux/lojasFeatures/lojasSlice';
+import { api } from '../../../service/Service.api';
 import { toast } from 'react-toastify';
 
 type FormDataOrNull = FormData | null;
 
-export const useLoja = () => {
+export const useCreateLoja = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedLoja, setSelectedLoja] = useState<any>(null);
@@ -128,10 +128,6 @@ export const useLoja = () => {
         'payments_mechanisms',
         JSON.stringify(paymentMechanismsList)
       );
-
-      for (let value of formData.values()) {
-        console.log(value);
-      }
 
       dispatch(criarLoja(formData)).then(() => {
         toast.success('Loja criada com sucesso! 🎉', {

@@ -14,19 +14,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import LojasModal from '../../../features/lojas/components/modal/index';
 import emptyStore from '../../../assets/emptyStore.svg';
 import { AppDispatch } from '../../../redux/store';
-import { getLojas, deleteLoja } from '../../../redux/lojasFeatures/lojasSlice';
+import { getLojas } from '../../../redux/lojasFeatures/lojasSlice';
 import Spinner from '../../../components/spinner/Spinner';
-import DeleteModal from './DeleteModal';
-import { useLoja } from '../../../features/lojas/hooks';
+import { useCreateLoja } from '../../../features/lojas/hooks/useCreateLoja';
 import SingleLoja from '../../../features/lojas/components/loja/SingleLoja';
 
 const Lojas: React.FC = () => {
   const { user } = useSelector((state: any) => state.user);
   const { lojas, isLoading } = useSelector((state: any) => state.lojas);
   const dispatch = useDispatch<AppDispatch>();
-  const [deleteModal, setDeleteModal] = React.useState(false);
   const [selectedLoja, setSelectedLoja] = React.useState<any>('');
-  const { showModal, setShowModal } = useLoja();
+  const { showModal, setShowModal } = useCreateLoja();
 
   useEffect(() => {
     dispatch(getLojas());
@@ -52,8 +50,6 @@ const Lojas: React.FC = () => {
           {lojas.length > 0 ? (
             lojas.map((loja: any) => (
               <SingleLoja
-                setDeleteModal={setDeleteModal}
-                deleteModal={deleteModal}
                 key={loja.id}
                 loja={loja}
                 selectedLoja={selectedLoja}
@@ -74,13 +70,7 @@ const Lojas: React.FC = () => {
         </LojasContainer>
       </Container>
 
-      {showModal && (
-        <LojasModal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          selectedLoja={selectedLoja}
-        />
-      )}
+      {showModal && <LojasModal selectedLoja={selectedLoja} />}
     </>
   );
 };

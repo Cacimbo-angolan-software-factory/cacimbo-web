@@ -1,16 +1,8 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-import { ToastContainer, toast } from 'react-toastify';
-// import Spinner from '../spinner/Spinner';
-// import SelectInput from '../SelectTextField';
-import { useLoja } from '../../hooks';
-
-// import {
-//   formatPaymentMechanisms,
-//   filterPaymentMechanisms,
-//   extractCompanyDetails,
-// } from './helpers'; // Import the helper functions
+import { ToastContainer } from 'react-toastify';
+import { useCreateLoja } from '../../hooks/useCreateLoja';
 
 import {
   ModalContainer,
@@ -22,12 +14,10 @@ import {
   FooterDiv,
   SpinnerDiv,
   Select,
-} from './styles'; // Import styles
+} from './styles';
 import Spinner from '../../../../components/spinner/Spinner';
 
 interface LojasModalProps {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  showModal: boolean;
   selectedLoja?: LojaData;
 }
 
@@ -35,11 +25,7 @@ interface LojaData {
   // ... your existing type definitions
 }
 
-const LojasModal: React.FC<LojasModalProps> = ({
-  setShowModal,
-  showModal,
-  selectedLoja,
-}) => {
+const LojasModal: React.FC<LojasModalProps> = ({ selectedLoja }) => {
   const {
     value,
     setStoreLogoUrl,
@@ -52,8 +38,10 @@ const LojasModal: React.FC<LojasModalProps> = ({
     handleSubmit,
     handleOptionChange,
     handleCheck,
+    showModal,
+    setShowModal,
     // handleEdit,
-  } = useLoja();
+  } = useCreateLoja();
 
   return (
     <>
