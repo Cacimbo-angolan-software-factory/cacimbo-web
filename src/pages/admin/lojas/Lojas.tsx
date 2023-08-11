@@ -16,9 +16,9 @@ import emptyStore from '../../../assets/emptyStore.svg';
 import { AppDispatch } from '../../../redux/store';
 import { getLojas, deleteLoja } from '../../../redux/lojasFeatures/lojasSlice';
 import Spinner from '../../../components/spinner/Spinner';
-import Loja from './Loja';
 import DeleteModal from './DeleteModal';
 import { useLoja } from '../../../features/lojas/hooks';
+import SingleLoja from '../../../features/lojas/components/loja/SingleLoja';
 
 const Lojas: React.FC = () => {
   const { user } = useSelector((state: any) => state.user);
@@ -51,7 +51,7 @@ const Lojas: React.FC = () => {
         <LojasContainer>
           {lojas.length > 0 ? (
             lojas.map((loja: any) => (
-              <Loja
+              <SingleLoja
                 setDeleteModal={setDeleteModal}
                 deleteModal={deleteModal}
                 key={loja.id}

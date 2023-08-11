@@ -3,11 +3,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { IoTrashOutline, IoEllipsisVertical } from 'react-icons/io5';
 
-import { LojaContainer, Overlay } from './lojasStyles';
-import DeleteModal from './DeleteModal';
-import SideBarLoja from '../../../features/lojas/components/sideBar/SideBarLoja';
-import { deleteLoja, getLojas } from '../../../redux/lojasFeatures/lojasSlice';
-import { AppDispatch } from '../../../redux/store';
+import { LojaContainer, Overlay } from './loja';
+import DeleteModal from '../../../../pages/admin/lojas/DeleteModal';
+import SideBarLoja from '../sideBar/SideBarLoja';
+import {
+  deleteLoja,
+  getLojas,
+} from '../../../../redux/lojasFeatures/lojasSlice';
+import { AppDispatch } from '../../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -20,7 +23,7 @@ interface Props {
   setShowModal: any;
 }
 
-const Loja: React.FC<Props> = ({
+const SingleLoja: React.FC<Props> = ({
   loja,
   setDeleteModal,
   deleteModal,
@@ -119,4 +122,4 @@ const Loja: React.FC<Props> = ({
   );
 };
 
-export default Loja;
+export default SingleLoja;
