@@ -1,23 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { IoTrashOutline, IoEllipsisVertical } from 'react-icons/io5';
+import { IoEllipsisVertical } from 'react-icons/io5';
 
 import { LojaContainer, Overlay } from './loja';
-import DeleteModal from '../../../../pages/admin/lojas/DeleteModal';
 import SideBarLoja from '../sideBar/SideBarLoja';
-import {
-  deleteLoja,
-  getLojas,
-} from '../../../../redux/lojasFeatures/lojasSlice';
-import { AppDispatch } from '../../../../redux/store';
-import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import ModalDelete from '../delete/ModalDelete';
+import { useLoja } from '../../hooks/useLoja';
 
 interface Props {
   loja: any;
-  setDeleteModal: any;
-  deleteModal: any;
   setSelectedLoja: any;
   selectedLoja: any;
   setShowModal: any;
@@ -25,45 +17,17 @@ interface Props {
 
 const SingleLoja: React.FC<Props> = ({
   loja,
-  setDeleteModal,
-  deleteModal,
   setSelectedLoja,
   selectedLoja,
   setShowModal,
 }) => {
   const [showOptions, setShowOptions] = React.useState(false);
-  const dispatch = useDispatch<AppDispatch>();
   let menuRef = useRef<any>(null);
+  const { useClickOutside, handleDelete, deleteModal, setDeleteModal } =
+    useLoja();
 
-  const handleDelete = (id: any) => {
-    dispatch(deleteLoja(id)).then(() => {
-      toast.success('Loja excluída com sucesso! 🎉', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
-    });
-    dispatch(getLojas());
-    setDeleteModal(false);
-  };
-
-  useEffect(() => {
-    let handler = (event: any) => {
-      if (!menuRef.current?.contains(event.target)) {
-        setShowOptions(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handler);
-
-    return () => {
-      document.removeEventListener('mousedown', handler);
-    };
+  useClickOutside(menuRef, () => {
+    setShowOptions(false);
   });
 
   return (
@@ -109,7 +73,7 @@ const SingleLoja: React.FC<Props> = ({
       )}
 
       {deleteModal && (
-        <DeleteModal
+        <ModalDelete
           loja={selectedLoja}
           deleteLoja={handleDelete}
           deleteModal={deleteModal}
