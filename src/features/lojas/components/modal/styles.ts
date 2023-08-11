@@ -121,3 +121,23 @@ export const FooterDiv = styled.div`
     background-color: #b71c50;
   }
 `;
+
+export const SpinnerDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  position: fixed;
+`;
+
+export const Select = styled.select`
+  padding: 1rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid #383838;
+  background-color: #242424;
+  color: #fff;
+  font-size: 1.2rem;
+`;

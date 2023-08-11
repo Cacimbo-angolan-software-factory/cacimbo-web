@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { IoTrashOutline, IoEllipsisVertical } from 'react-icons/io5';
 
 import { LojaContainer, Overlay } from './lojasStyles';
 import DeleteModal from './DeleteModal';
-import SideBarLoja from '../../../components/lojas/sideBarLojas/SideBarLoja';
+import SideBarLoja from '../../../features/lojas/components/sideBar/SideBarLoja';
 import { deleteLoja, getLojas } from '../../../redux/lojasFeatures/lojasSlice';
 import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Props {
   loja: any;
@@ -30,12 +33,20 @@ const Loja: React.FC<Props> = ({
   let menuRef = useRef<any>(null);
 
   const handleDelete = (id: any) => {
-    dispatch(deleteLoja(id));
-
-    setTimeout(() => {
-      dispatch(getLojas());
-      setDeleteModal(false);
-    }, 1000);
+    dispatch(deleteLoja(id)).then(() => {
+      toast.success('Loja excluída com sucesso! 🎉', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+    });
+    dispatch(getLojas());
+    setDeleteModal(false);
   };
 
   useEffect(() => {

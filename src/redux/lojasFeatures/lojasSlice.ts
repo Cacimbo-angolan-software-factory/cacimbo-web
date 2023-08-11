@@ -33,6 +33,7 @@ export const criarLoja = createAsyncThunk(
     try {
       return await lojasService.criarLoja(formData);
     } catch (err: any) {
+      console.log(err.response.data);
       return rejectWithValue(err.response.data);
     }
   }
