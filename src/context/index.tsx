@@ -48,6 +48,7 @@ interface ICreateContext {
   rejeitar?: (rejectData: any) => Promise<void>;
   loadingPassword?: boolean;
   loadingAprovar?: boolean;
+  loadingNif?: boolean;
 }
 
 export const LicContext = createContext<ICreateContext>({
@@ -80,6 +81,7 @@ export const LicProvider = ({ children }: IContext) => {
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [loadingAprovar, setLoadingAprovar] = useState(false);
   const { user: currentUser } = useSelector((state: any) => state.user);
+  const [loadingNif, setLoadingNif] = useState(false);
 
   const user = {
     id: 1,
@@ -279,12 +281,15 @@ export const LicProvider = ({ children }: IContext) => {
 
   async function getNif(nif: string) {
     try {
+      setLoadingNif(true);
       const { data } = await baseUrlGetNif.get(`${nif}`);
+      setLoadingNif(false);
       return data;
     } catch (err: any) {
       console.log(err);
       if (err?.response.status === 'undefined') {
         console.error('Sem ligação à internet', 'error');
+        setLoadingNif(false);
         return;
       }
       if (err?.response.status) {
@@ -435,6 +440,7 @@ export const LicProvider = ({ children }: IContext) => {
         changePassword,
         loadingPassword,
         loadingAprovar,
+        loadingNif,
       }}
     >
       {children}
