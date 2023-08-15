@@ -203,25 +203,6 @@ export const Card = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    & ul {
-      display: flex;
-      gap: 0.2rem;
-
-      & li {
-        list-style: none;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 2.8rem;
-        width: 2.8rem;
-        border-radius: 50%;
-        font-weight: 600;
-        background-color: #395661;
-        color: #ebebeb;
-      }
-    }
   }
 
   & p.location {
@@ -253,5 +234,32 @@ export const Card = styled.div`
     width: 0.8rem;
     border-radius: 50%;
     background-color: #33c4ff;
+  }
+`;
+
+export const WrapperList = styled.div`
+  width: 6.5vw;
+  overflow-x: scroll;
+
+  & ul {
+    display: flex;
+    gap: 0.2rem;
+    overflow-x: scroll;
+
+    & li {
+      list-style: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.8rem;
+      width: 2.8rem;
+      padding: 0 1rem;
+      max-inline-size: 2.8rem;
+      border-radius: 50%;
+      font-weight: 600;
+      background-color: #395661;
+      color: #ebebeb;
+    }
   }
 `;
