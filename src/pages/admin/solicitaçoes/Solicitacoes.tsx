@@ -16,6 +16,7 @@ import {
   SearchAndFilters,
   Card,
   Cards,
+  WrapperList,
 } from './stylesSoli';
 import {
   IoPersonAddOutline,
@@ -244,14 +245,16 @@ const Solicitaçoes: React.FC = () => {
                       Solicitação {section.id} -{' '}
                     </p>
 
-                    <ul>
-                      {section.sol_modulos.map(
-                        (module: any) =>
-                          module.modulo && (
-                            <li key={module.id}>{module.modulo.modulo}</li>
-                          )
-                      )}
-                    </ul>
+                    <WrapperList>
+                      <ul>
+                        {section.sol_modulos.map(
+                          (module: any) =>
+                            module.modulo && (
+                              <li key={module.id}>{module.modulo.modulo}</li>
+                            )
+                        )}
+                      </ul>
+                    </WrapperList>
                   </div>
 
                   <p className='location'>
@@ -305,11 +308,13 @@ const Solicitaçoes: React.FC = () => {
                     <span></span> Solicitação {pendente.id} -{' '}
                   </p>
 
-                  <ul>
-                    {getModulosId(
-                      pendente.sol_modulos.map((mod: any) => mod.modulo_id)
-                    )}
-                  </ul>
+                  <WrapperList>
+                    <ul>
+                      {getModulosId(
+                        pendente.sol_modulos.map((mod: any) => mod.modulo_id)
+                      )}
+                    </ul>
+                  </WrapperList>
                 </div>
 
                 <p className='location'>
