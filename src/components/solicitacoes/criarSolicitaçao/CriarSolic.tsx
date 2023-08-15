@@ -1,7 +1,15 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Container, Form, Div, DivChild, Select } from './stylesCriarSol';
+import {
+  Container,
+  Form,
+  Div,
+  DivChild,
+  Select,
+  SpinnerDiv,
+  Overlay,
+} from './stylesCriarSol';
 import { Checkbox, ListItemText, MenuItem, TextField } from '@mui/material';
 import SelectInput from '../../SelectTextField';
 import { LicContext } from '../../../context';
@@ -18,6 +26,7 @@ import {
   getLicencaPorEmpresa,
 } from '../../../redux/solicitaçaoFeatures/solicSlice';
 import { ToastContainer, toast } from 'react-toastify';
+import Spinner from '../../spinner/Spinner';
 
 interface CriarSolicitaçaoProps {
   setClick: (value: boolean) => void;
@@ -50,7 +59,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     licencaId: '',
     canal_id: '',
   });
-  const { getNif } = useContext(LicContext);
+  const { getNif, loadingNif } = useContext(LicContext);
   const [comum, setComum] = React.useState<any[]>([]);
   const [padronizar, setPadronizar] = React.useState<any[]>([]);
   const [showPadronizar, setShowPadronizar] = React.useState(false);
@@ -124,11 +133,10 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
   const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const modulos = [...moduloComum, moduloPadronizar];
+    const modulos = [...moduloComum, ...moduloPadronizar];
     const modulosId = modulos
       .filter((modulo) => [...comum, ...padronizar].includes(modulo.descricao))
       .map((obj) => obj.id);
-    console.log(modulosId);
 
     let canal_id = canal?.filter(
       (canal: any) => canal?.Nome === value.canal_id
@@ -370,34 +378,40 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           </Select>
         </DivChild>
 
-        <CheckMarkField
-          disabled={value.nif.length === 0 || value.nif === ''}
-          tag={'Comum'}
-          value={comum}
-          handleChange={handleComum}
-        >
-          {moduloComum.map((com: any) => (
-            <MenuItem key={com.id} value={com.descricao}>
-              <Checkbox checked={comum.indexOf(com.descricao) > -1} />
-              <ListItemText primary={com.descricao} />
-            </MenuItem>
-          ))}
-        </CheckMarkField>
-
-        {showPadronizar && (
+        {showPadronizar ? null : (
           <CheckMarkField
-            tag={'Padronizar'}
-            value={padronizar}
-            handleChange={handlePadronizar}
+            disabled={value.nif.length === 0 || value.nif === ''}
+            tag={'Comum'}
+            value={comum}
+            handleChange={handleComum}
           >
-            {moduloPadronizar.map((pad: any) => (
-              <MenuItem key={pad.id} value={pad.descricao}>
-                <Checkbox checked={padronizar.indexOf(pad.descricao) > -1} />
-                <ListItemText primary={pad.descricao} />
+            {moduloComum.map((com: any) => (
+              <MenuItem key={com.id} value={com.descricao}>
+                <Checkbox checked={comum.indexOf(com.descricao) > -1} />
+                <ListItemText primary={com.descricao} />
               </MenuItem>
             ))}
           </CheckMarkField>
         )}
+
+        {showLicencas
+          ? null
+          : showPadronizar && (
+              <CheckMarkField
+                tag={'Padronizar'}
+                value={padronizar}
+                handleChange={handlePadronizar}
+              >
+                {moduloPadronizar.map((pad: any) => (
+                  <MenuItem key={pad.id} value={pad.descricao}>
+                    <Checkbox
+                      checked={padronizar.indexOf(pad.descricao) > -1}
+                    />
+                    <ListItemText primary={pad.descricao} />
+                  </MenuItem>
+                ))}
+              </CheckMarkField>
+            )}
 
         {showLicencas && (
           <Select
@@ -421,6 +435,14 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
           </button>
         </Div>
       </Form>
+
+      {loadingNif && (
+        <SpinnerDiv>
+          <Spinner />
+        </SpinnerDiv>
+      )}
+
+      {loadingNif && <Overlay />}
     </Container>
   );
 };

@@ -94,3 +94,20 @@ export const Select = styled.select`
   font-size: 1.3rem;
   width: 100%;
 `;
+
+export const SpinnerDiv = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9;
+`;
