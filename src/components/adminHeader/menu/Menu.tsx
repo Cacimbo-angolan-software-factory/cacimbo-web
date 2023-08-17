@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
         </p>
       </MenuItem>
 
-      {user.user.id === 1 ? (
+      {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
         <MenuItem
           className={location.pathname === `/empresas` ? 'active' : 'inherit'}
           to='/empresas'
