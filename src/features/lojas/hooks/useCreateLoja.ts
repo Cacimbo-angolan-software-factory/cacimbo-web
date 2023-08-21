@@ -4,7 +4,7 @@ import { AppDispatch } from '../../../redux/store';
 import {
   criarLoja,
   getCompanyIdWithNif,
-  getPaymentMethods,
+  getLojas,
 } from '../../../redux/lojasFeatures/lojasSlice';
 import { api } from '../../../service/Service.api';
 import { toast } from 'react-toastify';
@@ -24,9 +24,8 @@ export const useCreateLoja = () => {
     payments_mechanisms: [] as any,
   });
   const [StoreLogoUrl, setStoreLogoUrl] = useState<FormDataOrNull>(null);
-  const [paymentMechanismsList, setPaymentMechanismsList] = useState<any>([]);
+  // const [paymentMechanismsList, setPaymentMechanismsList] = useState<any>([]);
   const [loadingOnBlur, setLoadingOnBlur] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const { companyIds, isLoading, paymentMethods } = useSelector(
     (state: any) => state.lojas
   );
@@ -37,39 +36,6 @@ export const useCreateLoja = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  useEffect(() => {
-    if (selectedLoja) {
-      setValue({
-        nif: selectedLoja.company?.TaxRegistrationNumber,
-        CompanyID: selectedLoja.CompanyID,
-        StoreName: selectedLoja.StoreName,
-        StoreSlogan: selectedLoja.StoreSlogan,
-        ArmazemID: selectedLoja.ArmazemID,
-        payments_mechanisms:
-          selectedLoja.company?.online_payments_mechanisms.map(
-            (method: any) => ({
-              Mechanism: method.Mechanism,
-              Description: method.Description,
-            })
-          ),
-      });
-      dispatch(
-        getCompanyIdWithNif(selectedLoja.company?.TaxRegistrationNumber)
-      );
-    } else {
-      setValue({
-        nif: '',
-        CompanyID: '',
-        StoreName: '',
-        StoreSlogan: '',
-        ArmazemID: 0,
-        payments_mechanisms: [] as any,
-      });
-    }
-
-    dispatch(getPaymentMethods());
-  }, [selectedLoja]);
 
   const handleBlur = async () => {
     if (!value.nif) {
@@ -126,7 +92,7 @@ export const useCreateLoja = () => {
       formData.append('ArmazemID', value.ArmazemID);
       formData.append(
         'payments_mechanisms',
-        JSON.stringify(paymentMechanismsList)
+        JSON.stringify(value.payments_mechanisms)
       );
 
       dispatch(criarLoja(formData)).then(() => {
@@ -150,9 +116,9 @@ export const useCreateLoja = () => {
             ArmazemID: 0,
             payments_mechanisms: [] as any,
           });
-          setPaymentMechanismsList([]);
+          // setPaymentMechanismsList([]);
           setStoreLogoUrl(null);
-          setShowModal(false);
+          dispatch(getLojas());
         }, 2000);
       });
     }
@@ -172,26 +138,32 @@ export const useCreateLoja = () => {
         Mechanism: method.Mechanism,
         Description: method.Description,
       };
-      setPaymentMechanismsList([...paymentMechanismsList, updatedMethods]);
+      // setPaymentMechanismsList([...paymentMechanismsList, updatedMethods]);
+      setValue({
+        ...value,
+        payments_mechanisms: [...value.payments_mechanisms, updatedMethods],
+      });
     } else {
       const updatedMethods = value.payments_mechanisms.filter(
         (method: any) => method.Mechanism !== method.Mechanism
       );
-      setPaymentMechanismsList(updatedMethods);
+      // setPaymentMechanismsList(updatedMethods);
+      setValue({
+        ...value,
+        payments_mechanisms: updatedMethods,
+      });
     }
   };
 
   return {
-    selectedLoja,
-    setSelectedLoja,
     value,
     setValue,
     handleChange,
     handleSubmit,
     StoreLogoUrl,
     setStoreLogoUrl,
-    paymentMechanismsList,
-    setPaymentMechanismsList,
+    // paymentMechanismsList,
+    // setPaymentMechanismsList,
     loadingOnBlur,
     companyIds,
     isLoading,
@@ -199,7 +171,5 @@ export const useCreateLoja = () => {
     handleBlur,
     handleOptionChange,
     handleCheck,
-    showModal,
-    setShowModal,
   };
 };

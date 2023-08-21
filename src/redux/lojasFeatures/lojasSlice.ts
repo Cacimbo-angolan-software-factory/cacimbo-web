@@ -11,6 +11,7 @@ interface LojasState {
   isLoading: boolean;
   isSuccess: boolean;
   isSuccessCriar: boolean;
+  isLoadingCriar: boolean;
   message: string;
 }
 
@@ -22,6 +23,7 @@ const initialState: LojasState = {
   isError: false,
   isErrorCriar: false,
   isSuccessCriar: false,
+  isLoadingCriar: false,
   isLoading: false,
   isSuccess: false,
   message: '',
@@ -105,18 +107,17 @@ export const lojasSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(criarLoja.pending, (state) => {
-      state.isLoading = true;
+      state.isLoadingCriar = true;
     });
     builder.addCase(criarLoja.fulfilled, (state, action) => {
       state.lojas.push(action.payload);
-      state.loja = action.payload;
-      state.isLoading = false;
+      state.isLoadingCriar = false;
       state.isSuccessCriar = true;
       state.message = 'Loja criada com sucesso! 🎉';
     });
     builder.addCase(criarLoja.rejected, (state) => {
       state.isErrorCriar = true;
-      state.isLoading = false;
+      state.isLoadingCriar = false;
       state.isSuccessCriar = false;
       state.message = 'Erro ao criar loja, tente novamente mais tarde';
     });

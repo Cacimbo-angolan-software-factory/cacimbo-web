@@ -5,6 +5,7 @@ import {
   Container,
   EmptyStore,
   LojasContainer,
+  Overlay,
   SpinnerDiv,
 } from './lojasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
@@ -21,10 +22,12 @@ import SingleLoja from '../../../features/lojas/components/loja/SingleLoja';
 
 const Lojas: React.FC = () => {
   const { user } = useSelector((state: any) => state.user);
-  const { lojas, isLoading } = useSelector((state: any) => state.lojas);
+  const { lojas, isLoading, isLoadingCriar } = useSelector(
+    (state: any) => state.lojas
+  );
   const dispatch = useDispatch<AppDispatch>();
-  const [selectedLoja, setSelectedLoja] = React.useState<any>('');
-  const { showModal, setShowModal } = useCreateLoja();
+  const [selectedLoja, setSelectedLoja] = React.useState<any>(null);
+  const [showModal, setShowModal] = React.useState(false);
 
   useEffect(() => {
     dispatch(getLojas());
@@ -52,9 +55,9 @@ const Lojas: React.FC = () => {
               <SingleLoja
                 key={loja.id}
                 loja={loja}
-                selectedLoja={selectedLoja}
-                setSelectedLoja={setSelectedLoja}
                 setShowModal={setShowModal}
+                setSelectedLoja={setSelectedLoja}
+                selectedLoja={selectedLoja}
               />
             ))
           ) : isLoading ? (
@@ -70,7 +73,21 @@ const Lojas: React.FC = () => {
         </LojasContainer>
       </Container>
 
-      {showModal && <LojasModal selectedLoja={selectedLoja} />}
+      {showModal && (
+        <LojasModal
+          selectedLoja={selectedLoja}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
+
+      {isLoadingCriar && (
+        <SpinnerDiv>
+          <Spinner />
+        </SpinnerDiv>
+      )}
+
+      {isLoadingCriar && <Overlay />}
     </>
   );
 };
