@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { useCreateLoja } from '../../hooks/useCreateLoja';
 
 import {
@@ -16,16 +16,37 @@ import {
   Select,
 } from './styles';
 import Spinner from '../../../../components/spinner/Spinner';
+import {
+  getCompanyIdWithNif,
+  getLojas,
+  getPaymentMethods,
+  updateLoja,
+} from '../../../../redux/lojasFeatures/lojasSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../redux/store';
 
 interface LojasModalProps {
-  selectedLoja?: LojaData;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedLoja: any;
 }
 
 interface LojaData {
-  // ... your existing type definitions
+  nif: string;
+  CompanyID: string;
+  StoreName: string;
+  StoreSlogan: string;
+  ArmazemID: string;
+  paymentMethods: string[];
+  StoreLogoUrl: string;
+  company: any;
 }
 
-const LojasModal: React.FC<LojasModalProps> = ({ selectedLoja }) => {
+const LojasModal: React.FC<LojasModalProps> = ({
+  showModal,
+  setShowModal,
+  selectedLoja,
+}) => {
   const {
     value,
     setStoreLogoUrl,
@@ -38,10 +59,84 @@ const LojasModal: React.FC<LojasModalProps> = ({ selectedLoja }) => {
     handleSubmit,
     handleOptionChange,
     handleCheck,
-    showModal,
-    setShowModal,
-    // handleEdit,
+    setValue,
+    // setPaymentMechanismsList,
+    // paymentMechanismsList,
   } = useCreateLoja();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (selectedLoja) {
+      setValue({
+        nif: selectedLoja.company?.TaxRegistrationNumber,
+        CompanyID: selectedLoja.CompanyID,
+        StoreName: selectedLoja.StoreName,
+        StoreSlogan: selectedLoja.StoreSlogan,
+        ArmazemID: selectedLoja.ArmazemID,
+        payments_mechanisms:
+          selectedLoja.company?.online_payments_mechanisms.map(
+            (method: any) => ({
+              Mechanism: method.Mechanism,
+              Description: method.Description,
+            })
+          ),
+      });
+      // setPaymentMechanismsList({
+      //   paymentMechanismsList:
+      //     selectedLoja.company?.online_payments_mechanisms.map(
+      //       (method: any) => ({
+      //         Mechanism: method.Mechanism,
+      //         Description: method.Description,
+      //       })
+      //     ),
+      // });
+      dispatch(
+        getCompanyIdWithNif(selectedLoja.company?.TaxRegistrationNumber)
+      );
+    } else {
+      setValue({
+        nif: '',
+        CompanyID: '',
+        StoreName: '',
+        StoreSlogan: '',
+        ArmazemID: 0,
+        payments_mechanisms: [] as any,
+      });
+    }
+    console.log(selectedLoja);
+    dispatch(getPaymentMethods());
+  }, [selectedLoja]);
+
+  const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    dispatch(updateLoja(selectedLoja)).then(() => {
+      toast.success('Loja editada com sucesso! 🎉', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+
+      setTimeout(() => {
+        setValue({
+          nif: '',
+          CompanyID: '',
+          StoreName: '',
+          StoreSlogan: '',
+          ArmazemID: 0,
+          payments_mechanisms: [] as any,
+        });
+        // setPaymentMechanismsList([]);
+        setStoreLogoUrl(null);
+        dispatch(getLojas());
+      }, 2000);
+    });
+  };
 
   return (
     <>
@@ -64,7 +159,7 @@ const LojasModal: React.FC<LojasModalProps> = ({ selectedLoja }) => {
           />
         </InputDiv>
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={selectedLoja ? handleEdit : handleSubmit}>
           <Content>
             <InputDiv>
               Id da empresa:
@@ -150,7 +245,11 @@ const LojasModal: React.FC<LojasModalProps> = ({ selectedLoja }) => {
           </Content>
           <FooterDiv>
             <button onClick={() => setShowModal(false)}>Cancelar</button>
-            <button type='submit'>
+            <button
+              // onClick={() => setTimeout(() => setShowModal(false), 3000)}
+              disabled={value.nif === ''}
+              type='submit'
+            >
               {' '}
               {isLoading
                 ? 'Aguarde...'

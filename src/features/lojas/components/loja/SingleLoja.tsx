@@ -7,19 +7,20 @@ import { LojaContainer, Overlay } from './loja';
 import SideBarLoja from '../sideBar/SideBarLoja';
 import ModalDelete from '../delete/ModalDelete';
 import { useLoja } from '../../hooks/useLoja';
+import { useCreateLoja } from '../../hooks/useCreateLoja';
 
 interface Props {
   loja: any;
+  setShowModal: any;
   setSelectedLoja: any;
   selectedLoja: any;
-  setShowModal: any;
 }
 
 const SingleLoja: React.FC<Props> = ({
   loja,
+  setShowModal,
   setSelectedLoja,
   selectedLoja,
-  setShowModal,
 }) => {
   const [showOptions, setShowOptions] = React.useState(false);
   let menuRef = useRef<any>(null);
@@ -54,6 +55,7 @@ const SingleLoja: React.FC<Props> = ({
               onClick={() => {
                 setShowOptions(true);
                 setSelectedLoja(loja);
+                console.log(loja);
               }}
             >
               <IoEllipsisVertical />
