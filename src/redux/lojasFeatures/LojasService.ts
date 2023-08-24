@@ -21,7 +21,7 @@ const deleteLoja = async (id: any) => {
 };
 
 const updateLoja = async (id: string) => {
-  const response = await apiCacimbo.put(`online-stores/${id}`);
+  const response = await apiCacimbo.patch(`online-stores/${id}`);
   return response.data;
 };
 
