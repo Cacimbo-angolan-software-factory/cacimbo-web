@@ -78,6 +78,7 @@ export const updateLoja = createAsyncThunk(
     try {
       return await lojasService.updateLoja(id);
     } catch (error: any) {
+      console.log(error.response.data);
       return error;
     }
   }

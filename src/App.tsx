@@ -29,6 +29,7 @@ const Solicitaçoes = lazy(
 const Empresas = lazy(() => import('./pages/admin/empresas/Empresas'));
 const Usuarios = lazy(() => import('./pages/admin/usuarios/Usuarios'));
 const Lojas = lazy(() => import('./pages/admin/lojas/Lojas'));
+const Tarefas = lazy(() => import('./pages/admin/tasks/Tarefas'));
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
               <Route path='/NovaPalavraPasse' element={<ResetPassword />} />
               <Route path='/acesso' element={<Acesso />} />
               <Route path='/lojas' element={<Lojas />} />
+              <Route path='/tarefas' element={<Tarefas />} />
             </Route>
             <Route path='/Login' element={<Login />} />
           </Routes>

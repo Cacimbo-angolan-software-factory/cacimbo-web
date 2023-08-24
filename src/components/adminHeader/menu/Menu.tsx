@@ -7,6 +7,7 @@ import {
   RiFileList3Fill,
   RiSurveyFill,
   RiStore3Fill,
+  RiTaskFill,
 } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
 
@@ -122,6 +123,26 @@ const Menu: React.FC = () => {
           </p>
         </MenuItem>
       ) : null}
+
+      <MenuItem
+        className={location.pathname === `/tarefas` ? 'active' : 'inherit'}
+        to='/tarefas'
+      >
+        <span
+          className={
+            location.pathname === `/tarefas` ? 'active-text' : 'inherit'
+          }
+        >
+          <RiTaskFill />
+        </span>
+        <p
+          className={
+            location.pathname === `/tarefas` ? 'active-text' : 'inherit'
+          }
+        >
+          Tarefas
+        </p>
+      </MenuItem>
 
       {user.user.lastCompanyIDUsed === null ||
       user.user.tipo === 'User' ? null : (

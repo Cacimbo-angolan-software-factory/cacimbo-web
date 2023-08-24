@@ -67,19 +67,19 @@ const LojasModal: React.FC<LojasModalProps> = ({
 
   useEffect(() => {
     if (selectedLoja) {
+      const payments_mechanisms =
+        selectedLoja.company.online_payments_mechanisms.map((method: any) => ({
+          Mechanism: method.Mechanism,
+          Description: method.Description,
+        }));
+      console.log(payments_mechanisms);
       setValue({
         nif: selectedLoja.company?.TaxRegistrationNumber,
         CompanyID: selectedLoja.CompanyID,
         StoreName: selectedLoja.StoreName,
         StoreSlogan: selectedLoja.StoreSlogan,
         ArmazemID: selectedLoja.ArmazemID,
-        payments_mechanisms:
-          selectedLoja.company?.online_payments_mechanisms.map(
-            (method: any) => ({
-              Mechanism: method.Mechanism,
-              Description: method.Description,
-            })
-          ),
+        payments_mechanisms,
       });
       // setPaymentMechanismsList({
       //   paymentMechanismsList:
@@ -103,7 +103,6 @@ const LojasModal: React.FC<LojasModalProps> = ({
         payments_mechanisms: [] as any,
       });
     }
-    console.log(selectedLoja);
     dispatch(getPaymentMethods());
   }, [selectedLoja]);
 
@@ -192,18 +191,20 @@ const LojasModal: React.FC<LojasModalProps> = ({
                 required
               />
             </InputDiv>
-            <InputDiv>
-              Logo:
-              <input
-                disabled={
-                  value.nif.length === 0 || value.nif === '' || loadingOnBlur
-                }
-                type='file'
-                onChange={(e: any) => setStoreLogoUrl(e.target.files?.[0])}
-                accept='image/*'
-                required
-              />
-            </InputDiv>
+            {selectedLoja ? null : (
+              <InputDiv>
+                Logo:
+                <input
+                  disabled={
+                    value.nif.length === 0 || value.nif === '' || loadingOnBlur
+                  }
+                  type='file'
+                  onChange={(e: any) => setStoreLogoUrl(e.target.files?.[0])}
+                  accept='image/*'
+                  required
+                />
+              </InputDiv>
+            )}
             <InputDiv>
               Slogan:
               <input
@@ -235,6 +236,10 @@ const LojasModal: React.FC<LojasModalProps> = ({
                 <label className='checkbox' key={method.id}>
                   <input
                     type='checkbox'
+                    checked={value.payments_mechanisms.some(
+                      (mechanism: any) =>
+                        mechanism.Mechanism === method.Mechanism
+                    )}
                     value={`${method.Mechanism},${method.Description}`}
                     onChange={(e) => handleCheck(e, method)}
                   />
