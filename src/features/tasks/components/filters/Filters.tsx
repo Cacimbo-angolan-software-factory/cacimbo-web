@@ -6,11 +6,12 @@ import { Header } from './filtersStyles';
 interface Props {
   filtro: string;
   setFiltro: (filtro: string) => void;
+  fixedFilter: any;
 }
 
-const Filters: React.FC<Props> = ({ filtro, setFiltro }) => {
+const Filters: React.FC<Props> = ({ filtro, setFiltro, fixedFilter }) => {
   return (
-    <Header>
+    <Header className={fixedFilter ? 'filter fixed' : 'filter'}>
       <nav>
         <button
           className={filtro === 'all' ? 'active' : ''}
