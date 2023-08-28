@@ -16,7 +16,9 @@ interface Props {
 const Tarefa: React.FC<Props> = ({ assist, filtro }) => {
   return (
     <Container>
-      <h3>{assist.titulo}</h3>
+      <h3>
+        {assist.titulo} - {assist.id}
+      </h3>
       <p>
         <IoDocumentTextOutline />
         {assist.cliente_nif}

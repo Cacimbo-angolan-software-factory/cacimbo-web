@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Main, Section, Section2 } from './tarefasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -8,7 +8,13 @@ import Filters from '../../../features/tasks/components/filters/Filters';
 import tarefas from '../../../assets/tarefas.svg';
 
 const Tarefas: React.FC = () => {
-  const { filtro, setfiltro, userAssistsFiltered } = useTasks();
+  const {
+    filtro,
+    setfiltro,
+    userAssistsFiltered,
+    fixedFilter,
+    setFixedFilter,
+  } = useTasks();
 
   return (
     <>
@@ -16,7 +22,11 @@ const Tarefas: React.FC = () => {
       <HeaderMobile />
 
       <Main>
-        <Filters filtro={filtro} setFiltro={setfiltro} />
+        <Filters
+          filtro={filtro}
+          setFiltro={setfiltro}
+          fixedFilter={fixedFilter}
+        />
         <Section>
           {userAssistsFiltered.length > 0 ? (
             userAssistsFiltered.map((assist: any) => (
