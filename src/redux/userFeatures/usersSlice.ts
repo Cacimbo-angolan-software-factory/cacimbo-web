@@ -5,13 +5,13 @@ interface UserState {
   user: null;
   users: string[];
   perfis: string[];
-  tarefas: string[];
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
   message: string;
   allUsers: string[];
   userEmpresas: string[];
+  userAssists: string[];
 }
 
 const initialState: UserState = {
@@ -20,13 +20,13 @@ const initialState: UserState = {
     : null,
   users: [],
   perfis: [],
-  tarefas: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: '',
   allUsers: [],
   userEmpresas: [],
+  userAssists: [],
 };
 
 export const login = createAsyncThunk(
@@ -86,11 +86,11 @@ export const getPerfis = createAsyncThunk('user/getPerfis', async () => {
   }
 });
 
-export const getTarefas = createAsyncThunk(
+export const getUsersAssists = createAsyncThunk(
   'user/getTarefas',
   async (user: any) => {
     try {
-      const response = await userService.getTarefas(user);
+      const response = await userService.getAssistsUsers(user);
       return response;
     } catch (error: any) {
       return error;
@@ -207,35 +207,35 @@ export const userSlice = createSlice({
       state.message = 'Sem perfis cadastrados';
     });
 
-    // get tarefas
-    builder.addCase(getTarefas.pending, (state) => {
+    // get assistencias
+    builder.addCase(getUsersAssists.pending, (state) => {
       state.isLoading = true;
     }),
-      builder.addCase(getTarefas.fulfilled, (state, action) => {
-        state.tarefas = action.payload;
+      builder.addCase(getUsersAssists.fulfilled, (state, action) => {
+        state.userAssists = action.payload;
         state.isLoading = false;
         state.isSuccess = true;
       });
-    builder.addCase(getTarefas.rejected, (state, action) => {
+    builder.addCase(getUsersAssists.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
-      state.message = 'Sem tarefas disponíveis';
+      state.message = 'Sem assistencias disponíveis';
     });
 
     // create tarefas
-    builder.addCase(createTarefas.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(createTarefas.fulfilled, (state, action) => {
-      state.tarefas.push(action.payload);
-      state.isLoading = false;
-      state.isSuccess = true;
-    });
-    builder.addCase(createTarefas.rejected, (state) => {
-      state.isError = true;
-      state.isLoading = false;
-      state.message = 'Erro ao criar tarefa';
-    });
+    // builder.addCase(createTarefas.pending, (state) => {
+    //   state.isLoading = true;
+    // });
+    // builder.addCase(createTarefas.fulfilled, (state, action) => {
+    //   state.tarefas.push(action.payload);
+    //   state.isLoading = false;
+    //   state.isSuccess = true;
+    // });
+    // builder.addCase(createTarefas.rejected, (state) => {
+    //   state.isError = true;
+    //   state.isLoading = false;
+    //   state.message = 'Erro ao criar tarefa';
+    // });
 
     // create user
     builder.addCase(createUser.pending, (state) => {

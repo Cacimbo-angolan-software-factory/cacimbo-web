@@ -88,10 +88,19 @@ const getPerfis = async () => {
   }
 };
 
-const getTarefas = async (user: any) => {
+const getAssistsUsers = async (userId: any) => {
+  try {
+    const response = await api.get(`assistencias/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const getAssistsPartners = async (user: any) => {
   try {
     const response = await api.get(
-      `task-textos?perfil=${user?.user.id_perfil}`
+      `assistencias/parceiro/${user?.user.parceiro_id}`
     );
     return response.data;
   } catch (error) {
@@ -118,12 +127,12 @@ export const userService = {
   logout,
   getUsers,
   getPerfis,
-  getTarefas,
   createTarefas,
   createUser,
   getAllUsers,
   getUsersEmpresas,
   AssociarUser,
+  getAssistsUsers,
 };
 
 export default userService;
