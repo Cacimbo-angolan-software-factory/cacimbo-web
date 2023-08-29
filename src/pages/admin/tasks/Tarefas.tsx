@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Main, Section, Section2 } from './tarefasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -13,7 +13,8 @@ const Tarefas: React.FC = () => {
     setfiltro,
     userAssistsFiltered,
     fixedFilter,
-    setFixedFilter,
+    search,
+    handleSearch,
   } = useTasks();
 
   return (
@@ -26,6 +27,8 @@ const Tarefas: React.FC = () => {
           filtro={filtro}
           setFiltro={setfiltro}
           fixedFilter={fixedFilter}
+          search={search}
+          handleSearch={handleSearch}
         />
         <Section>
           {userAssistsFiltered.length > 0 ? (

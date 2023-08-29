@@ -5,7 +5,7 @@ export const Header = styled.header`
   flex-direction: column;
   gap: 2rem;
 
-  .fixed {
+  &.fixed {
     position: fixed;
     top: 0;
     left: 0;

@@ -7,9 +7,17 @@ interface Props {
   filtro: string;
   setFiltro: (filtro: string) => void;
   fixedFilter: any;
+  search: string;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Filters: React.FC<Props> = ({ filtro, setFiltro, fixedFilter }) => {
+const Filters: React.FC<Props> = ({
+  filtro,
+  setFiltro,
+  fixedFilter,
+  search,
+  handleSearch,
+}) => {
   return (
     <Header className={fixedFilter ? 'filter fixed' : 'filter'}>
       <nav>
@@ -31,7 +39,13 @@ const Filters: React.FC<Props> = ({ filtro, setFiltro, fixedFilter }) => {
         >
           Concluídas
         </button>
-        <input type='text' placeholder='Pesquisar' />
+        <input
+          value={search}
+          onChange={handleSearch}
+          name='search'
+          type='text'
+          placeholder='Pesquise por id, cliente ou nif...'
+        />
       </nav>
       <div>
         <p>
