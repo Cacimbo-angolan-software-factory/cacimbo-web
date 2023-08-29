@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { login } from '../../redux/userFeatures/usersSlice';
 
-import { Container } from './stylesLogin';
+import { Container, Overlay, SpinnerDiv } from './stylesLogin';
 import { reset } from '../../redux/userFeatures/usersSlice';
 import { Link } from 'react-router-dom';
+import Spinner from '../../components/spinner/Spinner';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -68,6 +69,15 @@ const Login: React.FC = () => {
       <p>
         <a href='#'>Esqueceu a sua palavra passe?</a>
       </p>
+
+      {isLoading && (
+        <>
+          <SpinnerDiv>
+            <Spinner />
+          </SpinnerDiv>
+          <Overlay />
+        </>
+      )}
     </Container>
   );
 };
