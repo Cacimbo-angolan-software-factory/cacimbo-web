@@ -19,7 +19,8 @@ export const useTasks = () => {
     .filter((assist: any) => {
       if (filtro === 'all') return assist;
       if (filtro === 'concluidas') return assist.estado === 'done';
-      if (filtro === 'pendentes') return assist.estado === !'done';
+      if (filtro === 'pendentes')
+        return assist.estado === 'to do' && 'in progress';
     })
     .filter((item: any) => {
       if (search === '') return item;
