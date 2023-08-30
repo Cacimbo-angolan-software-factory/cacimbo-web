@@ -95,7 +95,6 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     dispatch(getCanal());
     dispatch(getModuloComum());
     dispatch(getModuloPadronizar());
-    console.log(licencasDaEmpresa.map((obj: any) => obj.id));
   }, []);
 
   const handleComum = (event: SelectChangeEvent<any>) => {
