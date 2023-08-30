@@ -67,6 +67,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
   const dispatch = useDispatch<AppDispatch>();
   const inputRefs = useRef<any>([]);
   const numberOfInputs = Object.keys(value).length;
+  const [licencaSelected, setLicencaSelected] = React.useState<any>();
 
   const handleOnKeyDown = (event: any, index: number) => {
     if (event.key === 'Enter') {
@@ -94,6 +95,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     dispatch(getCanal());
     dispatch(getModuloComum());
     dispatch(getModuloPadronizar());
+    console.log(licencasDaEmpresa.map((obj: any) => obj.id));
   }, []);
 
   const handleComum = (event: SelectChangeEvent<any>) => {
@@ -137,6 +139,9 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     const modulosId = modulos
       .filter((modulo) => [...comum, ...padronizar].includes(modulo.descricao))
       .map((obj) => obj.id);
+    const modulosDeRenovacao = licencaSelected.solicitacao.sol_modulos.map(
+      (obj: any) => obj.modulo_id
+    );
 
     let canal_id = canal?.filter(
       (canal: any) => canal?.Nome === value.canal_id
@@ -162,7 +167,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             typeof value.licencaId === 'string' && value.licencaId.length === 0
               ? 0
               : value.licencaId,
-          modulo: modulosId,
+          modulo: showLicencas ? modulosDeRenovacao : modulosId,
           parceiro_id: user?.user.parceiro_id,
           user_id: user?.user.id,
         })
@@ -227,6 +232,16 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
       ...value,
       licencaId: selectedValue,
     });
+    const licencaId = parseInt(e.target.value);
+
+    const selectedLicense = licencasDaEmpresa.find(
+      (lic: any) => lic.id === licencaId
+    );
+    if (selectedLicense) {
+      setLicencaSelected(selectedLicense);
+    } else {
+      setLicencaSelected([]);
+    }
   };
 
   return (
@@ -366,7 +381,6 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             disabled={value.nif.length === 0 || value.nif === ''}
             onChange={(e: any) => {
               setValue({ ...value, canal_id: e.target.value });
-              console.log(value.canal_id);
             }}
           >
             <option value=''>Selecione o canal</option>
