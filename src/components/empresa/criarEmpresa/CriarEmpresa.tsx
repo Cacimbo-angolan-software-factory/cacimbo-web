@@ -1,12 +1,20 @@
 import { MenuItem } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SelectInput from '../../SelectTextField';
 import { criarEmpresa } from '../../../redux/empresaFeatures/empresaSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, Form, Div } from './stylesCriarEmpresa';
+import {
+  Container,
+  Form,
+  Div,
+  SpinnerDiv,
+  Overlay,
+} from './stylesCriarEmpresa';
 import { AppDispatch } from '../../../redux/store';
 import ModalConcluido from '../../modalConcluido/ModalConcluido';
+import { LicContext } from '../../../context';
+import Spinner from '../../spinner/Spinner';
 
 interface CriarEmpresaProps {
   setCriarEmpresa: (value: boolean) => void;
@@ -27,6 +35,7 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
     (state: any) => state.empresa
   );
   const [showModal, setShowModal] = React.useState(false);
+  const { getNif, loadingNif } = useContext(LicContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -62,12 +71,37 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
     }
   }, [empresa, isError]);
 
+  const handleGetNif = async () => {
+    if (getNif === undefined) return;
+    const empresa = await getNif(value.nif);
+    console.log(empresa);
+    if (empresa) {
+      setValue({
+        ...value,
+        nome: empresa.nome,
+        email: empresa.email,
+        telefone: empresa.telefone,
+        sede: empresa.provincia,
+      });
+    }
+  };
+
   return (
     <>
       <Container>
         <h1>Parceiros</h1>
 
         <Form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor='nif'>Nif</label>
+            <input
+              name='nif'
+              value={value.nif}
+              onChange={handleChange}
+              type='text'
+              onBlur={handleGetNif}
+            />
+          </div>
           <div>
             <label htmlFor='nome'>Nome</label>
             <input
@@ -102,15 +136,6 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
               value={value.telefone}
               onChange={handleChange}
               type='number'
-            />
-          </div>
-          <div>
-            <label htmlFor='nif'>Nif</label>
-            <input
-              name='nif'
-              value={value.nif}
-              onChange={handleChange}
-              type='text'
             />
           </div>
           <div>
@@ -150,6 +175,14 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
           <h2>Cadastro feito com sucesso! 🎉</h2>
         </ModalConcluido>
       )}
+
+      {loadingNif && (
+        <SpinnerDiv>
+          <Spinner />
+        </SpinnerDiv>
+      )}
+
+      {loadingNif && <Overlay />}
     </>
   );
 };
