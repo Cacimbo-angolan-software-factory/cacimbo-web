@@ -2,13 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LicContext } from '../../../context';
 import Licence from '../../../components/licenças/Licence';
 
-import {
-  Div,
-  FiltersContainer,
-  InputSearch,
-  Overlay,
-  Pagination,
-} from './styles';
+import { Div, FiltersContainer, InputSearch, Overlay } from './styles';
 import Filters from '../../../components/licenças/filters/Filters';
 import ScrollTop from '../../../components/scrollTop/ScrollTop';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
@@ -23,7 +17,6 @@ import ModalParceiros from '../../../components/licenças/modalParceiros/ModalPa
 const Licenças: React.FC = () => {
   const { licences, loadingLicenses } = useContext(LicContext);
   const [fixedFilter, setFixedFilter] = useState(false);
-  const [pageNumber, setPageNumber] = useState(0);
   const [filtro, setFiltro] = useState('all');
   const [childFitro, setChildFiltro] = useState('todas');
   const [search, setSearch] = useState('');
@@ -46,27 +39,12 @@ const Licenças: React.FC = () => {
     setSearch(event.target.value);
   };
 
-  const itemsPerPage = 50;
-  const startOffset = pageNumber * itemsPerPage;
-  const endOffset = startOffset + itemsPerPage;
-
-  const currentItems = licences.slice(startOffset, endOffset);
-
-  const pageCount = Math.ceil(licences.length / itemsPerPage);
   let today = new Date().toISOString().slice(0, 10);
   const todasActivas = licences.filter(
     (licence) => licence.data_validade > today
   );
-  const todasActivasPaginated = todasActivas.slice(
-    startOffset,
-    startOffset + itemsPerPage
-  );
   const porRenovar = licences.filter(
     (licence) => licence.data_validade < today
-  );
-  const porRenovarPaginated = porRenovar.slice(
-    startOffset,
-    startOffset + itemsPerPage
   );
 
   // filter by partner
@@ -74,32 +52,13 @@ const Licenças: React.FC = () => {
     return licence.parceiro_id === empresaSelected?.id;
   });
 
-  const SelectedPartnerPaginated = licencasDeParceiro.slice(
-    startOffset,
-    startOffset + itemsPerPage
-  );
-
   const activasParceiro = licencasDeParceiro.filter(
     (licence) => licence.data_validade > today
-  );
-  const activasParceiroPaginated = activasParceiro.slice(
-    startOffset,
-    startOffset + itemsPerPage
   );
 
   const porRenovarParceiro = licencasDeParceiro.filter(
     (licence) => licence.data_validade < today
   );
-  const porRenovarParceiroPaginated = porRenovarParceiro.slice(
-    startOffset,
-    startOffset + itemsPerPage
-  );
-
-  const handlePageClick = (event: any) => {
-    const selectedPage = event.selected;
-    const newOffset = selectedPage * itemsPerPage;
-    setPageNumber(newOffset);
-  };
 
   // get nif from empresasList
   const getNif = (nif: any) => {
@@ -115,8 +74,8 @@ const Licenças: React.FC = () => {
     if (filtro === 'all' && childFitro === 'todas') {
       return (
         <div>
-          {currentItems.length > 0
-            ? currentItems
+          {licences.length > 0
+            ? licences
                 .filter((item: any) => {
                   if (search === '') {
                     return item;
@@ -154,8 +113,8 @@ const Licenças: React.FC = () => {
     if (filtro === 'all' && childFitro === 'activasAll') {
       return (
         <div>
-          {todasActivasPaginated.length > 0
-            ? todasActivasPaginated
+          {todasActivas.length > 0
+            ? todasActivas
                 .filter((item: any) => {
                   if (search === '') {
                     return item;
@@ -193,8 +152,8 @@ const Licenças: React.FC = () => {
     if (filtro === 'all' && childFitro === 'porRenovarAll') {
       return (
         <div>
-          {porRenovarPaginated.length > 0
-            ? porRenovarPaginated
+          {porRenovar.length > 0
+            ? porRenovar
                 .filter((item: any) => {
                   if (search === '') {
                     return item;
@@ -233,29 +192,31 @@ const Licenças: React.FC = () => {
     if (filtro === 'parceiro' && childFitro === 'parceiroTodas') {
       return (
         <div>
-          {SelectedPartnerPaginated.length > 0
-            ? SelectedPartnerPaginated.filter((item: any) => {
-                if (search === '') {
-                  return item;
-                } else if (
-                  item.data_emissao
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.data_validade
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  item.cliente_nome
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  getNif(item.empresa_id).includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              }).map((licence) => (
-                <div key={licence.id}>
-                  <Licence licence={licence} />
-                </div>
-              ))
+          {licencasDeParceiro.length > 0
+            ? licencasDeParceiro
+                .filter((item: any) => {
+                  if (search === '') {
+                    return item;
+                  } else if (
+                    item.data_emissao
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.data_validade
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    item.cliente_nome
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    getNif(item.empresa_id).includes(search.toLowerCase())
+                  ) {
+                    return item;
+                  }
+                })
+                .map((licence) => (
+                  <div key={licence.id}>
+                    <Licence licence={licence} />
+                  </div>
+                ))
             : !loadingLicenses && (
                 <EmptyState>
                   <h2>Não existem licenças</h2>
@@ -270,8 +231,8 @@ const Licenças: React.FC = () => {
     if (filtro === 'parceiro' && childFitro === 'activasParceiro') {
       return (
         <div>
-          {activasParceiroPaginated.length > 0
-            ? activasParceiroPaginated
+          {activasParceiro.length > 0
+            ? activasParceiro
                 .filter((item: any) => {
                   if (search === '') {
                     return item;
@@ -309,8 +270,8 @@ const Licenças: React.FC = () => {
     if (filtro === 'parceiro' && childFitro === 'porRenovarParceiro') {
       return (
         <div>
-          {porRenovarParceiroPaginated.length > 0
-            ? porRenovarParceiroPaginated
+          {porRenovarParceiro.length > 0
+            ? porRenovarParceiro
                 .filter((item: any) => {
                   if (search === '') {
                     return item;
@@ -399,18 +360,6 @@ const Licenças: React.FC = () => {
       )}
       {openModalParceiros && (
         <Overlay onClick={() => setOpenModalParceiros(false)} />
-      )}
-
-      {pageCount > 1 && (
-        <Pagination
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={'...'}
-          pageCount={pageCount}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          activeClassName={'active'}
-        />
       )}
     </>
   );

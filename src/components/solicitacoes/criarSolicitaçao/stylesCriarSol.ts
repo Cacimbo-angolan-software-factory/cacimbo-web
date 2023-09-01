@@ -111,3 +111,10 @@ export const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 9;
 `;
+
+export const ErrorMsg = styled.p`
+  color: #bb2525;
+  font-size: 1.7rem;
+  text-align: center;
+  margin: 2rem 0;
+`;
