@@ -72,7 +72,6 @@ const LojasModal: React.FC<LojasModalProps> = ({
           Mechanism: method.Mechanism,
           Description: method.Description,
         }));
-      console.log(payments_mechanisms);
       setValue({
         nif: selectedLoja.company?.TaxRegistrationNumber,
         CompanyID: selectedLoja.CompanyID,

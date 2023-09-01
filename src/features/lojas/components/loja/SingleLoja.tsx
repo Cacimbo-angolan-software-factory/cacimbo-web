@@ -55,7 +55,6 @@ const SingleLoja: React.FC<Props> = ({
               onClick={() => {
                 setShowOptions(true);
                 setSelectedLoja(loja);
-                console.log(loja);
               }}
             >
               <IoEllipsisVertical />

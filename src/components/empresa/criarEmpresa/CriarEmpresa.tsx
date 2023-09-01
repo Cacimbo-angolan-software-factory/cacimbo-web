@@ -74,7 +74,6 @@ const CriarEmpresa: React.FC<CriarEmpresaProps> = ({ setCriarEmpresa }) => {
   const handleGetNif = async () => {
     if (getNif === undefined) return;
     const empresa = await getNif(value.nif);
-    console.log(empresa);
     if (empresa) {
       setValue({
         ...value,

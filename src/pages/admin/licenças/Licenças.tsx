@@ -355,7 +355,6 @@ const Licenças: React.FC = () => {
           openModalParceiros={openModalParceiros}
           setOpenModalParceiros={setOpenModalParceiros}
           setEmpresaSelected={setEmpresaSelected}
-          empresaSelected={empresaSelected}
         />
       )}
       {openModalParceiros && (
