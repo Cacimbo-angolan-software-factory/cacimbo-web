@@ -82,8 +82,6 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
       setErrorMsg('Erro ao associar usuário, verifique o nif 🧐');
       console.log(error);
     }
-
-    console.log(value);
   };
 
   return (

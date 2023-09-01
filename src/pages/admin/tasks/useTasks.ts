@@ -12,7 +12,6 @@ export const useTasks = () => {
 
   useEffect(() => {
     dispatch(getUsersAssists(user.user.id));
-    console.log(userAssists);
   }, []);
 
   const userAssistsFiltered = userAssists

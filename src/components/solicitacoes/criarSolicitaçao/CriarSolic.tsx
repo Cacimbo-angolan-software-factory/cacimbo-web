@@ -230,7 +230,6 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
 
   const handleInputLicencaId = (e: any) => {
     const selectedValue = e.target.value;
-    console.log(selectedValue);
     setValue({
       ...value,
       licencaId: selectedValue,

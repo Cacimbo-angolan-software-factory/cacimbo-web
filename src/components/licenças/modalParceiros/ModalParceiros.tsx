@@ -8,21 +8,14 @@ interface ModalParceirosProps {
   openModalParceiros: boolean;
   setOpenModalParceiros: React.Dispatch<React.SetStateAction<boolean>>;
   setEmpresaSelected: React.Dispatch<React.SetStateAction<any>>;
-  empresaSelected: any;
 }
 
 const ModalParceiros: React.FC<ModalParceirosProps> = ({
   openModalParceiros,
   setOpenModalParceiros,
   setEmpresaSelected,
-  empresaSelected,
 }) => {
   const { empresas, loadingEmpresas } = useContext(LicContext);
-  //   const [empresaSelected, setEmpresaSelected] = useState<any>();
-
-  useEffect(() => {
-    console.log(empresaSelected);
-  }, []);
 
   return (
     <Wrapper className={openModalParceiros ? 'open' : ''}>

@@ -65,7 +65,6 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
       } else {
         setShowPermissions(false);
       }
-      console.log(filteredPermissions);
     } catch (error) {
       setShowPermissions(false);
     }
