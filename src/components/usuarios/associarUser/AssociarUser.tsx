@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import {
+  ErrorMsg,
   FooterDiv,
   Form,
   Header,
   InputDiv,
   Overlay,
   Select,
+  SpinnerDiv,
   Wrapper,
 } from './associarUserStyles';
 import { api, apiCacimbo } from '../../../service/Service.api';
@@ -15,6 +17,7 @@ import { MenuItem } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getUsersEmpresas } from '../../../redux/userFeatures/usersSlice';
+import Spinner from '../../spinner/Spinner';
 
 interface AssociarUserProps {
   openAssociar: boolean;
@@ -32,6 +35,8 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
     empresaSelecionada: '',
   });
   const [filteredEmpresas, setFilteredEmpresas] = useState([]);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [loadingNif, setLoadingNif] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,10 +48,14 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
 
   const handleBlur = async () => {
     try {
+      setLoadingNif(true);
       const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
       const company = response.data.data;
       setFilteredEmpresas(company);
+      setLoadingNif(false);
     } catch (error) {
+      setErrorMsg('Nif não encontrado');
+      setLoadingNif(false);
       console.log(error);
     }
   };
@@ -68,11 +77,13 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
         companyId: value.empresaSelecionada,
       });
       dispatch(getUsersEmpresas(userSelected.id));
+      setOpenAssociar(false);
     } catch (error) {
+      setErrorMsg('Erro ao associar usuário, verifique o nif 🧐');
       console.log(error);
     }
 
-    setOpenAssociar(false);
+    console.log(value);
   };
 
   return (
@@ -99,18 +110,30 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
           <Select
             value={value.empresaSelecionada}
             onChange={handleOptionChange}
+            disabled={value.nif === ''}
           >
+            <option value=''>Selecione o id da empresa</option>
             {filteredEmpresas.map((item: any) => (
               <option key={item.CompanyID} value={item.CompanyID}>
                 {item.CompanyName} - {item.CompanyID}
               </option>
             ))}
           </Select>
+
+          {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
           <FooterDiv>
             <button onClick={() => setOpenAssociar(false)}>Cancelar</button>
             <button type='submit'> Associar</button>
           </FooterDiv>
         </Form>
+
+        {loadingNif && (
+          <SpinnerDiv>
+            <Spinner />
+          </SpinnerDiv>
+        )}
+
+        {loadingNif && <Overlay />}
       </Wrapper>
 
       {openAssociar && <Overlay onClick={() => setOpenAssociar(false)} />}

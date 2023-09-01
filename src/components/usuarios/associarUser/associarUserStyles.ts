@@ -110,3 +110,17 @@ export const Select = styled.select`
   color: #fff;
   font-size: 1.2rem;
 `;
+
+export const ErrorMsg = styled.p`
+  color: #bb2525;
+  font-size: 1.6rem;
+  text-align: center;
+  margin: 0.5rem 0;
+`;
+
+export const SpinnerDiv = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
