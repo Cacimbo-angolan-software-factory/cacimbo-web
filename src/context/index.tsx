@@ -294,6 +294,7 @@ export const LicProvider = ({ children }: IContext) => {
       }
       if (err?.response.status) {
         console.error('😭 Algo deu errado, Tente mais tarde', 'error');
+        setLoadingNif(false);
         return;
       }
     }

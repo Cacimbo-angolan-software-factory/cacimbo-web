@@ -9,6 +9,7 @@ import {
   Select,
   SpinnerDiv,
   Overlay,
+  ErrorMsg,
 } from './stylesCriarSol';
 import { Checkbox, ListItemText, MenuItem, TextField } from '@mui/material';
 import SelectInput from '../../SelectTextField';
@@ -68,6 +69,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
   const inputRefs = useRef<any>([]);
   const numberOfInputs = Object.keys(value).length;
   const [licencaSelected, setLicencaSelected] = React.useState<any>();
+  const [errorMsg, setErrorMsg] = React.useState('');
 
   const handleOnKeyDown = (event: any, index: number) => {
     if (event.key === 'Enter') {
@@ -128,6 +130,8 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
         cargo: empresa.cargo,
         responsavel: empresa.contacto_nome,
       });
+    } else {
+      setErrorMsg('Nif não encontrado 🧐');
     }
   };
 
@@ -247,6 +251,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     <Container>
       <h1>Solicitação</h1>
 
+      <ErrorMsg>{errorMsg}</ErrorMsg>
       <Form onSubmit={handleSubmmit}>
         <div>
           <label htmlFor='nif'>Nif</label>
