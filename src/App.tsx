@@ -8,6 +8,7 @@ import PrivateRoutes from './PrivateRoutes';
 import ResetPassword from './pages/login/ResetPassword';
 import Acesso from './pages/admin/acesso/Acesso';
 import Spinner from './components/spinner/Spinner';
+import { ServersCli } from './pages/admin/servers';
 
 const AppContainer = styled.div`
   display: flex;
@@ -53,6 +54,7 @@ function App() {
               <Route path='/acesso' element={<Acesso />} />
               <Route path='/lojas' element={<Lojas />} />
               <Route path='/tarefas' element={<Tarefas />} />
+              <Route path='/servidores' element={<ServersCli/>} />
             </Route>
             <Route path='/Login' element={<Login />} />
           </Routes>
