@@ -195,11 +195,11 @@ const Menu: React.FC = () => {
       {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
         <MenuItem
           className={location.pathname === `/servidores` ? 'active' : 'inherit'}
-          to='/servidores'
+          to="/servidores"
         >
           <span
             className={
-              location.pathname === `/servidors` ? 'active-text' : 'inherit'
+              location.pathname === `/servidores` ? 'active-text' : 'inherit'
             }
           >
             <PiDesktopTowerFill />
@@ -209,7 +209,7 @@ const Menu: React.FC = () => {
               location.pathname === `/servidores` ? 'active-text' : 'inherit'
             }
           >
-            Lojas
+           Servidores Cli
           </p>
         </MenuItem>
         
