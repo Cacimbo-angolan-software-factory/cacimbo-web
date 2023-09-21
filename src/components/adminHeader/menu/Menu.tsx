@@ -9,6 +9,9 @@ import {
   RiStore3Fill,
   RiTaskFill,
 } from 'react-icons/ri';
+import {
+  PiDesktopTowerFill
+} from 'react-icons/pi';
 import { useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
@@ -187,6 +190,29 @@ const Menu: React.FC = () => {
             Lojas
           </p>
         </MenuItem>
+      
+      ) : null}
+      {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
+        <MenuItem
+          className={location.pathname === `/servidores` ? 'active' : 'inherit'}
+          to='/servidores'
+        >
+          <span
+            className={
+              location.pathname === `/servidors` ? 'active-text' : 'inherit'
+            }
+          >
+            <PiDesktopTowerFill />
+          </span>
+          <p
+            className={
+              location.pathname === `/servidores` ? 'active-text' : 'inherit'
+            }
+          >
+            Lojas
+          </p>
+        </MenuItem>
+        
       ) : null}
     </MenuContainer>
   );
