@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import useSWR from 'swr'
 import {
-  Container,
   EmptyStore,
   SpinnerDiv,
   Wrapper,
@@ -12,7 +12,7 @@ import emptyStore from '../../../assets/emptyStore.svg';
 import Spinner from '../../../components/spinner/Spinner';
 
 import { ServerCli } from '../../../components/serverCli';
-import { apiCacimbo } from '../../../service/Service.api';
+//import { apiCacimbo } from '../../../service/Service.api';
 	
 export type ICliServer={
   CompanyID:string; 
@@ -39,24 +39,28 @@ export type ICliServer={
   hash_sinc:string; 
 }
 const ServersCli: React.FC = () => {
-  const ws=new WebSocket("ws://45.93.138.188:8000")
-  const [isLoading, setIsLoading]=React.useState(false)
-  const [cli_servers, setCliServers]=React.useState<ICliServer[]>([])
+  //const ws=new WebSocket("ws://45.93.138.188:8000")
+  //const [isLoading, setIsLoading]=React.useState(false)
+  //const [cli_servers, setCliServers]=React.useState<ICliServer[]>([])
+
+  const fetcher = (url:string) => fetch(url).then(res => res.json())
   
+  const { data, error, isLoading } = useSWR<{data:ICliServer[]}>('https://cacimboerp.cacimboweb.com/api/socket-info', fetcher)
+ 
   async function getServersCli(){
     try {
-      setIsLoading(true)
-      const {data,status}=await apiCacimbo.get("socket-info")
+      //setIsLoading(true)
+      //const {data,status}=await apiCacimbo.get("socket-info")
       
-      if(status==200){
-        setCliServers(data.data)
-      }
-      setIsLoading(false)
+     // if(status==200){
+        //setCliServers(data.data)
+      //}
+      //setIsLoading(false)
       
     } catch (error:any) {
-      console.log(error)
-      console.info(error?.message)
-      setIsLoading(false)
+      //console.log(error)
+      //console.info(error?.message)
+      //setIsLoading(false)
       
     }
    
@@ -75,31 +79,31 @@ const ServersCli: React.FC = () => {
 }
 
   function listenOnclose(){
-    ws.onclose=(event)=>{
-        console.info(`[listenOnclose]:[${new Date().toLocaleTimeString()}]`,{event})
-    }
+    //ws.onclose=(event)=>{
+    //    console.info(`[listenOnclose]:[${new Date().toLocaleTimeString()}]`,{event})
+    //}
 }
 
 function connectionError(){
-    ws.onerror = (e) => {
-        console.info(`[connectionError]:[${new Date().toLocaleTimeString()}]`,{e})
-    }        
+    //ws.onerror = (e) => {
+    //    console.info(`[connectionError]:[${new Date().toLocaleTimeString()}]`,{e})
+    //}        
 }
 
 
   function listenOnmessage(){
-    ws.onmessage =(wsEvent) => {
-      const eventMessage= data_sanitization(wsEvent.data)
-      const isValid=!!eventMessage?.offline||!!eventMessage?.online
-      if(isValid){
-        console.info(`[new message]:[${new Date().toLocaleTimeString()}]`)
-        getServersCli()
+    //ws.onmessage =(wsEvent) => {
+      //const eventMessage= data_sanitization(wsEvent.data)
+      //const isValid=!!eventMessage?.offline||!!eventMessage?.online
+      //if(isValid){
+       // console.info(`[new message]:[${new Date().toLocaleTimeString()}]`)
+       // getServersCli()
 
-      }
-     }  
+      //}
+     //}  
   }
 
-useEffect(()=>{
+/*React.useEffect(()=>{
     getServersCli()
     ws.onopen= (e) => {
         console.info(`[onopen]:${new Date().toLocaleTimeString()}`)
@@ -110,7 +114,7 @@ useEffect(()=>{
         listenOnclose()
     }
 
-},[])
+},[])*/
  
 
   
@@ -120,18 +124,18 @@ useEffect(()=>{
       <AdminHeader />
       <HeaderMobile />
       <>
-          {cli_servers.length > 0 ? ( <Wrapper>
-            {cli_servers.map((cli:ICliServer,index:number) => (
+          { isLoading ? (
+            <SpinnerDiv>
+              <Spinner />
+            </SpinnerDiv>
+          ) :data?.data&&data?.data.length>0?  ( <Wrapper>
+            {data?.data.map((cli:ICliServer,index:number) => (
               <ServerCli
                 key={index}
                 cli={cli}
               />
             ))}
-            </Wrapper>): isLoading ? (
-            <SpinnerDiv>
-              <Spinner />
-            </SpinnerDiv>
-          ) : (
+            </Wrapper>):(
             <EmptyStore>
               <img src={emptyStore} alt='empty' />
               <h2>Lista indisponível no momento.</h2>
