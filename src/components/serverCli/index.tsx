@@ -34,7 +34,7 @@ export function ServerCli({cli}:CliServerProps){
                 <span><IoPeopleOutline /></span>
                 </Offline>
             }
-          <p>{cli.company_name}</p>
+          <p>{cli.CompanyName}</p>
         </ContainerHeader>
         <ContainerDiv>
             <div>
