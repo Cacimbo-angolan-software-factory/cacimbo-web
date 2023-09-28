@@ -248,10 +248,10 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
               <MenuItem value={'Admin'}>Admin</MenuItem>
               <MenuItem value={'Parceiro'}>Parceiro</MenuItem>
               <MenuItem value={'User'}>User</MenuItem>
-              <MenuItem value={'Cacimbo Adm'}>Cacimbo Adm</MenuItem>
-              <MenuItem value={'Cacimbo Ger'}>Cacimbo Ger</MenuItem>
-              <MenuItem value={'Cacimbo Sup'}>Cacimbo Sup</MenuItem>
-              <MenuItem value={'Cacimbo User'}>Cacimbo User</MenuItem>
+              <MenuItem value={'Cacimbo_Adm'}>Cacimbo Adm</MenuItem>
+              <MenuItem value={'Cacimbo_Ger'}>Cacimbo Ger</MenuItem>
+              <MenuItem value={'Cacimbo_Sup'}>Cacimbo Sup</MenuItem>
+              <MenuItem value={'Cacimbo_User'}>Cacimbo User</MenuItem>
             </SelectInput>
 
             <SelectInput
