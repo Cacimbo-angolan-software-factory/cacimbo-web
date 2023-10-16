@@ -70,6 +70,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
   const numberOfInputs = Object.keys(value).length;
   const [licencaSelected, setLicencaSelected] = React.useState<any>();
   const [errorMsg, setErrorMsg] = React.useState('');
+  const [modulosDeRenovar, setModulosRenovar] = React.useState<any>();
 
   const handleOnKeyDown = (event: any, index: number) => {
     if (event.key === 'Enter') {
@@ -135,6 +136,10 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     }
   };
 
+  const modulosDeRenovacao = licencaSelected?.solicitacao?.sol_modulos.map(
+    (obj: any) => obj.modulo_id
+  );
+
   const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -142,9 +147,6 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
     const modulosId = modulos
       .filter((modulo) => [...comum, ...padronizar].includes(modulo.descricao))
       .map((obj) => obj.id);
-    const modulosDeRenovacao = licencaSelected.solicitacao.sol_modulos.map(
-      (obj: any) => obj.modulo_id
-    );
 
     let canal_id = canal?.filter(
       (canal: any) => canal?.Nome === value.canal_id
@@ -208,7 +210,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
         getLicRequest && getLicRequest();
       }, 2500);
     } catch (error: any) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 
