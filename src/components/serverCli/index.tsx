@@ -16,7 +16,6 @@ import {
   Online,
   ContainerDiv,
 } from './styles';
-import { useEffect } from 'react';
 
 export type CliServerProps = {
   cli: ICliServer;

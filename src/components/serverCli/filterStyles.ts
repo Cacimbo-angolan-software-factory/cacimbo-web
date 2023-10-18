@@ -15,4 +15,12 @@ export const Button = styled.button`
   font-weight: 600;
   font-size: 1.6rem;
   border: none;
+
+  &:hover {
+    color: #b71c50;
+  }
+
+  &.active {
+    border: 0.5px solid #b71c50;
+  }
 `;

@@ -110,8 +110,42 @@ const ServersCli: React.FC = () => {
 },[])*/
 
   useEffect(() => {
-    console.log(data?.data);
+    console.log(
+      data?.data
+        .filter((item: any) => item.estado === 'online')
+        .map((cli: ICliServer, index: number) => (
+          <ServerCli key={index} cli={cli} />
+        ))
+    );
   }, []);
+
+  const showOnline = () => {
+    if (filtro === 'online') {
+      return (
+        <Wrapper>
+          {data?.data
+            .filter((item: any) => item.estado === 'online')
+            .map((cli: ICliServer, index: number) => (
+              <ServerCli key={index} cli={cli} />
+            ))}
+        </Wrapper>
+      );
+    }
+  };
+
+  const showOffline = () => {
+    if (filtro === 'offline') {
+      return (
+        <Wrapper>
+          {data?.data
+            .filter((item: any) => item.estado === 'offline')
+            .map((cli: ICliServer, index: number) => (
+              <ServerCli key={index} cli={cli} />
+            ))}
+        </Wrapper>
+      );
+    }
+  };
 
   return (
     <>
@@ -124,12 +158,14 @@ const ServersCli: React.FC = () => {
           </SpinnerDiv>
         ) : data?.data && data?.data.length > 0 ? (
           <>
-            <FiltersServer />
-            <Wrapper>
+            <FiltersServer filtro={filtro} setFiltro={setFiltro} />
+            {showOnline && showOnline()}
+            {showOffline && showOffline()}
+            {/* <Wrapper>
               {data?.data.map((cli: ICliServer, index: number) => (
                 <ServerCli key={index} cli={cli} />
               ))}
-            </Wrapper>
+            </Wrapper> */}
           </>
         ) : (
           <EmptyStore>
