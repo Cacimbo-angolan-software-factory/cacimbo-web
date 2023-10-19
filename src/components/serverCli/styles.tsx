@@ -1,82 +1,73 @@
 import styled from 'styled-components';
 
-
-
 export const Container = styled.div`
   display: flex;
   height: 320px;
   width: 320px;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
   border-radius: 0.5rem;
   border: 0.5px solid #3a3a3a;
-  
-  padding:1rem;
-  background: rgba(205,200,200,0.1);  
+
+  padding: 1rem;
+  background: rgba(205, 200, 200, 0.1);
 `;
 export const ContainerHeader = styled.div`
-display: flex;
-height: 30%;
-width: 100%;
-flex-direction:row;
-align-items: center;
-justify-content: flex-start;
-& p{
-  width: 80%;
-  margin-left:12px;
-  font-size: 1.4rem;
-  font-weight: 500;
-
+  display: flex;
+  height: 30%;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  & p {
+    width: 80%;
+    margin-left: 12px;
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
 `;
 
-export const Online=styled.div`
+export const Online = styled.div`
   display: flex;
   height: 42px;
   width: 42px;
   align-items: center;
   justify-content: center;
   border-radius: 21px;
-  background: #32B768;
-  & span{
+  background: #32b768;
+  & span {
     font-size: 18px;
-    color:  #F0F0F0;
-   
+    color: #f0f0f0;
   }
-`
-export const Offline=styled.div`
+`;
+export const Offline = styled.div`
   display: flex;
   height: 42px;
   width: 42px;
   align-items: center;
   justify-content: center;
   border-radius: 21px;
-  background:  #D0254E;
-  & span{
-    
+  background: #d0254e;
+  & span {
     font-size: 18px;
-    color: #F0F0F0;
-   
+    color: #f0f0f0;
   }
-
-`
-
+`;
 
 export const ContainerDiv = styled.div`
   display: flex;
   height: 30%;
   width: 100%;
-  flex-direction:row;
+  flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  & p{
+  & p {
     width: 80%;
-    margin-left:12px;
+    margin-left: 12px;
     font-size: 1.4rem;
     font-weight: 400;
-
   }
-  & div{
-    
+  & div {
     display: flex;
     height: 42px;
     width: 42px;
@@ -84,17 +75,13 @@ export const ContainerDiv = styled.div`
     justify-content: center;
     border-radius: 21px;
     border: 0.5px solid #3a3a3a;
-    & span{
+    & span {
       font-size: 18px;
-      color:  #F0F0F0;
+      color: #f0f0f0;
     }
-
   }
 `;
-export const Div=styled.div`
-  
-`
-
+export const Div = styled.div``;
 
 export const Buttons = styled.div`
   display: flex;
