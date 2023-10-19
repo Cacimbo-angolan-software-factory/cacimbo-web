@@ -5,22 +5,41 @@ import { Button, Main } from './filterStyles';
 interface Props {
   filtro: string;
   setFiltro: Dispatch<SetStateAction<string>>;
+  setOpenModal: any;
+  provinciaSelected: any;
+  setOpenModalVersao: any;
+  versaoSelected: any;
 }
 
-const FiltersServer: React.FC<Props> = ({ filtro, setFiltro }) => {
+const FiltersServer: React.FC<Props> = ({
+  filtro,
+  setFiltro,
+  setOpenModal,
+  provinciaSelected,
+  setOpenModalVersao,
+  versaoSelected,
+}) => {
   return (
     <Main>
       <Button
         className={filtro === 'provincia' ? 'active' : ''}
-        onClick={() => setFiltro('provincia')}
+        onClick={() => {
+          setFiltro('provincia');
+          setOpenModal(true);
+        }}
       >
-        Província
+        {provinciaSelected && filtro === 'provincia'
+          ? provinciaSelected
+          : 'Província'}
       </Button>
       <Button
         className={filtro === 'versao' ? 'active' : ''}
-        onClick={() => setFiltro('versao')}
+        onClick={() => {
+          setFiltro('versao');
+          setOpenModalVersao(true);
+        }}
       >
-        Versão
+        {versaoSelected && filtro === 'versao' ? versaoSelected : 'versão'}
       </Button>
       <Button
         className={filtro === 'online' ? 'active' : ''}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { EmptyStore, SpinnerDiv, Wrapper } from './styles';
+import { EmptyStore, SpinnerDiv, Wrapper, Overlay } from './styles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 
@@ -9,6 +9,8 @@ import Spinner from '../../../components/spinner/Spinner';
 
 import { ServerCli } from '../../../components/serverCli';
 import FiltersServer from '../../../components/serverCli/filtersServer';
+import ModalProvincia from '../../../components/serverCli/modal/modalProvincia';
+import ModalVersao from '../../../components/serverCli/modal/modalVersao';
 //import { apiCacimbo } from '../../../service/Service.api';
 
 export type ICliServer = {
@@ -40,6 +42,10 @@ const ServersCli: React.FC = () => {
   //const [isLoading, setIsLoading]=React.useState(false)
   //const [cli_servers, setCliServers]=React.useState<ICliServer[]>([])
   const [filtro, setFiltro] = useState('');
+  const [provinciaSelected, setProvinciaSelected] = useState();
+  const [versaoSelected, setVersaoSelected] = useState();
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalVersao, setOpenModalVersao] = useState(false);
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -109,16 +115,6 @@ const ServersCli: React.FC = () => {
 
 },[])*/
 
-  useEffect(() => {
-    console.log(
-      data?.data
-        .filter((item: any) => item.estado === 'online')
-        .map((cli: ICliServer, index: number) => (
-          <ServerCli key={index} cli={cli} />
-        ))
-    );
-  }, []);
-
   const showOnline = () => {
     if (filtro === 'online') {
       return (
@@ -147,6 +143,34 @@ const ServersCli: React.FC = () => {
     }
   };
 
+  const showProvincia = () => {
+    if (filtro === 'provincia') {
+      return (
+        <Wrapper>
+          {data?.data
+            .filter((item: any) => item.City === provinciaSelected)
+            .map((cli: ICliServer, index: number) => (
+              <ServerCli key={index} cli={cli} />
+            ))}
+        </Wrapper>
+      );
+    }
+  };
+
+  const showVersao = () => {
+    if (filtro === 'versao') {
+      return (
+        <Wrapper>
+          {data?.data
+            .filter((item: any) => item.cacimbo_version === versaoSelected)
+            .map((cli: ICliServer, index: number) => (
+              <ServerCli key={index} cli={cli} />
+            ))}
+        </Wrapper>
+      );
+    }
+  };
+
   return (
     <>
       <AdminHeader />
@@ -158,14 +182,25 @@ const ServersCli: React.FC = () => {
           </SpinnerDiv>
         ) : data?.data && data?.data.length > 0 ? (
           <>
-            <FiltersServer filtro={filtro} setFiltro={setFiltro} />
+            <FiltersServer
+              setOpenModal={setOpenModal}
+              filtro={filtro}
+              setFiltro={setFiltro}
+              provinciaSelected={provinciaSelected}
+              setOpenModalVersao={setOpenModalVersao}
+              versaoSelected={versaoSelected}
+            />
             {showOnline && showOnline()}
             {showOffline && showOffline()}
-            {/* <Wrapper>
-              {data?.data.map((cli: ICliServer, index: number) => (
-                <ServerCli key={index} cli={cli} />
-              ))}
-            </Wrapper> */}
+            {showProvincia && showProvincia()}
+            {showVersao && showVersao()}
+            {filtro === '' && (
+              <Wrapper>
+                {data?.data.map((cli: ICliServer, index: number) => (
+                  <ServerCli key={index} cli={cli} />
+                ))}
+              </Wrapper>
+            )}
           </>
         ) : (
           <EmptyStore>
@@ -174,6 +209,27 @@ const ServersCli: React.FC = () => {
           </EmptyStore>
         )}
       </>
+
+      {openModal && (
+        <ModalProvincia
+          setProvinciaSelected={setProvinciaSelected}
+          data={data?.data}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
+      )}
+
+      {openModalVersao && (
+        <ModalVersao
+          openModalVersao={openModalVersao}
+          setOpenModalVersao={setOpenModalVersao}
+          data={data?.data}
+          setVersaoSelected={setVersaoSelected}
+        />
+      )}
+
+      {openModal && <Overlay onClick={() => setOpenModal(false)} />}
+      {openModalVersao && <Overlay onClick={() => setOpenModalVersao(false)} />}
     </>
   );
 };
