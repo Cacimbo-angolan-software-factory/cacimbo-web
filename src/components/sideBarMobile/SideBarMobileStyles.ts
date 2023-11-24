@@ -25,12 +25,12 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 630px) {
+  @media (max-width: 900px) {
     width: 100%;
     z-index: 999999;
   }
 
-  @media (min-width: 630px) {
+  @media (min-width: 900px) {
     display: none;
     z-index: 0;
   }
