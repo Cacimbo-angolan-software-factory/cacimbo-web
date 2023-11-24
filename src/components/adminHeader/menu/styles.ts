@@ -9,7 +9,7 @@ export const MenuContainer = styled.nav`
     gap: 1rem;
   }
 
-  @media (max-width: 630px) {
+  @media (max-width: 900px) {
     display: none;
   }
 `;

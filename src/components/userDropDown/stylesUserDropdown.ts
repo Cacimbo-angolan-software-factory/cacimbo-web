@@ -15,7 +15,7 @@ export const Container = styled.div`
   cursor: pointer;
   position: relative;
 
-  @media (max-width: 630px) {
+  @media (max-width: 900px) {
     display: none;
   }
 

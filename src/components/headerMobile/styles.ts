@@ -25,7 +25,7 @@ export const Container = styled.nav`
     }
   }
 
-  @media (min-width: 630px) {
+  @media (min-width: 900px) {
     display: none;
   }
 

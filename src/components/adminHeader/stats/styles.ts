@@ -13,7 +13,7 @@ export const StatsContainer = styled.div`
     gap: 2rem;
   }
 
-  @media (max-width: 630px) {
+  @media (max-width: 900px) {
     margin-top: 6rem;
   }
 
