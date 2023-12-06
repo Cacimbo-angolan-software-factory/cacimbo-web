@@ -62,7 +62,7 @@ const CriarUsuarioModal: React.FC<CriarUsuarioModalProps> = ({
   useEffect(() => {
     dispatch(getPerfis());
     dispatch(getRoles());
-    dispatch(getPermissions());
+    dispatch(getPermissions(value.companyId));
   }, [dispatch]);
   const [showRoles, setShowRoles] = useState(false);
   const [filteredRoles, setFilteredRoles] = useState([]);
