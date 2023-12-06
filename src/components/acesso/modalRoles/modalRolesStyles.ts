@@ -133,3 +133,9 @@ export const PermissionsDiv = styled.div`
     font-size: 1.5rem;
   }
 `;
+
+export const ErrorMsg = styled.p`
+  color: red;
+  text-align: center;
+  font-size: 1.6rem;
+`;

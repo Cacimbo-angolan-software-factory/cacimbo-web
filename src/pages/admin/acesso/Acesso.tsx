@@ -9,9 +9,10 @@ import ModalAcessoEmpresas from '../../../components/acesso/modalAcessoEmpresas/
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getEmpresasAssociadas } from '../../../redux/empresaFeatures/empresaSlice';
+import { useModalRoles } from '../../../components/acesso/modalRoles/useModalRoles';
 
 const Acesso: React.FC = () => {
-  const [openModal, setOpenModal] = React.useState(false);
+  const { openModal, setOpenModal } = useModalRoles();
   const [openModalEmpresas, setOpenModalEmpresas] = React.useState(false);
   const { rolesList, isLoading } = useSelector(
     (state: any) => state.permission
@@ -49,7 +50,11 @@ const Acesso: React.FC = () => {
         <AcessoRoles rolesDeEmpresas={rolesDeEmpresas} />
       </Container>
 
-      <ModalRoles openModal={openModal} setOpenModal={setOpenModal} />
+      <ModalRoles
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        useModalRoles={useModalRoles}
+      />
       {openModalEmpresas && (
         <ModalAcessoEmpresas
           empresasAssociadas={empresasAssociadas}

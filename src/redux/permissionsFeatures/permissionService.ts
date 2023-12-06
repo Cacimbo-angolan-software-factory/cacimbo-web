@@ -17,8 +17,9 @@ const createPermission = async (permissionData: {
   return response.data;
 };
 
-const getPermissions = async () => {
-  const response = await api.get(`permissions`);
+const getPermissions = async (CompanyID: any) => {
+  const response = await api.get(`empresas/${CompanyID}/permissions`);
+
   return response.data;
 };
 
