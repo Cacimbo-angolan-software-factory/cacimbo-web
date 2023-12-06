@@ -249,11 +249,7 @@ const LojasModal: React.FC<LojasModalProps> = ({
           </Content>
           <FooterDiv>
             <button onClick={() => setShowModal(false)}>Cancelar</button>
-            <button
-              // onClick={() => setTimeout(() => setShowModal(false), 3000)}
-              disabled={value.nif === ''}
-              type='submit'
-            >
+            <button disabled={value.nif === ''} type='submit'>
               {' '}
               {isLoading
                 ? 'Aguarde...'

@@ -18,11 +18,13 @@ const Role: React.FC<RoleProps> = ({ role }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<any>({});
 
-  const sortedPermissions = [...role.permissions].sort((a, b) => {
-    if (a.name !== '' && b.name === '') return -1;
-    if (a.name === '' && b.name !== '') return 1;
-    return 0;
-  });
+  // const sortedPermissions = [...role.permissions].sort((a, b) => {
+  //   if (a.name !== '' && b.name === '') return -1;
+  //   if (a.name === '' && b.name !== '') return 1;
+  //   return 0;
+  // });
+
+  console.log(role.permissions);
 
   return (
     <RoleContainer>
@@ -37,7 +39,7 @@ const Role: React.FC<RoleProps> = ({ role }) => {
 
       {isExpanded && (
         <Permissions>
-          {sortedPermissions.map((permission: any, index: number) => (
+          {role.permissions.map((permission: any, index: number) => (
             <>
               {permission.name !== '' && (
                 <Permission key={index}>
