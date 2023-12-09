@@ -8,7 +8,9 @@ import {
   IoAddCircleOutline,
   IoRemoveCircleOutline,
   IoCloseCircleOutline,
+  IoTrashOutline,
 } from 'react-icons/io5';
+import { descriptionsObj } from '../modalRoles/descriptionsObj';
 
 interface RoleProps {
   role: any;
@@ -23,8 +25,6 @@ const Role: React.FC<RoleProps> = ({ role }) => {
   //   if (a.name === '' && b.name !== '') return 1;
   //   return 0;
   // });
-
-  console.log(role.permissions);
 
   return (
     <RoleContainer>
@@ -64,6 +64,7 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                     </div>
                     <div className='block'>
                       <p>{permission.name}</p>
+                      <IoTrashOutline className='delete' />
                     </div>
                   </section>
 
@@ -72,7 +73,8 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                       (youCanItem: any, subIndex: number) => (
                         <div key={subIndex} className='small'>
                           <IoCloseCircleOutline />
-                          <p>{youCanItem}</p>
+                          <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                          <IoTrashOutline className='delete' />
                         </div>
                       )
                     )}
@@ -84,7 +86,8 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                     <section className='section-2'>
                       {permission.name === '' && <IoCloseCircleOutline />}
                       <div className='block youCan'>
-                        <p>{youCanItem}</p>
+                        <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                        <IoTrashOutline className='delete' />
                       </div>
                     </section>
                   </Permission>

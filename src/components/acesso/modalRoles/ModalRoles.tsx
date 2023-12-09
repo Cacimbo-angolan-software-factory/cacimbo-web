@@ -11,8 +11,9 @@ import {
   ModalRolesContainer,
   Overlay,
   PermissionsDiv,
+  Section,
 } from './modalRolesStyles';
-import { IoCloseCircleOutline } from 'react-icons/io5';
+import { IoCloseCircleOutline, IoAddCircleOutline } from 'react-icons/io5';
 import { useModalRoles } from './useModalRoles';
 import Spinner from '../../spinner/Spinner';
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import {
   criarRole,
+  getPermissions,
   getRoles,
 } from '../../../redux/permissionsFeatures/permissionSlice';
 
@@ -48,28 +50,78 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
     setErrorMsg,
   } = useModalRoles();
   const dispatch = useDispatch<AppDispatch>();
+  const [openPermissions, setOpenPermissions] = React.useState(
+    new Array(list.length).fill(false)
+  );
+
+  const handlePermissionToggle = (index: number) => {
+    const updatedPermissions = [...openPermissions];
+    updatedPermissions[index] = !updatedPermissions[index];
+    setOpenPermissions(updatedPermissions);
+  };
 
   useEffect(() => {
     setCheckedPermissions(checkedPermissions);
   }, [checkedPermissions]);
 
+  // useEffect(() => {
+  //   dispatch(getPermissions(value.CompanyID));
+  //   console.log(list);
+  // }, []);
+
+  const permissionsList = (items: any[]) => {
+    let wrapper: any[] = [];
+    items.map((item: any) => {
+      if (Array.isArray(item)) {
+        wrapper.push(...item);
+      }
+      wrapper.push(item);
+    });
+
+    return wrapper;
+  };
+
   const renderPermissions = useCallback(
     ({ item, index }: { item: any; index: number }) => {
       return (
-        <label>
-          <input
-            type='checkbox'
-            value={item.id}
-            name={item.id}
-            onChange={(e) => handleSelect(e)}
-            checked={(() => {
-              return checkedPermissions?.includes(String(item.id));
-            })()}
-          />
-          <p>
-            {item.description} - {item.source_name}
-          </p>
-        </label>
+        <div>
+          <label>
+            <IoAddCircleOutline
+              className='svg'
+              onClick={() => handlePermissionToggle(index)}
+            />
+
+            <p>{item.name}</p>
+            <input
+              type='checkbox'
+              value={item.id}
+              name={item.name}
+              onChange={(e) => handleSelect(e)}
+              checked={(() => {
+                return checkedPermissions?.includes(String(item.id));
+              })()}
+            />
+          </label>
+
+          {openPermissions[index] && (
+            <Section>
+              {item.payload.map((child: any) => (
+                <label>
+                  <input
+                    type='checkbox'
+                    value={child.id}
+                    name={child.name}
+                    onChange={(e) => handleSelect(e)}
+                    checked={(() => {
+                      return checkedPermissions?.includes(String(child.id));
+                    })()}
+                  />
+                  <p>{child.name}</p>
+                </label>
+              ))}
+            </Section>
+          )}
+        </div>
       );
     },
     [checkedPermissions?.length]
@@ -111,8 +163,7 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
         });
         setCheckedPermissions([]);
         setOpenModal(false);
-        dispatch(getRoles);
-        console.log('counting');
+        dispatch(getRoles());
       }, 2000);
     }
   };
@@ -170,7 +221,7 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
               <PermissionsDiv>
                 {showPermissions && <h2>Permissões</h2>}
                 {showPermissions &&
-                  list.map((permission: any, index: number) =>
+                  permissionsList(list).map((permission: any, index: number) =>
                     renderPermissions({ item: permission, index: index })
                   )}
               </PermissionsDiv>

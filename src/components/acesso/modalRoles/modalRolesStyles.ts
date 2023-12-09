@@ -139,3 +139,15 @@ export const ErrorMsg = styled.p`
   text-align: center;
   font-size: 1.6rem;
 `;
+
+export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  gap: 0.2rem;
+
+  & svg {
+    cursor: pointer;
+  }
+`;
