@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {
@@ -11,28 +11,30 @@ import {
   ModalRolesContainer,
   Overlay,
   PermissionsDiv,
+  Section,
 } from './modalRolesStyles';
-import { IoCloseCircleOutline } from 'react-icons/io5';
+import { IoCloseCircleOutline, IoAddCircleOutline } from 'react-icons/io5';
 import { useModalRoles } from './useModalRoles';
 import Spinner from '../../spinner/Spinner';
-import { SpinnerDiv } from '../acessoRoles/acessoRolesStyles';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../redux/store';
+import {
+  criarRole,
+  getPermissions,
+  getRoles,
+} from '../../../redux/permissionsFeatures/permissionSlice';
 
 interface ModalRolesProps {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  useModalRoles: any;
 }
 
-const ModalRoles: React.FC<ModalRolesProps> = ({
-  openModal,
-  setOpenModal,
-  useModalRoles: modalRolesFunctions,
-}) => {
+const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
   const {
     handleBlur,
     handleChange,
-    handleSubmit,
+    // handleSubmit,
     showPermissions,
     list,
     isLoading,
@@ -44,34 +46,127 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
     handleSelect,
     errorMsg,
     user,
+    setValue,
+    setErrorMsg,
   } = useModalRoles();
-  const [checkeds, setCheckeds] = useState<any>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const [openPermissions, setOpenPermissions] = React.useState(
+    new Array(list.length).fill(false)
+  );
+
+  const handlePermissionToggle = (index: number) => {
+    const updatedPermissions = [...openPermissions];
+    updatedPermissions[index] = !updatedPermissions[index];
+    setOpenPermissions(updatedPermissions);
+  };
 
   useEffect(() => {
-    setCheckeds(checkedPermissions);
+    setCheckedPermissions(checkedPermissions);
   }, [checkedPermissions]);
+
+  // useEffect(() => {
+  //   dispatch(getPermissions(value.CompanyID));
+  //   console.log(list);
+  // }, []);
+
+  const permissionsList = (items: any[]) => {
+    let wrapper: any[] = [];
+    items.map((item: any) => {
+      if (Array.isArray(item)) {
+        wrapper.push(...item);
+      }
+      wrapper.push(item);
+    });
+
+    return wrapper;
+  };
 
   const renderPermissions = useCallback(
     ({ item, index }: { item: any; index: number }) => {
       return (
         <div>
-          <input
-            type='checkbox'
-            value={item.id}
-            name={item.id}
-            onChange={(e) => handleSelect(e)}
-            checked={(() => {
-              return checkeds?.includes(String(item.id));
-            })()}
-          />
-          <label htmlFor={item.id}>
-            {item.description} - {item.source_name}
+          <label>
+            <IoAddCircleOutline
+              className='svg'
+              onClick={() => handlePermissionToggle(index)}
+            />
+
+            <p>{item.name}</p>
+            <input
+              type='checkbox'
+              value={item.id}
+              name={item.name}
+              onChange={(e) => handleSelect(e)}
+              checked={(() => {
+                return checkedPermissions?.includes(String(item.id));
+              })()}
+            />
           </label>
+
+          {openPermissions[index] && (
+            <Section>
+              {item.payload.map((child: any) => (
+                <label>
+                  <input
+                    type='checkbox'
+                    value={child.id}
+                    name={child.name}
+                    onChange={(e) => handleSelect(e)}
+                    checked={(() => {
+                      return checkedPermissions?.includes(String(child.id));
+                    })()}
+                  />
+                  <p>{child.name}</p>
+                </label>
+              ))}
+            </Section>
+          )}
         </div>
       );
     },
-    [checkeds?.length]
+    [checkedPermissions?.length]
   );
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (value.name === '' || value.CompanyID === '') {
+      setErrorMsg('Por favor preencha os campos vazios');
+    } else {
+      console.log(value, checkedPermissions);
+
+      dispatch(
+        criarRole({
+          name: value.name,
+          CompanyID: value.CompanyID,
+          description: value.description,
+          permissions: checkedPermissions,
+        })
+      ).then(() => {
+        toast.success('Função criada com sucesso! 🎉', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
+      });
+
+      setTimeout(() => {
+        setValue({
+          CompanyID: '',
+          name: '',
+          description: '',
+        });
+        setCheckedPermissions([]);
+        setOpenModal(false);
+        dispatch(getRoles());
+      }, 2000);
+    }
+  };
 
   return (
     <>
@@ -120,16 +215,18 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
 
             {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
 
-            <PermissionsDiv>
-              {showPermissions && <h2>Permissões</h2>}
-              {showPermissions &&
-                list.map((permission: any, index: number) =>
-                  renderPermissions({ item: permission, index: index })
-                )}
-            </PermissionsDiv>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <PermissionsDiv>
+                {showPermissions && <h2>Permissões</h2>}
+                {showPermissions &&
+                  permissionsList(list).map((permission: any, index: number) =>
+                    renderPermissions({ item: permission, index: index })
+                  )}
+              </PermissionsDiv>
+            )}
           </Content>
-
-          {/* {isLoading && <Spinner />} */}
 
           <FooterDiv
             className={showPermissions === false ? 'noPermission' : ''}

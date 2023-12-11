@@ -9,9 +9,7 @@ import {
   RiStore3Fill,
   RiTaskFill,
 } from 'react-icons/ri';
-import {
-  PiDesktopTowerFill
-} from 'react-icons/pi';
+import { PiDesktopTowerFill } from 'react-icons/pi';
 import { useLocation } from 'react-router-dom';
 
 import { MenuContainer, MenuItem } from './styles';
@@ -20,6 +18,11 @@ import { useSelector } from 'react-redux';
 const Menu: React.FC = () => {
   const location = useLocation();
   const { user } = useSelector((state: any) => state.user);
+
+  const usersSemAcesso =
+    user.user.tipo === 'User' ||
+    user.user.tipo === 'Cacimbo User' ||
+    user.user.tipo === 'Cacimbo Sup';
 
   return (
     <MenuContainer>
@@ -147,8 +150,7 @@ const Menu: React.FC = () => {
         </p>
       </MenuItem>
 
-      {user.user.lastCompanyIDUsed === null ||
-      user.user.tipo === 'User' ? null : (
+      {user.user.lastCompanyIDUsed === null || usersSemAcesso ? null : (
         <MenuItem
           className={location.pathname === `/acesso` ? 'active' : 'inherit'}
           to='/acesso'
@@ -190,12 +192,11 @@ const Menu: React.FC = () => {
             Lojas
           </p>
         </MenuItem>
-      
       ) : null}
       {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
         <MenuItem
           className={location.pathname === `/servidores` ? 'active' : 'inherit'}
-          to="/servidores"
+          to='/servidores'
         >
           <span
             className={
@@ -209,10 +210,9 @@ const Menu: React.FC = () => {
               location.pathname === `/servidores` ? 'active-text' : 'inherit'
             }
           >
-           Servidores Cli
+            Servidores Cli
           </p>
         </MenuItem>
-        
       ) : null}
     </MenuContainer>
   );

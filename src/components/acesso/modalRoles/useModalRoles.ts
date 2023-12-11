@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { apiCacimbo } from '../../../service/Service.api';
-import {
-  criarRole,
-  getPermissions,
-  getRoles,
-} from '../../../redux/permissionsFeatures/permissionSlice';
-import { toast } from 'react-toastify';
+import { getPermissions } from '../../../redux/permissionsFeatures/permissionSlice';
 
 export const useModalRoles = () => {
   const { user } = useSelector((state: any) => state.user);
@@ -58,41 +53,9 @@ export const useModalRoles = () => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (value.name === '' || value.CompanyID === '') {
-      setErrorMsg('Por favor preencha os campos vazios');
-    } else {
-      console.log(value, checkedPermissions);
-
-      dispatch(
-        criarRole({
-          name: value.name,
-          CompanyID: value.CompanyID,
-          description: value.description,
-          permissions: checkedPermissions,
-        })
-      );
-
-      setTimeout(() => {
-        setValue({
-          CompanyID: '',
-          name: '',
-          description: '',
-        });
-        setCheckedPermissions([]);
-        setOpenModal(false);
-        dispatch(getRoles);
-        console.log('counting');
-      }, 2000);
-    }
-  };
-
   return {
     handleBlur,
     handleChange,
-    handleSubmit,
     showPermissions,
     list,
     isLoading,
@@ -106,5 +69,7 @@ export const useModalRoles = () => {
     user,
     openModal,
     setOpenModal,
+    setValue,
+    setErrorMsg,
   };
 };

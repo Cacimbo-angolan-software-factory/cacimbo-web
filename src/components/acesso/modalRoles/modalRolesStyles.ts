@@ -54,7 +54,7 @@ export const Inputs = styled.div`
   width: 100%;
 `;
 
-export const InputDiv = styled.div`
+export const InputDiv = styled.label`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -126,7 +126,7 @@ export const PermissionsDiv = styled.div`
     margin-bottom: 2rem;
   }
 
-  & div {
+  & label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -138,4 +138,16 @@ export const ErrorMsg = styled.p`
   color: red;
   text-align: center;
   font-size: 1.6rem;
+`;
+
+export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  gap: 0.2rem;
+
+  & svg {
+    cursor: pointer;
+  }
 `;

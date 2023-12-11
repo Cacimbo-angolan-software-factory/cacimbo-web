@@ -94,11 +94,17 @@ export const Permission = styled.div`
     gap: 0.5rem;
     min-width: 20.5rem;
     cursor: pointer;
+    justify-content: space-between;
 
     & p {
       color: #fff;
       margin-right: 1.6rem;
       font-size: 1.6rem;
+    }
+
+    & svg.delete {
+      color: #b71c50;
+      font-size: 1.8rem;
     }
   }
 
@@ -107,10 +113,15 @@ export const Permission = styled.div`
     cursor: pointer;
   }
 
+  & svg.delete {
+    color: #b71c50;
+  }
+
   & div.small {
     padding: 0.5rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.5rem;
     margin-left: 2.5rem;
     animation: ${animation} 400ms ease-in-out forwards;
@@ -122,6 +133,10 @@ export const Permission = styled.div`
 
     & svg {
       color: #6c6c6c;
+    }
+
+    & svg.delete {
+      color: #b71c50;
     }
 
     & p {

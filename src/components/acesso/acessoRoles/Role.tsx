@@ -8,7 +8,9 @@ import {
   IoAddCircleOutline,
   IoRemoveCircleOutline,
   IoCloseCircleOutline,
+  IoTrashOutline,
 } from 'react-icons/io5';
+import { descriptionsObj } from '../modalRoles/descriptionsObj';
 
 interface RoleProps {
   role: any;
@@ -18,11 +20,11 @@ const Role: React.FC<RoleProps> = ({ role }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<any>({});
 
-  const sortedPermissions = [...role.permissions].sort((a, b) => {
-    if (a.name !== '' && b.name === '') return -1;
-    if (a.name === '' && b.name !== '') return 1;
-    return 0;
-  });
+  // const sortedPermissions = [...role.permissions].sort((a, b) => {
+  //   if (a.name !== '' && b.name === '') return -1;
+  //   if (a.name === '' && b.name !== '') return 1;
+  //   return 0;
+  // });
 
   return (
     <RoleContainer>
@@ -37,7 +39,7 @@ const Role: React.FC<RoleProps> = ({ role }) => {
 
       {isExpanded && (
         <Permissions>
-          {sortedPermissions.map((permission: any, index: number) => (
+          {role.permissions.map((permission: any, index: number) => (
             <>
               {permission.name !== '' && (
                 <Permission key={index}>
@@ -62,6 +64,7 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                     </div>
                     <div className='block'>
                       <p>{permission.name}</p>
+                      <IoTrashOutline className='delete' />
                     </div>
                   </section>
 
@@ -70,7 +73,8 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                       (youCanItem: any, subIndex: number) => (
                         <div key={subIndex} className='small'>
                           <IoCloseCircleOutline />
-                          <p>{youCanItem}</p>
+                          <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                          <IoTrashOutline className='delete' />
                         </div>
                       )
                     )}
@@ -82,7 +86,8 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                     <section className='section-2'>
                       {permission.name === '' && <IoCloseCircleOutline />}
                       <div className='block youCan'>
-                        <p>{youCanItem}</p>
+                        <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                        <IoTrashOutline className='delete' />
                       </div>
                     </section>
                   </Permission>

@@ -50,11 +50,7 @@ const Acesso: React.FC = () => {
         <AcessoRoles rolesDeEmpresas={rolesDeEmpresas} />
       </Container>
 
-      <ModalRoles
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        useModalRoles={useModalRoles}
-      />
+      <ModalRoles openModal={openModal} setOpenModal={setOpenModal} />
       {openModalEmpresas && (
         <ModalAcessoEmpresas
           empresasAssociadas={empresasAssociadas}

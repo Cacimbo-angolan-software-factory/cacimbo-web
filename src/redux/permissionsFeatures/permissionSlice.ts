@@ -117,9 +117,14 @@ export const permissionSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(criarRole.fulfilled, (state, action) => {
+      const newRole = action.payload;
       state.isLoading = false;
       state.isSuccess = true;
-      state.rolesList.push(action.payload);
+      state.rolesList.push(newRole);
+      const filteredRoles = state.rolesList.filter(
+        (role) => role.CompanyID === newRole.CompanyID
+      );
+      state.rolesList = filteredRoles;
     });
     builder.addCase(criarRole.rejected, (state) => {
       state.isError = true;

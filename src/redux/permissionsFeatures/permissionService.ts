@@ -19,8 +19,18 @@ const createPermission = async (permissionData: {
 
 const getPermissions = async (CompanyID: any) => {
   const response = await api.get(`empresas/${CompanyID}/permissions`);
-
-  return response.data;
+  const data = Object.getOwnPropertyNames(response.data).map((value) => {
+    if (value == '0') {
+      return null;
+    }
+    return {
+      id: response.data[value][0].source_id,
+      name: value,
+      payload: response.data[value],
+    };
+  });
+  console.log(data.filter((item) => item !== null));
+  return data.filter((item) => item !== null);
 };
 
 const getRoles = async () => {
