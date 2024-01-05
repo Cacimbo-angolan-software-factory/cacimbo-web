@@ -15,9 +15,9 @@ export const useModalRoles = () => {
     description: '',
   });
   const [showPermissions, setShowPermissions] = useState(false);
-  const [checkedPermissions, setCheckedPermissions] = useState<any>([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [parsedPermissions, setParsedPermissions] = useState([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -39,20 +39,6 @@ export const useModalRoles = () => {
     }
   };
 
-  const handleSelect = (event: any) => {
-    const value = event.target.value;
-    const isChecked = event.target.checked;
-
-    if (isChecked && !checkedPermissions.includes(value)) {
-      setCheckedPermissions([...checkedPermissions, value]);
-    } else {
-      const filteredList = checkedPermissions.filter(
-        (item: any) => item !== value
-      );
-      setCheckedPermissions(filteredList);
-    }
-  };
-
   return {
     handleBlur,
     handleChange,
@@ -62,9 +48,6 @@ export const useModalRoles = () => {
     setSearchCompanyId,
     value,
     searchCompanyId,
-    checkedPermissions,
-    setCheckedPermissions,
-    handleSelect,
     errorMsg,
     user,
     openModal,

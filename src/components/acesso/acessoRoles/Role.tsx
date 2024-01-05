@@ -73,7 +73,9 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                       (youCanItem: any, subIndex: number) => (
                         <div key={subIndex} className='small'>
                           <IoCloseCircleOutline />
-                          <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                          {/* <p>{descriptionsObj[youCanItem.toUpperCase()]}</p> */}
+                          <p>{youCanItem}</p>
+
                           <IoTrashOutline className='delete' />
                         </div>
                       )
@@ -86,7 +88,9 @@ const Role: React.FC<RoleProps> = ({ role }) => {
                     <section className='section-2'>
                       {permission.name === '' && <IoCloseCircleOutline />}
                       <div className='block youCan'>
-                        <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                        {/* <p>{descriptionsObj[youCanItem.toUpperCase()]}</p> */}
+                        <p>{youCanItem}</p>
+
                         <IoTrashOutline className='delete' />
                       </div>
                     </section>

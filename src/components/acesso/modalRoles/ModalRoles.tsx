@@ -13,7 +13,11 @@ import {
   PermissionsDiv,
   Section,
 } from './modalRolesStyles';
-import { IoCloseCircleOutline, IoAddCircleOutline } from 'react-icons/io5';
+import {
+  IoCloseCircleOutline,
+  IoAddCircleOutline,
+  IoLanguage,
+} from 'react-icons/io5';
 import { useModalRoles } from './useModalRoles';
 import Spinner from '../../spinner/Spinner';
 import { ToastContainer, toast } from 'react-toastify';
@@ -24,6 +28,8 @@ import {
   getPermissions,
   getRoles,
 } from '../../../redux/permissionsFeatures/permissionSlice';
+import PermissionsList from './PermissionsList';
+import { status } from './Constants';
 
 interface ModalRolesProps {
   openModal: boolean;
@@ -34,98 +40,19 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
   const {
     handleBlur,
     handleChange,
-    // handleSubmit,
     showPermissions,
     list,
     isLoading,
     setSearchCompanyId,
     searchCompanyId,
     value,
-    checkedPermissions,
-    setCheckedPermissions,
-    handleSelect,
     errorMsg,
     user,
     setValue,
     setErrorMsg,
   } = useModalRoles();
   const dispatch = useDispatch<AppDispatch>();
-  const [openPermissions, setOpenPermissions] = React.useState(
-    new Array(list.length).fill(false)
-  );
-
-  const handlePermissionToggle = (index: number) => {
-    const updatedPermissions = [...openPermissions];
-    updatedPermissions[index] = !updatedPermissions[index];
-    setOpenPermissions(updatedPermissions);
-  };
-
-  useEffect(() => {
-    setCheckedPermissions(checkedPermissions);
-  }, [checkedPermissions]);
-
-  // useEffect(() => {
-  //   dispatch(getPermissions(value.CompanyID));
-  //   console.log(list);
-  // }, []);
-
-  const permissionsList = (items: any[]) => {
-    let wrapper: any[] = [];
-    items.map((item: any) => {
-      if (Array.isArray(item)) {
-        wrapper.push(...item);
-      }
-      wrapper.push(item);
-    });
-
-    return wrapper;
-  };
-
-  const renderPermissions = useCallback(
-    ({ item, index }: { item: any; index: number }) => {
-      return (
-        <div>
-          <label>
-            <IoAddCircleOutline
-              className='svg'
-              onClick={() => handlePermissionToggle(index)}
-            />
-
-            <p>{item.name}</p>
-            <input
-              type='checkbox'
-              value={item.id}
-              name={item.name}
-              onChange={(e) => handleSelect(e)}
-              checked={(() => {
-                return checkedPermissions?.includes(String(item.id));
-              })()}
-            />
-          </label>
-
-          {openPermissions[index] && (
-            <Section>
-              {item.payload.map((child: any) => (
-                <label>
-                  <input
-                    type='checkbox'
-                    value={child.id}
-                    name={child.name}
-                    onChange={(e) => handleSelect(e)}
-                    checked={(() => {
-                      return checkedPermissions?.includes(String(child.id));
-                    })()}
-                  />
-                  <p>{child.name}</p>
-                </label>
-              ))}
-            </Section>
-          )}
-        </div>
-      );
-    },
-    [checkedPermissions?.length]
-  );
+  const [checkedPermissions, setCheckedPermissions] = React.useState<any>([]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -133,8 +60,6 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
     if (value.name === '' || value.CompanyID === '') {
       setErrorMsg('Por favor preencha os campos vazios');
     } else {
-      console.log(value, checkedPermissions);
-
       dispatch(
         criarRole({
           name: value.name,
@@ -167,6 +92,10 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
       }, 2000);
     }
   };
+
+  useEffect(() => {
+    console.log(checkedPermissions);
+  }, [checkedPermissions]);
 
   return (
     <>
@@ -220,10 +149,13 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
             ) : (
               <PermissionsDiv>
                 {showPermissions && <h2>Permissões</h2>}
-                {showPermissions &&
-                  permissionsList(list).map((permission: any, index: number) =>
-                    renderPermissions({ item: permission, index: index })
-                  )}
+                {showPermissions && (
+                  <PermissionsList
+                    checkedPermissions={checkedPermissions}
+                    setCheckedPermissions={setCheckedPermissions}
+                    list={list}
+                  />
+                )}
               </PermissionsDiv>
             )}
           </Content>
