@@ -11,13 +11,6 @@ interface IProps {
   list: any;
 }
 
-interface Permission {
-  id: number;
-  name: string;
-  payload?: Permission[];
-  isChecked: boolean;
-}
-
 const PermissionsList: React.FC<IProps> = ({
   checkedPermissions,
   list,
