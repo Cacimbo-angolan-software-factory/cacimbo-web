@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {
@@ -13,44 +13,50 @@ import {
   PermissionsDiv,
   Section,
 } from './modalRolesStyles';
-import {
-  IoCloseCircleOutline,
-  IoAddCircleOutline,
-  IoLanguage,
-} from 'react-icons/io5';
-import { useModalRoles } from './useModalRoles';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 import Spinner from '../../spinner/Spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import {
   criarRole,
-  getPermissions,
   getRoles,
 } from '../../../redux/permissionsFeatures/permissionSlice';
 import PermissionsList from './PermissionsList';
-import { status } from './Constants';
 
 interface ModalRolesProps {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  handleBlur: () => Promise<void>;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  showPermissions: boolean;
+  list: any;
+  isLoading: any;
+  setSearchCompanyId: any;
+  searchCompanyId: any;
+  value: any;
+  user: any;
+  setValue: any;
+  errorMsg: string;
+  setErrorMsg: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
-  const {
-    handleBlur,
-    handleChange,
-    showPermissions,
-    list,
-    isLoading,
-    setSearchCompanyId,
-    searchCompanyId,
-    value,
-    errorMsg,
-    user,
-    setValue,
-    setErrorMsg,
-  } = useModalRoles();
+const ModalRoles: React.FC<ModalRolesProps> = ({
+  openModal,
+  setOpenModal,
+  handleBlur,
+  handleChange,
+  showPermissions,
+  list,
+  isLoading,
+  setSearchCompanyId,
+  searchCompanyId,
+  value,
+  user,
+  setValue,
+  setErrorMsg,
+  errorMsg,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [checkedPermissions, setCheckedPermissions] = React.useState<any>([]);
 
@@ -92,10 +98,6 @@ const ModalRoles: React.FC<ModalRolesProps> = ({ openModal, setOpenModal }) => {
       }, 2000);
     }
   };
-
-  useEffect(() => {
-    console.log(checkedPermissions);
-  }, [checkedPermissions]);
 
   return (
     <>

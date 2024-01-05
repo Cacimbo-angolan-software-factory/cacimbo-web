@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import { status } from './Constants';
 
 // import { Container } from './styles';
 interface IProps {

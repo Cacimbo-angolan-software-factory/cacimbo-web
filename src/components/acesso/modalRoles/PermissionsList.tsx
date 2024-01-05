@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { Section } from './modalRolesStyles';
-import { status } from './Constants';
 import CheckBox from './CheckBox';
 
 // import { Container } from './styles';
