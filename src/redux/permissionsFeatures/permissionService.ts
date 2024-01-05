@@ -23,13 +23,22 @@ const getPermissions = async (CompanyID: any) => {
     if (value == '0') {
       return null;
     }
+    const children = response.data[value].map((child: any) => ({
+      id: child.id,
+      name: child.name,
+      isChecked: false,
+      slug: child.slug,
+      CompanyID: child.CompanyID,
+      source_id: child.source_id,
+    }));
+
     return {
       id: response.data[value][0].source_id,
       name: value,
-      payload: response.data[value],
+      payload: children,
+      isChecked: false,
     };
   });
-  console.log(data.filter((item) => item !== null));
   return data.filter((item) => item !== null);
 };
 

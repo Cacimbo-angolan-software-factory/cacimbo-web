@@ -12,11 +12,24 @@ import { getEmpresasAssociadas } from '../../../redux/empresaFeatures/empresaSli
 import { useModalRoles } from '../../../components/acesso/modalRoles/useModalRoles';
 
 const Acesso: React.FC = () => {
-  const { openModal, setOpenModal } = useModalRoles();
+  const {
+    openModal,
+    setOpenModal,
+    handleBlur,
+    handleChange,
+    showPermissions,
+    list,
+    isLoading,
+    setSearchCompanyId,
+    searchCompanyId,
+    value,
+    errorMsg,
+    user,
+    setValue,
+    setErrorMsg,
+  } = useModalRoles();
   const [openModalEmpresas, setOpenModalEmpresas] = React.useState(false);
-  const { rolesList, isLoading } = useSelector(
-    (state: any) => state.permission
-  );
+  const { rolesList } = useSelector((state: any) => state.permission);
   const { empresasAssociadas } = useSelector((state: any) => state.empresa);
   const dispatch = useDispatch<AppDispatch>();
   const [selectedEmpresa, setSelectedEmpresa] = React.useState<any>({});
@@ -50,7 +63,22 @@ const Acesso: React.FC = () => {
         <AcessoRoles rolesDeEmpresas={rolesDeEmpresas} />
       </Container>
 
-      <ModalRoles openModal={openModal} setOpenModal={setOpenModal} />
+      <ModalRoles
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        showPermissions={showPermissions}
+        list={list}
+        isLoading={isLoading}
+        setSearchCompanyId={setSearchCompanyId}
+        searchCompanyId={searchCompanyId}
+        value={value}
+        user={user}
+        errorMsg={errorMsg}
+        setErrorMsg={setErrorMsg}
+        setValue={setValue}
+      />
       {openModalEmpresas && (
         <ModalAcessoEmpresas
           empresasAssociadas={empresasAssociadas}
