@@ -58,9 +58,15 @@ const createRole = async (roleData: {
   return response.data;
 };
 
+const deleteRole = async (id: number) => {
+  const response = await api.delete(`roles/${id}`);
+  return response.data;
+};
+
 export default {
   createPermission,
   getPermissions,
   getRoles,
   createRole,
+  deleteRole,
 };

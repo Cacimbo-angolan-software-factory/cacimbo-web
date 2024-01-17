@@ -3,8 +3,6 @@ import { IoAddCircleOutline } from 'react-icons/io5';
 import { Section } from './modalRolesStyles';
 import CheckBox from './CheckBox';
 
-// import { Container } from './styles';
-
 interface IProps {
   checkedPermissions: any;
   setCheckedPermissions: any;

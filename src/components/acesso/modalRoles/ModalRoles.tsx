@@ -23,6 +23,7 @@ import {
   getRoles,
 } from '../../../redux/permissionsFeatures/permissionSlice';
 import PermissionsList from './PermissionsList';
+import { Msg } from '../acessoRoles/acessoRolesStyles';
 
 interface ModalRolesProps {
   openModal: boolean;
@@ -151,12 +152,14 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
             ) : (
               <PermissionsDiv>
                 {showPermissions && <h2>Permissões</h2>}
-                {showPermissions && (
+                {showPermissions ? (
                   <PermissionsList
                     checkedPermissions={checkedPermissions}
                     setCheckedPermissions={setCheckedPermissions}
                     list={list}
                   />
+                ) : (
+                  <Msg>Empresa selecionada não contém permissões 🧐</Msg>
                 )}
               </PermissionsDiv>
             )}

@@ -71,11 +71,23 @@ export const criarRole = createAsyncThunk(
   }) => {
     try {
       const response = await permissionService.createRole(roleData);
-      console.log(response);
       return response;
     } catch (error: any) {
       console.log(error.response);
       return error;
+    }
+  }
+);
+
+export const deleteRole = createAsyncThunk(
+  'permission/deleteRole',
+  async (id: number) => {
+    try {
+      const response = await permissionService.deleteRole(id);
+      return response;
+    } catch (err: any) {
+      console.log(err.response);
+      return err;
     }
   }
 );
@@ -141,6 +153,20 @@ export const permissionSlice = createSlice({
       state.isSuccess = true;
     });
     builder.addCase(getRoles.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+
+    // delete role
+    builder.addCase(deleteRole.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteRole.fulfilled, (state, action) => {
+      state.rolesList.filter((role) => role !== action.payload);
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(deleteRole.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
     });
