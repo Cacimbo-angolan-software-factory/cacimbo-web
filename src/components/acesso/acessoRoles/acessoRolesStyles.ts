@@ -33,12 +33,17 @@ export const RoleContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  & h2 {
-    margin-bottom: 0.5rem;
+  & div {
     display: flex;
     align-items: center;
+  }
+
+  & h2 {
+    margin-bottom: 0.5rem;
     gap: 0.5rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     & svg {
       font-size: 2rem;
@@ -164,4 +169,118 @@ export const NoRoles = styled.div`
   & h1 {
     font-weight: 300;
   }
+`;
+
+export const Span = styled.span`
+  margin-left: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+  font-size: 1.6rem;
+
+  &:hover {
+    background-color: #5a5a5a;
+    padding: 0 0.3rem;
+    border-radius: 0.5rem;
+  }
+`;
+
+// Modal options
+
+export const ModalOptions = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 15rem;
+  height: fit-content;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #5a5a5a;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & button {
+    display: flex;
+    /* align-items: center; */
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: inherit;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+
+    & svg {
+      font-size: 1.4rem;
+    }
+
+    &:hover {
+      background-color: #808080;
+      border-radius: 0.8rem;
+    }
+  }
+
+  & button:last-child {
+    & svg {
+      color: red;
+    }
+  }
+`;
+
+export const Msg = styled.h2`
+  text-align: center;
+  margin-top: 4rem;
+`;
+
+// Card message for delete role
+export const Card = styled.main`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background-color: #5d5d5d;
+  width: 40rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  gap: 2rem;
+  font-size: 1.6rem;
+  z-index: 10;
+
+  & div {
+    display: flex;
+    gap: 1rem;
+
+    & button {
+      padding: 0.8rem 2rem;
+      font-size: 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      color: #ebebeb;
+    }
+
+    & button:first-child {
+      background-color: #bebebe;
+      color: #242424;
+    }
+
+    & button:last-child {
+      background-color: #b71c50;
+    }
+  }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
 `;

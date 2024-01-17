@@ -18,6 +18,7 @@ const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
   );
   const { user } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
+  const [roleSelected, setRoleSelected] = useState<any>();
 
   useEffect(() => {
     dispatch(getRoles());
@@ -27,7 +28,14 @@ const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
     return (
       <>
         {user.roles > 0 ? (
-          user.roles.map((role: any) => <Role key={role.id} role={role} />)
+          user.roles.map((role: any) => (
+            <Role
+              roleSelected={roleSelected}
+              setRoleSelected={setRoleSelected}
+              key={role.id}
+              role={role}
+            />
+          ))
         ) : (
           <NoRoles>
             <img src={noAcess} alt='empty' />
@@ -49,7 +57,12 @@ const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
           <Container>
             {rolesDeEmpresas.length > 0
               ? rolesDeEmpresas.map((role: any) => (
-                  <Role key={role.id} role={role} />
+                  <Role
+                    roleSelected={roleSelected}
+                    setRoleSelected={setRoleSelected}
+                    key={role.id}
+                    role={role}
+                  />
                 ))
               : handleUserRoles()}
           </Container>

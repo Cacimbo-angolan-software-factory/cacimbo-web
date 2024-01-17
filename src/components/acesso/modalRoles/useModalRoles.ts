@@ -17,7 +17,6 @@ export const useModalRoles = () => {
   const [showPermissions, setShowPermissions] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const [parsedPermissions, setParsedPermissions] = useState([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
