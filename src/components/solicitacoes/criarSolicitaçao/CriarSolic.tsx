@@ -272,7 +272,7 @@ const CriarSolicitaçao: React.FC<CriarSolicitaçaoProps> = ({ setClick }) => {
             value={value.empresa}
             onChange={handleChange}
             type='text'
-            disabled={value.nif.length === 0 || value.nif === ''}
+            disabled
           />
         </div>
         <DivChild>
