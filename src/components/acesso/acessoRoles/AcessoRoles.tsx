@@ -1,27 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { Container, NoRoles, SpinnerDiv } from './acessoRolesStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
-import { getRoles } from '../../../redux/permissionsFeatures/permissionSlice';
+import {
+  getPermissions,
+  getRoles,
+} from '../../../redux/permissionsFeatures/permissionSlice';
 import Spinner from '../../spinner/Spinner';
 import Role from './Role';
 import noAcess from '../../../assets/noAccess.svg';
 
 interface Props {
   rolesDeEmpresas: any;
+  list: any;
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
+  roleSelected: any;
+  setRoleSelected: Dispatch<any>;
 }
 
-const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
-  const { rolesList, isError, isLoading } = useSelector(
-    (state: any) => state.permission
-  );
+const AcessoRoles: React.FC<Props> = ({
+  rolesDeEmpresas,
+  list,
+  setOpenModal,
+  roleSelected,
+  setRoleSelected,
+}) => {
+  const { isLoading } = useSelector((state: any) => state.permission);
   const { user } = useSelector((state: any) => state.user);
   const dispatch = useDispatch<AppDispatch>();
-  const [roleSelected, setRoleSelected] = useState<any>();
 
   useEffect(() => {
     dispatch(getRoles());
+    dispatch(getPermissions(user.user.lastCompanyIDUsed));
   }, []);
 
   const handleUserRoles = () => {
@@ -30,10 +41,13 @@ const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
         {user.roles > 0 ? (
           user.roles.map((role: any) => (
             <Role
+              list={list}
               roleSelected={roleSelected}
               setRoleSelected={setRoleSelected}
               key={role.id}
               role={role}
+              user={user}
+              setOpenModal={setOpenModal}
             />
           ))
         ) : (
@@ -58,10 +72,13 @@ const AcessoRoles: React.FC<Props> = ({ rolesDeEmpresas }) => {
             {rolesDeEmpresas.length > 0
               ? rolesDeEmpresas.map((role: any) => (
                   <Role
+                    list={list}
                     roleSelected={roleSelected}
                     setRoleSelected={setRoleSelected}
                     key={role.id}
                     role={role}
+                    user={user}
+                    setOpenModal={setOpenModal}
                   />
                 ))
               : handleUserRoles()}

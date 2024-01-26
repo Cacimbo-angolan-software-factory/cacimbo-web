@@ -134,6 +134,18 @@ export const PermissionsDiv = styled.div`
   }
 `;
 
+// Section that contains the plus button, name of permission and checkbox
+export const PerSection = styled.section`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  & svg {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+`;
+
 export const ErrorMsg = styled.p`
   color: red;
   text-align: center;

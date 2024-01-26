@@ -27,12 +27,14 @@ const Acesso: React.FC = () => {
     user,
     setValue,
     setErrorMsg,
+    setShowPermissions,
   } = useModalRoles();
   const [openModalEmpresas, setOpenModalEmpresas] = React.useState(false);
   const { rolesList } = useSelector((state: any) => state.permission);
   const { empresasAssociadas } = useSelector((state: any) => state.empresa);
   const dispatch = useDispatch<AppDispatch>();
   const [selectedEmpresa, setSelectedEmpresa] = React.useState<any>({});
+  const [roleSelected, setRoleSelected] = React.useState<any>();
 
   useEffect(() => {
     dispatch(getEmpresasAssociadas());
@@ -60,7 +62,13 @@ const Acesso: React.FC = () => {
           {selectedEmpresa?.CompanyName || 'Selecione uma empresa'}
         </Button>
 
-        <AcessoRoles rolesDeEmpresas={rolesDeEmpresas} />
+        <AcessoRoles
+          list={list}
+          rolesDeEmpresas={rolesDeEmpresas}
+          setOpenModal={setOpenModal}
+          roleSelected={roleSelected}
+          setRoleSelected={setRoleSelected}
+        />
       </Container>
 
       <ModalRoles
@@ -78,6 +86,8 @@ const Acesso: React.FC = () => {
         errorMsg={errorMsg}
         setErrorMsg={setErrorMsg}
         setValue={setValue}
+        roleSelected={roleSelected}
+        setShowPermissions={setShowPermissions}
       />
       {openModalEmpresas && (
         <ModalAcessoEmpresas

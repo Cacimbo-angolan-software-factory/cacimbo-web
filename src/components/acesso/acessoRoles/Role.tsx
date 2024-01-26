@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import {
   Overlay,
@@ -20,19 +20,38 @@ import {
 import { descriptionsObj } from '../modalRoles/descriptionsObj';
 import OptionsRolesModal from './OptionsRolesModal';
 import MessageModalDelete from './MessageModalDelete';
+import {
+  deletePermission,
+  getPermissions,
+  getRoles,
+} from '../../../redux/permissionsFeatures/permissionSlice';
+import { AppDispatch } from '../../../redux/store';
+import { useDispatch } from 'react-redux';
 
 interface RoleProps {
   role: any;
   setRoleSelected: React.Dispatch<any>;
   roleSelected: any;
+  list: any;
+  user: any;
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const Role: React.FC<RoleProps> = ({ role, roleSelected, setRoleSelected }) => {
+const Role: React.FC<RoleProps> = ({
+  role,
+  roleSelected,
+  setRoleSelected,
+  list,
+  user,
+  setOpenModal,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<any>({});
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalOptions, setOpenModalOptions] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [openMessageModal, setOpenMessageModal] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const [permissionSelected, setPermissionSelected] = useState<any>();
 
   // const sortedPermissions = [...role.permissions].sort((a, b) => {
   //   if (a.name !== '' && b.name === '') return -1;
@@ -46,9 +65,14 @@ const Role: React.FC<RoleProps> = ({ role, roleSelected, setRoleSelected }) => {
       top: rect.bottom + window.scrollY,
       left: rect.left + window.scrollX,
     });
-    setOpenModal(!openModal);
+    setOpenModalOptions(!openModalOptions);
     setRoleSelected(role);
   };
+
+  useEffect(() => {
+    // dispatch(getPermissions(user.user.lastCompanyIDUsed));
+    // console.log(list);
+  }, []);
 
   return (
     <>
@@ -95,7 +119,10 @@ const Role: React.FC<RoleProps> = ({ role, roleSelected, setRoleSelected }) => {
                       </div>
                       <div className='block'>
                         <p>{permission.name}</p>
-                        <IoTrashBinOutline className='delete' />
+                        {/* <IoTrashBinOutline
+                          onClick={() => setPermissionSelected(permission.name)}
+                          className='delete'
+                        /> */}
                       </div>
                     </section>
 
@@ -107,7 +134,7 @@ const Role: React.FC<RoleProps> = ({ role, roleSelected, setRoleSelected }) => {
                             {/* <p>{descriptionsObj[youCanItem.toUpperCase()]}</p> */}
                             <p>{youCanItem}</p>
 
-                            <IoTrashBinOutline className='delete' />
+                            {/* <IoTrashBinOutline className='delete' /> */}
                           </div>
                         )
                       )}
@@ -122,7 +149,7 @@ const Role: React.FC<RoleProps> = ({ role, roleSelected, setRoleSelected }) => {
                           {/* <p>{descriptionsObj[youCanItem.toUpperCase()]}</p> */}
                           <p>{youCanItem}</p>
 
-                          <IoTrashBinOutline className='delete' />
+                          {/* <IoTrashBinOutline className='delete' /> */}
                         </div>
                       </section>
                     </Permission>
@@ -133,12 +160,11 @@ const Role: React.FC<RoleProps> = ({ role, roleSelected, setRoleSelected }) => {
         )}
       </RoleContainer>
 
-      {openModal && (
+      {openModalOptions && (
         <OptionsRolesModal
-          openMessageModal={openMessageModal}
           setOpenMessageModal={setOpenMessageModal}
-          roleSelected={roleSelected}
           position={position}
+          setOpenModal={setOpenModal}
         />
       )}
 
