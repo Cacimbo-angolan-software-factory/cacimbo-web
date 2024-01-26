@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
-import { Section } from './modalRolesStyles';
+import { PerSection, Section } from './modalRolesStyles';
 import CheckBox from './CheckBox';
 
 interface IProps {
@@ -73,19 +73,21 @@ const PermissionsList: React.FC<IProps> = ({
     <div>
       {list.map((permission: any, index: number) => (
         <div key={index}>
-          <label>
+          <PerSection>
             <IoAddCircleOutline
               className='svg'
               onClick={() => handlePermissionToggle(index)}
             />
-            <p>{permission.name}</p>
-            <CheckBox
-              handleChange={handleCheckboxChange}
-              id={permission.id}
-              name={permission.name}
-              checkedPermissions={checkedPermissions}
-            />
-          </label>
+            <label>
+              <p>{permission.name}</p>
+              <CheckBox
+                handleChange={handleCheckboxChange}
+                id={permission.id}
+                name={permission.name}
+                checkedPermissions={checkedPermissions}
+              />
+            </label>
+          </PerSection>
 
           {openPermissions[index] && (
             <Section>

@@ -27,12 +27,12 @@ const Stats: React.FC = () => {
           <h2>{totalPedidos}</h2>
           <p>Solicitações</p>
         </Stat>
-        {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
+        {/* {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
           <Stat>
             <h2>2786</h2>
             <p>Atribuídas</p>
           </Stat>
-        ) : null}
+        ) : null} */}
         {user.user.parceiro_id === 1 && user.user.tipo === 'Admin' ? (
           <Stat>
             <h2>{lojas.length}</h2>

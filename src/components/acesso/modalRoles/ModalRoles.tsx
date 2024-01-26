@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {
@@ -20,10 +20,12 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import {
   criarRole,
+  getPermissions,
   getRoles,
 } from '../../../redux/permissionsFeatures/permissionSlice';
 import PermissionsList from './PermissionsList';
 import { Msg } from '../acessoRoles/acessoRolesStyles';
+import { getCompanyIdWithNif } from '../../../redux/lojasFeatures/lojasSlice';
 
 interface ModalRolesProps {
   openModal: boolean;
@@ -40,6 +42,8 @@ interface ModalRolesProps {
   setValue: any;
   errorMsg: string;
   setErrorMsg: React.Dispatch<React.SetStateAction<string>>;
+  roleSelected: any;
+  setShowPermissions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalRoles: React.FC<ModalRolesProps> = ({
@@ -57,9 +61,33 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
   setValue,
   setErrorMsg,
   errorMsg,
+  roleSelected,
+  setShowPermissions,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [checkedPermissions, setCheckedPermissions] = React.useState<any>([]);
+
+  // useEffect(() => {
+  //   if (roleSelected) {
+  //     console.log(
+  //       roleSelected.permissions.flatMap((permission: any) => [
+  //         permission.name,
+  //         ...permission.youCan,
+  //       ])
+  //     );
+  //     const allPermissionsName = roleSelected.permissions.flatMap(
+  //       (permission: any) => [permission.name, ...permission.youCan]
+  //     );
+  //     setValue({
+  //       name: roleSelected?.name,
+  //       CompanyID: roleSelected?.companyId,
+  //       description: roleSelected?.description,
+  //     });
+  //     setCheckedPermissions(allPermissionsName);
+  //     dispatch(getPermissions(roleSelected.companyId));
+  //     setShowPermissions(true);
+  //   }
+  // }, [roleSelected]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

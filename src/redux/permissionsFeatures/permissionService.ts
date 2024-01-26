@@ -17,6 +17,13 @@ const createPermission = async (permissionData: {
   return response.data;
 };
 
+const deletePermission = async (role: any, permission_id: any) => {
+  const response = await api.post(`roles/${role}/permissions/remove/`, {
+    permission_id,
+  });
+  return response.data;
+};
+
 const getPermissions = async (CompanyID: any) => {
   const response = await api.get(`empresas/${CompanyID}/permissions`);
   const data = Object.getOwnPropertyNames(response.data).map((value) => {
@@ -63,10 +70,17 @@ const deleteRole = async (id: number) => {
   return response.data;
 };
 
+const editRole = async (id: number) => {
+  const response = await api.put(`roles/${id}`);
+  return response.data;
+};
+
 export default {
   createPermission,
   getPermissions,
   getRoles,
   createRole,
   deleteRole,
+  deletePermission,
+  editRole,
 };

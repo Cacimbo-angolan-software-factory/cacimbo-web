@@ -60,8 +60,6 @@ const LojasModal: React.FC<LojasModalProps> = ({
     handleOptionChange,
     handleCheck,
     setValue,
-    // setPaymentMechanismsList,
-    // paymentMechanismsList,
   } = useCreateLoja();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -80,15 +78,7 @@ const LojasModal: React.FC<LojasModalProps> = ({
         ArmazemID: selectedLoja.ArmazemID,
         payments_mechanisms,
       });
-      // setPaymentMechanismsList({
-      //   paymentMechanismsList:
-      //     selectedLoja.company?.online_payments_mechanisms.map(
-      //       (method: any) => ({
-      //         Mechanism: method.Mechanism,
-      //         Description: method.Description,
-      //       })
-      //     ),
-      // });
+
       dispatch(
         getCompanyIdWithNif(selectedLoja.company?.TaxRegistrationNumber)
       );

@@ -92,6 +92,35 @@ export const deleteRole = createAsyncThunk(
   }
 );
 
+export const editRole = createAsyncThunk(
+  'permission/editRole',
+  async (id: number) => {
+    try {
+      const response = await permissionService.editRole(id);
+      return response;
+    } catch (err: any) {
+      console.log(err.response);
+      return err;
+    }
+  }
+);
+
+export const deletePermission = createAsyncThunk(
+  'permission/deletePermission',
+  async (role: any, permission_id) => {
+    try {
+      const response = await permissionService.deletePermission(
+        role,
+        permission_id
+      );
+      return response;
+    } catch (err: any) {
+      console.log(err.response);
+      return err;
+    }
+  }
+);
+
 export const permissionSlice = createSlice({
   name: 'permission',
   initialState,
@@ -167,6 +196,34 @@ export const permissionSlice = createSlice({
       state.isSuccess = true;
     });
     builder.addCase(deleteRole.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+
+    // edit role
+    builder.addCase(editRole.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(editRole.fulfilled, (state, action) => {
+      state.rolesList.filter((role) => role !== action.payload);
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(editRole.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+
+    // delete permission
+    builder.addCase(deletePermission.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deletePermission.fulfilled, (state, action) => {
+      state.rolesList = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(deletePermission.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
     });
