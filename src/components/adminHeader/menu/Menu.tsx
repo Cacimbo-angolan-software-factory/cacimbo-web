@@ -146,7 +146,7 @@ const Menu: React.FC = () => {
             location.pathname === `/tarefas` ? 'active-text' : 'inherit'
           }
         >
-          Tarefas
+          Assistências
         </p>
       </MenuItem>
 
