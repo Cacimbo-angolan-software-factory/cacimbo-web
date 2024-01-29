@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Main, Section, Section2 } from './tarefasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -6,6 +6,7 @@ import { useTasks } from './useTasks';
 import Filters from '../../../features/tasks/components/filters/Filters';
 import tarefas from '../../../assets/tarefas.svg';
 import Assistencia from '../../../features/tasks/components/task/Assistencia';
+import ModalClients from '../../../features/tasks/components/modalClientsAssist/ModalClients';
 
 const Assistencias: React.FC = () => {
   const {
@@ -20,11 +21,13 @@ const Assistencias: React.FC = () => {
     user,
     empresaSelected,
     setEmpresaSelected,
+    empresasAssociadas,
   } = useTasks();
+  const [openModalClients, setOpenModalClients] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(assistSelected);
-  }, [assistSelected]);
+    // console.log(assistSelected);
+  }, []);
 
   return (
     <>
@@ -39,6 +42,7 @@ const Assistencias: React.FC = () => {
           search={search}
           handleSearch={handleSearch}
           user={user}
+          setOpenModalClients={setOpenModalClients}
         />
         <Section>
           {userAssistsFiltered.length > 0 ? (
@@ -59,6 +63,13 @@ const Assistencias: React.FC = () => {
           )}
         </Section>
       </Main>
+
+      {openModalClients && (
+        <ModalClients
+          empresasAssociadas={empresasAssociadas}
+          setEmpresaSelected={setEmpresaSelected}
+        />
+      )}
     </>
   );
 };

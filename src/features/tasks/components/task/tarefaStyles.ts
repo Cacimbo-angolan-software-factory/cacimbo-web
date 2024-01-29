@@ -24,6 +24,27 @@ export const Container = styled.main`
   }
 `;
 
+export const DivBottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & button {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: inherit;
+    border: none;
+    color: #ffff;
+    font-size: 1.8rem;
+  }
+
+  & button:hover {
+    background-color: #5d5d5d;
+    border-radius: 0.5rem;
+  }
+`;
+
 export const Span = styled.span`
   width: 5rem;
   height: 0.5rem;

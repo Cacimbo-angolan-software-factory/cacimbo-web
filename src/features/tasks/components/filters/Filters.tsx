@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { Header } from './filtersStyles';
 
 // import { Container } from './styles';
@@ -9,6 +9,8 @@ interface Props {
   fixedFilter: any;
   search: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  user: any;
+  setOpenModalClients: Dispatch<any>;
 }
 
 const Filters: React.FC<Props> = ({
@@ -17,9 +19,25 @@ const Filters: React.FC<Props> = ({
   fixedFilter,
   search,
   handleSearch,
+  user,
+  setOpenModalClients,
 }) => {
   return (
     <Header className={fixedFilter ? 'filter fixed' : 'filter'}>
+      <section>
+        <button
+          className={filtro === 'all' ? 'active' : ''}
+          // onClick={() => setFiltro('all')}
+        >
+          {user?.user?.name}
+        </button>
+        <button
+          className={filtro === 'pendentes' ? 'active' : ''}
+          onClick={() => setOpenModalClients(true)}
+        >
+          Clientes
+        </button>
+      </section>
       <nav>
         <button
           className={filtro === 'all' ? 'active' : ''}
@@ -39,13 +57,15 @@ const Filters: React.FC<Props> = ({
         >
           Concluídas
         </button>
-        <input
-          value={search}
-          onChange={handleSearch}
-          name='search'
-          type='text'
-          placeholder='Pesquise por id, cliente ou nif...'
-        />
+        <label>
+          <input
+            value={search}
+            onChange={handleSearch}
+            name='search'
+            type='text'
+            placeholder='Pesquise por id, título, cliente ou nif...'
+          />
+        </label>
       </nav>
       <div>
         <p>
