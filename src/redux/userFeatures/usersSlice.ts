@@ -12,6 +12,7 @@ interface UserState {
   allUsers: string[];
   userEmpresas: string[];
   userAssists: string[];
+  companyAssists: string[];
 }
 
 const initialState: UserState = {
@@ -27,6 +28,7 @@ const initialState: UserState = {
   allUsers: [],
   userEmpresas: [],
   userAssists: [],
+  companyAssists: [],
 };
 
 export const login = createAsyncThunk(
@@ -91,6 +93,18 @@ export const getUsersAssists = createAsyncThunk(
   async (user: any) => {
     try {
       const response = await userService.getAssistsUsers(user);
+      return response;
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
+export const getCompanyAssists = createAsyncThunk(
+  'user/getCompanyAssists',
+  async (cliente_nome: string) => {
+    try {
+      const response = await userService.getCompanyAssists(cliente_nome);
       return response;
     } catch (error: any) {
       return error;
@@ -222,20 +236,20 @@ export const userSlice = createSlice({
       state.message = 'Sem assistencias disponíveis';
     });
 
-    // create tarefas
-    // builder.addCase(createTarefas.pending, (state) => {
-    //   state.isLoading = true;
-    // });
-    // builder.addCase(createTarefas.fulfilled, (state, action) => {
-    //   state.tarefas.push(action.payload);
-    //   state.isLoading = false;
-    //   state.isSuccess = true;
-    // });
-    // builder.addCase(createTarefas.rejected, (state) => {
-    //   state.isError = true;
-    //   state.isLoading = false;
-    //   state.message = 'Erro ao criar tarefa';
-    // });
+    // get company assistencias
+    builder.addCase(getCompanyAssists.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getCompanyAssists.fulfilled, (state, action) => {
+      state.companyAssists = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getCompanyAssists.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.message = 'Erro ao buscar assistencias da empresa';
+    });
 
     // create user
     builder.addCase(createUser.pending, (state) => {
