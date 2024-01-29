@@ -71,41 +71,42 @@ const PermissionsList: React.FC<IProps> = ({
 
   return (
     <div>
-      {list.map((permission: any, index: number) => (
-        <div key={index}>
-          <PerSection>
-            <IoAddCircleOutline
-              className='svg'
-              onClick={() => handlePermissionToggle(index)}
-            />
-            <label>
-              <p>{permission.name}</p>
-              <CheckBox
-                handleChange={handleCheckboxChange}
-                id={permission.id}
-                name={permission.name}
-                checkedPermissions={checkedPermissions}
+      {list.length &&
+        list.map((permission: any, index: number) => (
+          <div key={index}>
+            <PerSection>
+              <IoAddCircleOutline
+                className='svg'
+                onClick={() => handlePermissionToggle(index)}
               />
-            </label>
-          </PerSection>
+              <label>
+                <p>{permission.name}</p>
+                <CheckBox
+                  handleChange={handleCheckboxChange}
+                  id={permission.id}
+                  name={permission.name}
+                  checkedPermissions={checkedPermissions}
+                />
+              </label>
+            </PerSection>
 
-          {openPermissions[index] && (
-            <Section>
-              {permission.payload.map((paychild: any) => (
-                <label key={paychild.id}>
-                  <CheckBox
-                    handleChange={handleCheckboxChange}
-                    id={paychild.id}
-                    name={paychild.name}
-                    checkedPermissions={checkedPermissions}
-                  />
-                  <p>{paychild.name}</p>
-                </label>
-              ))}
-            </Section>
-          )}
-        </div>
-      ))}
+            {openPermissions[index] && (
+              <Section>
+                {permission.payload.map((paychild: any) => (
+                  <label key={paychild.id}>
+                    <CheckBox
+                      handleChange={handleCheckboxChange}
+                      id={paychild.id}
+                      name={paychild.name}
+                      checkedPermissions={checkedPermissions}
+                    />
+                    <p>{paychild.name}</p>
+                  </label>
+                ))}
+              </Section>
+            )}
+          </div>
+        ))}
     </div>
   );
 };

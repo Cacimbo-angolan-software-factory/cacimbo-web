@@ -17,6 +17,11 @@ export const Header = styled.header`
     box-shadow: 0px 11px 11px -14px rgba(0, 0, 0, 0.75);
   }
 
+  & section {
+    display: flex;
+    gap: 2rem;
+  }
+
   & nav {
     display: flex;
     gap: 2rem;
@@ -47,6 +52,7 @@ export const Header = styled.header`
     border-radius: 0.5rem;
     background-color: #242424;
     color: #fff;
+    width: 25rem;
   }
 
   & div {

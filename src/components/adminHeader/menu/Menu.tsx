@@ -131,22 +131,22 @@ const Menu: React.FC = () => {
       ) : null}
 
       <MenuItem
-        className={location.pathname === `/tarefas` ? 'active' : 'inherit'}
-        to='/tarefas'
+        className={location.pathname === `/assistencias` ? 'active' : 'inherit'}
+        to='/assistencias'
       >
         <span
           className={
-            location.pathname === `/tarefas` ? 'active-text' : 'inherit'
+            location.pathname === `/assistencias` ? 'active-text' : 'inherit'
           }
         >
           <RiTaskFill />
         </span>
         <p
           className={
-            location.pathname === `/tarefas` ? 'active-text' : 'inherit'
+            location.pathname === `/assistencias` ? 'active-text' : 'inherit'
           }
         >
-          Tarefas
+          Assistências
         </p>
       </MenuItem>
 

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Main, Section, Section2 } from './tarefasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useTasks } from './useTasks';
-import Tarefa from '../../../features/tasks/components/task/Tarefa';
 import Filters from '../../../features/tasks/components/filters/Filters';
 import tarefas from '../../../assets/tarefas.svg';
+import Assistencia from '../../../features/tasks/components/task/Assistencia';
+import ModalClients from '../../../features/tasks/components/modalClientsAssist/ModalClients';
 
-const Tarefas: React.FC = () => {
+const Assistencias: React.FC = () => {
   const {
     filtro,
     setfiltro,
@@ -15,7 +16,18 @@ const Tarefas: React.FC = () => {
     fixedFilter,
     search,
     handleSearch,
+    assistSelected,
+    setAssistSelected,
+    user,
+    empresaSelected,
+    setEmpresaSelected,
+    empresasAssociadas,
   } = useTasks();
+  const [openModalClients, setOpenModalClients] = useState<boolean>(false);
+
+  useEffect(() => {
+    // console.log(assistSelected);
+  }, []);
 
   return (
     <>
@@ -29,11 +41,19 @@ const Tarefas: React.FC = () => {
           fixedFilter={fixedFilter}
           search={search}
           handleSearch={handleSearch}
+          user={user}
+          setOpenModalClients={setOpenModalClients}
         />
         <Section>
           {userAssistsFiltered.length > 0 ? (
             userAssistsFiltered.map((assist: any) => (
-              <Tarefa key={assist.id} assist={assist} filtro={filtro} />
+              <Assistencia
+                key={assist.id}
+                assist={assist}
+                filtro={filtro}
+                setAssistSelected={setAssistSelected}
+                assistSelected={assistSelected}
+              />
             ))
           ) : (
             <Section2>
@@ -43,8 +63,15 @@ const Tarefas: React.FC = () => {
           )}
         </Section>
       </Main>
+
+      {openModalClients && (
+        <ModalClients
+          empresasAssociadas={empresasAssociadas}
+          setEmpresaSelected={setEmpresaSelected}
+        />
+      )}
     </>
   );
 };
 
-export default Tarefas;
+export default Assistencias;

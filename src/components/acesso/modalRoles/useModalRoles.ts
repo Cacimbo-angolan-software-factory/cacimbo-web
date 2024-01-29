@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { apiCacimbo } from '../../../service/Service.api';
@@ -17,29 +17,20 @@ export const useModalRoles = () => {
   const [showPermissions, setShowPermissions] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [selectedEmpresa, setSelectedEmpresa] = useState<any>({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
 
-  const handleBlur = async () => {
-    try {
-      const response = await apiCacimbo.get(`docs_empresas/${searchCompanyId}`);
-      const companyData = response.data.data.CompanyID;
-
-      if (companyData) {
-        dispatch(getPermissions(companyData));
-        setShowPermissions(true);
-      } else {
-        setShowPermissions(false);
-      }
-    } catch (error) {
-      setShowPermissions(false);
+  useEffect(() => {
+    if (selectedEmpresa?.CompanyID) {
+      dispatch(getPermissions(selectedEmpresa.CompanyID));
+      // setShowPermissions(true);
     }
-  };
+  }, [selectedEmpresa]);
 
   return {
-    handleBlur,
     handleChange,
     showPermissions,
     list,
@@ -54,5 +45,7 @@ export const useModalRoles = () => {
     setValue,
     setErrorMsg,
     setShowPermissions,
+    selectedEmpresa,
+    setSelectedEmpresa,
   };
 };

@@ -28,9 +28,9 @@ import { Msg } from '../acessoRoles/acessoRolesStyles';
 import { getCompanyIdWithNif } from '../../../redux/lojasFeatures/lojasSlice';
 
 interface ModalRolesProps {
+  selectedEmpresa: any;
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleBlur: () => Promise<void>;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   showPermissions: boolean;
   list: any;
@@ -47,9 +47,9 @@ interface ModalRolesProps {
 }
 
 const ModalRoles: React.FC<ModalRolesProps> = ({
+  selectedEmpresa,
   openModal,
   setOpenModal,
-  handleBlur,
   handleChange,
   showPermissions,
   list,
@@ -88,6 +88,10 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
   //     setShowPermissions(true);
   //   }
   // }, [roleSelected]);
+
+  // useEffect(() => {
+  //   console.log(selectedEmpresa);
+  // }, [selectedEmpresa]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -142,12 +146,12 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
               <InputDiv>
                 <p>Id da empresa</p>
                 <input
-                  placeholder='Pesquise uma empresa...'
+                  // placeholder='Pesquise uma empresa...'
                   name='searchCompanyId'
-                  value={searchCompanyId}
-                  onChange={(e: any) => setSearchCompanyId(e.target.value)}
-                  type='text'
-                  onBlur={handleBlur}
+                  value={selectedEmpresa.CompanyID}
+                  // onChange={(e: any) => setSearchCompanyId(e.target.value)}
+                  // type='text'
+                  disabled
                 />
               </InputDiv>
             ) : null}
@@ -179,8 +183,8 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
               <Spinner />
             ) : (
               <PermissionsDiv>
-                {showPermissions && <h2>Permissões</h2>}
-                {showPermissions ? (
+                {!!list.length && <h2>Permissões</h2>}
+                {!!list.length ? (
                   <PermissionsList
                     checkedPermissions={checkedPermissions}
                     setCheckedPermissions={setCheckedPermissions}

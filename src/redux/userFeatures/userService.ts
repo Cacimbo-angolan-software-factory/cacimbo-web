@@ -97,12 +97,12 @@ const getAssistsUsers = async (userId: any) => {
   }
 };
 
-const getAssistsPartners = async (user: any) => {
+const getCompanyAssists = async (cliente_nome: string) => {
   try {
-    const response = await api.get(
-      `assistencias/parceiro/${user?.user.parceiro_id}`
+    const response = await api.get(`assistencias`);
+    return response.data.filter(
+      (cliente: any) => cliente.cliente_nome === cliente_nome
     );
-    return response.data;
   } catch (error) {
     return error;
   }
@@ -133,6 +133,7 @@ export const userService = {
   getUsersEmpresas,
   AssociarUser,
   getAssistsUsers,
+  getCompanyAssists,
 };
 
 export default userService;
