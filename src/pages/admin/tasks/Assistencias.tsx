@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Main, Section, Section2 } from './tarefasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
 import { useTasks } from './useTasks';
-import Tarefa from '../../../features/tasks/components/task/Tarefa';
 import Filters from '../../../features/tasks/components/filters/Filters';
 import tarefas from '../../../assets/tarefas.svg';
+import Assistencia from '../../../features/tasks/components/task/Assistencia';
 
-const Tarefas: React.FC = () => {
+const Assistencias: React.FC = () => {
   const {
     filtro,
     setfiltro,
@@ -15,7 +15,16 @@ const Tarefas: React.FC = () => {
     fixedFilter,
     search,
     handleSearch,
+    assistSelected,
+    setAssistSelected,
+    user,
+    empresaSelected,
+    setEmpresaSelected,
   } = useTasks();
+
+  useEffect(() => {
+    console.log(assistSelected);
+  }, [assistSelected]);
 
   return (
     <>
@@ -29,11 +38,18 @@ const Tarefas: React.FC = () => {
           fixedFilter={fixedFilter}
           search={search}
           handleSearch={handleSearch}
+          user={user}
         />
         <Section>
           {userAssistsFiltered.length > 0 ? (
             userAssistsFiltered.map((assist: any) => (
-              <Tarefa key={assist.id} assist={assist} filtro={filtro} />
+              <Assistencia
+                key={assist.id}
+                assist={assist}
+                filtro={filtro}
+                setAssistSelected={setAssistSelected}
+                assistSelected={assistSelected}
+              />
             ))
           ) : (
             <Section2>
@@ -47,4 +63,4 @@ const Tarefas: React.FC = () => {
   );
 };
 
-export default Tarefas;
+export default Assistencias;
