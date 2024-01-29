@@ -15,11 +15,7 @@ const ModalAcessoEmpresas: React.FC<IModalAcessoEmpresas> = ({
   setSelectedEmpresa,
   setOpenModalEmpresas,
 }) => {
-  const [search, setSearch] = useState('');
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
+  const [search, setSearch] = useState<string>('');
 
   const handleClick = (empresa: any) => {
     setSelectedEmpresa(empresa);
@@ -30,12 +26,16 @@ const ModalAcessoEmpresas: React.FC<IModalAcessoEmpresas> = ({
     <Wrapper className={openModalEmpresas ? 'open' : ''}>
       <h1>Empresas</h1>
 
-      <Input
-        onChange={handleSearch}
-        value={search}
-        type='text'
-        placeholder='Pesquise por nome ou id da empresa...'
-      />
+      <label>
+        <Input
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setSearch(event.target.value)
+          }
+          value={search}
+          type='text'
+          placeholder='Pesquise por nome ou id da empresa...'
+        />
+      </label>
 
       <ul>
         {empresasAssociadas &&

@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import { getEmpresasAssociadas } from '../../../redux/empresaFeatures/empresaSlice';
 import { useModalRoles } from '../../../components/acesso/modalRoles/useModalRoles';
+import { getPermissions } from '../../../redux/permissionsFeatures/permissionSlice';
 
 const Acesso: React.FC = () => {
   const {
     openModal,
     setOpenModal,
-    handleBlur,
     handleChange,
     showPermissions,
     list,
@@ -28,12 +28,13 @@ const Acesso: React.FC = () => {
     setValue,
     setErrorMsg,
     setShowPermissions,
+    selectedEmpresa,
+    setSelectedEmpresa,
   } = useModalRoles();
   const [openModalEmpresas, setOpenModalEmpresas] = React.useState(false);
   const { rolesList } = useSelector((state: any) => state.permission);
   const { empresasAssociadas } = useSelector((state: any) => state.empresa);
   const dispatch = useDispatch<AppDispatch>();
-  const [selectedEmpresa, setSelectedEmpresa] = React.useState<any>({});
   const [roleSelected, setRoleSelected] = React.useState<any>();
 
   useEffect(() => {
@@ -52,10 +53,12 @@ const Acesso: React.FC = () => {
       <Container>
         <div className='div'>
           <h2>Funções</h2>
-          <button onClick={() => setOpenModal(true)}>
-            <IoAddCircleOutline />
-            Criar função
-          </button>
+          {selectedEmpresa?.CompanyName && (
+            <button onClick={() => setOpenModal(true)}>
+              <IoAddCircleOutline />
+              Criar função
+            </button>
+          )}
         </div>
 
         <Button onClick={() => setOpenModalEmpresas(true)}>
@@ -72,9 +75,9 @@ const Acesso: React.FC = () => {
       </Container>
 
       <ModalRoles
+        selectedEmpresa={selectedEmpresa}
         openModal={openModal}
         setOpenModal={setOpenModal}
-        handleBlur={handleBlur}
         handleChange={handleChange}
         showPermissions={showPermissions}
         list={list}
