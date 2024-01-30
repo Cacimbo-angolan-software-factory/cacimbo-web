@@ -16,4 +16,37 @@ export const Main = styled.div`
   border: 1px solid #383838;
   transition: all 0.2s ease-in;
   overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & h1 {
+    padding: 2rem;
+  }
+
+  & ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & li {
+      padding: 2rem;
+      list-style: none;
+      font-size: 1.4rem;
+      background-color: #383838;
+      cursor: pointer;
+    }
+  }
+`;
+
+export const Input = styled.input`
+  padding: 1rem;
+  border: 1px solid #383838;
+  border-radius: 0.5rem;
+  background-color: #242424;
+  color: #fff;
+  width: 22rem;
+
+  margin: 0 0 2rem 2rem;
 `;
