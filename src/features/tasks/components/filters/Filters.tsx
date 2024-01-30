@@ -47,17 +47,20 @@ const Filters: React.FC<Props> = ({
         >
           {user?.user?.name}
         </button>
-        <button
-          className={filtro === 'cliente' ? 'active' : ''}
-          onClick={() => {
-            setOpenModalClients(true);
-            handleFilterClient;
-          }}
-        >
-          {empresaSelected?.CompanyName
-            ? empresaSelected?.CompanyName
-            : 'Cliente'}
-        </button>
+
+        {user.user.parceiro_id === 1 ? (
+          <button
+            className={filtro === 'cliente' ? 'active' : ''}
+            onClick={() => {
+              setOpenModalClients(true);
+              handleFilterClient;
+            }}
+          >
+            {empresaSelected?.CompanyName
+              ? empresaSelected?.CompanyName
+              : 'Cliente'}
+          </button>
+        ) : null}
       </section>
       <nav>
         {filtro === 'user' ? (
