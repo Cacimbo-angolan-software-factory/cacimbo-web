@@ -102,9 +102,9 @@ export const getUsersAssists = createAsyncThunk(
 
 export const getCompanyAssists = createAsyncThunk(
   'user/getCompanyAssists',
-  async (cliente_nome: string) => {
+  async () => {
     try {
-      const response = await userService.getCompanyAssists(cliente_nome);
+      const response = await userService.getCompanyAssists();
       return response;
     } catch (error: any) {
       return error;

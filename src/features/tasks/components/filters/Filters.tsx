@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Header } from './filtersStyles';
 
 // import { Container } from './styles';
@@ -11,6 +11,9 @@ interface Props {
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   user: any;
   setOpenModalClients: Dispatch<any>;
+  empresaSelected: any;
+  childFiltro: string;
+  setChildFiltro: Dispatch<SetStateAction<string>>;
 }
 
 const Filters: React.FC<Props> = ({
@@ -21,42 +24,86 @@ const Filters: React.FC<Props> = ({
   handleSearch,
   user,
   setOpenModalClients,
+  empresaSelected,
+  childFiltro,
+  setChildFiltro,
 }) => {
+  const handleFilterUser = () => {
+    setFiltro('user');
+    setChildFiltro('todas');
+  };
+
+  const handleFilterClient = () => {
+    setFiltro('cliente');
+    setChildFiltro('clienteTodas');
+  };
+
   return (
     <Header className={fixedFilter ? 'filter fixed' : 'filter'}>
       <section>
         <button
-          className={filtro === 'all' ? 'active' : ''}
-          // onClick={() => setFiltro('all')}
+          className={filtro === 'user' ? 'active' : ''}
+          onClick={handleFilterUser}
         >
           {user?.user?.name}
         </button>
         <button
-          className={filtro === 'pendentes' ? 'active' : ''}
-          onClick={() => setOpenModalClients(true)}
+          className={filtro === 'cliente' ? 'active' : ''}
+          onClick={() => {
+            setOpenModalClients(true);
+            handleFilterClient;
+          }}
         >
-          Clientes
+          {empresaSelected?.CompanyName
+            ? empresaSelected?.CompanyName
+            : 'Cliente'}
         </button>
       </section>
       <nav>
-        <button
-          className={filtro === 'all' ? 'active' : ''}
-          onClick={() => setFiltro('all')}
-        >
-          Todas
-        </button>
-        <button
-          className={filtro === 'pendentes' ? 'active' : ''}
-          onClick={() => setFiltro('pendentes')}
-        >
-          Pendentes
-        </button>
-        <button
-          className={filtro === 'concluidas' ? 'active' : ''}
-          onClick={() => setFiltro('concluidas')}
-        >
-          Concluídas
-        </button>
+        {filtro === 'user' ? (
+          <>
+            <button
+              className={childFiltro === 'todas' ? 'active' : ''}
+              onClick={() => setChildFiltro('todas')}
+            >
+              Todas
+            </button>
+            <button
+              className={childFiltro === 'pendentes' ? 'active' : ''}
+              onClick={() => setChildFiltro('pendentes')}
+            >
+              Pendentes
+            </button>
+            <button
+              className={childFiltro === 'concluidas' ? 'active' : ''}
+              onClick={() => setChildFiltro('concluidas')}
+            >
+              Concluídas
+            </button>{' '}
+          </>
+        ) : (
+          <>
+            {' '}
+            <button
+              className={childFiltro === 'clienteTodas' ? 'active' : ''}
+              onClick={() => setChildFiltro('clienteTodas')}
+            >
+              Todas
+            </button>
+            <button
+              className={childFiltro === 'clientePendentes' ? 'active' : ''}
+              onClick={() => setChildFiltro('clientePendentes')}
+            >
+              Pendentes
+            </button>
+            <button
+              className={childFiltro === 'clienteConcluidas' ? 'active' : ''}
+              onClick={() => setChildFiltro('clienteConcluidas')}
+            >
+              Concluídas
+            </button>{' '}
+          </>
+        )}
         <label>
           <input
             value={search}

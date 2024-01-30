@@ -97,12 +97,10 @@ const getAssistsUsers = async (userId: any) => {
   }
 };
 
-const getCompanyAssists = async (cliente_nome: string) => {
+const getCompanyAssists = async () => {
   try {
     const response = await api.get(`assistencias`);
-    return response.data.filter(
-      (cliente: any) => cliente.cliente_nome === cliente_nome
-    );
+    return response.data;
   } catch (error) {
     return error;
   }

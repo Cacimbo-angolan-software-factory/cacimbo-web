@@ -14,6 +14,8 @@ interface Props {
   filtro: string;
   setAssistSelected: Dispatch<any>;
   assistSelected: any;
+  getSingleAssist: (assistencia: number) => Promise<any>;
+  setOpenSideBar: Dispatch<boolean>;
 }
 
 const Assistencia: React.FC<Props> = ({
@@ -21,7 +23,15 @@ const Assistencia: React.FC<Props> = ({
   filtro,
   setAssistSelected,
   assistSelected,
+  getSingleAssist,
+  setOpenSideBar,
 }) => {
+  const handleClickAssistSelected = async (assit: any) => {
+    const detailedAssist = await getSingleAssist(assist.id);
+    setAssistSelected(detailedAssist);
+    setOpenSideBar(true);
+  };
+
   return (
     <Container>
       <h3>
@@ -53,7 +63,7 @@ const Assistencia: React.FC<Props> = ({
               : 'red'
           }
         ></Span>
-        <button onClick={() => setAssistSelected(assist)}>
+        <button onClick={() => handleClickAssistSelected(assist)}>
           <IoOpenOutline />
         </button>
       </DivBottom>
