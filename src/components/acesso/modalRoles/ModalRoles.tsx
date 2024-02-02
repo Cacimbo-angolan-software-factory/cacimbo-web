@@ -132,6 +132,15 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
     }
   };
 
+  const onClose = () => {
+    setValue({
+      name: '',
+      description: '',
+    });
+    setCheckedPermissions([]);
+    setOpenModal(false);
+  };
+
   return (
     <>
       <ModalRolesContainer className={openModal ? 'open' : ''}>
@@ -200,13 +209,15 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
           <FooterDiv
             className={showPermissions === false ? 'noPermission' : ''}
           >
-            <button onClick={() => setOpenModal(false)}>Cancelar</button>
+            <button type='reset' onClick={() => setOpenModal(false)}>
+              Cancelar
+            </button>
             <button type='submit'>Criar função</button>
           </FooterDiv>
         </form>
       </ModalRolesContainer>
 
-      {openModal && <Overlay onClick={() => setOpenModal(false)} />}
+      {openModal && <Overlay onClick={onClose} />}
 
       <ToastContainer />
     </>

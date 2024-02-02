@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   Overlay,
@@ -52,6 +58,7 @@ const Role: React.FC<RoleProps> = ({
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [permissionSelected, setPermissionSelected] = useState<any>();
+  let menuRef = useRef<any>(null);
 
   // const sortedPermissions = [...role.permissions].sort((a, b) => {
   //   if (a.name !== '' && b.name === '') return -1;
@@ -73,6 +80,29 @@ const Role: React.FC<RoleProps> = ({
     // dispatch(getPermissions(user.user.lastCompanyIDUsed));
     // console.log(list);
   }, []);
+
+  const useClickOutside = (
+    ref: React.RefObject<HTMLElement>,
+    callback: () => void
+  ) => {
+    useEffect(() => {
+      const handler = (event: any) => {
+        if (!ref.current?.contains(event.target)) {
+          callback();
+        }
+      };
+
+      document.addEventListener('mousedown', handler);
+
+      return () => {
+        document.removeEventListener('mousedown', handler);
+      };
+    }, [ref, callback]);
+  };
+
+  useClickOutside(menuRef, () => {
+    setOpenModalOptions(false);
+  });
 
   return (
     <>
@@ -128,32 +158,41 @@ const Role: React.FC<RoleProps> = ({
 
                     {selectedPermissions[permission.name] &&
                       permission.youCan.map(
-                        (youCanItem: any, subIndex: number) => (
-                          <div key={subIndex} className='small'>
-                            <IoCloseCircleOutline />
-                            {/* <p>{descriptionsObj[youCanItem.toUpperCase()]}</p> */}
-                            <p>{youCanItem}</p>
+                        (youCanItem: any, subIndex: number) => {
+                          if (youCanItem === '') return null;
+                          return (
+                            <div key={subIndex} className='small'>
+                              <IoCloseCircleOutline />
+                              <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                              {/* <p>{youCanItem}</p> */}
 
-                            {/* <IoTrashBinOutline className='delete' /> */}
-                          </div>
-                        )
+                              {/* <IoTrashBinOutline className='delete' /> */}
+                            </div>
+                          );
+                        }
                       )}
                   </Permission>
                 )}
                 {permission.name === '' &&
-                  permission.youCan.map((youCanItem: any, subIndex: number) => (
-                    <Permission key={subIndex}>
-                      <section className='section-2'>
-                        {permission.name === '' && <IoCloseCircleOutline />}
-                        <div className='block youCan'>
-                          {/* <p>{descriptionsObj[youCanItem.toUpperCase()]}</p> */}
-                          <p>{youCanItem}</p>
+                  permission.youCan.map((youCanItem: any, subIndex: number) => {
+                    if (youCanItem === '') return null;
+                    return (
+                      <Permission key={subIndex}>
+                        <section className='section-2'>
+                          {permission.name === '' && <IoCloseCircleOutline />}
+                          <div className='block youCan'>
+                            <p>
+                              {!!descriptionsObj[youCanItem.toUpperCase()]
+                                ? descriptionsObj[youCanItem.toUpperCase()]
+                                : youCanItem}
+                            </p>
 
-                          {/* <IoTrashBinOutline className='delete' /> */}
-                        </div>
-                      </section>
-                    </Permission>
-                  ))}
+                            {/* <IoTrashBinOutline className='delete' /> */}
+                          </div>
+                        </section>
+                      </Permission>
+                    );
+                  })}
               </>
             ))}
           </Permissions>
@@ -165,6 +204,7 @@ const Role: React.FC<RoleProps> = ({
           setOpenMessageModal={setOpenMessageModal}
           position={position}
           setOpenModal={setOpenModal}
+          menuRef={menuRef}
         />
       )}
 
