@@ -7,15 +7,18 @@ interface Props {
   position: { top: number; left: number };
   setOpenMessageModal: Dispatch<SetStateAction<boolean>>;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
+  menuRef: any;
 }
 
 const OptionsRolesModal: React.FC<Props> = ({
   position,
   setOpenMessageModal,
   setOpenModal,
+  menuRef,
 }) => {
   return (
     <ModalOptions
+      ref={menuRef}
       style={{ top: `${position.top}px`, left: `${position.left}px` }}
     >
       <button

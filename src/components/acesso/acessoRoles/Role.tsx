@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   Overlay,
@@ -52,6 +58,7 @@ const Role: React.FC<RoleProps> = ({
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [permissionSelected, setPermissionSelected] = useState<any>();
+  let menuRef = useRef<any>(null);
 
   // const sortedPermissions = [...role.permissions].sort((a, b) => {
   //   if (a.name !== '' && b.name === '') return -1;
@@ -73,6 +80,29 @@ const Role: React.FC<RoleProps> = ({
     // dispatch(getPermissions(user.user.lastCompanyIDUsed));
     // console.log(list);
   }, []);
+
+  const useClickOutside = (
+    ref: React.RefObject<HTMLElement>,
+    callback: () => void
+  ) => {
+    useEffect(() => {
+      const handler = (event: any) => {
+        if (!ref.current?.contains(event.target)) {
+          callback();
+        }
+      };
+
+      document.addEventListener('mousedown', handler);
+
+      return () => {
+        document.removeEventListener('mousedown', handler);
+      };
+    }, [ref, callback]);
+  };
+
+  useClickOutside(menuRef, () => {
+    setOpenModalOptions(false);
+  });
 
   return (
     <>
@@ -165,6 +195,7 @@ const Role: React.FC<RoleProps> = ({
           setOpenMessageModal={setOpenMessageModal}
           position={position}
           setOpenModal={setOpenModal}
+          menuRef={menuRef}
         />
       )}
 
