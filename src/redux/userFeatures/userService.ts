@@ -5,16 +5,25 @@ const login = async (userData: {
   password: string;
   device_name: string;
 }) => {
-  const response = await apiCacimbo.post(`token`, {
-    ...userData,
-    device_name: 'web',
-  });
+  try {
+    const response = await apiCacimbo.post(`token`, {
+      ...userData,
+      device_name: 'web',
+    });
 
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data));
+    if (response.data) {
+      const userDataStore = {
+        user: response.data.user,
+      };
+
+      console.log(response.data);
+      localStorage.setItem('user', JSON.stringify(userDataStore));
+    }
+
+    return response.data;
+  } catch (err: any) {
+    console.log(err);
   }
-
-  return response.data;
 };
 
 const logout = async () => {
