@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Main, Overlay, Section, Section2 } from './tarefasStyles';
 import AdminHeader from '../../../components/adminHeader/AdminHeader';
 import HeaderMobile from '../../../components/headerMobile/HeaderMobile';
@@ -36,6 +36,10 @@ const Assistencias: React.FC = () => {
   useClickOutside(menuRef, () => {
     setOpenSideBar(false);
   });
+
+  useEffect(() => {
+    console.log(assistSelected?.tasks);
+  }, [assistSelected]);
 
   return (
     <>
