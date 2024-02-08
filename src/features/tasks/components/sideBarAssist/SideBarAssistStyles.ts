@@ -100,12 +100,28 @@ export const Tasks = styled.div`
     background: #5555;
     border-radius: 0.5rem;
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
     justify-content: space-between;
 
     & section {
       display: flex;
-      flex-direction: column;
       gap: 1rem;
     }
+  }
+`;
+
+export const Button = styled.button`
+  padding: 1rem;
+  font-size: 1.7rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  border: none;
+  background-color: #5555;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #7777;
   }
 `;
