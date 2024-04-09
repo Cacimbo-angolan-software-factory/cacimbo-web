@@ -9,15 +9,15 @@ export const useModalRoles = () => {
   const { list, isLoading } = useSelector((state: any) => state.permission);
   const [searchCompanyId, setSearchCompanyId] = useState('');
   const dispatch = useDispatch<AppDispatch>();
+  const [selectedEmpresa, setSelectedEmpresa] = useState<any>({});
   const [value, setValue] = useState({
     name: '',
-    CompanyID: user.user.lastCompanyIDUsed,
+    CompanyID: selectedEmpresa?.CompanyID,
     description: '',
   });
   const [showPermissions, setShowPermissions] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const [selectedEmpresa, setSelectedEmpresa] = useState<any>({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -27,6 +27,11 @@ export const useModalRoles = () => {
     if (selectedEmpresa?.CompanyID) {
       dispatch(getPermissions(selectedEmpresa.CompanyID));
       // setShowPermissions(true);
+
+      setValue((prevValue) => ({
+        ...prevValue,
+        CompanyID: selectedEmpresa?.CompanyID,
+      }));
     }
   }, [selectedEmpresa]);
 

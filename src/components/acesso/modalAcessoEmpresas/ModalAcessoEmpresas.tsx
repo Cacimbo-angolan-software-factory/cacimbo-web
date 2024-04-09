@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Input, Wrapper } from './stylesAcessoEmpresas';
 
@@ -53,6 +53,7 @@ const ModalAcessoEmpresas: React.FC<IModalAcessoEmpresas> = ({
             .map((empresa: any, index: number) => (
               <li onClick={() => handleClick(empresa)} key={index}>
                 {empresa.CompanyName}
+                {/* {console.log(empresa)} */}
               </li>
             ))}
       </ul>
