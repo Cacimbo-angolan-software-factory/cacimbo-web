@@ -99,25 +99,27 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
     if (value.name === '' || value.CompanyID === '') {
       setErrorMsg('Por favor preencha os campos vazios');
     } else {
-      dispatch(
-        criarRole({
-          name: value.name,
-          CompanyID: value.CompanyID,
-          description: value.description,
-          permissions: checkedPermissions,
-        })
-      ).then(() => {
-        toast.success('Função criada com sucesso! 🎉', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        });
-      });
+      // dispatch(
+      //   criarRole({
+      //     name: value.name,
+      //     CompanyID: value.CompanyID,
+      //     description: value.description,
+      //     permissions: checkedPermissions,
+      //   })
+      // ).then(() => {
+      //   toast.success('Função criada com sucesso! 🎉', {
+      //     position: 'top-right',
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: 'colored',
+      //   });
+      // });
+
+      console.log(value);
 
       setTimeout(() => {
         setValue({

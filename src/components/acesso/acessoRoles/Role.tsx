@@ -76,11 +76,6 @@ const Role: React.FC<RoleProps> = ({
     setRoleSelected(role);
   };
 
-  useEffect(() => {
-    // dispatch(getPermissions(user.user.lastCompanyIDUsed));
-    // console.log(list);
-  }, []);
-
   const useClickOutside = (
     ref: React.RefObject<HTMLElement>,
     callback: () => void
@@ -163,7 +158,7 @@ const Role: React.FC<RoleProps> = ({
                           return (
                             <div key={subIndex} className='small'>
                               <IoCloseCircleOutline />
-                              <p>{descriptionsObj[youCanItem.toUpperCase()]}</p>
+                              <p>{descriptionsObj[youCanItem]}</p>
                               {/* <p>{youCanItem}</p> */}
 
                               {/* <IoTrashBinOutline className='delete' /> */}
@@ -182,8 +177,8 @@ const Role: React.FC<RoleProps> = ({
                           {permission.name === '' && <IoCloseCircleOutline />}
                           <div className='block youCan'>
                             <p>
-                              {!!descriptionsObj[youCanItem.toUpperCase()]
-                                ? descriptionsObj[youCanItem.toUpperCase()]
+                              {!!descriptionsObj[youCanItem]
+                                ? descriptionsObj[youCanItem]
                                 : youCanItem}
                             </p>
 
