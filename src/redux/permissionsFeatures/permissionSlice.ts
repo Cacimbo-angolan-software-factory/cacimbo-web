@@ -5,8 +5,10 @@ interface PermissionState {
   permissions: any[];
   list: any[];
   rolesList: any[];
+  userRoles: any[];
   isError: boolean;
   isLoading: boolean;
+  isLoadingUserRoles: boolean;
   isSuccess: boolean;
 }
 
@@ -14,8 +16,10 @@ const initialState: PermissionState = {
   permissions: [],
   list: [],
   rolesList: [],
+  userRoles: [],
   isError: false,
   isLoading: false,
+  isLoadingUserRoles: false,
   isSuccess: false,
 };
 
@@ -59,6 +63,18 @@ export const getRoles = createAsyncThunk('permission/getRoles', async () => {
     return error;
   }
 });
+
+export const getUserRoles = createAsyncThunk(
+  'permission/getUserRoles',
+  async (id: number) => {
+    try {
+      const response = await permissionService.getUserRoles(id);
+      return response;
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
 
 export const criarRole = createAsyncThunk(
   'permission/criarRole',
@@ -184,6 +200,20 @@ export const permissionSlice = createSlice({
     builder.addCase(getRoles.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
+    });
+
+    // get user roles
+    builder.addCase(getUserRoles.pending, (state) => {
+      state.isLoadingUserRoles = true;
+    });
+    builder.addCase(getUserRoles.fulfilled, (state, action) => {
+      state.userRoles = action.payload;
+      state.isLoadingUserRoles = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getUserRoles.rejected, (state) => {
+      state.isError = true;
+      state.isLoadingUserRoles = false;
     });
 
     // delete role

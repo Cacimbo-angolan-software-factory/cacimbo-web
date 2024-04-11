@@ -9,6 +9,8 @@ import {
 } from './stylesSideBars';
 import { RiCloseCircleLine, RiPencilFill } from 'react-icons/ri';
 import {
+  IoBagCheckOutline,
+  IoBriefcaseOutline,
   IoBusinessOutline,
   IoPeopleOutline,
   IoPersonAddOutline,
@@ -19,6 +21,7 @@ import { getUsersEmpresas } from '../../../redux/userFeatures/usersSlice';
 import Spinner from '../../spinner/Spinner';
 import noCompanies from '../../../assets/noCompanies.svg';
 import AssociarUser from '../associarUser/AssociarUser';
+import { getUserRoles } from '../../../redux/permissionsFeatures/permissionSlice';
 
 interface UserContainerProps {
   userSelected: any;
@@ -31,11 +34,16 @@ const UserContainer: React.FC<UserContainerProps> = ({
   setOpen,
 }) => {
   const { userEmpresas, isLoading } = useSelector((state: any) => state.user);
+  const { userRoles, isLoadingUserRoles } = useSelector(
+    (state: any) => state.permission
+  );
   const [openAssociar, setOpenAssociar] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getUsersEmpresas(userSelected.id));
+    dispatch(getUserRoles(userSelected.id));
+    console.log(userRoles.roles);
   }, []);
 
   const handleClick = () => {
@@ -85,6 +93,36 @@ const UserContainer: React.FC<UserContainerProps> = ({
               <NoCompanies>
                 <img src={noCompanies} alt='Nenhuma empresa' />
                 <p>Nenhuma empresa associada à este usuário.</p>
+              </NoCompanies>
+            )}
+          </Companies>
+        </div>
+
+        <div>
+          <Div1>
+            <h2>
+              <IoBriefcaseOutline />
+              Funções atribuídas
+            </h2>
+            <p onClick={handleClick}>
+              <IoPersonAddOutline />
+            </p>
+          </Div1>
+
+          <Companies>
+            {isLoadingUserRoles ? (
+              <Spinner />
+            ) : userRoles && userRoles.roles && userRoles.roles.length > 0 ? (
+              userRoles.roles.map((role: any, index: number) => (
+                <div key={index}>
+                  <IoBagCheckOutline />
+                  <p>{role.name}</p>
+                </div>
+              ))
+            ) : (
+              <NoCompanies>
+                <img src={noCompanies} alt='Nenhuma função' />
+                <p>Nenhuma função atribuída a este usuário</p>
               </NoCompanies>
             )}
           </Companies>

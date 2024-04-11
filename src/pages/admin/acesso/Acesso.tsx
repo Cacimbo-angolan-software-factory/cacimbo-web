@@ -45,10 +45,6 @@ const Acesso: React.FC = () => {
     return role.companyId === selectedEmpresa?.CompanyID;
   });
 
-  useEffect(() => {
-    console.log(selectedEmpresa);
-  }, [selectedEmpresa]);
-
   return (
     <>
       <AdminHeader />

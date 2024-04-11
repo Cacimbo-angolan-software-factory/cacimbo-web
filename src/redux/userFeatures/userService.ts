@@ -14,9 +14,9 @@ const login = async (userData: {
     if (response.data) {
       const userDataStore = {
         user: response.data.user,
+        roles: response.data.roles,
       };
 
-      console.log(response.data);
       localStorage.setItem('user', JSON.stringify(userDataStore));
     }
 

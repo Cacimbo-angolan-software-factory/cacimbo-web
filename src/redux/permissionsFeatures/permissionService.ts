@@ -54,6 +54,11 @@ const getRoles = async () => {
   return response.data;
 };
 
+const getUserRoles = async (id: number) => {
+  const response = await api.get(`users/${id}/roles`);
+  return response.data;
+};
+
 const createRole = async (roleData: {
   id?: number;
   name: string;
@@ -83,4 +88,5 @@ export default {
   deleteRole,
   deletePermission,
   editRole,
+  getUserRoles,
 };
