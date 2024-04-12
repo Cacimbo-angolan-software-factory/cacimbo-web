@@ -95,6 +95,18 @@ export const criarRole = createAsyncThunk(
   }
 );
 
+export const addRole = createAsyncThunk(
+  'permission/addRole',
+  async (roleData: any, id: any) => {
+    try {
+      const response = await permissionService.addRole(roleData, id);
+      return response;
+    } catch (error: any) {
+      console.log(error.response);
+    }
+  }
+);
+
 export const deleteRole = createAsyncThunk(
   'permission/deleteRole',
   async (id: number) => {
@@ -212,6 +224,21 @@ export const permissionSlice = createSlice({
       state.isSuccess = true;
     });
     builder.addCase(getUserRoles.rejected, (state) => {
+      state.isError = true;
+      state.isLoadingUserRoles = false;
+    });
+
+    // add role
+    builder.addCase(addRole.pending, (state) => {
+      state.isLoadingUserRoles = true;
+    });
+    builder.addCase(addRole.fulfilled, (state, action) => {
+      const newRole = action.payload;
+      state.userRoles.push(newRole);
+      state.isLoadingUserRoles = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(addRole.rejected, (state) => {
       state.isError = true;
       state.isLoadingUserRoles = false;
     });

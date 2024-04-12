@@ -80,6 +80,11 @@ const editRole = async (id: number) => {
   return response.data;
 };
 
+const addRole = async (roleData: any, id: number) => {
+  const response = await api.post(`users/${id}/roles/add`, { ...roleData });
+  return response.data;
+};
+
 export default {
   createPermission,
   getPermissions,
@@ -89,4 +94,5 @@ export default {
   deletePermission,
   editRole,
   getUserRoles,
+  addRole,
 };

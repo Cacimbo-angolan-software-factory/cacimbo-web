@@ -22,6 +22,7 @@ import Spinner from '../../spinner/Spinner';
 import noCompanies from '../../../assets/noCompanies.svg';
 import AssociarUser from '../associarUser/AssociarUser';
 import { getUserRoles } from '../../../redux/permissionsFeatures/permissionSlice';
+import AddRole from '../addRole/AddRole';
 
 interface UserContainerProps {
   userSelected: any;
@@ -38,12 +39,12 @@ const UserContainer: React.FC<UserContainerProps> = ({
     (state: any) => state.permission
   );
   const [openAssociar, setOpenAssociar] = React.useState(false);
+  const [openAddRole, setOpenAddRole] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getUsersEmpresas(userSelected.id));
     dispatch(getUserRoles(userSelected.id));
-    console.log(userRoles.roles);
   }, []);
 
   const handleClick = () => {
@@ -104,7 +105,7 @@ const UserContainer: React.FC<UserContainerProps> = ({
               <IoBriefcaseOutline />
               Funções atribuídas
             </h2>
-            <p onClick={handleClick}>
+            <p onClick={() => setOpenAddRole(true)}>
               <IoPersonAddOutline />
             </p>
           </Div1>
@@ -135,6 +136,15 @@ const UserContainer: React.FC<UserContainerProps> = ({
           setOpenAssociar={setOpenAssociar}
           userSelected={userSelected}
           // userId={userSelected.id}
+        />
+      )}
+
+      {openAddRole && (
+        <AddRole
+          openAddRole={openAddRole}
+          setOpenAddRole={setOpenAddRole}
+          userSelected={userSelected}
+          userEmpresas={userEmpresas}
         />
       )}
     </>
