@@ -42,6 +42,7 @@ const AddRole: React.FC<IProps> = ({
   const [filteredRoles, setFilteredRoles] = useState<any>([]);
   const { rolesList } = useSelector((state: any) => state.permission);
   const [addRoleLoading, setAddRoleLoading] = useState(false);
+  const [fetchingRoles, setFetchingRoles] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -54,9 +55,11 @@ const AddRole: React.FC<IProps> = ({
       ...value,
       empresaSelecionada: selectedValue,
     });
+    setFetchingRoles(true);
   };
 
   const handleBlur = async () => {
+    setFetchingRoles(true);
     try {
       const response = await apiCacimbo.get(
         `docs_empresas/${value.empresaSelecionada}`
@@ -76,6 +79,8 @@ const AddRole: React.FC<IProps> = ({
       }
     } catch (error) {
       setShowRoles(false);
+    } finally {
+      setFetchingRoles(false);
     }
   };
 
@@ -88,7 +93,7 @@ const AddRole: React.FC<IProps> = ({
         role_id: value.role,
         companyId: value.empresaSelecionada,
       });
-      getUserRoles(userSelected.id);
+      dispatch(getUserRoles(userSelected.id));
       setAddRoleLoading(false);
       setOpenAddRole(false);
     } catch (error: any) {
@@ -118,30 +123,31 @@ const AddRole: React.FC<IProps> = ({
             ))}
           </Select>
 
-          <SectionRoles>
-            <h2>Funções</h2>
-            {showRoles === false ? (
-              <Spinner />
-            ) : (
-              filteredRoles.map((role: any) => (
-                <Label>
-                  <input
-                    type='checkbox'
-                    name={role.name}
-                    id={role.id}
-                    value={role.id}
-                    onChange={(e) => {
-                      setValue({
-                        ...value,
-                        role: e.target.value,
-                      });
-                    }}
-                  />
-                  {role.name}
-                </Label>
-              ))
-            )}
-          </SectionRoles>
+          {fetchingRoles ? (
+            <Spinner />
+          ) : (
+            <SectionRoles>
+              <h2>Funções</h2>
+              {showRoles &&
+                filteredRoles.map((role: any) => (
+                  <Label key={role.id}>
+                    <input
+                      type='checkbox'
+                      name={role.name}
+                      id={role.id}
+                      value={role.id}
+                      onChange={(e) => {
+                        setValue({
+                          ...value,
+                          role: e.target.value,
+                        });
+                      }}
+                    />
+                    {role.name}
+                  </Label>
+                ))}
+            </SectionRoles>
+          )}
 
           <FooterDiv>
             <button type='reset' onClick={() => setOpenAddRole(false)}>
