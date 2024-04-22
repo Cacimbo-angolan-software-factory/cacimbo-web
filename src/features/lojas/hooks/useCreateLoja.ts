@@ -6,7 +6,7 @@ import {
   getCompanyIdWithNif,
   getLojas,
 } from '../../../redux/lojasFeatures/lojasSlice';
-import { api } from '../../../service/Service.api';
+import { api, apiCacimbo } from '../../../service/Service.api';
 import { toast } from 'react-toastify';
 
 type FormDataOrNull = FormData | null;
@@ -48,8 +48,11 @@ export const useCreateLoja = () => {
 
     try {
       setLoadingOnBlur(true);
-      const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
+      const response = await apiCacimbo.get(
+        `docs_empresas/all-by-nif/${value.nif}`
+      );
       const company = response.data.data[0];
+      console.log(response.data.data[0]);
       dispatch(getCompanyIdWithNif(value.nif));
       setLoadingOnBlur(false);
 
@@ -60,7 +63,7 @@ export const useCreateLoja = () => {
           StoreName: company.CompanyName,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       setLoadingOnBlur(false);
       console.log(error);
     }
@@ -116,7 +119,6 @@ export const useCreateLoja = () => {
             ArmazemID: 0,
             payments_mechanisms: [] as any,
           });
-          // setPaymentMechanismsList([]);
           setStoreLogoUrl(null);
           dispatch(getLojas());
         }, 2000);

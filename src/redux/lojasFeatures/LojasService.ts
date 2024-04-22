@@ -6,7 +6,7 @@ const criarLoja = async (formData: any) => {
 };
 
 const getCompanyIdWithNif = async (nif: string) => {
-  const response = await api.get(`docs_empresas/all-by-nif/${nif}`);
+  const response = await apiCacimbo.get(`docs_empresas/all-by-nif/${nif}`);
   return response.data;
 };
 
