@@ -49,7 +49,9 @@ const AssociarUser: React.FC<AssociarUserProps> = ({
   const handleBlur = async () => {
     try {
       setLoadingNif(true);
-      const response = await api.get(`docs_empresas/all-by-nif/${value.nif}`);
+      const response = await apiCacimbo.get(
+        `docs_empresas/all-by-nif/${value.nif}`
+      );
       const company = response.data.data;
       setFilteredEmpresas(company);
       setLoadingNif(false);
