@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {
   Content,
+  Div,
   ErrorMsg,
   FooterDiv,
   Header,
@@ -22,10 +23,12 @@ import {
   criarRole,
   getPermissions,
   getRoles,
+  getSyncPermissions,
 } from '../../../redux/permissionsFeatures/permissionSlice';
 import PermissionsList from './PermissionsList';
 import { Msg } from '../acessoRoles/acessoRolesStyles';
 import { getCompanyIdWithNif } from '../../../redux/lojasFeatures/lojasSlice';
+import { api } from '../../../service/Service.api';
 
 interface ModalRolesProps {
   selectedEmpresa: any;
@@ -66,32 +69,11 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [checkedPermissions, setCheckedPermissions] = React.useState<any>([]);
+  const [loadingSync, setLoadingSync] = React.useState(false);
 
-  // useEffect(() => {
-  //   if (roleSelected) {
-  //     console.log(
-  //       roleSelected.permissions.flatMap((permission: any) => [
-  //         permission.name,
-  //         ...permission.youCan,
-  //       ])
-  //     );
-  //     const allPermissionsName = roleSelected.permissions.flatMap(
-  //       (permission: any) => [permission.name, ...permission.youCan]
-  //     );
-  //     setValue({
-  //       name: roleSelected?.name,
-  //       CompanyID: roleSelected?.companyId,
-  //       description: roleSelected?.description,
-  //     });
-  //     setCheckedPermissions(allPermissionsName);
-  //     dispatch(getPermissions(roleSelected.companyId));
-  //     setShowPermissions(true);
-  //   }
-  // }, [roleSelected]);
-
-  // useEffect(() => {
-  //   console.log(selectedEmpresa);
-  // }, [selectedEmpresa]);
+  useEffect(() => {
+    console.log(selectedEmpresa.CompanyID);
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -141,6 +123,22 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
     });
     setCheckedPermissions([]);
     setOpenModal(false);
+  };
+
+  const handleSyncPermissions = async (companyId: any) => {
+    try {
+      setLoadingSync(true);
+      const response = await api.get(
+        `sync-permissions-with-docs/empresa/${companyId}`
+      );
+      dispatch(getPermissions(selectedEmpresa.CompanyID));
+      setLoadingSync(false);
+      console.log(response.data);
+      return response.data;
+    } catch (err: any) {
+      console.log(err.response);
+      setLoadingSync(false);
+    }
   };
 
   return (
@@ -202,7 +200,18 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
                     list={list}
                   />
                 ) : (
-                  <Msg>Empresa selecionada não contém permissões 🧐</Msg>
+                  <Div>
+                    <Msg>Empresa selecionada não contém permissões 🧐</Msg>
+                    <button
+                      onClick={() =>
+                        handleSyncPermissions(selectedEmpresa.CompanyID)
+                      }
+                    >
+                      {loadingSync
+                        ? 'A sincronizar...'
+                        : 'Sincronizar permissões'}
+                    </button>
+                  </Div>
                 )}
               </PermissionsDiv>
             )}

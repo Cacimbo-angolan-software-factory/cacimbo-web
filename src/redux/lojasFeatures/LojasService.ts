@@ -30,6 +30,16 @@ const getPaymentMethods = async () => {
   return response.data.data;
 };
 
+const getLojasAssociadas = async () => {
+  const response = await apiCacimbo.get(`users-online-stores`);
+  return response.data;
+};
+
+const associarLoja = async (data: any) => {
+  const response = await apiCacimbo.post(`users-online-stores`, data);
+  return response.data;
+};
+
 export default {
   criarLoja,
   getCompanyIdWithNif,
@@ -37,4 +47,6 @@ export default {
   deleteLoja,
   updateLoja,
   getPaymentMethods,
+  getLojasAssociadas,
+  associarLoja,
 };

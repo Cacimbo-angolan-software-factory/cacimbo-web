@@ -3,6 +3,7 @@ import permissionService, { Type } from './permissionService';
 
 interface PermissionState {
   permissions: any[];
+  syncPermissions: any[];
   list: any[];
   rolesList: any[];
   userRoles: any[];
@@ -14,6 +15,7 @@ interface PermissionState {
 
 const initialState: PermissionState = {
   permissions: [],
+  syncPermissions: [],
   list: [],
   rolesList: [],
   userRoles: [],
@@ -141,6 +143,19 @@ export const deletePermission = createAsyncThunk(
         role,
         permission_id
       );
+      return response;
+    } catch (err: any) {
+      console.log(err.response);
+      return err;
+    }
+  }
+);
+
+export const getSyncPermissions = createAsyncThunk(
+  'permission/getSyncPermissions',
+  async (companyId: number) => {
+    try {
+      const response = await permissionService.getSyncPermissions(companyId);
       return response;
     } catch (err: any) {
       console.log(err.response);
@@ -281,6 +296,19 @@ export const permissionSlice = createSlice({
       state.isSuccess = true;
     });
     builder.addCase(deletePermission.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+    // sync permissions
+    builder.addCase(getSyncPermissions.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getSyncPermissions.fulfilled, (state, action) => {
+      state.permissions = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getSyncPermissions.rejected, (state) => {
       state.isError = true;
       state.isLoading = false;
     });

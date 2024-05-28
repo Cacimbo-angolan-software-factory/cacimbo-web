@@ -74,6 +74,23 @@ export const InputDiv = styled.label`
   }
 `;
 
+export const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+
+  & button {
+    padding: 0.8rem 2rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    color: #ebebeb;
+    background-color: #b71c50;
+  }
+`;
+
 export const FooterDiv = styled.div`
   background-color: #242424;
   border-top: 1px solid #383838;

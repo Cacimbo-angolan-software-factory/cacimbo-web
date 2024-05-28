@@ -59,6 +59,13 @@ const getUserRoles = async (id: number) => {
   return response.data;
 };
 
+const getSyncPermissions = async (companyId: number) => {
+  const response = await api.get(
+    `sync-permissions-with-docs/empresa/${companyId}`
+  );
+  return response.data;
+};
+
 const createRole = async (roleData: {
   id?: number;
   name: string;
@@ -95,4 +102,5 @@ export default {
   editRole,
   getUserRoles,
   addRole,
+  getSyncPermissions,
 };

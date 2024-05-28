@@ -13,6 +13,8 @@ interface LojasState {
   isSuccessCriar: boolean;
   isLoadingCriar: boolean;
   message: string;
+  lojasAssociadas: any[];
+  isLoadingAssociar: boolean;
 }
 
 const initialState: LojasState = {
@@ -27,6 +29,8 @@ const initialState: LojasState = {
   isLoading: false,
   isSuccess: false,
   message: '',
+  lojasAssociadas: [],
+  isLoadingAssociar: false,
 };
 
 export const criarLoja = createAsyncThunk(
@@ -89,6 +93,28 @@ export const getPaymentMethods = createAsyncThunk(
   async () => {
     try {
       return await lojasService.getPaymentMethods();
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
+export const getLojasAssociadas = createAsyncThunk(
+  'lojas/getLojasAssociadas',
+  async () => {
+    try {
+      return await lojasService.getLojasAssociadas();
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
+export const associarLoja = createAsyncThunk(
+  'lojas/associarLoja',
+  async (data: any) => {
+    try {
+      return await lojasService.associarLoja(data);
     } catch (error: any) {
       return error;
     }
@@ -204,6 +230,36 @@ export const lojasSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = false;
       state.message = 'Erro ao atualizar loja, tente novamente mais tarde';
+    });
+
+    // get lojas associadas
+    builder.addCase(getLojasAssociadas.pending, (state) => {
+      state.isLoadingAssociar = true;
+    });
+    builder.addCase(getLojasAssociadas.fulfilled, (state, action) => {
+      state.lojasAssociadas = action.payload;
+      state.isLoadingAssociar = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(getLojasAssociadas.rejected, (state) => {
+      state.isError = true;
+      state.isLoadingAssociar = false;
+      state.isSuccess = false;
+    });
+
+    // associar loja
+    builder.addCase(associarLoja.pending, (state) => {
+      state.isLoadingAssociar = true;
+    });
+    builder.addCase(associarLoja.fulfilled, (state, action) => {
+      state.lojasAssociadas.push(action.payload);
+      state.isLoadingAssociar = false;
+      state.isSuccess = true;
+    });
+    builder.addCase(associarLoja.rejected, (state) => {
+      state.isError = true;
+      state.isLoadingAssociar = false;
+      state.isSuccess = false;
     });
   },
 });

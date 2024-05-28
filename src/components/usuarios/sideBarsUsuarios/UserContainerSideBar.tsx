@@ -10,6 +10,7 @@ import {
 import { RiCloseCircleLine, RiPencilFill } from 'react-icons/ri';
 import {
   IoBagCheckOutline,
+  IoBagHandleOutline,
   IoBriefcaseOutline,
   IoBusinessOutline,
   IoPeopleOutline,
@@ -23,6 +24,8 @@ import noCompanies from '../../../assets/noCompanies.svg';
 import AssociarUser from '../associarUser/AssociarUser';
 import { getUserRoles } from '../../../redux/permissionsFeatures/permissionSlice';
 import AddRole from '../addRole/AddRole';
+import AssociarLoja from '../associarLoja/AssociarLoja';
+import { getLojasAssociadas } from '../../../redux/lojasFeatures/lojasSlice';
 
 interface UserContainerProps {
   userSelected: any;
@@ -35,16 +38,28 @@ const UserContainer: React.FC<UserContainerProps> = ({
   setOpen,
 }) => {
   const { userEmpresas, isLoading } = useSelector((state: any) => state.user);
+  const { lojasAssociadas, isLoadingAssociar } = useSelector(
+    (state: any) => state.lojas
+  );
+
   const { userRoles, isLoadingUserRoles } = useSelector(
     (state: any) => state.permission
   );
   const [openAssociar, setOpenAssociar] = React.useState(false);
   const [openAddRole, setOpenAddRole] = React.useState(false);
+  const [openAssociarLoja, setOpenAssociarLoja] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getUsersEmpresas(userSelected.id));
     dispatch(getUserRoles(userSelected.id));
+    dispatch(getLojasAssociadas());
+
+    console.log(
+      lojasAssociadas
+        .filter((lojas: any) => lojas.user_id === userSelected.id)
+        .map((loja: any) => loja)
+    );
   }, []);
 
   const handleClick = () => {
@@ -128,6 +143,38 @@ const UserContainer: React.FC<UserContainerProps> = ({
             )}
           </Companies>
         </div>
+
+        <div>
+          <Div1>
+            <h2>
+              <IoBagHandleOutline />
+              Lojas associadas
+            </h2>
+            <p onClick={() => setOpenAssociarLoja(true)}>
+              <IoPersonAddOutline />
+            </p>
+          </Div1>
+
+          <Companies>
+            {isLoadingAssociar ? (
+              <Spinner />
+            ) : lojasAssociadas.length > 0 ? (
+              lojasAssociadas
+                .filter((lojas: any) => lojas.user_id === userSelected.id)
+                .map((loja: any, index: number) => (
+                  <div key={index}>
+                    <IoBagHandleOutline />
+                    <p>{loja.expositor.StoreName}</p>
+                  </div>
+                ))
+            ) : (
+              <NoCompanies>
+                <img src={noCompanies} alt='Nenhuma função' />
+                <p>Nenhuma loja associada a este usuário</p>
+              </NoCompanies>
+            )}
+          </Companies>
+        </div>
       </Container>
 
       {openAssociar && (
@@ -145,6 +192,14 @@ const UserContainer: React.FC<UserContainerProps> = ({
           setOpenAddRole={setOpenAddRole}
           userSelected={userSelected}
           userEmpresas={userEmpresas}
+        />
+      )}
+
+      {openAssociarLoja && (
+        <AssociarLoja
+          openAssociarLoja={openAssociarLoja}
+          setOpenAssociarLoja={setOpenAssociarLoja}
+          userSelected={userSelected}
         />
       )}
     </>
