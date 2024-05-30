@@ -17,6 +17,8 @@ interface Props {
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   roleSelected: any;
   setRoleSelected: Dispatch<any>;
+  openEdit: boolean;
+  setOpenEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 const AcessoRoles: React.FC<Props> = ({
@@ -25,6 +27,8 @@ const AcessoRoles: React.FC<Props> = ({
   setOpenModal,
   roleSelected,
   setRoleSelected,
+  openEdit,
+  setOpenEdit,
 }) => {
   const { isLoading } = useSelector((state: any) => state.permission);
   const { user } = useSelector((state: any) => state.user);
@@ -48,6 +52,8 @@ const AcessoRoles: React.FC<Props> = ({
               role={role}
               user={user}
               setOpenModal={setOpenModal}
+              openEdit={openEdit}
+              setOpenEdit={setOpenEdit}
             />
           ))
         ) : (
@@ -79,6 +85,8 @@ const AcessoRoles: React.FC<Props> = ({
                     role={role}
                     user={user}
                     setOpenModal={setOpenModal}
+                    openEdit={openEdit}
+                    setOpenEdit={setOpenEdit}
                   />
                 ))
               : handleUserRoles()}

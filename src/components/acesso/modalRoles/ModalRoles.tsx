@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';
 import {
   criarRole,
+  editRole,
   getPermissions,
   getRoles,
   getSyncPermissions,
@@ -47,6 +48,8 @@ interface ModalRolesProps {
   setErrorMsg: React.Dispatch<React.SetStateAction<string>>;
   roleSelected: any;
   setShowPermissions: React.Dispatch<React.SetStateAction<boolean>>;
+  openEdit: boolean;
+  setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalRoles: React.FC<ModalRolesProps> = ({
@@ -66,14 +69,12 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
   errorMsg,
   roleSelected,
   setShowPermissions,
+  openEdit,
+  setOpenEdit,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [checkedPermissions, setCheckedPermissions] = React.useState<any>([]);
   const [loadingSync, setLoadingSync] = React.useState(false);
-
-  useEffect(() => {
-    console.log(selectedEmpresa.CompanyID);
-  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -100,8 +101,6 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
           theme: 'colored',
         });
       });
-
-      console.log(value);
 
       setTimeout(() => {
         setValue({
@@ -133,7 +132,6 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
       );
       dispatch(getPermissions(selectedEmpresa.CompanyID));
       setLoadingSync(false);
-      console.log(response.data);
       return response.data;
     } catch (err: any) {
       console.log(err.response);
@@ -141,15 +139,44 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (roleSelected) {
+      setValue({
+        name: roleSelected.name,
+        description: roleSelected.description,
+      });
+      setCheckedPermissions(checkedPermissions);
+    }
+  }, [roleSelected]);
+
+  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    dispatch(editRole(roleSelected.id)).then(() => {
+      toast.success('Função editada com sucesso! 🎉', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+    });
+
+    dispatch(getRoles());
+  };
+
   return (
     <>
       <ModalRolesContainer className={openModal ? 'open' : ''}>
         <Header>
-          <h2>Criar função</h2>
+          <h2>{openEdit ? 'Editar função' : 'Criar função'}</h2>
           <IoCloseCircleOutline onClick={() => setOpenModal(false)} />
         </Header>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={openEdit ? handleUpdate : handleSubmit}>
           <Content>
             {user.user.parceiro_id === 1 ? (
               <InputDiv>
@@ -223,7 +250,9 @@ const ModalRoles: React.FC<ModalRolesProps> = ({
             <button type='reset' onClick={() => setOpenModal(false)}>
               Cancelar
             </button>
-            <button type='submit'>Criar função</button>
+            <button type='submit'>
+              {openEdit ? 'Editar função' : 'Criar função'}
+            </button>
           </FooterDiv>
         </form>
       </ModalRolesContainer>

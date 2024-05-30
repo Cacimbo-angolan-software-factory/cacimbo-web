@@ -36,6 +36,7 @@ const Acesso: React.FC = () => {
   const { empresasAssociadas } = useSelector((state: any) => state.empresa);
   const dispatch = useDispatch<AppDispatch>();
   const [roleSelected, setRoleSelected] = React.useState<any>();
+  const [openEdit, setOpenEdit] = React.useState(false);
 
   useEffect(() => {
     dispatch(getEmpresasAssociadas());
@@ -54,7 +55,12 @@ const Acesso: React.FC = () => {
         <div className='div'>
           <h2>Funções</h2>
           {selectedEmpresa?.CompanyName && (
-            <button onClick={() => setOpenModal(true)}>
+            <button
+              onClick={() => {
+                setOpenModal(true);
+                setOpenEdit(false);
+              }}
+            >
               <IoAddCircleOutline />
               Criar função
             </button>
@@ -71,6 +77,8 @@ const Acesso: React.FC = () => {
           setOpenModal={setOpenModal}
           roleSelected={roleSelected}
           setRoleSelected={setRoleSelected}
+          openEdit={openEdit}
+          setOpenEdit={setOpenEdit}
         />
       </Container>
 
@@ -91,6 +99,8 @@ const Acesso: React.FC = () => {
         setValue={setValue}
         roleSelected={roleSelected}
         setShowPermissions={setShowPermissions}
+        openEdit={openEdit}
+        setOpenEdit={setOpenEdit}
       />
       {openModalEmpresas && (
         <ModalAcessoEmpresas

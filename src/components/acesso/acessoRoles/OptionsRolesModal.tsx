@@ -8,6 +8,8 @@ interface Props {
   setOpenMessageModal: Dispatch<SetStateAction<boolean>>;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   menuRef: any;
+  openEdit: boolean;
+  setOpenEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 const OptionsRolesModal: React.FC<Props> = ({
@@ -15,6 +17,7 @@ const OptionsRolesModal: React.FC<Props> = ({
   setOpenMessageModal,
   setOpenModal,
   menuRef,
+  setOpenEdit,
 }) => {
   return (
     <ModalOptions
@@ -22,7 +25,10 @@ const OptionsRolesModal: React.FC<Props> = ({
       style={{ top: `${position.top}px`, left: `${position.left}px` }}
     >
       <button
-      // onClick={() => setOpenModal(true)}
+        onClick={() => {
+          setOpenModal(true);
+          setOpenEdit(true);
+        }}
       >
         <IoCreateOutline /> Editar função
       </button>

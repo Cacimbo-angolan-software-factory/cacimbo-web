@@ -41,6 +41,8 @@ interface RoleProps {
   list: any;
   user: any;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
+  openEdit: boolean;
+  setOpenEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 const Role: React.FC<RoleProps> = ({
@@ -50,6 +52,8 @@ const Role: React.FC<RoleProps> = ({
   list,
   user,
   setOpenModal,
+  openEdit,
+  setOpenEdit,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<any>({});
@@ -200,6 +204,8 @@ const Role: React.FC<RoleProps> = ({
           position={position}
           setOpenModal={setOpenModal}
           menuRef={menuRef}
+          openEdit={openEdit}
+          setOpenEdit={setOpenEdit}
         />
       )}
 
