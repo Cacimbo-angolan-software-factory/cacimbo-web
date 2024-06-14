@@ -65,6 +65,9 @@ const Login: React.FC = () => {
       </form>
 
       {error && <p style={{ color: '#B71c51', margin: '15px 0' }}>{error}</p>}
+      <p>
+        Não tem uma conta? <a href='/criar-conta'>Criar conta</a>
+      </p>
 
       <p>
         <a href='#'>Esqueceu a sua palavra passe?</a>

@@ -99,5 +99,92 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 9;
+`;
+
+// Register page
+
+export const DivButtons = styled.div`
+  display: flex;
+  /* width: 100%; */
+  gap: 2rem;
+
+  & a {
+    width: 100%;
+  }
+
+  & button:first-child {
+    background-color: #ebebeb;
+    color: #1d1d1d;
+  }
+`;
+
+export const ErrorMsg = styled.h3`
+  color: #b71c50;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+`;
+
+export const Button = styled.button`
+  padding: 0.8rem 2rem;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  background-color: #b71c50;
+  color: #ebebeb;
+`;
+
+export const Modal = styled.div`
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  max-width: 40.5rem;
+  max-height: 32.5rem;
+  background-color: #1d1d1d;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 0.5rem;
+  border: 1px solid #383838;
+  transition: all 0.2s ease-in;
+  overflow: auto;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  & h3 {
+    font-size: 1.6rem;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  & input {
+    padding: 1rem;
+    border: 1px solid #b71c50;
+    width: 100%;
+    font-size: 1.6rem;
+    border-radius: 0.5rem;
+  }
+
+  & button {
+    padding: 1rem;
+    background-color: #b71c50;
+    font-size: 1.6rem;
+    color: #fff;
+    border: 1px solid #b71c50;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 0.5rem;
+  }
 `;

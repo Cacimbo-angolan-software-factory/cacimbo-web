@@ -9,6 +9,7 @@ import ResetPassword from './pages/login/ResetPassword';
 import Acesso from './pages/admin/acesso/Acesso';
 import Spinner from './components/spinner/Spinner';
 import { ServersCli } from './pages/admin/servers';
+import Register from './pages/login/Register';
 
 const AppContainer = styled.div`
   display: flex;
@@ -57,6 +58,7 @@ function App() {
               <Route path='/servidores' element={<ServersCli />} />
             </Route>
             <Route path='/Login' element={<Login />} />
+            <Route path='/criar-conta' element={<Register />} />
           </Routes>
         </Suspense>
       </AppContainer>
