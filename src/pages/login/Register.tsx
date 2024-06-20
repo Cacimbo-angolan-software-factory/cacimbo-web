@@ -73,8 +73,8 @@ const Register: React.FC = () => {
     setIsVerifying(true);
     try {
       const response = await api.post('users/verifyPhone', {
-        phoneNumber,
-        verificationCode,
+        phone_number: phoneNumber,
+        code: verificationCode,
       });
       if (response.status === 200) {
         alert('Phone number verified successfully');
@@ -109,9 +109,9 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await api.post('users/register', {
+      const response = await api.post('users/signup/erp', {
         nif,
-        phoneNumber,
+        phone_number: phoneNumber,
         name: data.nome,
         email: value.email,
         password: value.password,
@@ -123,7 +123,8 @@ const Register: React.FC = () => {
       } else {
         alert('Failed to create account');
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
       alert('Erro ao criar conta, tente mais tarde');
     } finally {
       setLoadingCreate(false);
