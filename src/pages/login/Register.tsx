@@ -73,7 +73,7 @@ const Register: React.FC = () => {
     setIsVerifying(true);
     try {
       const response = await api.post('users/verifyPhone', {
-        phone_number: phoneNumber,
+        phone: [phoneNumber],
         code: verificationCode,
       });
       if (response.status === 200) {
@@ -111,7 +111,7 @@ const Register: React.FC = () => {
     try {
       const response = await api.post('users/signup/erp', {
         nif,
-        phone_number: phoneNumber,
+        phone: phoneNumber,
         name: data.nome,
         email: value.email,
         password: value.password,
